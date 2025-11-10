@@ -44,7 +44,59 @@ Kimi K2 is a state-of-the-art mixture-of-experts (MoE) language model with 32 bi
   </picture>
 </div>
 
-## 2. Model Summary
+## 2. Extended Capabilities: Linux Commands & Forge AI
+
+Kimi-K2 now includes powerful extensions for creative development and advanced file management:
+
+### 🐧 Linux-Style Command System
+A virtual file system with familiar Linux commands for advanced file management:
+- **Command Support**: `ls`, `cd`, `mkdir`, `rm`, `cat`, `echo`, `cp`, `mv`, and more
+- **Aliasing**: Create custom command shortcuts
+- **Scripting**: Execute batch operations from script files
+- **Virtual File System**: Isolated, safe environment for file operations
+
+### 🎨 Forge AI Extension
+AI-driven creative tools for storytelling and game development:
+- **Book Writing**: Create structured outlines, generate chapters, and export complete books
+- **NPC Dialogue**: Generate context-aware character dialogues with multiple personality tones
+- **Quest Scripting**: Create quests, quest chains, and game events with templates
+- **Interactive CLI**: User-friendly command-line interface for all features
+
+### 🔗 Seamless Integration
+The command system and AI extensions work together seamlessly:
+```python
+from kimi_k2 import CommandSystem, ForgeAI
+
+# Set up project structure with Linux commands
+cmd = CommandSystem()
+cmd.execute("mkdir -p book_project/chapters")
+
+# Generate content with Forge AI
+forge = ForgeAI()
+outline = forge.book_writer.create_outline("My Novel", "Author", "Fantasy", 10)
+
+# Save using integrated systems
+content = forge.book_writer.generate_chapter_content(1)
+chapter_path = cmd.vfs._resolve_path("chapters/chapter_01.md")
+chapter_path.write_text(content)
+```
+
+### 📚 Documentation & Examples
+- **[Usage Guide](docs/USAGE_GUIDE.md)**: Comprehensive documentation with API reference
+- **[Book Workflow Example](examples/example_book_workflow.py)**: Complete book project setup
+- **[Game Development Example](examples/example_game_workflow.py)**: NPCs, quests, and dialogues
+- **[Interactive CLI](src/kimi_k2/cli.py)**: Try it out: `python src/kimi_k2/cli.py`
+
+### 🧪 Testing
+Full test coverage with automated unit tests:
+```bash
+pip install -r requirements.txt
+pytest tests/ -v
+```
+
+---
+
+## 3. Model Summary
 
 <div align="center">
 
@@ -68,7 +120,7 @@ Kimi K2 is a state-of-the-art mixture-of-experts (MoE) language model with 32 bi
 | **Activation Function** | SwiGLU |
 </div>
 
-## 3. Evaluation Results
+## 4. Evaluation Results
 
 #### Instruction model evaluation results
 
@@ -648,7 +700,7 @@ Kimi K2 is a state-of-the-art mixture-of-experts (MoE) language model with 32 bi
 </sup>
 
 
-## 4. Deployment
+## 5. Deployment
 > [!Note]
 > You can access Kimi K2's API on https://platform.moonshot.ai , we provide an OpenAI/Anthropic-compatible API for you.
 >
@@ -667,7 +719,7 @@ Deployment examples for vLLM and SGLang can be found in the [Model Deployment Gu
 
 ---
 
-## 5. Model Usage
+## 6. Model Usage
 
 ### Chat Completion
 
@@ -772,13 +824,13 @@ For streaming output and manual tool-parsing, see the [Tool Calling Guide](docs/
 
 ---
 
-## 6. License
+## 7. License
 
 Both the code and the model weights are released under the [Modified MIT License](LICENSE).
 
 ---
 
-## 7. Citation
+## 8. Citation
 
 ```
 @misc{kimiteam2025kimik2openagentic,
@@ -794,6 +846,6 @@ Both the code and the model weights are released under the [Modified MIT License
 
 ---
 
-## 8. Contact Us
+## 9. Contact Us
 
 If you have any questions or concerns, please reach out to us at [support@moonshot.cn](mailto:support@moonshot.cn).

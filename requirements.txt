@@ -1,0 +1,9 @@
+# Core dependencies
+# No external dependencies required for basic functionality
+
+# Testing dependencies
+pytest>=7.0.0
+pytest-cov>=4.0.0
+
+# Optional: For enhanced CLI experience
+# colorama>=0.4.6  # Cross-platform colored terminal text
