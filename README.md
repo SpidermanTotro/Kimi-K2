@@ -33,6 +33,7 @@ Kimi K2 is a state-of-the-art mixture-of-experts (MoE) language model with 32 bi
 - Large-Scale Training: Pre-trained a 1T parameter MoE model on 15.5T tokens with zero training instability.
 - MuonClip Optimizer: We apply the Muon optimizer to an unprecedented scale, and develop novel optimization techniques to resolve instabilities while scaling up.
 - Agentic Intelligence: Specifically designed for tool use, reasoning, and autonomous problem-solving.
+- Multi-Domain Excellence: Trained on diverse datasets spanning programming, writing, animation, research, and filmmaking to deliver exceptional creative and technical capabilities.
 
 ### Model Variants
 - **Kimi-K2-Base**: The foundation model, a strong start for researchers and builders who want full control for fine-tuning and custom solutions.
@@ -648,7 +649,63 @@ Kimi K2 is a state-of-the-art mixture-of-experts (MoE) language model with 32 bi
 </sup>
 
 
-## 4. Deployment
+## 4. Multi-Domain Capabilities
+
+Kimi K2 has been extensively trained on diverse datasets to excel across multiple creative and technical domains. This multi-domain approach enables the model to outperform specialized models by leveraging cross-domain knowledge and reasoning.
+
+### Training Data Coverage
+
+Kimi K2's training encompasses:
+
+- **Programming**: 18+ languages including Python, JavaScript, Go, C++, Rust, with comprehensive coverage of frameworks, design patterns, and debugging techniques. See [Multi-Domain Training Data](docs/multi_domain_training.md#1-programming-skills) for details.
+
+- **Writing**: 90B+ tokens covering creative writing (fiction, poetry, screenplays), technical documentation, academic writing, and journalism. Training includes style guides, grammar references, and literary analysis. See [Writing Skills](docs/multi_domain_training.md#2-writing-skills).
+
+- **Animation & Visual Creativity**: Extensive datasets of animation scripts, HTML/CSS/JavaScript frameworks, and rendering techniques. Supports code generation for libraries like GSAP, Three.js, D3.js, and more. See [Animation Capabilities](docs/multi_domain_training.md#3-animation-and-visual-creativity).
+
+- **Research Assistance**: 100B+ tokens from academic papers, encyclopedias, and research databases across STEM, social sciences, and humanities. Includes proper citation formatting (APA, MLA, Chicago, IEEE, Harvard) and research methodologies. See [Research Features](docs/multi_domain_training.md#4-book-and-research-assistance).
+
+- **Filmmaking**: 30B+ tokens covering screenplay writing, plot structures, character development, and cinematic techniques. Trained on industry-standard formats and professional screenplays. See [Filmmaking Capabilities](docs/multi_domain_training.md#5-movie-making-and-filmmaking).
+
+### Benchmarking
+
+Kimi K2 is rigorously evaluated across all domains with comprehensive benchmark suites:
+
+- **Programming**: HumanEval, MBPP, MultiPL-E, LiveCodeBench, SWE-bench (see main evaluation results above)
+- **Writing**: ROUGE scores, style transfer accuracy, creative writing evaluations
+- **Animation**: W3C validation, performance metrics (FPS, load time), accessibility compliance
+- **Research**: Citation accuracy, summarization quality (ROUGE, BERTScore), fact verification
+- **Filmmaking**: Format compliance, story structure analysis, dialogue quality ratings
+
+For complete benchmarking details, see the [Multi-Domain Benchmarking Guide](docs/multi_domain_benchmarking.md).
+
+### Cross-Domain Integration
+
+Kimi K2's unique strength lies in integrating knowledge across domains:
+
+- Generate code with comprehensive, well-written documentation
+- Create animations with accurate technical implementations
+- Write screenplays with authentic technical details
+- Implement research algorithms from academic papers
+- Produce research papers with proper code examples
+
+### Use Cases
+
+**For Developers**: Code generation, debugging, refactoring, documentation writing, algorithm implementation
+
+**For Writers**: Story creation, editing, style adaptation, academic writing, citation management
+
+**For Designers**: Animation code generation, interactive visualizations, performance optimization
+
+**For Researchers**: Literature review, paper summarization, citation formatting, research synthesis
+
+**For Filmmakers**: Screenplay writing, scene descriptions, dialogue creation, story development
+
+For detailed training data specifications, see the [Multi-Domain Training Documentation](docs/multi_domain_training.md).
+
+---
+
+## 5. Deployment
 > [!Note]
 > You can access Kimi K2's API on https://platform.moonshot.ai , we provide an OpenAI/Anthropic-compatible API for you.
 >
@@ -667,7 +724,7 @@ Deployment examples for vLLM and SGLang can be found in the [Model Deployment Gu
 
 ---
 
-## 5. Model Usage
+## 6. Model Usage
 
 ### Chat Completion
 
@@ -772,13 +829,13 @@ For streaming output and manual tool-parsing, see the [Tool Calling Guide](docs/
 
 ---
 
-## 6. License
+## 7. License
 
 Both the code and the model weights are released under the [Modified MIT License](LICENSE).
 
 ---
 
-## 7. Citation
+## 8. Citation
 
 ```
 @misc{kimiteam2025kimik2openagentic,
@@ -794,6 +851,6 @@ Both the code and the model weights are released under the [Modified MIT License
 
 ---
 
-## 8. Contact Us
+## 9. Contact Us
 
 If you have any questions or concerns, please reach out to us at [support@moonshot.cn](mailto:support@moonshot.cn).
