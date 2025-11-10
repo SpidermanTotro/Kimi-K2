@@ -794,6 +794,68 @@ Both the code and the model weights are released under the [Modified MIT License
 
 ---
 
-## 8. Contact Us
+## 8. Utilities and Examples
+
+We've added comprehensive utilities and examples to help you get started with Kimi-K2 quickly:
+
+### 🚀 Quick Start
+
+```bash
+# Install utilities
+pip install -e .
+
+# Interactive chat
+kimi-cli interactive --url http://localhost:8000
+
+# Single message
+kimi-cli chat --url http://localhost:8000 "What is Kimi K2?"
+```
+
+### 📦 Features
+
+- **KimiClient**: Enhanced Python client with streaming and tool calling
+- **ToolManager**: Automatic tool schema generation from Python functions
+- **CLI Tools**: `kimi-cli` and `kimi-benchmark` command-line utilities
+- **Examples**: Production-ready code for chat, tools, and multi-agent systems
+- **Tests**: Comprehensive test suite with 91% coverage
+
+### 📚 Documentation
+
+- **[Tutorials](docs/tutorials.md)**: Step-by-step guides
+- **[API Reference](docs/api_reference.md)**: Complete API documentation
+- **[Advanced Usage](docs/advanced_usage.md)**: Best practices and patterns
+- **[Utilities Guide](docs/utilities_guide.md)**: Feature overview
+
+### 🎯 Example Usage
+
+```python
+from kimi_k2.client import KimiClient
+from kimi_k2.tools import ToolManager
+
+# Initialize client
+client = KimiClient(base_url="http://localhost:8000")
+
+# Simple chat
+response = client.simple_chat("Explain quantum computing")
+
+# Tool calling
+tm = ToolManager()
+
+@tm.register(description="Get weather")
+def get_weather(city: str) -> dict:
+    return {"weather": "Sunny"}
+
+response = client.chat_with_tools(
+    messages=[{"role": "user", "content": "Weather in Paris?"}],
+    tools=tm.get_tool_schemas(),
+    tool_map=tm.get_tool_map()
+)
+```
+
+See [examples directory](src/kimi_k2/examples/) for more code samples.
+
+---
+
+## 9. Contact Us
 
 If you have any questions or concerns, please reach out to us at [support@moonshot.cn](mailto:support@moonshot.cn).
