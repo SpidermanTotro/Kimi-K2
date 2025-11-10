@@ -190,12 +190,17 @@ func (m *GPTModel) getEmbeddings(inputIDs []int) *mat.Dense {
 
 // newTransformerLayer creates a new transformer layer
 func newTransformerLayer(cfg *config.ModelConfig) *TransformerLayer {
-	return &TransformerLayer{
+	layer := &TransformerLayer{
 		attnNorm:  newLayerNorm(cfg.HiddenDim, cfg.LayerNormEps),
 		ffnNorm:   newLayerNorm(cfg.HiddenDim, cfg.LayerNormEps),
 		attention: attention.NewAttention(cfg.HiddenDim, cfg.NumHeads, cfg.NumKVHeads, cfg.UseFlashAttention, cfg.NumWorkers),
 		ffn:       newFeedForward(cfg.HiddenDim, cfg.IntermediateDim, cfg.NumWorkers),
 	}
+	
+	// Initialize attention weights
+	layer.attention.InitWeights()
+	
+	return layer
 }
 
 // Forward performs forward pass through the transformer layer

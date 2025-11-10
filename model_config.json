@@ -1,0 +1,18 @@
+{
+  "vocab_size": 50000,
+  "hidden_dim": 1024,
+  "intermediate_dim": 2816,
+  "num_layers": 12,
+  "num_heads": 8,
+  "num_kv_heads": 4,
+  "max_seq_len": 2048,
+  "use_fp16": true,
+  "use_bf16": false,
+  "use_flash_attention": true,
+  "use_kv_cache": true,
+  "max_memory_gb": 4,
+  "activation_fn": "swiglu",
+  "dropout_rate": 0,
+  "layer_norm_eps": 0.00001,
+  "num_workers": 4
+}

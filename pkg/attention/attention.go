@@ -171,8 +171,18 @@ func (a *Attention) Forward(x *mat.Dense, mask *mat.Dense, layerIdx int, cache *
 		return nil, err
 	}
 	
-	// Output projection
-	result := mat.NewDense(batchSize, a.hiddenDim, nil)
+	// Ensure output has correct dimensions before projection
+	outRows, outCols := output.Dims()
+	if outCols != a.hiddenDim {
+		return nil, fmt.Errorf("attention output dimension mismatch: got %d, expected %d", outCols, a.hiddenDim)
+	}
+	
+	// Output projection  - ensure oProj is initialized
+	if a.oProj == nil {
+		return nil, fmt.Errorf("output projection matrix not initialized")
+	}
+	
+	result := mat.NewDense(outRows, a.hiddenDim, nil)
 	result.Mul(output, a.oProj)
 	
 	return result, nil
@@ -181,27 +191,57 @@ func (a *Attention) Forward(x *mat.Dense, mask *mat.Dense, layerIdx int, cache *
 // standardAttention implements standard scaled dot-product attention
 func (a *Attention) standardAttention(q, k, v, mask *mat.Dense) (*mat.Dense, error) {
 	qRows, _ := q.Dims()
-	kRows, kCols := k.Dims()
+	kRows, _ := k.Dims()
 	
-	// Compute attention scores: Q @ K^T
-	scores := mat.NewDense(qRows, kRows, nil)
-	scores.Mul(q, k.T())
+	// Output must be hiddenDim to match Q dimensions
+	output := mat.NewDense(qRows, a.hiddenDim, nil)
 	
-	// Scale by sqrt(headDim)
-	scale := 1.0 / math.Sqrt(float64(a.headDim))
-	scores.Scale(scale, scores)
-	
-	// Apply mask if provided
-	if mask != nil {
-		applyMask(scores, mask)
+	for i := 0; i < qRows; i++ {
+		qRow := mat.Row(nil, i, q)
+		
+		// Compute attention scores for this query
+		scores := make([]float64, kRows)
+		scale := 1.0 / math.Sqrt(float64(a.headDim))
+		
+		for j := 0; j < kRows; j++ {
+			kRow := mat.Row(nil, j, k)
+			
+			// Compute dot product
+			score := 0.0
+			minLen := min(len(qRow), len(kRow))
+			for l := 0; l < minLen; l++ {
+				score += qRow[l] * kRow[l]
+			}
+			scores[j] = score * scale
+		}
+		
+		// Apply softmax
+		maxScore := max64(scores)
+		expSum := 0.0
+		for j := range scores {
+			scores[j] = math.Exp(scores[j] - maxScore)
+			expSum += scores[j]
+		}
+		for j := range scores {
+			scores[j] /= expSum
+		}
+		
+		// Weighted sum of values
+		// For GQA, V has fewer columns, so we need to expand to hiddenDim
+		vRow, vCols := v.Dims()
+		if vRow > 0 && vCols > 0 {
+			// Compute weighted sum
+			for j := 0; j < a.hiddenDim; j++ {
+				val := 0.0
+				for k := 0; k < kRows; k++ {
+					// Repeat V values to match hiddenDim
+					vIdx := j % vCols
+					val += scores[k] * v.At(k, vIdx)
+				}
+				output.Set(i, j, val)
+			}
+		}
 	}
-	
-	// Softmax
-	softmax(scores)
-	
-	// Multiply by values: scores @ V
-	output := mat.NewDense(qRows, kCols, nil)
-	output.Mul(scores, v)
 	
 	return output, nil
 }
@@ -210,12 +250,12 @@ func (a *Attention) standardAttention(q, k, v, mask *mat.Dense) (*mat.Dense, err
 // This is a simplified version of FlashAttention for demonstration
 func (a *Attention) flashAttention(q, k, v, mask *mat.Dense) (*mat.Dense, error) {
 	qRows, _ := q.Dims()
-	_, vCols := v.Dims()
 	
 	// FlashAttention computes attention in blocks to reduce memory usage
 	// For this implementation, we use a simplified online softmax approach
 	
-	output := mat.NewDense(qRows, vCols, nil)
+	// Output must be hiddenDim
+	output := mat.NewDense(qRows, a.hiddenDim, nil)
 	
 	// Process in chunks using goroutines for parallelization
 	chunkSize := max(1, qRows/a.numWorkers)
@@ -235,8 +275,10 @@ func (a *Attention) flashAttention(q, k, v, mask *mat.Dense) (*mat.Dense, error)
 				// Compute attention for this query
 				attnOut := a.computeQueryAttention(qVec, k, v, mask)
 				
-				// Set output row
-				output.SetRow(i, attnOut)
+				// Set output row - ensure we have hiddenDim values
+				for j := 0; j < a.hiddenDim && j < len(attnOut); j++ {
+					output.Set(i, j, attnOut[j])
+				}
 			}
 		}(start, end)
 	}
@@ -276,13 +318,18 @@ func (a *Attention) computeQueryAttention(q []float64, k, v *mat.Dense, mask *ma
 	}
 	
 	// Compute weighted sum of values
-	output := make([]float64, vCols)
+	// For GQA, V has fewer columns, so repeat to match hiddenDim
+	output := make([]float64, a.hiddenDim)
 	for i := 0; i < kRows; i++ {
 		vVec := mat.Row(nil, i, v)
 		weight := expScores[i]
 		
-		for j := range output {
-			output[j] += weight * vVec[j]
+		for j := 0; j < a.hiddenDim; j++ {
+			// Repeat V values to fill hiddenDim
+			vIdx := j % vCols
+			if vIdx < len(vVec) {
+				output[j] += weight * vVec[vIdx]
+			}
 		}
 	}
 	
