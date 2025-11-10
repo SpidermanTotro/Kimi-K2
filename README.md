@@ -33,6 +33,9 @@ Kimi K2 is a state-of-the-art mixture-of-experts (MoE) language model with 32 bi
 - Large-Scale Training: Pre-trained a 1T parameter MoE model on 15.5T tokens with zero training instability.
 - MuonClip Optimizer: We apply the Muon optimizer to an unprecedented scale, and develop novel optimization techniques to resolve instabilities while scaling up.
 - Agentic Intelligence: Specifically designed for tool use, reasoning, and autonomous problem-solving.
+- **Animation AI Capabilities**: Advanced tools for stop-motion analysis, animation loops, and skeletal rigging with multi-format export (JSON, FBX, glTF).
+- **Linux-style Command System**: Full-featured virtual filesystem with scripting capabilities and Forge-like AI extension for generative tasks.
+- **Optimized GPT Models**: 16GB model with Grouped Query Attention, KV caching, and FlashAttention, plus 16-layer transformer with memory efficiency.
 
 ### Model Variants
 - **Kimi-K2-Base**: The foundation model, a strong start for researchers and builders who want full control for fine-tuning and custom solutions.
@@ -772,13 +775,89 @@ For streaming output and manual tool-parsing, see the [Tool Calling Guide](docs/
 
 ---
 
-## 6. License
+## 6. Extended Capabilities
+
+Kimi K2 now includes powerful extended capabilities for animation, command systems, and optimized model architectures.
+
+### Animation AI
+
+Create and manipulate animations with professional-grade tools:
+
+- **Claymation Assistant**: Analyze stop-motion sequences, generate intermediate frames, and apply style presets
+- **Animation Assistant**: Build animation loops, skeletal rigs, and export to JSON, FBX, and glTF formats
+
+```python
+from kimi_k2.animation import ClayamationAssistant, AnimationAssistant
+
+# Analyze and enhance stop-motion animation
+claymation = ClayamationAssistant()
+result = claymation.process_sequence(frames, target_fps=24, style="smooth")
+
+# Create skeletal animation
+animator = AnimationAssistant()
+animator.create_animation_loop("walk_cycle", keyframes, duration=2.0)
+json_export = animator.export_to_json("walk_cycle", "skeleton")
+```
+
+### Linux-style Command System
+
+Execute commands and scripts in a virtual filesystem:
+
+- **Command System**: Full-featured commands (ls, cd, mkdir, etc.) with scripting support
+- **Forge AI**: Generate creative content, NPC dialogues, and quest scripts
+
+```python
+from kimi_k2.commands import CommandSystem, ForgeAI
+
+# Execute commands
+cmd = CommandSystem()
+cmd.execute("mkdir projects && cd projects")
+cmd.execute_script(multi_line_script)
+
+# Generate game content
+forge = ForgeAI()
+quest = forge.generate_quest(quest_type="fetch", difficulty="hard")
+dialogue = forge.generate_npc_dialogue("Merchant", personality="friendly")
+```
+
+### Optimized GPT Models
+
+High-performance transformer models with advanced features:
+
+- **Optimized GPT**: Grouped Query Attention, KV caching, FlashAttention
+- **16-Layer Transformer**: Memory-efficient architecture with gradient checkpointing
+
+```python
+from kimi_k2.models import OptimizedGPT, TransformerModel
+
+# Use optimized GPT with GQA and KV caching
+model = OptimizedGPT(num_layers=12, num_heads=12, num_kv_heads=4)
+generated = model.generate(input_ids, max_new_tokens=50, temperature=0.8)
+
+# 16-layer transformer with memory efficiency
+transformer = TransformerModel(num_layers=16, gradient_checkpointing=True)
+memory_est = transformer.estimate_memory_usage(batch_size=4, seq_len=512)
+```
+
+For detailed documentation, see [Extended Capabilities Documentation](docs/enhancements_documentation.md).
+
+For examples, check the `examples/` directory.
+
+---
+
+## 7. License
 
 Both the code and the model weights are released under the [Modified MIT License](LICENSE).
 
 ---
 
-## 7. Citation
+## 7. License
+
+Both the code and the model weights are released under the [Modified MIT License](LICENSE).
+
+---
+
+## 8. Citation
 
 ```
 @misc{kimiteam2025kimik2openagentic,
@@ -794,6 +873,6 @@ Both the code and the model weights are released under the [Modified MIT License
 
 ---
 
-## 8. Contact Us
+## 9. Contact Us
 
 If you have any questions or concerns, please reach out to us at [support@moonshot.cn](mailto:support@moonshot.cn).
