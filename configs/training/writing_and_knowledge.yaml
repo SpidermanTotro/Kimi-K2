@@ -1,0 +1,213 @@
+# Training Configuration for Writing and Book Knowledge
+# Focus on creative writing, formal writing, and encyclopedic knowledge
+
+training_config:
+  task: "writing_and_knowledge"
+  model_name: "kimi_k2_16_layer"
+  output_dir: "./checkpoints/writing"
+  
+  # Dataset Configuration
+  datasets:
+    # Creative Writing
+    - name: "writingprompts"
+      weight: 0.15
+      genres: ["fiction", "sci_fi", "fantasy", "mystery", "romance", "horror"]
+      max_samples: 200000
+      
+    - name: "bookcorpus"
+      weight: 0.15
+      focus: "narrative_structure"
+      max_samples: 300000
+      
+    # Formal & Academic Writing
+    - name: "scientific_papers"
+      weight: 0.15
+      sources: ["arxiv", "pubmed", "semantic_scholar"]
+      domains: ["cs", "physics", "biology", "medicine", "engineering"]
+      max_samples: 250000
+      
+    - name: "essays_and_articles"
+      weight: 0.10
+      types: ["argumentative", "expository", "descriptive", "narrative"]
+      max_samples: 150000
+      
+    # Encyclopedic Knowledge
+    - name: "wikipedia"
+      weight: 0.20
+      categories: ["all"]
+      include_references: true
+      max_samples: 500000
+      
+    - name: "wikibooks"
+      weight: 0.05
+      focus: "educational_content"
+      max_samples: 50000
+      
+    # Literature Analysis
+    - name: "gutenberg"
+      weight: 0.10
+      era: ["classic", "modern"]
+      max_samples: 100000
+      
+    # Summarization & Citation
+    - name: "cnn_dailymail"
+      weight: 0.05
+      task: "summarization"
+      max_samples: 100000
+      
+    - name: "xsum"
+      weight: 0.05
+      task: "extreme_summarization"
+      max_samples: 50000
+
+  # Writing Skill Categories
+  skill_focus:
+    creative_writing:
+      - short_stories
+      - novels
+      - poetry
+      - screenplays
+      - dialogue
+      - character_development
+      - world_building
+      - plot_structure
+      
+    formal_writing:
+      - research_papers
+      - technical_reports
+      - business_documents
+      - academic_essays
+      - grant_proposals
+      - white_papers
+      
+    journalistic:
+      - news_articles
+      - feature_stories
+      - interviews
+      - opinion_pieces
+      - investigative_reporting
+      
+    knowledge_tasks:
+      - fact_retrieval
+      - information_synthesis
+      - reference_citation
+      - knowledge_verification
+      - comparative_analysis
+      - historical_context
+      
+    language_skills:
+      - grammar_correction
+      - style_improvement
+      - tone_adjustment
+      - readability_enhancement
+      - vocabulary_enrichment
+
+  # Writing Styles
+  style_categories:
+    - academic
+    - journalistic
+    - creative
+    - technical
+    - conversational
+    - formal
+    - informal
+    - persuasive
+    - descriptive
+    - narrative
+    - expository
+
+  # Training Parameters
+  training_params:
+    max_steps: 80000
+    learning_rate: 4.0e-5
+    warmup_ratio: 0.05
+    lr_scheduler_type: "cosine"
+    
+    batch_config:
+      per_device_batch_size: 2
+      gradient_accumulation_steps: 8
+      effective_batch_size: 16
+      
+    sequence_length:
+      min: 1024
+      max: 16384
+      padding: "max_length"
+      truncation: true
+      
+    evaluation:
+      eval_strategy: "steps"
+      eval_steps: 1000
+      save_steps: 4000
+      save_total_limit: 3
+      load_best_model_at_end: true
+      metric_for_best_model: "perplexity"
+
+  # Data Preprocessing
+  preprocessing:
+    preserve_formatting: true
+    clean_html: true
+    extract_citations: true
+    preserve_markdown: true
+    normalize_unicode: true
+    remove_boilerplate: true
+    
+  # Augmentation Strategies
+  augmentation:
+    style_transfer: 0.1
+    paraphrasing: 0.15
+    summary_expansion: 0.1
+    tone_variation: 0.1
+
+  # Knowledge Enhancement
+  knowledge_integration:
+    fact_checking: true
+    reference_linking: true
+    entity_recognition: true
+    temporal_awareness: true
+    cross_reference_building: true
+    
+  # Citation & Reference Handling
+  citation_formats:
+    - apa
+    - mla
+    - chicago
+    - harvard
+    - ieee
+    - vancouver
+
+  # Evaluation Benchmarks
+  benchmarks:
+    writing_quality:
+      - perplexity
+      - coherence_score
+      - grammaticality
+      - readability_metrics
+      
+    knowledge:
+      - trivia_qa
+      - natural_questions
+      - squad_v2
+      - hotpot_qa
+      - mmlu
+      
+    summarization:
+      - rouge_scores
+      - bert_score
+      - factual_consistency
+
+  # Special Tokens
+  special_tokens:
+    genre_tag: "<|genre:{type}|>"
+    style_tag: "<|style:{style}|>"
+    citation_begin: "<|cite_begin|>"
+    citation_end: "<|cite_end|>"
+    summary_tag: "<|summary|>"
+    reference_tag: "<|ref:{id}|>"
+    
+# Memory Management
+memory_optimization:
+  use_memory_config: "../optimization/memory_optimization.yaml"
+  writing_specific:
+    cache_long_contexts: true
+    hierarchical_attention: true
+    streaming_mode: true

@@ -37,6 +37,7 @@ Kimi K2 is a state-of-the-art mixture-of-experts (MoE) language model with 32 bi
 ### Model Variants
 - **Kimi-K2-Base**: The foundation model, a strong start for researchers and builders who want full control for fine-tuning and custom solutions.
 - **Kimi-K2-Instruct**: The post-trained model, best for drop-in, general-purpose chat and agentic experiences. It is a reflex-grade model without long thinking.
+- **Kimi-K2-16-Layer**: A memory-optimized variant with 16 layers designed to run within 16GB memory constraints while supporting programming, writing, animation, and research capabilities. [Learn more →](docs/KIMI_K2_16_LAYER.md)
 
 <div align="center">
   <picture>
@@ -647,6 +648,51 @@ Kimi K2 is a state-of-the-art mixture-of-experts (MoE) language model with 32 bi
 
 </sup>
 
+---
+
+## 3.5. Kimi-K2-16-Layer: Memory-Optimized Variant
+
+For users with memory constraints or those seeking an efficient model for multi-domain tasks, we provide the **Kimi-K2-16-Layer** variant:
+
+### Key Specifications
+
+| Feature | Kimi-K2-16-Layer | Original Kimi-K2 |
+|---------|------------------|------------------|
+| **Layers** | 16 | 61 |
+| **Parameters** | ~30B | ~1T |
+| **Memory Footprint** | <16GB | 80GB+ |
+| **Context Length** | 32K | 128K |
+| **Supported Domains** | Programming, Writing, Animation | General Purpose |
+
+### Optimizations
+
+✅ **Mixed Precision (BF16/FP16)** - 50% memory reduction  
+✅ **Flash Attention** - O(n) memory complexity  
+✅ **Gradient Checkpointing** - 50-70% activation memory savings  
+✅ **FP8 Quantization** - Efficient inference  
+✅ **Parameter Efficient Fine-Tuning** - LoRA support
+
+### Supported Skills
+
+- 🖥️ **Programming**: Python, JavaScript, Java, C++, Go, Rust + frameworks
+- ✍️ **Writing**: Creative, formal, academic with citation support
+- 🎬 **Animation & Moviemaking**: Screenplays, storyboards, web animation code
+- 📚 **Knowledge**: Encyclopedic knowledge, research, summarization
+
+### Quick Start
+
+```bash
+# Train on programming tasks
+python examples/train_kimi_16layer.py \
+  --training_config configs/training/programming_skills.yaml
+
+# Run benchmarks to verify <16GB memory usage
+python examples/benchmark_kimi_16layer.py --memory_limit 16.0
+```
+
+📖 **[Complete Documentation →](docs/KIMI_K2_16_LAYER.md)**
+
+---
 
 ## 4. Deployment
 > [!Note]

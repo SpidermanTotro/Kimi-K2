@@ -1,0 +1,110 @@
+# Memory Optimization Configuration for Kimi-K2 16-Layer Model
+# This configuration ensures the model stays within 16GB memory footprint
+
+# Mixed Precision Training
+mixed_precision:
+  enabled: true
+  precision: "bf16"  # BFloat16 for better numerical stability
+  fallback_to_fp16: true
+  gradient_clipping: 1.0
+  loss_scaling: "dynamic"
+
+# Gradient Checkpointing
+gradient_checkpointing:
+  enabled: true
+  checkpoint_segments: 4
+  use_reentrant: false
+
+# Flash Attention Configuration
+attention_optimization:
+  use_flash_attention: true
+  attention_backend: "flash_attn_2"
+  sparse_attention: false
+  block_size: 64
+  window_size: null  # null for full attention
+
+# Parameter Efficient Training
+peft:
+  enabled: false  # Disable for full model training
+  method: "lora"
+  lora_r: 16
+  lora_alpha: 32
+  lora_dropout: 0.05
+  target_modules: ["q_proj", "v_proj", "k_proj", "o_proj"]
+
+# Weight Quantization (for inference)
+quantization:
+  enabled: true
+  method: "fp8"  # FP8 quantization for optimal performance
+  weight_bits: 8
+  activation_bits: 8
+  symmetric: true
+  per_channel: true
+
+# KV Cache Optimization
+kv_cache:
+  enabled: true
+  cache_implementation: "static"
+  max_cache_length: 32768
+  compress_kv: false
+
+# Memory Efficient Optimizer
+optimizer:
+  type: "muon"  # Use Muon optimizer as in the original Kimi-K2
+  learning_rate: 1.0e-4
+  weight_decay: 0.1
+  beta1: 0.9
+  beta2: 0.95
+  eps: 1.0e-8
+  fused: true
+  foreach: true
+
+# Activation Checkpointing
+activation_checkpointing:
+  enabled: true
+  checkpoint_every_n_layers: 2
+  use_reentrant: false
+
+# Data Loading Optimization
+data_loader:
+  num_workers: 4
+  pin_memory: true
+  persistent_workers: true
+  prefetch_factor: 2
+
+# Batch Size Configuration (optimized for 16GB)
+training:
+  per_device_train_batch_size: 2
+  per_device_eval_batch_size: 4
+  gradient_accumulation_steps: 8
+  max_grad_norm: 1.0
+  warmup_steps: 1000
+  
+# Memory Budget Allocation (in GB)
+memory_budget:
+  total_available: 16.0
+  model_parameters: 8.0
+  activations: 3.0
+  optimizer_states: 3.0
+  gradients: 1.5
+  buffer_reserve: 0.5
+
+# Advanced Memory Optimization
+advanced_optimization:
+  cpu_offload: false  # Set to true if GPU memory is still insufficient
+  zero_stage: 2  # DeepSpeed ZeRO stage 2
+  offload_optimizer: false
+  offload_params: false
+  
+# Model Parallelism (optional, for larger deployments)
+parallelism:
+  tensor_parallel_size: 1
+  pipeline_parallel_size: 1
+  data_parallel_size: 1
+  expert_parallel_size: 1
+
+# Monitoring
+monitoring:
+  log_memory_usage: true
+  memory_profiling_interval: 100
+  peak_memory_logging: true

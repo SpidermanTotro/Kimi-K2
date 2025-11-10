@@ -1,0 +1,147 @@
+# Example: Multi-Task Training Configuration
+# Trains the model on programming, writing, and animation tasks simultaneously
+
+training_config:
+  task: "multitask_combined"
+  model_name: "kimi_k2_16_layer"
+  output_dir: "./checkpoints/multitask"
+  
+  # Combined dataset configuration with balanced sampling
+  datasets:
+    # Programming (40% of data)
+    programming:
+      weight: 0.40
+      sources:
+        - name: "the_stack_dedup"
+          weight: 0.3
+        - name: "code_contests"
+          weight: 0.25
+        - name: "stackoverflow_qa"
+          weight: 0.25
+        - name: "codeparrot"
+          weight: 0.20
+    
+    # Writing & Knowledge (35% of data)
+    writing:
+      weight: 0.35
+      sources:
+        - name: "wikipedia"
+          weight: 0.35
+        - name: "bookcorpus"
+          weight: 0.25
+        - name: "scientific_papers"
+          weight: 0.25
+        - name: "essays"
+          weight: 0.15
+    
+    # Animation & Moviemaking (25% of data)
+    animation:
+      weight: 0.25
+      sources:
+        - name: "movie_scripts"
+          weight: 0.40
+        - name: "dialogue_datasets"
+          weight: 0.30
+        - name: "web_animation_code"
+          weight: 0.30
+  
+  # Training parameters optimized for multi-task learning
+  training_params:
+    max_steps: 120000
+    learning_rate: 4.5e-5
+    warmup_ratio: 0.05
+    lr_scheduler_type: "cosine"
+    
+    batch_config:
+      per_device_batch_size: 2
+      gradient_accumulation_steps: 8
+      effective_batch_size: 16
+      
+    sequence_length:
+      min: 512
+      max: 8192
+      adaptive: true  # Adjust based on task
+      
+    evaluation:
+      eval_strategy: "steps"
+      eval_steps: 1000
+      save_steps: 4000
+      save_total_limit: 5
+      load_best_model_at_end: true
+      metric_for_best_model: "average_score"
+  
+  # Multi-task learning strategy
+  multitask_strategy:
+    type: "interleaved"  # or "sequential", "task_clustering"
+    task_sampling: "proportional"  # or "uniform", "temperature"
+    temperature: 0.8  # For temperature-based sampling
+    
+    # Task-specific learning rates (optional)
+    task_learning_rates:
+      programming: 5.0e-5
+      writing: 4.0e-5
+      animation: 4.5e-5
+  
+  # Curriculum learning (optional)
+  curriculum:
+    enabled: true
+    stages:
+      - name: "foundation"
+        steps: 30000
+        datasets: ["basic_programming", "simple_writing", "dialogue_basics"]
+        description: "Learn foundational patterns"
+        
+      - name: "intermediate"
+        steps: 50000
+        datasets: ["advanced_programming", "formal_writing", "screenplay_structure"]
+        description: "Develop intermediate skills"
+        
+      - name: "expert"
+        steps: 40000
+        datasets: ["all_domains_mixed"]
+        description: "Master complex multi-domain tasks"
+  
+  # Evaluation benchmarks for all domains
+  benchmarks:
+    programming:
+      - humaneval
+      - mbpp
+      - code_contests
+    writing:
+      - perplexity
+      - rouge_scores
+      - mmlu
+    animation:
+      - screenplay_format_accuracy
+      - dialogue_coherence
+    general:
+      - multitask_composite_score
+  
+  # Special tokens for task identification
+  special_tokens:
+    task_programming: "<|task:programming|>"
+    task_writing: "<|task:writing|>"
+    task_animation: "<|task:animation|>"
+    task_end: "<|task_end|>"
+
+# Memory optimization (uses shared config)
+memory_optimization:
+  use_memory_config: "../optimization/memory_optimization.yaml"
+  multitask_specific:
+    task_batch_balancing: true
+    adaptive_sequence_length: true
+    
+# Logging and monitoring
+monitoring:
+  wandb:
+    enabled: true
+    project: "kimi-k2-16-layer-multitask"
+    log_interval: 100
+  
+  tensorboard:
+    enabled: true
+    log_dir: "./logs/multitask"
+  
+  checkpointing:
+    save_optimizer_state: true
+    save_rng_state: true

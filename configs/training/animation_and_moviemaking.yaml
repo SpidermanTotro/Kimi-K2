@@ -1,0 +1,252 @@
+# Training Configuration for Animation and Movie Making Skills
+# Focus on screenwriting, storyboarding, and technical animation guidance
+
+training_config:
+  task: "animation_and_moviemaking"
+  model_name: "kimi_k2_16_layer"
+  output_dir: "./checkpoints/animation"
+  
+  # Dataset Configuration
+  datasets:
+    # Screenwriting
+    - name: "movie_scripts"
+      weight: 0.25
+      sources: ["imsdb", "screenplays_online", "dailyscript"]
+      genres: ["action", "comedy", "drama", "sci_fi", "horror", "romance", "thriller"]
+      max_samples: 150000
+      
+    - name: "tv_scripts"
+      weight: 0.15
+      formats: ["sitcom", "drama", "anthology", "animated"]
+      max_samples: 100000
+      
+    # Dialogue Writing
+    - name: "dialogue_datasets"
+      weight: 0.15
+      sources: ["cornell_movie_dialogs", "dailydialog", "character_dialogs"]
+      max_samples: 200000
+      
+    # Storyboarding & Visual Description
+    - name: "visual_storytelling"
+      weight: 0.15
+      focus: ["scene_description", "camera_angles", "visual_composition"]
+      max_samples: 100000
+      
+    # Technical Animation
+    - name: "animation_tutorials"
+      weight: 0.10
+      topics: ["2d_animation", "3d_animation", "motion_graphics", "vfx"]
+      tools: ["blender", "maya", "after_effects", "animate", "unity"]
+      max_samples: 50000
+      
+    # Web Animation Code
+    - name: "codepen_animations"
+      weight: 0.10
+      technologies: ["css", "javascript", "svg", "canvas", "webgl"]
+      max_samples: 80000
+      
+    # Film Theory & Production
+    - name: "film_production_guides"
+      weight: 0.10
+      topics: ["cinematography", "editing", "sound_design", "lighting", "directing"]
+      max_samples: 40000
+
+  # Animation & Moviemaking Skill Categories
+  skill_focus:
+    screenwriting:
+      - screenplay_formatting
+      - act_structure
+      - scene_writing
+      - dialogue_crafting
+      - character_arcs
+      - plot_development
+      - theme_integration
+      - pacing
+      - montage_sequences
+      - transitions
+      
+    storyboarding:
+      - shot_composition
+      - camera_angles
+      - camera_movement
+      - visual_flow
+      - panel_layout
+      - action_notation
+      - timing_notes
+      
+    animation_technical:
+      - keyframe_animation
+      - motion_principles
+      - rigging_basics
+      - character_animation
+      - effects_animation
+      - 2d_techniques
+      - 3d_workflows
+      
+    web_animation:
+      - css_animations
+      - javascript_animations
+      - svg_animation
+      - canvas_rendering
+      - webgl_basics
+      - animation_libraries
+      - performance_optimization
+      
+    production:
+      - pre_production
+      - production_planning
+      - post_production
+      - cinematography
+      - editing_techniques
+      - sound_design
+      - color_grading
+
+  # Format Templates
+  screenplay_formats:
+    - feature_film
+    - tv_episode
+    - short_film
+    - web_series
+    - animation_script
+    - documentary
+    - commercial
+
+  # Technical Knowledge Areas
+  technical_domains:
+    software_tools:
+      animation_3d:
+        - blender
+        - maya
+        - 3ds_max
+        - cinema_4d
+        - houdini
+        
+      animation_2d:
+        - adobe_animate
+        - toon_boom
+        - krita
+        - procreate
+        
+      compositing:
+        - after_effects
+        - nuke
+        - fusion
+        
+      web_technologies:
+        - html5_canvas
+        - svg
+        - webgl
+        - three_js
+        - gsap
+        - anime_js
+        - lottie
+
+  # Training Parameters
+  training_params:
+    max_steps: 60000
+    learning_rate: 4.0e-5
+    warmup_ratio: 0.05
+    lr_scheduler_type: "cosine"
+    
+    batch_config:
+      per_device_batch_size: 2
+      gradient_accumulation_steps: 8
+      effective_batch_size: 16
+      
+    sequence_length:
+      min: 1024
+      max: 12288
+      padding: "max_length"
+      truncation: true
+      
+    evaluation:
+      eval_strategy: "steps"
+      eval_steps: 1000
+      save_steps: 3000
+      save_total_limit: 3
+      load_best_model_at_end: true
+      metric_for_best_model: "format_accuracy"
+
+  # Data Preprocessing
+  preprocessing:
+    preserve_screenplay_formatting: true
+    extract_scene_headers: true
+    identify_dialogue: true
+    parse_action_lines: true
+    preserve_transitions: true
+    clean_ocr_artifacts: true
+    
+  # Augmentation Strategies
+  augmentation:
+    genre_transfer: 0.1
+    tone_variation: 0.1
+    dialogue_substitution: 0.05
+    scene_reordering: 0.05
+
+  # Screenplay Elements
+  screenplay_components:
+    - scene_headings
+    - action_lines
+    - character_names
+    - dialogue
+    - parentheticals
+    - transitions
+    - shot_descriptions
+    - sound_cues
+    - music_cues
+
+  # Animation Principles (12 Principles)
+  animation_principles:
+    - squash_and_stretch
+    - anticipation
+    - staging
+    - straight_ahead_and_pose_to_pose
+    - follow_through_and_overlapping
+    - slow_in_and_slow_out
+    - arcs
+    - secondary_action
+    - timing
+    - exaggeration
+    - solid_drawing
+    - appeal
+
+  # Evaluation Benchmarks
+  benchmarks:
+    - screenplay_format_validation
+    - dialogue_quality_metrics
+    - scene_structure_coherence
+    - technical_accuracy
+    - code_syntax_validation
+
+  # Special Tokens
+  special_tokens:
+    scene_header: "<|scene_header|>"
+    dialogue_begin: "<|dialogue_begin|>"
+    dialogue_end: "<|dialogue_end|>"
+    action_line: "<|action|>"
+    transition: "<|transition:{type}|>"
+    shot: "<|shot:{type}|>"
+    code_begin: "<|anim_code_begin|>"
+    code_end: "<|anim_code_end|>"
+    storyboard_panel: "<|panel:{number}|>"
+    
+  # Template Examples
+  templates:
+    screenplay:
+      enabled: true
+      formats: ["fountain", "final_draft", "celtx"]
+      
+    storyboard:
+      enabled: true
+      layouts: ["vertical", "horizontal", "grid"]
+      
+    animation_code:
+      enabled: true
+      frameworks: ["react", "vue", "vanilla_js"]
+
+# Memory Management
+memory_optimization:
+  use_memory_config: "../optimization/memory_optimization.yaml"
+  animation_specific:
+    cache_templates: true
+    streaming_long_scripts: true

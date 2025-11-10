@@ -1,0 +1,173 @@
+# Training Configuration for Programming Skills
+# Optimized for multi-language programming, debugging, and code optimization
+
+training_config:
+  task: "programming_skills"
+  model_name: "kimi_k2_16_layer"
+  output_dir: "./checkpoints/programming"
+  
+  # Dataset Configuration
+  datasets:
+    # Code Generation Datasets
+    - name: "the_stack_dedup"
+      weight: 0.25
+      languages: ["python", "javascript", "java", "cpp", "go", "rust", "typescript", "ruby"]
+      max_samples: 500000
+      
+    - name: "codeparrot"
+      weight: 0.15
+      focus: ["python", "javascript"]
+      max_samples: 200000
+      
+    # Code Understanding & Debugging
+    - name: "code_contests"
+      weight: 0.15
+      task_types: ["algorithm", "debugging", "optimization"]
+      max_samples: 150000
+      
+    - name: "apps"
+      weight: 0.10
+      difficulty_levels: ["introductory", "interview", "competition"]
+      max_samples: 100000
+      
+    # Framework-Specific Knowledge
+    - name: "stackoverflow_qa"
+      weight: 0.15
+      tags: ["python", "javascript", "react", "django", "flask", "nodejs", "tensorflow", "pytorch"]
+      max_samples: 300000
+      
+    # Code Explanation & Documentation
+    - name: "code_clippy"
+      weight: 0.10
+      focus: "code_explanation"
+      max_samples: 100000
+      
+    # Multi-language Translation
+    - name: "mbpp"
+      weight: 0.10
+      task: "code_translation"
+      max_samples: 50000
+
+  # Programming Skill Categories
+  skill_focus:
+    languages:
+      - python
+      - javascript
+      - typescript
+      - java
+      - cpp
+      - go
+      - rust
+      - ruby
+      - php
+      - swift
+      - kotlin
+      - c_sharp
+      
+    frameworks:
+      web:
+        - react
+        - vue
+        - angular
+        - nextjs
+        - express
+        - django
+        - flask
+        - fastapi
+      
+      mobile:
+        - react_native
+        - flutter
+        - swift_ui
+        
+      ml_ai:
+        - pytorch
+        - tensorflow
+        - jax
+        - huggingface
+        - scikit_learn
+        
+      data:
+        - pandas
+        - numpy
+        - dask
+        - spark
+        
+    capabilities:
+      - code_generation
+      - code_completion
+      - bug_detection
+      - code_optimization
+      - refactoring
+      - unit_test_generation
+      - documentation_generation
+      - code_review
+      - vulnerability_detection
+      - performance_profiling
+
+  # Training Parameters
+  training_params:
+    max_steps: 100000
+    learning_rate: 5.0e-5
+    warmup_ratio: 0.05
+    lr_scheduler_type: "cosine"
+    
+    batch_config:
+      per_device_batch_size: 2
+      gradient_accumulation_steps: 8
+      effective_batch_size: 16  # 2 * 8 * 1 GPU
+      
+    sequence_length:
+      min: 512
+      max: 8192
+      padding: "max_length"
+      truncation: true
+      
+    evaluation:
+      eval_strategy: "steps"
+      eval_steps: 1000
+      save_steps: 5000
+      save_total_limit: 3
+      load_best_model_at_end: true
+      metric_for_best_model: "pass@1"
+
+  # Data Preprocessing
+  preprocessing:
+    remove_comments: false
+    normalize_whitespace: true
+    add_language_tags: true
+    include_docstrings: true
+    max_function_length: 2048
+    
+  # Augmentation Strategies
+  augmentation:
+    variable_renaming: 0.1
+    code_formatting: 0.2
+    comment_removal: 0.05
+    dead_code_insertion: 0.05
+
+  # Evaluation Benchmarks
+  benchmarks:
+    - humaneval
+    - mbpp
+    - code_contests
+    - apps
+    - live_code_bench
+    - swe_bench_verified
+    - multi_pl_e
+
+  # Special Tokens
+  special_tokens:
+    code_begin: "<|code_begin|>"
+    code_end: "<|code_end|>"
+    language_tag: "<|lang:{language}|>"
+    function_tag: "<|function|>"
+    class_tag: "<|class|>"
+    
+# Memory Management for Programming Training
+memory_optimization:
+  use_memory_config: "../optimization/memory_optimization.yaml"
+  code_specific:
+    cache_parsed_ast: true
+    lazy_load_large_files: true
+    streaming_mode: true
