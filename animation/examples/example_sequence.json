@@ -1,0 +1,56 @@
+{
+  "name": "Simple Character Walk",
+  "fps": 24,
+  "style": "",
+  "metadata": {
+    "created": "2025-11-10",
+    "author": "Kimi-K2 Animation AI"
+  },
+  "keyframes": [
+    {
+      "id": 0,
+      "timestamp": 0.0,
+      "objects": [
+        {
+          "name": "character",
+          "position": {"x": 0, "y": 0, "z": 0},
+          "rotation": {"pitch": 0, "yaw": 0, "roll": 0},
+          "properties": {
+            "scale": 1.0
+          }
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "id": 1,
+      "timestamp": 0.5,
+      "objects": [
+        {
+          "name": "character",
+          "position": {"x": 50, "y": 2, "z": 0},
+          "rotation": {"pitch": 5, "yaw": 0, "roll": 0},
+          "properties": {
+            "scale": 1.0
+          }
+        }
+      ],
+      "metadata": {}
+    },
+    {
+      "id": 2,
+      "timestamp": 1.0,
+      "objects": [
+        {
+          "name": "character",
+          "position": {"x": 100, "y": 0, "z": 0},
+          "rotation": {"pitch": 0, "yaw": 0, "roll": 0},
+          "properties": {
+            "scale": 1.0
+          }
+        }
+      ],
+      "metadata": {}
+    }
+  ]
+}

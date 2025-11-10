@@ -1,0 +1,31 @@
+# Binaries
+kimi-animation
+*.exe
+*.dll
+*.so
+*.dylib
+
+# Test outputs
+output_*.json
+*_output.json
+test_*.json
+smoothed_*.json
+
+# Go build artifacts
+*.test
+*.out
+*.prof
+
+# Go modules
+go.sum
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db

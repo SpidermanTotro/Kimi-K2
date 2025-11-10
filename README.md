@@ -794,6 +794,33 @@ Both the code and the model weights are released under the [Modified MIT License
 
 ---
 
-## 8. Contact Us
+## 8. Animation AI Extension
+
+Kimi-K2 now includes an **Animation AI module** that provides AI-powered tools for creating claymation and animation sequences. This extension leverages Kimi-K2's transformer capabilities to assist with:
+
+### Features
+- **Claymation Assistant**: Frame-by-frame analysis, transition smoothing, and style presets (Wallace and Gromit, Robot Chicken, Classic)
+- **Animation Assistant**: Generate animation loops (walk, idle, run, jump), skeletal rigging, and inverse kinematics
+- **CLI Interface**: Easy-to-use command-line tools for animation generation and optimization
+- **Multi-format Export**: Export to JSON, FBX, glTF, and other formats
+
+### Quick Start
+
+```bash
+cd animation
+go build -o kimi-animation ./cli
+
+# Generate a walk cycle
+./kimi-animation animation generate-loop walk output.json
+
+# Smooth a claymation sequence
+./kimi-animation claymation smooth input.json output.json --intermediate-frames 3
+```
+
+For detailed documentation, see [animation/README.md](animation/README.md).
+
+---
+
+## 9. Contact Us
 
 If you have any questions or concerns, please reach out to us at [support@moonshot.cn](mailto:support@moonshot.cn).

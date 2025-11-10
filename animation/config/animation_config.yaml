@@ -1,0 +1,107 @@
+# Animation AI Configuration
+
+# Claymation Settings
+claymation:
+  default_fps: 24.0
+  interpolation_type: "ease-in-out"  # Options: linear, ease-in, ease-out, ease-in-out
+  
+  # Style presets for different claymation styles
+  style_presets:
+    wallace-gromit:
+      name: "Wallace and Gromit"
+      motion_blur: 0.2
+      frame_spacing: 1.0
+      smoothing_intensity: 0.8
+      description: "Classic Aardman style with smooth, charming motion"
+    
+    robot-chicken:
+      name: "Robot Chicken"
+      motion_blur: 0.1
+      frame_spacing: 0.8
+      smoothing_intensity: 0.5
+      description: "Fast-paced comedy style with snappy movements"
+    
+    classic:
+      name: "Classic Stop-Motion"
+      motion_blur: 0.0
+      frame_spacing: 1.0
+      smoothing_intensity: 0.3
+      description: "Traditional stop-motion with visible frame transitions"
+
+# Animation Settings
+animation:
+  default_fps: 30.0
+  ik_solver_precision: 0.001
+  
+  # Loop templates for common animation types
+  loop_templates:
+    walk:
+      name: "Walk Cycle"
+      type: "walk"
+      default_duration: 1.0
+      keyframe_count: 8
+      description: "Standard walk cycle with natural foot placement"
+    
+    idle:
+      name: "Idle Animation"
+      type: "idle"
+      default_duration: 2.0
+      keyframe_count: 4
+      description: "Subtle breathing and weight shifting"
+    
+    run:
+      name: "Run Cycle"
+      type: "run"
+      default_duration: 0.6
+      keyframe_count: 8
+      description: "Fast run cycle with extended stride"
+    
+    jump:
+      name: "Jump"
+      type: "jump"
+      default_duration: 1.5
+      keyframe_count: 6
+      description: "Jump animation with anticipation and landing"
+
+# Training Dataset Configuration
+training:
+  datasets:
+    claymation:
+      - name: "Aardman Classics"
+        path: "datasets/claymation/aardman"
+        styles: ["wallace-gromit", "chicken-run", "shaun-sheep"]
+      
+      - name: "Robot Chicken Dataset"
+        path: "datasets/claymation/robot-chicken"
+        styles: ["robot-chicken"]
+      
+      - name: "General Stop-Motion"
+        path: "datasets/claymation/general"
+        styles: ["classic"]
+    
+    animation:
+      - name: "2D Animation"
+        path: "datasets/animation/2d"
+        types: ["sprite", "vector", "traditional"]
+      
+      - name: "3D Animation"
+        path: "datasets/animation/3d"
+        types: ["rigged", "mocap", "procedural"]
+
+# Model Configuration
+model:
+  transformer_integration: true
+  kimi_k2_api_endpoint: "http://localhost:8000"
+  enable_tool_calling: true
+  temperature: 0.6
+  max_tokens: 4096
+
+# Export Settings
+export:
+  supported_formats:
+    - json
+    - fbx
+    - gltf
+    - blend
+    - maya
+  default_format: "json"
