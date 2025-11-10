@@ -4,6 +4,7 @@
 *.dll
 *.so
 *.dylib
+transformer-demo
 
 # Test binary, built with `go test -c`
 *.test
