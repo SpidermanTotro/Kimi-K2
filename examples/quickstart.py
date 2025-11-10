@@ -5,6 +5,12 @@ Kimi-K2 Skills Framework - Quick Start Example
 This example demonstrates basic usage of the media generation and AI creativity modules.
 """
 
+import sys
+from pathlib import Path
+
+# Add parent directory to path to import skills module
+sys.path.insert(0, str(Path(__file__).parent.parent))
+
 from skills.media_generation import (
     VideoGenerator,
     VoiceSynthesizer,
@@ -64,13 +70,13 @@ def example_image_generation():
         height=2048,
         style=ImageStyle.PHOTOREALISTIC,
         quality="high",
-        steps=50
+        steps=50,
+        seed=42
     )
     
     image = generator.generate(
         "A majestic mountain landscape at sunset with dramatic clouds",
-        config,
-        seed=42
+        config
     )
     
     print(f"Generated image: {image['width']}x{image['height']}")
