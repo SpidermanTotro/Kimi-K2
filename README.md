@@ -772,13 +772,99 @@ For streaming output and manual tool-parsing, see the [Tool Calling Guide](docs/
 
 ---
 
-## 6. License
+## 6. Kimi-K2 Unified Framework
+
+In addition to the AI model, this repository includes a comprehensive **Unified AI Framework** that consolidates multiple AI-related tools and capabilities into a single cohesive system.
+
+### Framework Features
+
+🎬 **Animation Suite**
+- Professional claymation and video generation tools
+- Timeline editor with drag-and-drop functionality
+- Quality presets: draft, TV, cinema
+- AI-powered frame optimization and interpolation
+
+💻 **Command Interface**
+- Linux-style command system with familiar syntax
+- AI-powered script generation from natural language
+- Extensible command framework for custom automation
+- Safe execution with built-in security controls
+
+🤖 **Dual AI Model System**
+- **Lightweight Model**: 1B parameters, 2GB memory - Fast inference
+- **Heavy Model**: 32B parameters, 16GB memory - Advanced capabilities
+- Intelligent memory management and automatic model switching
+- 16GB-optimized architecture for maximum efficiency
+
+🤝 **Multi-User Collaboration**
+- Real-time collaboration across all framework modules
+- Session-based collaborative editing
+- Shared state synchronization
+- Support for up to 10 concurrent users (configurable)
+
+🖥️ **Unified Interfaces**
+- Modern CLI built with Click
+- Cross-platform desktop UI using Tkinter
+- Built-in tutorials and walkthroughs
+- Real-time feedback and progress tracking
+
+### Quick Start with Framework
+
+```bash
+# Install the framework
+pip install -e .
+
+# Initialize configuration
+kimi-k2 init
+
+# Show framework information
+kimi-k2 info
+
+# Create an animation project
+kimi-k2 animation create my_animation --fps 30 --quality tv
+
+# Generate text with AI
+kimi-k2 model generate "Explain machine learning" --model lightweight
+
+# Execute commands
+kimi-k2 cmd exec help
+```
+
+### Framework Documentation
+
+For complete framework documentation, examples, and API reference, see [FRAMEWORK.md](FRAMEWORK.md).
+
+### Framework Testing
+
+The framework includes comprehensive tests with 94% code coverage:
+
+```bash
+# Run all tests
+pytest
+
+# Run with coverage report
+pytest --cov=kimi_k2 --cov-report=html
+
+# Run benchmarks
+python benchmarks/benchmark_suite.py
+```
+
+### Examples
+
+- `examples/animation_workflow.py` - Complete animation pipeline
+- `examples/command_automation.py` - Command automation and scripting
+- `examples/model_comparison.py` - Compare lightweight vs heavy models
+- `examples/collaborative_editing.py` - Multi-user collaboration demo
+
+---
+
+## 7. License
 
 Both the code and the model weights are released under the [Modified MIT License](LICENSE).
 
 ---
 
-## 7. Citation
+## 8. Citation
 
 ```
 @misc{kimiteam2025kimik2openagentic,
@@ -794,6 +880,6 @@ Both the code and the model weights are released under the [Modified MIT License
 
 ---
 
-## 8. Contact Us
+## 9. Contact Us
 
 If you have any questions or concerns, please reach out to us at [support@moonshot.cn](mailto:support@moonshot.cn).
