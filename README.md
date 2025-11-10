@@ -25,6 +25,34 @@
 <b>📰&nbsp;&nbsp;<a href="https://moonshotai.github.io/Kimi-K2/">Tech Blog</a></b> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <b>📄&nbsp;&nbsp;<a href="https://www.arxiv.org/abs/2507.20534">Full Report</a></b>
 </p>
 
+## Platform-Specific Deployment
+
+Kimi-K2 is optimized for deployment across multiple platforms, each leveraging platform-specific hardware capabilities:
+
+<div align="center">
+
+| Platform | Guide | Key Features |
+|----------|-------|--------------|
+| 🐧 **Linux** | [Deployment Guide](platforms/linux/README.md) | GPU/TPU acceleration, multi-node scaling, systemd integration |
+| 🍎 **iOS** | [Deployment Guide](platforms/ios/README.md) | Neural Engine optimization, Metal acceleration, Core ML integration |
+| 🤖 **Android** | [Deployment Guide](platforms/android/README.md) | NPU/GPU acceleration, Samsung optimization, TensorFlow Lite |
+| 💡 **Lightweight** | [Deployment Guide](platforms/shared/lightweight-deployment.md) | Quantization, distillation, edge deployment |
+| 🔌 **API Integration** | [Integration Guide](platforms/shared/api-integration.md) | Cross-platform APIs, hardware acceleration patterns |
+
+</div>
+
+### Platform Comparison
+
+| Feature | Linux | iOS | Android |
+|---------|-------|-----|---------|
+| **Performance** | ⭐⭐⭐⭐⭐ Highest | ⭐⭐⭐⭐ Very High | ⭐⭐⭐⭐ Very High |
+| **Scalability** | ⭐⭐⭐⭐⭐ Unlimited | ⭐⭐ Single Device | ⭐⭐ Single Device |
+| **Battery Efficiency** | N/A | ⭐⭐⭐⭐⭐ Excellent | ⭐⭐⭐⭐ Very Good |
+| **Hardware Acceleration** | CUDA, ROCm, Intel | Neural Engine, Metal | NPU, GPU, Hexagon DSP |
+| **Deployment Complexity** | ⭐⭐⭐ Moderate | ⭐⭐⭐⭐ Complex | ⭐⭐⭐⭐ Complex |
+
+---
+
 ## 1. Model Introduction
 
 Kimi K2 is a state-of-the-art mixture-of-experts (MoE) language model with 32 billion activated parameters and 1 trillion total parameters. Trained with the Muon optimizer, Kimi K2 achieves exceptional performance across frontier knowledge, reasoning, and coding tasks while being meticulously optimized for agentic capabilities.
@@ -649,10 +677,14 @@ Kimi K2 is a state-of-the-art mixture-of-experts (MoE) language model with 32 bi
 
 
 ## 4. Deployment
+
+### Cloud API
 > [!Note]
 > You can access Kimi K2's API on https://platform.moonshot.ai , we provide an OpenAI/Anthropic-compatible API for you.
 >
 > The Anthropic-compatible API maps temperature by `real_temperature = request_temperature * 0.6` for better compatiblity with existing applications.
+
+### Self-Hosted Deployment
 
 Our model checkpoints are stored in block-fp8 format, you can find it on [Huggingface](https://huggingface.co/moonshotai/Kimi-K2-Instruct).
 
@@ -664,6 +696,38 @@ Currently, it is recommended to run Kimi-K2 on the following inference engines:
 * TensorRT-LLM
 
 Deployment examples for vLLM and SGLang can be found in the [Model Deployment Guide](docs/deploy_guidance.md).
+
+### Platform-Specific Deployments
+
+For optimized deployments on specific platforms with hardware acceleration:
+
+#### 🐧 Linux Server Deployment
+- **Best for**: High-throughput production workloads, multi-GPU setups, data center deployments
+- **Hardware**: NVIDIA GPUs (H100/H200/A100), AMD GPUs, Intel CPUs
+- **Features**: Systemd integration, command-line tools, containerization
+- **Guide**: [Linux Deployment Guide](platforms/linux/README.md)
+
+#### 🍎 iOS Mobile Deployment (iPhone 17 Pro Max)
+- **Best for**: On-device AI experiences, privacy-focused applications
+- **Hardware**: A19 Pro chip with 18-core Neural Engine (38 TOPS)
+- **Features**: Metal acceleration, Core ML integration, SwiftUI components
+- **Guide**: [iOS Deployment Guide](platforms/ios/README.md)
+
+#### 🤖 Android Mobile Deployment (Galaxy 21 Series)
+- **Best for**: Android AI applications, Samsung device optimization
+- **Hardware**: Snapdragon 8 Gen 4 / Exynos 2600 with NPU (48 TOPS)
+- **Features**: NNAPI acceleration, TensorFlow Lite, Jetpack Compose UI
+- **Guide**: [Android Deployment Guide](platforms/android/README.md)
+
+#### 💡 Lightweight & Edge Deployment
+- **Best for**: Resource-constrained environments, edge devices, IoT
+- **Features**: Model quantization (INT8/INT4), distillation, hybrid cloud-edge
+- **Guide**: [Lightweight Deployment Guide](platforms/shared/lightweight-deployment.md)
+
+#### 🔌 Cross-Platform API Integration
+- **Best for**: Multi-platform applications, hardware acceleration patterns
+- **Features**: Unified APIs, performance optimization, monitoring
+- **Guide**: [API Integration Guide](platforms/shared/api-integration.md)
 
 ---
 
