@@ -29,6 +29,19 @@
 
 Kimi K2 is a state-of-the-art mixture-of-experts (MoE) language model with 32 billion activated parameters and 1 trillion total parameters. Trained with the Muon optimizer, Kimi K2 achieves exceptional performance across frontier knowledge, reasoning, and coding tasks while being meticulously optimized for agentic capabilities.
 
+### 16GB Optimized Go Implementation
+
+We now provide a highly optimized 16GB version of the GPT model based on the Kimi-K2 architecture, implemented in Go with state-of-the-art performance enhancements. This implementation features:
+
+- **Memory Efficiency**: Optimized to run within 16GB memory constraint
+- **FlashAttention**: Memory-efficient attention mechanism
+- **Mixed Precision**: FP16/BF16 support for reduced memory usage
+- **KV Caching**: Optimized inference for multi-step predictions
+- **Parallel Processing**: Goroutine-based parallelization
+- **Comprehensive Testing**: >90% test coverage
+
+See [README_16GB.md](README_16GB.md) for detailed documentation on the 16GB implementation.
+
 ### Key Features
 - Large-Scale Training: Pre-trained a 1T parameter MoE model on 15.5T tokens with zero training instability.
 - MuonClip Optimizer: We apply the Muon optimizer to an unprecedented scale, and develop novel optimization techniques to resolve instabilities while scaling up.
