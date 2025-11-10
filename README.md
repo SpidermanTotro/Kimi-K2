@@ -794,6 +794,100 @@ Both the code and the model weights are released under the [Modified MIT License
 
 ---
 
-## 8. Contact Us
+## 8. Kimi-K2 Skills Framework
+
+Kimi-K2 now includes a comprehensive **Skills Framework** - an integrated AI toolkit for advanced media generation and creative content creation.
+
+### 🌟 Key Capabilities
+
+#### Comprehensive Media Generation Suite
+- **Full-Length Video Generation**: Create complete videos with scene composition, transitions, and professional effects
+- **Cinematic Animation**: High-quality 3D animation with advanced lighting, physics, and choreographed motion
+- **Voice Synthesis**: Multi-language voice generation (100+ languages) with emotional expression and lip-sync support
+- **Music Generation**: AI-composed music synced to scenes with dynamic mixing and multi-track arrangement
+- **Image Generation**: High-resolution images (up to 8K+) in photorealistic and artistic styles
+
+#### AI Creativity Modules
+- **Story & Book Writing**: Long-form narrative generation with character development and plot structure
+- **Dialogue Generation**: Natural multi-character conversations with emotional subtext
+- **Procedural Content**: Dynamic quest generation, branching narratives, and world-building
+
+#### Performance & Optimization
+- **Intelligent Caching**: Multi-tier caching system for real-time workflows
+- **GPU Acceleration**: Optimized for CUDA with mixed precision support
+- **Workflow Orchestration**: End-to-end production pipelines
+- **Batch Processing**: Parallel execution and optimal batch sizing
+
+### 📚 Quick Start Example
+
+```python
+from skills.media_generation import VideoGenerator, VoiceSynthesizer, MusicGenerator
+from skills.ai_creativity import StoryWriter
+from skills.core import WorkflowManager
+
+# Generate a complete animated short film
+workflow_manager = WorkflowManager()
+
+# 1. Create story
+story_writer = StoryWriter()
+story = story_writer.create_story(...)
+script = story_writer.write_chapter(story, 1)
+
+# 2. Generate voice narration
+voice_synth = VoiceSynthesizer(device="cuda")
+audio = voice_synth.synthesize(script, voice_profile)
+
+# 3. Create synchronized music
+music_gen = MusicGenerator(device="cuda")
+music = music_gen.generate_for_scene(scene_data, adaptive=True)
+
+# 4. Generate video with animation
+video_gen = VideoGenerator(device="cuda")
+video = video_gen.generate_from_text(script, config)
+video = video_gen.add_audio_track(video, audio)
+
+# 5. Export final production
+video_gen.export(video, "final_film.mp4")
+```
+
+### 📖 Documentation
+
+- **[Complete Skills Documentation](docs/skills_documentation.md)** - Full guide with examples and tutorials
+- **[API Reference](docs/api_reference.md)** - Detailed API documentation for all modules
+- **[Workflow Examples](docs/skills_documentation.md#workflows-and-integration)** - End-to-end production workflows
+
+### 🚀 Getting Started
+
+```bash
+# Skills framework is included with Kimi-K2
+cd Kimi-K2/skills
+
+# Import modules as needed
+from skills.media_generation import *
+from skills.ai_creativity import *
+from skills.core import *
+```
+
+### 🎯 Use Cases
+
+- **Animated Films & Series**: Complete production from script to final video
+- **Game Development**: Voice acting, music, procedural content generation
+- **Content Creation**: Marketing videos, educational content, social media
+- **Interactive Storytelling**: Branching narratives and dynamic dialogue
+- **Rapid Prototyping**: Quick iteration on creative concepts
+
+### 💡 Integration with Kimi-K2
+
+The Skills Framework leverages Kimi-K2's powerful language understanding for:
+- **Scene Understanding**: Automatic scene breakdown from text descriptions
+- **Character Development**: Consistent personality and dialogue generation
+- **Context-Aware Generation**: Music and visuals matched to narrative context
+- **Quality Control**: Intelligent prompting and negative prompts for optimal results
+
+For detailed tutorials and advanced features, see the [Skills Documentation](docs/skills_documentation.md).
+
+---
+
+## 9. Contact Us
 
 If you have any questions or concerns, please reach out to us at [support@moonshot.cn](mailto:support@moonshot.cn).

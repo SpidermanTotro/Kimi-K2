@@ -1,0 +1,41 @@
+# Kimi-K2 Skills Framework Requirements
+# Additional dependencies for media generation and AI creativity modules
+
+# Core dependencies (already in main requirements.txt)
+# openai
+# transformers
+# torch
+# numpy
+
+# Media Processing
+opencv-python>=4.8.0  # Video processing
+pillow>=10.0.0  # Image processing
+imageio>=2.31.0  # Image/video I/O
+imageio-ffmpeg>=0.4.9  # FFmpeg backend
+
+# Audio Processing
+soundfile>=0.12.0  # Audio I/O
+librosa>=0.10.0  # Audio analysis
+pydub>=0.25.0  # Audio manipulation
+
+# Optional: Advanced Features
+# scipy>=1.11.0  # Scientific computing for audio/image processing
+# numba>=0.57.0  # Performance optimization for audio processing
+# matplotlib>=3.7.0  # Visualization for debugging
+
+# Optional: GPU-Accelerated Libraries
+# cupy-cuda11x>=12.0.0  # CUDA-accelerated numpy (for NVIDIA GPUs)
+# torch-directml>=0.2.0  # DirectML backend (for AMD/Intel GPUs on Windows)
+
+# Optional: Advanced Media Processing
+# ffmpeg-python>=0.2.0  # Advanced FFmpeg bindings
+# moviepy>=1.0.3  # Video editing
+
+# Development Tools
+# pytest>=7.4.0  # Testing
+# black>=23.7.0  # Code formatting
+# flake8>=6.1.0  # Linting
+
+# Note: The skills framework is designed to work with Kimi-K2's existing
+# dependencies. These additional packages enhance media processing capabilities
+# but are not strictly required for basic functionality.
