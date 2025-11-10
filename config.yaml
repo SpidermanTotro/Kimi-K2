@@ -1,0 +1,34 @@
+# Kimi-K2 Framework Configuration
+# This is the default configuration file
+
+animation:
+  enabled: true
+  output_dir: output/animations
+  default_fps: 30
+  quality_preset: tv
+  max_duration: 300
+
+commands:
+  enabled: true
+  shell_mode: bash
+  script_dir: scripts
+  allow_dangerous: false
+
+models:
+  enabled: true
+  default_model: lightweight
+  model_cache_dir: .cache/models
+  max_memory_gb: 16
+  use_optimization: true
+
+ui:
+  cli_enabled: true
+  desktop_enabled: false
+  theme: dark
+  show_tutorials: true
+
+collaboration:
+  enabled: false
+  server_host: localhost
+  server_port: 8080
+  max_users: 10
