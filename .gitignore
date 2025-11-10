@@ -1,0 +1,92 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+env/
+ENV/
+kimi-k2-env/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# Model checkpoints and outputs
+checkpoints/
+*.bin
+*.safetensors
+*.ckpt
+*.pth
+models/
+wandb/
+logs/
+
+# Datasets
+datasets/
+data/
+*.parquet
+*.arrow
+*.feather
+
+# Training outputs
+runs/
+outputs/
+results/
+benchmark_results.json
+
+# Cache
+.cache/
+*.cache
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Compiled files
+*.pyc
+*.pyo
+*.pyd
+
+# Distribution / packaging
+*.egg
+*.whl
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+
+# Documentation builds
+docs/_build/
+site/

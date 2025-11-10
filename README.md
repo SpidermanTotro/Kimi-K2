@@ -22,7 +22,7 @@
 </div>
 
 <p align="center">
-<b>📰&nbsp;&nbsp;<a href="https://moonshotai.github.io/Kimi-K2/">Tech Blog</a></b> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <b>📄&nbsp;&nbsp;<a href="https://www.arxiv.org/abs/2507.20534">Full Report</a></b>
+<b>📰&nbsp;&nbsp;<a href="https://moonshotai.github.io/Kimi-K2/">Tech Blog</a></b> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <b>📄&nbsp;&nbsp;<a href="https://www.arxiv.org/abs/2507.20534">Full Report</a></b> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <b>🚀&nbsp;&nbsp;<a href="QUICKSTART.md">Quick Start (16-Layer)</a></b>
 </p>
 
 ## 1. Model Introduction
