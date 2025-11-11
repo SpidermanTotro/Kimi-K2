@@ -663,7 +663,7 @@ Currently, it is recommended to run Kimi-K2 on the following inference engines:
 * KTransformers
 * TensorRT-LLM
 
-Deployment examples for vLLM and SGLang can be found in the [Model Deployment Guide](docs/deploy_guidance.md).
+Deployment examples for vLLM and SGLang can be found in the [AI Guide](docs/ai_guide.md).
 
 ---
 
@@ -768,7 +768,7 @@ def tool_call_with_client(client: OpenAI, model_name: str):
 
 The `tool_call_with_client` function implements the pipeline from user query to tool execution.
 This pipeline requires the inference engine to support Kimi-K2’s native tool-parsing logic.
-For streaming output and manual tool-parsing, see the [Tool Calling Guide](docs/tool_call_guidance.md).
+For streaming output and manual tool-parsing, see the [AI Guide](docs/ai_guide.md).
 
 ---
 
