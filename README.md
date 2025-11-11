@@ -794,6 +794,163 @@ Both the code and the model weights are released under the [Modified MIT License
 
 ---
 
-## 8. Contact Us
+## 8. Kimi K2 SDK - Enhanced Integration
+
+We've expanded Kimi K2 with a comprehensive SDK that integrates advanced capabilities from Moon AI and other AI systems. This SDK provides:
+
+### 🚀 Advanced Features
+
+#### **Skill Set Expansion**
+- **Advanced Reasoning**: Chain-of-thought reasoning, problem decomposition, and multi-hop analysis
+- **Text-to-Image Generation**: Integration with DALL-E and Stable Diffusion
+- **Contextual Chat**: Context-aware conversations with history tracking
+- **Specialized Pipelines**: Domain-specific AI for healthcare, education, legal, and finance
+
+#### **Better Interaction Models**
+- **Conversation Manager**: Multi-user session support with message threading
+- **Personalization Engine**: User preferences and adaptive learning
+- **Memory Module**: Persistent memory for cross-session recall
+
+#### **Cross-AI Integration**
+- **Moon AI Integration**: Unified interface for multiple AI systems
+- **AI Pipelines**: Chain multiple AI systems for complex workflows
+- **Configuration Management**: Easy integration management
+
+#### **Performance Improvements**
+- **Benchmarking Tools**: Measure latency, throughput, and quality
+- **Optimization Helpers**: Caching, batching, and parallel processing
+- **Performance Monitoring**: Track and optimize AI system performance
+
+### 📚 SDK Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/moonshotai/Kimi-K2.git
+cd Kimi-K2
+
+# Install the SDK
+pip install -r requirements.txt
+python setup.py install
+
+# Or install in development mode
+pip install -e .
+```
+
+### 🎯 Quick Start
+
+```python
+from kimi_k2 import KimiClient
+from kimi_k2.skills import AdvancedReasoning, ContextualChat
+from kimi_k2.interaction import ConversationManager, MemoryModule
+
+# Initialize client
+client = KimiClient(api_key="your-api-key")
+
+# Simple chat
+response = client.simple_chat("Explain MoE architectures")
+
+# Advanced reasoning
+reasoning = AdvancedReasoning(client)
+result = reasoning.chain_of_thought("Complex problem here", domain="math")
+
+# Contextual conversation
+chat = ContextualChat(client)
+response = chat.chat_with_context(
+    "What should I learn next?",
+    context={"user_info": "experienced developer"}
+)
+
+# Memory management
+memory = MemoryModule()
+memory.store_memory("user_001", "User loves Python", category="preference")
+memories = memory.recall_memories("user_001", category="preference")
+```
+
+### 📖 Documentation
+
+- **[API Documentation](docs/API_DOCUMENTATION.md)**: Complete API reference
+- **[Examples](examples/)**: Working code examples
+  - `basic_usage.py`: Client basics and tool calling
+  - `advanced_skills.py`: Reasoning and specialized pipelines
+  - `interaction_features.py`: Conversations and personalization
+  - `integration_performance.py`: Cross-AI integration and optimization
+
+### 🧪 Testing
+
+Run the comprehensive test suite:
+
+```bash
+# Run all tests
+pytest tests/unit/ -v
+
+# Run with coverage
+pytest tests/unit/ --cov=kimi_k2 --cov-report=html
+
+# Run specific test file
+pytest tests/unit/test_skills.py -v
+```
+
+### 🔒 Security
+
+The SDK includes:
+- Input validation for all user inputs
+- Secure API key handling
+- Rate limiting support
+- Comprehensive error handling
+- Security vulnerability testing
+
+All new integrations are tested against common vulnerabilities to ensure safe deployment.
+
+### 📝 Examples Directory
+
+Complete working examples demonstrating all features:
+
+```bash
+# Set your API key
+export MOONSHOT_API_KEY='your-api-key'
+
+# Run examples
+python examples/basic_usage.py
+python examples/advanced_skills.py
+python examples/interaction_features.py
+python examples/integration_performance.py
+```
+
+### 🤝 Contributing
+
+We welcome contributions! The SDK is designed to be extensible:
+
+1. **Skills**: Add new AI capabilities in `src/kimi_k2/skills/`
+2. **Integrations**: Add new AI system integrations in `src/kimi_k2/integration/`
+3. **Optimizations**: Contribute performance improvements
+4. **Tests**: Add comprehensive unit tests for all changes
+
+### 📦 Package Structure
+
+```
+kimi-k2/
+├── src/kimi_k2/           # Main SDK package
+│   ├── client.py          # Core Kimi K2 client
+│   ├── skills/            # Advanced AI capabilities
+│   ├── interaction/       # Conversation & personalization
+│   ├── integration/       # Cross-AI integration
+│   └── performance/       # Benchmarking & optimization
+├── tests/                 # Comprehensive test suite
+├── examples/              # Working code examples
+├── docs/                  # Documentation
+└── setup.py              # Package configuration
+```
+
+### 🌟 Key Differentiators
+
+1. **Unified Interface**: Single SDK for Kimi K2 and integrated AI systems
+2. **Production-Ready**: Comprehensive testing and error handling
+3. **Performance-Focused**: Built-in optimization and benchmarking tools
+4. **Extensible**: Easy to add new skills, integrations, and pipelines
+5. **Well-Documented**: Complete API docs and working examples
+
+---
+
+## 9. Contact Us
 
 If you have any questions or concerns, please reach out to us at [support@moonshot.cn](mailto:support@moonshot.cn).
