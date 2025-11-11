@@ -22,7 +22,7 @@
 </div>
 
 <p align="center">
-<b>📰&nbsp;&nbsp;<a href="https://moonshotai.github.io/Kimi-K2/">Tech Blog</a></b> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <b>📄&nbsp;&nbsp;<a href="https://www.arxiv.org/abs/2507.20534">Full Report</a></b>
+<b>📰&nbsp;&nbsp;<a href="https://moonshotai.github.io/Kimi-K2/">Tech Blog</a></b> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <b>📄&nbsp;&nbsp;<a href="https://www.arxiv.org/abs/2507.20534">Full Report</a></b> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <b>💡&nbsp;&nbsp;<a href="docs/examples_guide.md">Examples & Skills Guide</a></b>
 </p>
 
 ## 1. Model Introduction
@@ -772,13 +772,35 @@ For streaming output and manual tool-parsing, see the [Tool Calling Guide](docs/
 
 ---
 
-## 6. License
+## 6. Examples & Skills Demonstration
+
+Want to see Kimi K2's capabilities in action? Check out our comprehensive [Examples & Skills Guide](docs/examples_guide.md), which includes:
+
+- **Before & After Examples**: See how Kimi K2 improves code quality, fixes bugs, and optimizes performance
+- **Real Coding Examples**: Practical implementations of REST APIs, async pipelines, TDD, and more
+- **Tool Use Demonstrations**: Learn how to integrate Kimi K2 with external tools and APIs
+- **Agentic Workflows**: Multi-step problem solving with autonomous decision-making
+
+The guide showcases:
+- Code refactoring and optimization
+- Bug detection and automatic fixes
+- Algorithm improvements with complexity analysis
+- Building production-ready applications
+- Test-driven development examples
+- Database integration and natural language queries
+- Multi-step code analysis and review
+
+Perfect for understanding how to build real applications with Kimi K2's agentic intelligence!
+
+---
+
+## 7. License
 
 Both the code and the model weights are released under the [Modified MIT License](LICENSE).
 
 ---
 
-## 7. Citation
+## 8. Citation
 
 ```
 @misc{kimiteam2025kimik2openagentic,
@@ -794,6 +816,6 @@ Both the code and the model weights are released under the [Modified MIT License
 
 ---
 
-## 8. Contact Us
+## 9. Contact Us
 
 If you have any questions or concerns, please reach out to us at [support@moonshot.cn](mailto:support@moonshot.cn).
