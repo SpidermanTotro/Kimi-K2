@@ -37,6 +37,14 @@ Welcome to the Kimi K2 documentation! This index helps you find the right guide 
   - Multi-language support
   - Streaming responses
 
+### Gaming & Entertainment
+- **[Gaming Enhancement Guide](gaming_enhancement_guide.md)** - Revolutionary gaming features:
+  - ALL Pokemon games enhanced (GB/GBC/GBA/DS/3DS)
+  - AI-powered upscaling to Legends Arceus quality
+  - 50+ games with highest quality graphics
+  - MMO private server creation
+  - All built into 16GB package
+
 ## 🌟 Vision & Community
 
 - **[Vision & Roadmap](vision_and_roadmap.md)** - Our future plans and how to contribute
@@ -56,6 +64,8 @@ Welcome to the Kimi K2 documentation! This index helps you find the right guide 
 - **See what it can do** → [Examples & Skills Guide](examples_guide.md)
 - **Start coding immediately** → [Quick Start Examples](quick_start_examples.md)
 - **Use external tools** → [Tool Calling Guide](tool_call_guidance.md)
+- **Enhance retro games** → [Gaming Enhancement Guide](gaming_enhancement_guide.md)
+- **Create private game servers** → [Gaming Enhancement Guide - MMO Servers](gaming_enhancement_guide.md#-mmo-server-creation--management)
 - **Understand the vision** → [Vision & Roadmap](vision_and_roadmap.md)
 - **See benchmarks** → [Main README](../README.md#3-evaluation-results)
 - **Learn about the model** → [Main README](../README.md#1-model-introduction)
@@ -103,12 +113,13 @@ Welcome to the Kimi K2 documentation! This index helps you find the right guide 
 
 ```
 docs/
-├── README.md                    # This index file
-├── deploy_guidance.md           # Deployment instructions
-├── tool_call_guidance.md        # Tool calling API
-├── examples_guide.md            # Comprehensive examples
-├── quick_start_examples.md      # Quick start code
-└── vision_and_roadmap.md        # Future vision & roadmap
+├── README.md                      # This index file
+├── deploy_guidance.md             # Deployment instructions
+├── tool_call_guidance.md          # Tool calling API
+├── examples_guide.md              # Comprehensive examples
+├── quick_start_examples.md        # Quick start code
+├── vision_and_roadmap.md          # Future vision & roadmap
+└── gaming_enhancement_guide.md    # Gaming features & Pokemon upscaling
 ```
 
 ## 💡 Common Use Cases
@@ -133,6 +144,13 @@ docs/
 ### Multi-Step Problem Solving
 → [Examples - Agentic Workflows](examples_guide.md#advanced-agentic-workflows)
 
+### Retro Game Enhancement
+→ [Gaming Guide - Pokemon Upscaling](gaming_enhancement_guide.md)
+→ [Gaming Guide - All Platforms](gaming_enhancement_guide.md#-all-pokémon-games-supported---complete-list)
+
+### Private Server Creation
+→ [Gaming Guide - MMO Servers](gaming_enhancement_guide.md#-mmo-server-creation--management)
+
 ## 🤝 Contributing
 
 Interested in contributing? Check out:
@@ -148,10 +166,11 @@ Interested in contributing? Check out:
 
 ## 📊 Documentation Stats
 
-- **Total Guides:** 6
+- **Total Guides:** 7
 - **Code Examples:** 50+ 
 - **Languages Covered:** Python, JavaScript, TypeScript, Java, Go, Rust
-- **Use Cases:** REST APIs, async processing, TDD, tool integration, code review, and more
+- **Use Cases:** REST APIs, async processing, TDD, tool integration, code review, gaming enhancement, private servers, and more
+- **Pokemon Games Covered:** 50+ across all generations (GB, GBC, GBA, DS, 3DS)
 
 ---
 
