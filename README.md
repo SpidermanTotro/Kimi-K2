@@ -22,8 +22,10 @@
 </div>
 
 <p align="center">
-<b>📰&nbsp;&nbsp;<a href="https://moonshotai.github.io/Kimi-K2/">Tech Blog</a></b> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <b>📄&nbsp;&nbsp;<a href="https://www.arxiv.org/abs/2507.20534">Full Report</a></b>
+<b>📰&nbsp;&nbsp;<a href="https://moonshotai.github.io/Kimi-K2/">Tech Blog</a></b> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <b>📄&nbsp;&nbsp;<a href="https://www.arxiv.org/abs/2507.20534">Full Report</a></b> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <b>🚀&nbsp;&nbsp;<a href="nebula/README.md">Project Nebula</a></b>
 </p>
+
+> **🆕 NEW: Project Nebula** - A full-scale Linux-like system built on Kimi-K2! Now includes kernel-level components, a command-line interface, and package management system. [Learn more →](nebula/README.md)
 
 ## 1. Model Introduction
 
