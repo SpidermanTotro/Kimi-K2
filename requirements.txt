@@ -1,0 +1,12 @@
+# THE FORGE Implementation Requirements
+
+# Core dependencies (minimal - uses standard library)
+# No external dependencies required for basic functionality!
+
+# Optional: For advanced features
+# vllm>=0.2.0  # For model deployment
+# sglang>=0.1.0  # Alternative deployment option
+# openai>=1.0.0  # For API compatibility
+# fastapi>=0.100.0  # For REST API server
+# uvicorn>=0.20.0  # For running FastAPI
+# pydantic>=2.0.0  # For data validation
