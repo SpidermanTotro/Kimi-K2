@@ -1,0 +1,27 @@
+# Benchmark Suite Requirements
+# THE FORGE AI - Phase 2: Benchmark Optimization
+
+# Core dependencies
+openai>=1.0.0
+pyyaml>=6.0
+requests>=2.31.0
+numpy>=1.24.0
+pandas>=2.0.0
+
+# Benchmark-specific
+pytest>=7.4.0
+pytest-timeout>=2.1.0
+
+# Visualization and reporting
+matplotlib>=3.7.0
+seaborn>=0.12.0
+jinja2>=3.1.2
+
+# Code execution and testing
+docker>=6.1.0
+subprocess32>=3.5.4; python_version < '3.0'
+
+# Utilities
+tqdm>=4.65.0
+python-dotenv>=1.0.0
+tenacity>=8.2.0

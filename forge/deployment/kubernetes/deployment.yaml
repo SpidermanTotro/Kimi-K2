@@ -1,0 +1,93 @@
+# Kimi K2 Deployment
+# THE FORGE AI - Phase 4: Production Deployment
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kimi-k2-deployment
+  namespace: kimi-k2
+  labels:
+    app: kimi-k2
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: kimi-k2
+  template:
+    metadata:
+      labels:
+        app: kimi-k2
+    spec:
+      containers:
+      - name: kimi-k2
+        image: kimi-k2:latest
+        imagePullPolicy: IfNotPresent
+        
+        ports:
+        - containerPort: 8000
+          name: http
+          protocol: TCP
+        
+        env:
+        - name: MODEL_NAME
+          value: "/models/Kimi-K2-Instruct"
+        - name: SERVER_PORT
+          value: "8000"
+        - name: TENSOR_PARALLEL_SIZE
+          value: "8"
+        - name: TRUST_REMOTE_CODE
+          value: "true"
+        - name: ENABLE_AUTO_TOOL_CHOICE
+          value: "true"
+        - name: TOOL_CALL_PARSER
+          value: "kimi_k2"
+        
+        resources:
+          requests:
+            memory: "64Gi"
+            cpu: "16"
+            nvidia.com/gpu: "8"
+          limits:
+            memory: "128Gi"
+            cpu: "32"
+            nvidia.com/gpu: "8"
+        
+        volumeMounts:
+        - name: model-storage
+          mountPath: /models
+          readOnly: true
+        - name: logs
+          mountPath: /app/logs
+        
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8000
+          initialDelaySeconds: 60
+          periodSeconds: 30
+          timeoutSeconds: 10
+          failureThreshold: 3
+        
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+      
+      volumes:
+      - name: model-storage
+        persistentVolumeClaim:
+          claimName: kimi-k2-model-pvc
+      - name: logs
+        emptyDir: {}
+      
+      nodeSelector:
+        nvidia.com/gpu.product: H100
+      
+      tolerations:
+      - key: nvidia.com/gpu
+        operator: Exists
+        effect: NoSchedule

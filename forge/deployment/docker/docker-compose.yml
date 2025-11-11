@@ -1,0 +1,73 @@
+# Docker Compose for Kimi K2
+# THE FORGE AI - Phase 4: Production Deployment
+
+version: '3.8'
+
+services:
+  kimi-k2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: kimi-k2:latest
+    container_name: kimi-k2-service
+    
+    ports:
+      - "8000:8000"
+    
+    volumes:
+      - ${MODEL_PATH:-./models}:/models:ro
+      - ./logs:/app/logs
+    
+    environment:
+      - CUDA_VISIBLE_DEVICES=0,1,2,3,4,5,6,7
+      - MODEL_NAME=/models/Kimi-K2-Instruct
+      - SERVER_PORT=8000
+      - TENSOR_PARALLEL_SIZE=8
+    
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 8
+              capabilities: [gpu]
+    
+    restart: unless-stopped
+    
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: kimi-k2-prometheus
+    ports:
+      - "9090:9090"
+    volumes:
+      - ../monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+    restart: unless-stopped
+
+  grafana:
+    image: grafana/grafana:latest
+    container_name: kimi-k2-grafana
+    ports:
+      - "3000:3000"
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ../monitoring/grafana-dashboards:/etc/grafana/provisioning/dashboards:ro
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-admin}
+    restart: unless-stopped
+    depends_on:
+      - prometheus
+
+volumes:
+  prometheus-data:
+  grafana-data:

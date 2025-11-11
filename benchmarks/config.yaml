@@ -1,0 +1,57 @@
+# Kimi K2 Benchmark Configuration
+# Part of THE FORGE AI - Phase 2: Benchmark Optimization
+
+# Model Configuration
+model:
+  name: "moonshotai/Kimi-K2-Instruct"
+  endpoint: "http://localhost:8000"
+  api_key: "${KIMI_API_KEY}"
+  temperature: 0.6
+  max_tokens: 8192
+
+# Benchmark Settings
+benchmarks:
+  livecodebench:
+    enabled: true
+    version: "v6"
+    date_range: "Aug 24 - May 25"
+    timeout: 300  # seconds per problem
+    pass_at_k: 1
+    target_improvement: 6  # minimum % improvement target
+    
+  swebench:
+    enabled: true
+    variant: "verified"
+    mode: "agentic"  # or "agentless"
+    single_attempt: true
+    timeout: 600  # seconds per issue
+    target_improvement: 6  # minimum % improvement target
+    
+  aime:
+    enabled: true
+    year: 2024
+    avg_at_k: 64
+    timeout: 180  # seconds per problem
+    target_improvement: 6  # minimum % improvement target
+
+# Output Configuration
+output:
+  results_dir: "results"
+  format: "json"  # json, csv, or both
+  include_traces: true
+  save_failures: true
+
+# Performance Optimization
+optimization:
+  parallel_workers: 4
+  batch_size: 8
+  cache_enabled: true
+  retry_failed: true
+  max_retries: 2
+
+# Reporting
+reporting:
+  generate_html: true
+  generate_plots: true
+  compare_baseline: true
+  baseline_file: "results/baseline.json"

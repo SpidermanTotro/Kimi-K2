@@ -1,0 +1,65 @@
+# Fine-tuning Configuration for Kimi K2
+# THE FORGE AI - Phase 3: Training Data Enhancement
+
+# Model Configuration
+model:
+  name: "moonshotai/Kimi-K2-Base"
+  checkpoint: null  # Path to checkpoint if resuming
+  trust_remote_code: true
+
+# Training Data
+data:
+  train_file: "data/train.jsonl"
+  val_file: "data/val.jsonl"
+  max_length: 8192
+  batch_size: 4
+  num_workers: 4
+
+# Training Parameters
+training:
+  num_epochs: 3
+  learning_rate: 2e-5
+  warmup_steps: 100
+  weight_decay: 0.01
+  gradient_accumulation_steps: 4
+  max_grad_norm: 1.0
+  
+  # Optimization
+  optimizer: "adamw"
+  scheduler: "cosine"
+  
+  # Mixed Precision
+  fp16: false
+  bf16: true
+  
+  # Distributed Training
+  distributed: false
+  world_size: 1
+  
+# LoRA Configuration (optional)
+lora:
+  enabled: false
+  r: 8
+  alpha: 16
+  dropout: 0.05
+  target_modules: ["q_proj", "v_proj"]
+
+# Logging and Checkpointing
+logging:
+  log_interval: 10
+  eval_interval: 100
+  save_interval: 500
+  output_dir: "outputs"
+  
+  # TensorBoard
+  use_tensorboard: true
+  
+  # Weights & Biases
+  use_wandb: false
+  wandb_project: "kimi-k2-finetuning"
+
+# Hardware
+hardware:
+  device: "cuda"
+  num_gpus: 1
+  gpu_memory_utilization: 0.9

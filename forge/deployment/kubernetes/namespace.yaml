@@ -1,0 +1,10 @@
+# Kimi K2 Namespace
+# THE FORGE AI - Phase 4: Production Deployment
+
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: kimi-k2
+  labels:
+    name: kimi-k2
+    app: kimi-k2
