@@ -4,9 +4,7 @@ __pycache__/
 *$py.class
 *.so
 .Python
-build/
 develop-eggs/
-dist/
 downloads/
 eggs/
 .eggs/
@@ -14,7 +12,6 @@ lib/
 lib64/
 parts/
 sdist/
-var/
 wheels/
 *.egg-info/
 .installed.cfg
@@ -36,9 +33,11 @@ env/
 .DS_Store
 Thumbs.db
 
-# Nebula specific
+# Nebula specific - build artifacts only
 nebula/build/build/
 nebula/build/dist/
+dist/
+var/
 /tmp/nebula_pm_example/
 
 # Package manager data
