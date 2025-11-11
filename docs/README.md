@@ -1,11 +1,23 @@
 # Kimi K2 Documentation Index
 
+> [!NOTE]
+> **🔥 NEW: [COMPLETE GUIDE - All in One Document](COMPLETE_GUIDE.md) 🔥**
+> 
+> **Everything merged into one comprehensive guide!**
+> - Programming AI capabilities
+> - Book writing AI
+> - Gaming enhancement (50+ Pokemon games)
+> - MMO server creation (all WoW expansions)
+> - All examples, tutorials, and code
+> - **1,000+ lines - EVERYTHING in one place!**
+
 Welcome to the Kimi K2 documentation! This index helps you find the right guide for your needs.
 
 ## 🚀 Getting Started
 
 **New to Kimi K2? Start here:**
 
+0. **[📚 COMPLETE GUIDE - ALL IN ONE](COMPLETE_GUIDE.md)** - **NEW!** Everything merged: Programming, Writing, Gaming, Examples, Vision - all in one massive guide!
 1. **[Main README](../README.md)** - Overview, model specs, and benchmark results
 2. **[Quick Start Examples](quick_start_examples.md)** - Get running in 5 minutes with ready-to-use code
 3. **[Examples & Skills Guide](examples_guide.md)** - See Kimi K2's capabilities with before/after comparisons
@@ -113,13 +125,14 @@ Welcome to the Kimi K2 documentation! This index helps you find the right guide 
 
 ```
 docs/
-├── README.md                      # This index file
-├── deploy_guidance.md             # Deployment instructions
-├── tool_call_guidance.md          # Tool calling API
-├── examples_guide.md              # Comprehensive examples
-├── quick_start_examples.md        # Quick start code
-├── vision_and_roadmap.md          # Future vision & roadmap
-└── gaming_enhancement_guide.md    # Gaming features & Pokemon upscaling
+├── COMPLETE_GUIDE.md (1,000+ lines) ... 🔥 EVERYTHING IN ONE! 🔥
+├── README.md                        ... This index file
+├── deploy_guidance.md               ... Deployment instructions
+├── tool_call_guidance.md            ... Tool calling API
+├── examples_guide.md                ... Comprehensive examples
+├── quick_start_examples.md          ... Quick start code
+├── vision_and_roadmap.md            ... Future vision & roadmap
+└── gaming_enhancement_guide.md      ... Gaming features & Pokemon upscaling
 ```
 
 ## 💡 Common Use Cases
