@@ -772,13 +772,73 @@ For streaming output and manual tool-parsing, see the [Tool Calling Guide](docs/
 
 ---
 
-## 6. License
+## 6. Enhanced Features & Extensions
+
+Kimi K2 now includes a comprehensive suite of tools and frameworks to enhance development, deployment, and community engagement:
+
+### 📊 Benchmarking Framework
+Comprehensive benchmarking tools with real-time metrics visualization:
+- Extended dataset support beyond LiveCodeBench, SWE-bench, and AIME
+- Grafana + Prometheus dashboards for real-time metrics
+- Automated benchmark execution pipeline
+- **[Learn more →](benchmarks/README.md)**
+
+### 🔌 Plugin System
+Modular architecture for seamless extensibility:
+- Dynamic plugin loading and management
+- Plugin templates for easy development
+- Interactive testing framework
+- Community plugin registry
+- **[Get started →](plugins/README.md)**
+
+### 🧠 Memory Management
+Extended context and personalization capabilities:
+- Long-context conversation management (up to 128K tokens)
+- User profile and preference tracking
+- Intelligent memory compression
+- Multi-backend storage (file, database, Redis)
+- **[Configure →](memory/README.md)**
+
+### 🎓 Training Enhancements
+Advanced training utilities and pipelines:
+- Data augmentation toolkit with multiple techniques
+- Multi-pass fine-tuning pipeline
+- Automated training metrics tracking
+- Distributed training support
+- **[Training guide →](training/README.md)**
+
+### 🤝 Community Engagement
+Enhanced contribution tools and resources:
+- Interactive setup wizard for easy onboarding
+- Plugin submission templates
+- Code review guidelines
+- Comprehensive tutorials
+- **[Contribute →](CONTRIBUTING.md)**
+
+### 🔒 Security & Monitoring
+Production-ready monitoring and security:
+- Kubernetes auto-scaling configurations (HPA, VPA)
+- Prometheus + Grafana monitoring stack
+- Security best practices documentation
+- Vulnerability scanning tools
+- **[Deploy securely →](monitoring/README.md)**
+
+### 📚 Interactive Documentation
+Enhanced documentation with GitHub Pages:
+- Interactive HTML documentation hub
+- Cross-linked guides and tutorials
+- Code examples and use cases
+- **[Browse docs →](https://moonshotai.github.io/Kimi-K2/)**
+
+---
+
+## 7. License
 
 Both the code and the model weights are released under the [Modified MIT License](LICENSE).
 
 ---
 
-## 7. Citation
+## 8. Citation
 
 ```
 @misc{kimiteam2025kimik2openagentic,
@@ -794,6 +854,6 @@ Both the code and the model weights are released under the [Modified MIT License
 
 ---
 
-## 8. Contact Us
+## 9. Contact Us
 
 If you have any questions or concerns, please reach out to us at [support@moonshot.cn](mailto:support@moonshot.cn).

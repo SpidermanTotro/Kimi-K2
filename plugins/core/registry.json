@@ -1,0 +1,30 @@
+{
+  "example_tool": {
+    "name": "example_tool",
+    "version": "1.0.0",
+    "description": "Example tool plugin for Kimi K2",
+    "type": "tool",
+    "path": "examples/example_tool",
+    "class": "ExampleToolPlugin",
+    "author": "Kimi Team",
+    "dependencies": [],
+    "config": {
+      "enabled": true,
+      "timeout": 30
+    }
+  },
+  "weather_api": {
+    "name": "weather_api",
+    "version": "1.0.0",
+    "description": "Weather API integration plugin",
+    "type": "api",
+    "path": "examples/weather_api",
+    "class": "WeatherAPIPlugin",
+    "author": "Community",
+    "dependencies": ["requests"],
+    "config": {
+      "enabled": true,
+      "api_key": "YOUR_API_KEY_HERE"
+    }
+  }
+}

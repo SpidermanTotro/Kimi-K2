@@ -1,0 +1,38 @@
+backend: file
+
+storage:
+  path: ./data/memory
+  max_history: 1000
+  compression: true
+  auto_summarize: true
+  summary_threshold: 100  # Summarize when history exceeds this
+
+personalization:
+  enabled: true
+  profile_fields:
+    - language
+    - expertise_level
+    - interests
+    - preferences
+    - preferred_format
+  
+  expertise_levels:
+    - beginner
+    - intermediate
+    - expert
+  
+  response_formats:
+    - concise
+    - balanced
+    - detailed
+
+memory_compression:
+  enabled: true
+  method: semantic  # semantic, extractive, or hybrid
+  compression_ratio: 0.3
+  preserve_recent: 10  # Always keep last N messages
+
+context_window:
+  max_tokens: 128000
+  reserve_tokens: 8000  # Reserve for response
+  context_tokens: 120000

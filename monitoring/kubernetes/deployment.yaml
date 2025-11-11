@@ -1,0 +1,127 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kimi-k2-deployment
+  namespace: kimi-k2
+  labels:
+    app: kimi-k2
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: kimi-k2
+  template:
+    metadata:
+      labels:
+        app: kimi-k2
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8000"
+        prometheus.io/path: "/metrics"
+    spec:
+      containers:
+        - name: kimi-k2
+          image: kimi-k2:latest
+          ports:
+            - name: http
+              containerPort: 8000
+              protocol: TCP
+            - name: metrics
+              containerPort: 9090
+              protocol: TCP
+          
+          resources:
+            requests:
+              cpu: "4000m"
+              memory: "16Gi"
+              nvidia.com/gpu: "2"
+            limits:
+              cpu: "8000m"
+              memory: "32Gi"
+              nvidia.com/gpu: "2"
+          
+          env:
+            - name: MODEL_PATH
+              value: "/models/Kimi-K2-Instruct"
+            - name: MAX_BATCH_SIZE
+              value: "128"
+            - name: MAX_NUM_TOKENS
+              value: "4096"
+            - name: TEMPERATURE
+              value: "0.6"
+          
+          livenessProbe:
+            httpGet:
+              path: /health
+              port: 8000
+            initialDelaySeconds: 60
+            periodSeconds: 10
+            timeoutSeconds: 5
+            failureThreshold: 3
+          
+          readinessProbe:
+            httpGet:
+              path: /ready
+              port: 8000
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            timeoutSeconds: 3
+            failureThreshold: 3
+          
+          volumeMounts:
+            - name: model-volume
+              mountPath: /models
+              readOnly: true
+            - name: cache-volume
+              mountPath: /cache
+      
+      volumes:
+        - name: model-volume
+          persistentVolumeClaim:
+            claimName: kimi-k2-model-pvc
+        - name: cache-volume
+          emptyDir: {}
+      
+      nodeSelector:
+        nvidia.com/gpu.present: "true"
+      
+      tolerations:
+        - key: nvidia.com/gpu
+          operator: Exists
+          effect: NoSchedule
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kimi-k2-service
+  namespace: kimi-k2
+  labels:
+    app: kimi-k2
+spec:
+  type: LoadBalancer
+  ports:
+    - name: http
+      port: 80
+      targetPort: 8000
+      protocol: TCP
+    - name: metrics
+      port: 9090
+      targetPort: 9090
+      protocol: TCP
+  selector:
+    app: kimi-k2
+
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: kimi-k2-model-pvc
+  namespace: kimi-k2
+spec:
+  accessModes:
+    - ReadOnlyMany
+  resources:
+    requests:
+      storage: 500Gi
+  storageClassName: fast-ssd

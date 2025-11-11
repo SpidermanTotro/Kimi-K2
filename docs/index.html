@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kimi K2 Documentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .header {
+            background: linear-gradient(135deg, #1783ff 0%, #0052cc 100%);
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .nav {
+            background: #f8f9fa;
+            padding: 1rem 0;
+            margin-bottom: 2rem;
+            border-radius: 8px;
+        }
+
+        .nav ul {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .nav a {
+            color: #1783ff;
+            text-decoration: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            transition: background 0.3s;
+        }
+
+        .nav a:hover {
+            background: #e9ecef;
+        }
+
+        .section {
+            margin-bottom: 3rem;
+        }
+
+        .section h2 {
+            color: #1783ff;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid #1783ff;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .card {
+            background: white;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+
+        .card h3 {
+            color: #1783ff;
+            margin-bottom: 0.5rem;
+        }
+
+        .card p {
+            color: #666;
+            margin-bottom: 1rem;
+        }
+
+        .card a {
+            color: #1783ff;
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .card a:hover {
+            text-decoration: underline;
+        }
+
+        .code-block {
+            background: #f8f9fa;
+            border-left: 4px solid #1783ff;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 4px;
+            overflow-x: auto;
+        }
+
+        .code-block code {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 0.9rem;
+        }
+
+        .footer {
+            background: #343a40;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+
+        .footer a {
+            color: #1783ff;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>🤖 Kimi K2 Documentation</h1>
+        <p>Open Agentic Intelligence - Complete Documentation Hub</p>
+    </div>
+
+    <div class="container">
+        <nav class="nav">
+            <ul>
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#getting-started">Getting Started</a></li>
+                <li><a href="#features">Features</a></li>
+                <li><a href="#guides">Guides</a></li>
+                <li><a href="#resources">Resources</a></li>
+            </ul>
+        </nav>
+
+        <section id="overview" class="section">
+            <h2>Overview</h2>
+            <p>
+                Kimi K2 is a state-of-the-art mixture-of-experts (MoE) language model with 32 billion activated 
+                parameters and 1 trillion total parameters. This documentation provides comprehensive guides for 
+                deployment, development, and extending Kimi K2's capabilities.
+            </p>
+        </section>
+
+        <section id="getting-started" class="section">
+            <h2>Getting Started</h2>
+            <div class="cards">
+                <div class="card">
+                    <h3>📚 Quick Start</h3>
+                    <p>Get up and running with Kimi K2 in minutes</p>
+                    <a href="getting_started.html">Read Guide →</a>
+                </div>
+                <div class="card">
+                    <h3>🚀 Deployment</h3>
+                    <p>Deploy Kimi K2 with vLLM, SGLang, or TensorRT-LLM</p>
+                    <a href="deploy_guidance.html">View Options →</a>
+                </div>
+                <div class="card">
+                    <h3>🛠️ Setup Wizard</h3>
+                    <p>Interactive configuration wizard for easy setup</p>
+                    <a href="../community/wizards/setup_wizard.py">Run Wizard →</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="features" class="section">
+            <h2>Key Features</h2>
+            <div class="cards">
+                <div class="card">
+                    <h3>📊 Benchmarking</h3>
+                    <p>Comprehensive benchmarking framework with real-time metrics visualization</p>
+                    <a href="../benchmarks/README.html">Explore Benchmarks →</a>
+                </div>
+                <div class="card">
+                    <h3>🔌 Plugin System</h3>
+                    <p>Modular plugin architecture for seamless extensibility</p>
+                    <a href="../plugins/README.html">Learn About Plugins →</a>
+                </div>
+                <div class="card">
+                    <h3>🧠 Memory Management</h3>
+                    <p>Extended context and personalization capabilities</p>
+                    <a href="../memory/README.html">Configure Memory →</a>
+                </div>
+                <div class="card">
+                    <h3>🎓 Training Tools</h3>
+                    <p>Data augmentation and multi-pass fine-tuning pipelines</p>
+                    <a href="../training/README.html">Training Guide →</a>
+                </div>
+                <div class="card">
+                    <h3>🔒 Security</h3>
+                    <p>Comprehensive security best practices and monitoring</p>
+                    <a href="../monitoring/security/SECURITY_BEST_PRACTICES.html">Security Guide →</a>
+                </div>
+                <div class="card">
+                    <h3>📈 Monitoring</h3>
+                    <p>Kubernetes auto-scaling and performance monitoring</p>
+                    <a href="../monitoring/README.html">Setup Monitoring →</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="guides" class="section">
+            <h2>Comprehensive Guides</h2>
+            <div class="cards">
+                <div class="card">
+                    <h3>🔧 Tool Calling</h3>
+                    <p>Implement and use tool-calling capabilities</p>
+                    <a href="tool_call_guidance.html">Learn More →</a>
+                </div>
+                <div class="card">
+                    <h3>🧩 Plugin Development</h3>
+                    <p>Create custom plugins for Kimi K2</p>
+                    <a href="../plugins/templates/DEVELOPMENT.html">Development Guide →</a>
+                </div>
+                <div class="card">
+                    <h3>🤝 Contributing</h3>
+                    <p>Submit plugins and contribute to the project</p>
+                    <a href="../community/templates/PLUGIN_SUBMISSION.html">Contribution Guide →</a>
+                </div>
+            </div>
+        </section>
+
+        <section id="resources" class="section">
+            <h2>Additional Resources</h2>
+            <div class="code-block">
+                <code>
+# Example: Basic chat completion<br>
+from openai import OpenAI<br>
+<br>
+client = OpenAI(base_url="http://localhost:8000/v1", api_key="not-needed")<br>
+<br>
+response = client.chat.completions.create(<br>
+&nbsp;&nbsp;&nbsp;&nbsp;model="kimi-k2",<br>
+&nbsp;&nbsp;&nbsp;&nbsp;messages=[{"role": "user", "content": "Hello!"}],<br>
+&nbsp;&nbsp;&nbsp;&nbsp;temperature=0.6<br>
+)<br>
+<br>
+print(response.choices[0].message.content)
+                </code>
+            </div>
+
+            <div class="cards">
+                <div class="card">
+                    <h3>📄 Technical Report</h3>
+                    <p>Read the full technical report on arXiv</p>
+                    <a href="https://www.arxiv.org/abs/2507.20534" target="_blank">Read Paper →</a>
+                </div>
+                <div class="card">
+                    <h3>💬 Community</h3>
+                    <p>Join our Discord community for support</p>
+                    <a href="https://discord.gg/TYU2fdJykW" target="_blank">Join Discord →</a>
+                </div>
+                <div class="card">
+                    <h3>🤗 Hugging Face</h3>
+                    <p>Download models from Hugging Face</p>
+                    <a href="https://huggingface.co/moonshotai" target="_blank">Visit Hub →</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <div class="footer">
+        <p>
+            Kimi K2 - Open Agentic Intelligence<br>
+            <a href="https://www.moonshot.ai" target="_blank">Moonshot AI</a> | 
+            <a href="mailto:support@moonshot.cn">Support</a> | 
+            <a href="https://github.com/moonshotai/Kimi-K2" target="_blank">GitHub</a>
+        </p>
+    </div>
+</body>
+</html>
