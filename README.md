@@ -22,10 +22,17 @@
 </div>
 
 <p align="center">
-<b>📰&nbsp;&nbsp;<a href="https://moonshotai.github.io/Kimi-K2/">Tech Blog</a></b> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <b>📄&nbsp;&nbsp;<a href="https://www.arxiv.org/abs/2507.20534">Full Report</a></b> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <b>💡&nbsp;&nbsp;<a href="docs/examples_guide.md">Examples & Skills Guide</a></b>
+<b>📰&nbsp;&nbsp;<a href="https://moonshotai.github.io/Kimi-K2/">Tech Blog</a></b> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <b>📄&nbsp;&nbsp;<a href="https://www.arxiv.org/abs/2507.20534">Full Report</a></b> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <b>💡&nbsp;&nbsp;<a href="docs/examples_guide.md">Examples Guide</a></b> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <b>🚀&nbsp;&nbsp;<a href="docs/vision_and_roadmap.md">Vision & Roadmap</a></b>
 </p>
 
 ## 1. Model Introduction
+
+> [!NOTE]
+> **Thank You, Kimi Team!** 🙏
+> 
+> We extend our deepest gratitude to the Kimi Team at Moonshot AI for creating and open-sourcing this revolutionary AI model. By making Kimi K2 freely available, you've empowered developers worldwide and advanced the entire field of AI. Your commitment to open science and accessible AI is changing the world. Thank you! 
+>
+> See our [Vision & Roadmap](docs/vision_and_roadmap.md) to learn how we're building on your amazing work.
 
 Kimi K2 is a state-of-the-art mixture-of-experts (MoE) language model with 32 billion activated parameters and 1 trillion total parameters. Trained with the Muon optimizer, Kimi K2 achieves exceptional performance across frontier knowledge, reasoning, and coding tasks while being meticulously optimized for agentic capabilities.
 
