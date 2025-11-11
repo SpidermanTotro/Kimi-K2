@@ -31,7 +31,12 @@ class KimiClient:
             model: Model identifier (kimi-k2-instruct or kimi-k2-base)
             temperature: Temperature for response generation (default: 0.6)
         """
-        self.client = OpenAI(api_key=api_key, base_url=base_url)
+        # Only initialize OpenAI client if API key is provided
+        if api_key:
+            self.client = OpenAI(api_key=api_key, base_url=base_url)
+        else:
+            self.client = None
+        
         self.model = model
         self.temperature = temperature
         self.default_system_prompt = "You are Kimi, an AI assistant created by Moonshot AI."
@@ -59,6 +64,9 @@ class KimiClient:
         Returns:
             Chat completion response
         """
+        if not self.client:
+            raise ValueError("API key required for chat operations. Initialize with api_key parameter.")
+        
         temp = temperature if temperature is not None else self.temperature
         
         completion_kwargs = {
