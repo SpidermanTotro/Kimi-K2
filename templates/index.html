@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE FORGE AI - Next Generation Intelligence</title>
+    <link rel="stylesheet" href="/static/css/style.css">
+    <link rel="stylesheet" href="/static/css/splash.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- EPIC SPLASH SCREEN -->
+    <div id="splashScreen" class="splash-screen">
+        <div class="splash-background">
+            <div class="neural-network"></div>
+            <div class="particles"></div>
+        </div>
+        
+        <div class="splash-content">
+            <!-- Massive Logo -->
+            <div class="forge-logo">
+                <div class="logo-ring ring-1"></div>
+                <div class="logo-ring ring-2"></div>
+                <div class="logo-ring ring-3"></div>
+                <div class="logo-core">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <div class="power-glow"></div>
+            </div>
+            
+            <!-- Title -->
+            <h1 class="splash-title">
+                <span class="title-the">THE</span>
+                <span class="title-forge">FORGE</span>
+                <span class="title-ai">AI</span>
+            </h1>
+            
+            <p class="splash-subtitle">Next Generation Artificial Intelligence Platform</p>
+            
+            <!-- Power Indicator -->
+            <div class="power-display">
+                <div class="power-label">ADAPTIVE POWER CONFIGURATION</div>
+                <div class="power-options">
+                    <div class="power-option" data-ram="16">
+                        <div class="power-bar">
+                            <div class="power-fill active"></div>
+                        </div>
+                        <span>16GB RAM</span>
+                        <div class="power-badge">👑 YOUR KING</div>
+                    </div>
+                    <div class="power-option" data-ram="32">
+                        <div class="power-bar">
+                            <div class="power-fill"></div>
+                        </div>
+                        <span>32GB RAM</span>
+                    </div>
+                    <div class="power-option" data-ram="64">
+                        <div class="power-bar">
+                            <div class="power-fill"></div>
+                        </div>
+                        <span>64GB RAM</span>
+                    </div>
+                    <div class="power-option" data-ram="128">
+                        <div class="power-bar">
+                            <div class="power-fill"></div>
+                        </div>
+                        <span>128GB RAM</span>
+                    </div>
+                </div>
+                <div class="power-message">
+                    <i class="fas fa-crown"></i>
+                    OPTIMIZED FOR YOUR SYSTEM - 16GB IS ALL IT NEEDS TO DOMINATE
+                </div>
+            </div>
+            
+            <!-- Loading Stats -->
+            <div class="loading-stats">
+                <div class="stat-item">
+                    <div class="stat-icon"><i class="fas fa-brain"></i></div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="capabilitiesLoading">0</div>
+                        <div class="stat-label">Capabilities</div>
+                    </div>
+                </div>
+                
+                <div class="stat-item">
+                    <div class="stat-icon"><i class="fas fa-database"></i></div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="documentsLoading">0</div>
+                        <div class="stat-label">Neural Modules</div>
+                    </div>
+                </div>
+                
+                <div class="stat-item">
+                    <div class="stat-icon"><i class="fas fa-bolt"></i></div>
+                    <div class="stat-content">
+                        <div class="stat-value" id="powerLoading">0%</div>
+                        <div class="stat-label">Power Level</div>
+                    </div>
+                </div>
+                
+                <div class="stat-item">
+                    <div class="stat-icon"><i class="fas fa-microchip"></i></div>
+                    <div class="stat-content">
+                        <div class="stat-value">1T</div>
+                        <div class="stat-label">Parameters</div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- System Status -->
+            <div class="system-status">
+                <div class="status-item" id="status1">
+                    <div class="status-dot"></div>
+                    <span>Initializing Neural Networks...</span>
+                </div>
+                <div class="status-item" id="status2">
+                    <div class="status-dot"></div>
+                    <span>Loading Knowledge Base (904 KB)...</span>
+                </div>
+                <div class="status-item" id="status3">
+                    <div class="status-dot"></div>
+                    <span>Activating 865+ Capabilities...</span>
+                </div>
+                <div class="status-item" id="status4">
+                    <div class="status-dot"></div>
+                    <span>Optimizing for 16GB Configuration...</span>
+                </div>
+                <div class="status-item" id="status5">
+                    <div class="status-dot"></div>
+                    <span>Calibrating Intelligence Modules...</span>
+                </div>
+            </div>
+            
+            <!-- Progress Bar -->
+            <div class="splash-progress">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                    <div class="progress-shine"></div>
+                </div>
+                <div class="progress-text">
+                    <span id="progressPercent">0%</span>
+                    <span id="progressStatus">INITIALIZING SYSTEMS...</span>
+                </div>
+            </div>
+            
+            <!-- Capabilities Showcase -->
+            <div class="capabilities-showcase">
+                <div class="capability-badge">
+                    <i class="fas fa-code"></i>
+                    <span>PROGRAMMING<br>60+ Skills</span>
+                </div>
+                <div class="capability-badge">
+                    <i class="fas fa-book"></i>
+                    <span>WRITING<br>80+ Skills</span>
+                </div>
+                <div class="capability-badge">
+                    <i class="fas fa-gamepad"></i>
+                    <span>GAMING<br>40+ Skills</span>
+                </div>
+                <div class="capability-badge">
+                    <i class="fas fa-video"></i>
+                    <span>VIDEO<br>50+ Skills</span>
+                </div>
+                <div class="capability-badge">
+                    <i class="fas fa-image"></i>
+                    <span>PHOTO<br>55+ Skills</span>
+                </div>
+                <div class="capability-badge">
+                    <i class="fas fa-brain"></i>
+                    <span>INTELLIGENT<br>290+ Skills</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Application (hidden until splash completes) -->
+    <div id="mainApp" style="display: none;">
+        <!-- Navigation Bar -->
+        <nav class="navbar">
+            <div class="nav-brand">
+                <i class="fas fa-fire"></i>
+                <h1>THE FORGE AI</h1>
+                <span class="version">v1.0.0</span>
+                <span class="ram-badge">16GB KING 👑</span>
+            </div>
+            <div class="nav-stats" id="navStats">
+                <span><i class="fas fa-brain"></i> <span id="capCount">0</span> Capabilities</span>
+                <span><i class="fas fa-file-alt"></i> <span id="docCount">0</span> Documents</span>
+                <span class="status-badge" id="statusBadge">Ready</span>
+            </div>
+        </nav>
+
+        <!-- Main Toolbar -->
+        <div class="toolbar">
+            <div class="toolbar-section">
+                <button class="tool-btn active" data-mode="chat" title="Chat Mode">
+                    <i class="fas fa-comments"></i>
+                    <span>Chat</span>
+                </button>
+                <button class="tool-btn" data-mode="code" title="Code Mode">
+                    <i class="fas fa-code"></i>
+                    <span>Code</span>
+                </button>
+                <button class="tool-btn" data-mode="book" title="Book Writing">
+                    <i class="fas fa-book"></i>
+                    <span>Book</span>
+                </button>
+                <button class="tool-btn" data-mode="video" title="Video Editing">
+                    <i class="fas fa-video"></i>
+                    <span>Video</span>
+                </button>
+                <button class="tool-btn" data-mode="photo" title="Photo Editing">
+                    <i class="fas fa-image"></i>
+                    <span>Photo</span>
+                </button>
+                <button class="tool-btn" data-mode="word" title="Word Processing">
+                    <i class="fas fa-file-word"></i>
+                    <span>Document</span>
+                </button>
+            </div>
+            
+            <div class="toolbar-section">
+                <button class="tool-btn" onclick="showPanel('capabilities')" title="View Capabilities">
+                    <i class="fas fa-list"></i>
+                    <span>Skills</span>
+                </button>
+                <button class="tool-btn" onclick="showPanel('tools')" title="Tools">
+                    <i class="fas fa-toolbox"></i>
+                    <span>Tools</span>
+                </button>
+                <button class="tool-btn" onclick="showPanel('docs')" title="Documentation">
+                    <i class="fas fa-book-open"></i>
+                    <span>Docs</span>
+                </button>
+                <button class="tool-btn" onclick="showPanel('settings')" title="Settings">
+                    <i class="fas fa-cog"></i>
+                    <span>Settings</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="container">
+            <!-- Left Sidebar - Capabilities -->
+            <aside class="sidebar left-sidebar" id="capabilitiesPanel">
+                <div class="sidebar-header">
+                    <h3><i class="fas fa-star"></i> Capabilities</h3>
+                    <button class="close-btn" onclick="hidePanel('capabilities')">×</button>
+                </div>
+                <div class="sidebar-content">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="capSearch" placeholder="Search capabilities..." onkeyup="filterCapabilities()">
+                    </div>
+                    <div id="capabilitiesList" class="capabilities-list">
+                        <div class="loading">Loading capabilities...</div>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Workspace -->
+            <main class="workspace">
+                <!-- Chat Interface -->
+                <div id="chatInterface" class="chat-interface">
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="system-message">
+                            <i class="fas fa-crown"></i>
+                            THE FORGE AI is ready at full power on your 16GB system. How can I help you dominate today?
+                        </div>
+                    </div>
+                    
+                    <div class="chat-input-area">
+                        <div class="mode-indicator" id="modeIndicator">
+                            <i class="fas fa-comments"></i>
+                            <span>Chat Mode</span>
+                        </div>
+                        <div class="input-container">
+                            <textarea id="chatInput" placeholder="Type your message here..." rows="3"></textarea>
+                            <button class="send-btn" onclick="sendMessage()">
+                                <i class="fas fa-paper-plane"></i>
+                                Send
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </main>
+
+            <!-- Right Sidebar - Tools & Info -->
+            <aside class="sidebar right-sidebar" id="toolsPanel" style="display: none;">
+                <div class="sidebar-header">
+                    <h3><i class="fas fa-toolbox"></i> Quick Tools</h3>
+                    <button class="close-btn" onclick="hidePanel('tools')">×</button>
+                </div>
+                <div class="sidebar-content">
+                    <div class="tool-group">
+                        <h4>Code Tools</h4>
+                        <button class="quick-tool" onclick="executeTool('code-review')">
+                            <i class="fas fa-search-plus"></i> Code Review
+                        </button>
+                        <button class="quick-tool" onclick="executeTool('refactor')">
+                            <i class="fas fa-sync"></i> Refactor
+                        </button>
+                        <button class="quick-tool" onclick="executeTool('test-gen')">
+                            <i class="fas fa-vial"></i> Generate Tests
+                        </button>
+                    </div>
+                    
+                    <div class="tool-group">
+                        <h4>Book Writing</h4>
+                        <button class="quick-tool" onclick="executeTool('book-analyze')">
+                            <i class="fas fa-book-reader"></i> Analyze Book
+                        </button>
+                        <button class="quick-tool" onclick="executeTool('sequel-detect')">
+                            <i class="fas fa-search"></i> Detect Sequel
+                        </button>
+                        <button class="quick-tool" onclick="executeTool('quality-check')">
+                            <i class="fas fa-check-double"></i> Quality Check
+                        </button>
+                    </div>
+                    
+                    <div class="tool-group">
+                        <h4>Media Tools</h4>
+                        <button class="quick-tool" onclick="executeTool('image-upscale')">
+                            <i class="fas fa-expand-arrows-alt"></i> Upscale Image
+                        </button>
+                        <button class="quick-tool" onclick="executeTool('video-edit')">
+                            <i class="fas fa-film"></i> Edit Video
+                        </button>
+                        <button class="quick-tool" onclick="executeTool('audio-enhance')">
+                            <i class="fas fa-volume-up"></i> Enhance Audio
+                        </button>
+                    </div>
+                </div>
+            </aside>
+        </div>
+
+        <!-- Bottom Status Bar -->
+        <footer class="status-bar">
+            <div class="status-left">
+                <span id="currentMode">Ready</span>
+                <span class="ram-indicator">💪 16GB OPTIMIZED</span>
+            </div>
+            <div class="status-center">
+                <span id="statusMessage">All systems operational - Maximum performance on 16GB</span>
+            </div>
+            <div class="status-right">
+                <span><i class="fas fa-clock"></i> <span id="currentTime"></span></span>
+            </div>
+        </footer>
+    </div>
+
+    <script src="/static/js/app.js"></script>
+    <script src="/static/js/splash.js"></script>
+</body>
+</html>
