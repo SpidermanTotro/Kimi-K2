@@ -172,8 +172,13 @@ class MemoryManager:
             }
         }
         
-        # Save profile
-        self.update_profile(user_id, profile)
+        # Save profile directly without calling update_profile to avoid recursion
+        user_dir = self.storage_path / user_id
+        user_dir.mkdir(exist_ok=True)
+        
+        profile_file = user_dir / 'profile.json'
+        with open(profile_file, 'w') as f:
+            json.dump(profile, f, indent=2)
         
         return profile
     
