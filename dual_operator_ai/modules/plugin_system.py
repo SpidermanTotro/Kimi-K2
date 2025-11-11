@@ -280,15 +280,16 @@ class WorkflowPlugin(Plugin):
         """
         results = []
         self.current_step = 0
+        context = kwargs.copy()
         
         for step in self.steps:
-            result = step(*args, **kwargs)
+            # Pass previous result if the step accepts it
+            if self.current_step > 0 and results:
+                context['previous_result'] = results[-1]
+            
+            result = step(*args, **context)
             results.append(result)
             self.current_step += 1
-            
-            # Pass result to next step if kwargs has 'previous_result'
-            if 'previous_result' in inspect.signature(step).parameters:
-                kwargs['previous_result'] = result
         
         return results[-1] if results else None
     

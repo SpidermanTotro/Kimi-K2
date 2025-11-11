@@ -6,7 +6,13 @@ Provides seamless integration with Kimi-K2 API for the dual-operator AI system.
 
 from typing import Dict, List, Any, Optional
 import json
-from openai import OpenAI
+
+try:
+    from openai import OpenAI
+    OPENAI_AVAILABLE = True
+except ImportError:
+    OPENAI_AVAILABLE = False
+    OpenAI = None
 
 
 class KimiK2Adapter:
@@ -32,7 +38,16 @@ class KimiK2Adapter:
             base_url: Base URL for the API
             model_name: Name of the model to use
             temperature: Temperature for generation
+            
+        Raises:
+            ImportError: If openai package is not installed
         """
+        if not OPENAI_AVAILABLE:
+            raise ImportError(
+                "openai package is required for KimiK2Adapter. "
+                "Install it with: pip install openai"
+            )
+        
         self.client = OpenAI(api_key=api_key, base_url=base_url)
         self.model_name = model_name
         self.temperature = temperature
