@@ -1,0 +1,16 @@
+# Dual Operator AI System - Requirements
+
+# Core dependencies (optional, for enhanced functionality)
+# The core system works without external dependencies
+
+# For Kimi-K2 API integration
+openai>=1.0.0
+
+# For testing (optional)
+pytest>=7.0.0
+pytest-cov>=4.0.0
+
+# For development (optional)
+black>=23.0.0
+flake8>=6.0.0
+mypy>=1.0.0

@@ -667,7 +667,47 @@ Deployment examples for vLLM and SGLang can be found in the [Model Deployment Gu
 
 ---
 
-## 5. Model Usage
+## 5. Dual Operator AI System
+
+**NEW**: We now provide a modular framework for creating "one AI entity for two operators" - perfect for couples, partners, or collaborators who want to share a single AI assistant that understands both their perspectives.
+
+### Features
+
+- **Multi-User Context Management**: Handles long-context understanding and multimodal inputs
+- **Personalized Responses**: Adapts to dynamic preferences of both users
+- **Decision Fusion**: Merges decision-making based on user strengths and expertise
+- **Kimi-K2 Integration**: Seamlessly works with Kimi-K2 API
+- **Transparency Tools**: Visualization and audit dashboards for decision transparency
+
+### Quick Start
+
+```python
+from dual_operator_ai.core import UserProfile, DualOperatorEngine, FusionStrategy
+
+# Create user profiles
+user1 = UserProfile(user_id="alice", name="Alice", strengths=["technical"])
+user2 = UserProfile(user_id="bob", name="Bob", strengths=["creative"])
+
+# Initialize the dual-operator engine
+engine = DualOperatorEngine(
+    user1_profile=user1,
+    user2_profile=user2,
+    fusion_strategy=FusionStrategy.ADAPTIVE
+)
+
+# Process inputs from both users
+engine.process_input("alice", "How should we build this?")
+engine.process_input("bob", "Let's focus on user experience.")
+
+# Generate response considering both perspectives
+response = engine.generate_response(include_both_perspectives=True)
+```
+
+**[Full Documentation](dual_operator_ai/README.md)** | **[Examples](dual_operator_ai/examples/)**
+
+---
+
+## 6. Model Usage
 
 ### Chat Completion
 
@@ -772,13 +812,13 @@ For streaming output and manual tool-parsing, see the [Tool Calling Guide](docs/
 
 ---
 
-## 6. License
+## 7. License
 
 Both the code and the model weights are released under the [Modified MIT License](LICENSE).
 
 ---
 
-## 7. Citation
+## 8. Citation
 
 ```
 @misc{kimiteam2025kimik2openagentic,
@@ -794,6 +834,6 @@ Both the code and the model weights are released under the [Modified MIT License
 
 ---
 
-## 8. Contact Us
+## 9. Contact Us
 
 If you have any questions or concerns, please reach out to us at [support@moonshot.cn](mailto:support@moonshot.cn).
