@@ -385,49 +385,127 @@ Why This Matters:
 - Community control over game direction
 ```
 
-**AI-Assisted Server Setup:**
+**AI-Assisted Server Setup - ALL WoW Expansions:**
 
 ```python
-# Kimi K2 can help set up private game servers
+# Kimi K2 assists with TrinityCore-based server setup
+# For educational, preservation, and community purposes
 
-from kimi_k2 import ServerBuilder
+from kimi_k2 import WoWServerBuilder
 
-# Create a community-driven MMO server
-server = ServerBuilder(game_type="mmorpg")
+# Choose your WoW expansion/version
+server = WoWServerBuilder()
 
-# AI helps with:
-server.setup_database()          # Configure game database
-server.configure_network()       # Set up networking
-server.apply_patches()           # Apply community patches
-server.setup_authentication()    # User authentication
-server.configure_content()       # Choose which content to enable
-server.optimize_performance()    # AI optimizes for your hardware
-server.setup_admin_tools()       # Management interface
+# ALL expansions supported:
+available_versions = [
+    "vanilla",              # Classic WoW (1.12)
+    "tbc",                  # The Burning Crusade (2.4.3)
+    "wotlk",                # Wrath of the Lich King (3.3.5a)
+    "cataclysm",            # Cataclysm (4.3.4)
+    "mop",                  # Mists of Pandaria (5.4.8)
+    "wod",                  # Warlords of Draenor (6.2.4)
+    "legion",               # Legion (7.3.5)
+    "legion_timewalking",   # Legion Timewalking Edition
+    "bfa",                  # Battle for Azeroth (8.3.7)
+    "shadowlands",          # Shadowlands (9.2.7)
+    "dragonflight",         # Dragonflight (10.x)
+]
 
-# Community features
-server.disable_monetization()    # No pay-to-win
-server.enable_community_voting() # Democratic decisions
-server.set_xp_rates(custom=True) # Community-chosen rates
-server.add_custom_content()      # Player-created content
+# Example: Set up a Legion Timewalking server
+server.configure(
+    version="legion_timewalking",
+    core="TrinityCore",
+    purpose="educational"  # IMPORTANT: Legal compliance
+)
 
-print("Community server ready! Free from corporate control.")
+# AI helps with complete setup:
+server.setup_database()           # MySQL/MariaDB configuration
+server.configure_network()        # Realm and auth server setup
+server.download_core_safely()     # TrinityCore from official repo
+server.apply_community_patches()  # Community improvements
+server.setup_authentication()     # User authentication
+server.configure_content()        # Enable specific expansions
+server.optimize_performance()     # AI optimizes for your hardware
+server.setup_admin_tools()        # GM commands and tools
+server.configure_security()       # Anti-DDoS, rate limiting
+
+# Educational and preservation features
+server.enable_research_mode()     # Study game mechanics
+server.enable_logging()           # Understand server architecture
+server.document_protocols()       # Learn networking
+server.preserve_content()         # Archive game content
+
+# Community features (for private use)
+server.disable_monetization()     # No pay-to-win (legal requirement)
+server.enable_community_voting()  # Democratic decisions
+server.set_xp_rates(custom=True)  # Community-chosen rates
+server.add_custom_content()       # Player-created content
+server.set_max_players(50)        # Small community size (legal safer)
+
+print("✅ Server configured for educational/preservation purposes")
+print("⚖️ Legal compliance: Private, non-commercial use only")
 ```
 
-**What Kimi K2 Provides:**
+**ALL WoW Expansions - Complete Coverage:**
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│  KIMI K2 WOW SERVER ASSISTANCE - ALL EXPANSIONS            │
+├─────────────────────────────────────────────────────────────┤
+│                                                             │
+│  ✅ Classic WoW (Vanilla 1.12.1)                           │
+│  ✅ The Burning Crusade (2.4.3)                            │
+│  ✅ Wrath of the Lich King (3.3.5a) - Most popular!        │
+│  ✅ Cataclysm (4.3.4)                                      │
+│  ✅ Mists of Pandaria (5.4.8)                              │
+│  ✅ Warlords of Draenor (6.2.4)                            │
+│  ✅ Legion (7.3.5)                                         │
+│  ✅ Legion Timewalking Edition - Special!                  │
+│  ✅ Battle for Azeroth (8.3.7)                             │
+│  ✅ Shadowlands (9.2.7)                                    │
+│  ✅ Dragonflight (10.x)                                    │
+│  ✅ Retail WoW (Latest) - Experimental                     │
+│                                                             │
+│  Core Support:                                             │
+│  • TrinityCore (Recommended)                               │
+│  • AzerothCore                                             │
+│  • CMaNGOS                                                 │
+│  • MaNGOS                                                  │
+│                                                             │
+└─────────────────────────────────────────────────────────────┘
+```
+
+**What Kimi K2 Provides (Legally Compliant):**
 
 1. **Server Setup Assistance**
-   - Database configuration
-   - Network setup guides
+   - TrinityCore installation guides
+   - Database configuration (MySQL/MariaDB)
+   - Network setup and port configuration
    - Security best practices
    - Performance optimization
+   - Troubleshooting help
 
-2. **Code Generation**
-   - Custom features implementation
-   - Bug fixes for server software
-   - Performance improvements
-   - Anti-cheat systems
+2. **Educational Code Generation**
+   - Understanding server architecture
+   - Learning database structures
+   - Network protocol analysis
+   - Custom features for learning
+   - Bug fixes and improvements
+   - Anti-cheat systems study
 
-3. **Community Tools**
+3. **Community Tools (Private Use)**
+   - Admin panel setup
+   - Player management systems
+   - Content creation tools
+   - Moderation features
+   - Analytics and logging
+
+4. **Legal Compliance Features**
+   - Non-commercial use guidelines
+   - Private server best practices
+   - Educational documentation
+   - Preservation purposes
+   - Small-scale community focus
    - Admin panels
    - Player management systems
    - Content creation tools
@@ -442,16 +520,47 @@ print("Community server ready! Free from corporate control.")
 **Important Note:**
 
 > [!WARNING]
-> **Legal and Ethical Considerations**
+> **⚖️ LEGAL AND ETHICAL COMPLIANCE - WE OBEY ALL LAWS ⚖️**
 > 
-> Private servers exist in a legal gray area. Kimi K2 provides tools and knowledge, but users must:
-> - Respect intellectual property rights
-> - Follow local laws and regulations
-> - Not profit from copyrighted content
-> - Consider supporting official games when possible
-> - Use private servers for preservation and community purposes
->
-> This feature is about **empowering communities** and **preserving gaming history**, not piracy.
+> **IMPORTANT: READ CAREFULLY**
+> 
+> Private game servers exist in a complex legal area. **Kimi K2 provides tools and knowledge ONLY for legitimate purposes:**
+> 
+> **✅ LEGAL USES:**
+> - **Educational purposes** - Learning server architecture, networking, databases
+> - **Game preservation** - Archiving discontinued content for historical purposes
+> - **Research and development** - Studying game design and systems
+> - **Private friends/family servers** - Small-scale, truly private use (no public access)
+> - **Testing and development** - Learning to code and work with complex systems
+> 
+> **❌ ILLEGAL USES (DO NOT DO):**
+> - ❌ Public servers competing with official games
+> - ❌ Commercial use or accepting donations/payments
+> - ❌ Distributing copyrighted game clients
+> - ❌ Large-scale public communities
+> - ❌ Advertising or promoting public servers
+> - ❌ Profiting from Blizzard's intellectual property
+> 
+> **🛡️ LEGAL REQUIREMENTS:**
+> 1. **Own the game** - You must own legitimate copies
+> 2. **Private use only** - Not public or advertised
+> 3. **No monetization** - Absolutely no money involved
+> 4. **No distribution** - Don't share copyrighted files
+> 5. **Educational/preservation** - Clear legitimate purpose
+> 6. **Respect IP** - Blizzard owns World of Warcraft
+> 7. **Follow local laws** - Laws vary by country
+> 
+> **⚠️ DISCLAIMER:**
+> This documentation is for **educational purposes only**. Running private servers may violate Terms of Service and can have legal consequences. Kimi K2 and its developers:
+> - Do NOT encourage illegal activity
+> - Do NOT provide copyrighted game files
+> - Do NOT support commercial private servers
+> - STRONGLY recommend supporting official games
+> - Provide information for learning and preservation only
+> 
+> **We obey all laws. You must too.** If uncertain, consult a lawyer or stick to official servers.
+> 
+> **BEST PRACTICE:** Support Blizzard and play official WoW whenever possible. Use private servers ONLY for legitimate educational/preservation purposes with games you own.
 
 **The Philosophy:**
 
