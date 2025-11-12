@@ -13,7 +13,7 @@ from dataclasses import dataclass, asdict
 from pathlib import Path
 
 # Flask for REST API
-from flask import Flask, request, jsonify, Response, stream_with_context
+from flask import Flask, request, jsonify, Response, stream_with_context, render_template, send_from_directory
 from flask_cors import CORS
 
 # Import our implementation
@@ -81,6 +81,12 @@ def health_check():
         'initialized': forge is not None,
         'timestamp': datetime.utcnow().isoformat()
     })
+
+
+@app.route('/')
+def index():
+    """Serve the main HTML page"""
+    return render_template('index.html')
 
 
 @app.route('/api/chat', methods=['POST'])
