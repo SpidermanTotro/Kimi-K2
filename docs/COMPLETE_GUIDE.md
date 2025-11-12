@@ -1571,7 +1571,7 @@ GAMING FEATURES:
 ✅ Fiction and non-fiction
 
 ### Gaming AI
-✅ ALL Pokemon games enhanced (50+)
+✅ ALL Pokemon games enhanced (65+)
 ✅ Legends Arceus quality graphics
 ✅ Real-time AI upscaling
 ✅ ALL WoW expansions (server creation)
