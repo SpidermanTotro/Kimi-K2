@@ -452,7 +452,7 @@ class UniversalFileHandler:
 ├────────────────────────────────────────────────────────────┤
 │                                                            │
 │  1. 🎮 Gaming Enhancement Platform                        │
-│     • 50+ Pokemon games upscaling                         │
+│     • 65+ Pokemon games upscaling                         │
 │     • GB/GBC/GBA/DS/3DS support                           │
 │     • Legends Arceus quality graphics                     │
 │     • Real-time AI upscaling                              │

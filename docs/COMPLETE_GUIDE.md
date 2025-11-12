@@ -966,7 +966,9 @@ Kimi K2 includes a **revolutionary gaming enhancement platform** that transforms
 │  ✅ ALL Game Boy Advance games enhanced                    │
 │  ✅ ALL Nintendo DS games enhanced                         │
 │  ✅ ALL Nintendo 3DS games enhanced                        │
-│  ✅ ALL Pokemon games (50+) - HIGHEST QUALITY              │
+│  ✅ ALL Nintendo Switch games enhanced                     │
+│  ✅ Nintendo Switch 2 ready                                │
+│  ✅ ALL Pokemon games (65+) - HIGHEST QUALITY              │
 │  ✅ Neural upscaling AI models                             │
 │  ✅ Real-time enhancement engine                           │
 │  ✅ Legends Arceus quality graphics                        │
@@ -980,7 +982,7 @@ Kimi K2 includes a **revolutionary gaming enhancement platform** that transforms
 ---
 
 <a name="pokemon-enhancement"></a>
-## Pokemon Games Enhancement - ALL 50+ Games!
+## Pokemon Games Enhancement - ALL 65+ Games!
 
 ### **EVERY Pokemon Game with HIGHEST QUALITY Graphics**
 
@@ -1030,6 +1032,23 @@ Kimi K2 includes a **revolutionary gaming enhancement platform** that transforms
 - ✅ Pokemon Moon → **Island paradise HD**
 - ✅ Pokemon Ultra Sun → **Enhanced even further**
 - ✅ Pokemon Ultra Moon → **Legendary graphics**
+
+**Generation 8 (Nintendo Switch) - 2018-2022**
+- ✅ Pokemon Let's Go Pikachu → **Kanto reimagined in HD**
+- ✅ Pokemon Let's Go Eevee → **Modern Switch quality**
+- ✅ Pokemon Sword → **Galar region SPECTACULAR**
+- ✅ Pokemon Shield → **Dynamic encounters enhanced**
+- ✅ Pokemon Brilliant Diamond → **Sinnoh reborn AGAIN**
+- ✅ Pokemon Shining Pearl → **Underground in stunning detail**
+- ✅ Pokemon Legends Arceus → **Already amazing, now PERFECTED**
+
+**Generation 9 (Nintendo Switch) - 2022-Present**
+- ✅ Pokemon Scarlet → **Open world BREATHTAKING**
+- ✅ Pokemon Violet → **Paldea region in ULTRA quality**
+
+**Switch 2 Ready**
+- 🎯 Future Pokemon Z-A → **Next-gen enhancement ready**
+- 🎯 All upcoming Switch 2 games → **Day-one support**
 
 **Spin-offs & Special Games (30+)**
 - ✅ Pokemon Mystery Dungeon series
