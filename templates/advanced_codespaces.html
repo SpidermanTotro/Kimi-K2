@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 Advanced FREE Codespaces with AI Companions</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #fff;
+            overflow-x: hidden;
+        }
+
+        /* Floating AI Companion */
+        .ai-companion {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            z-index: 1000;
+            cursor: pointer;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0px) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(5deg);
+            }
+        }
+
+        .companion-character {
+            font-size: 80px;
+            filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+            transition: all 0.3s;
+        }
+
+        .companion-character:hover {
+            transform: scale(1.2);
+            filter: drop-shadow(0 15px 30px rgba(0,0,0,0.4));
+        }
+
+        .companion-speech-bubble {
+            position: absolute;
+            bottom: 100%;
+            right: 0;
+            background: white;
+            color: #333;
+            padding: 15px 20px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            margin-bottom: 20px;
+            min-width: 250px;
+            max-width: 350px;
+            display: none;
+            animation: popIn 0.3s ease-out;
+        }
+
+        @keyframes popIn {
+            from {
+                opacity: 0;
+                transform: scale(0.8) translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .companion-speech-bubble.show {
+            display: block;
+        }
+
+        .companion-speech-bubble::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            right: 30px;
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-top: 10px solid white;
+        }
+
+        /* Companion Stats Bar */
+        .companion-stats {
+            position: absolute;
+            top: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.7);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 12px;
+            white-space: nowrap;
+        }
+
+        .stat-bar {
+            display: inline-block;
+            margin: 0 5px;
+        }
+
+        .stat-icon {
+            margin-right: 3px;
+        }
+
+        .stat-value {
+            font-weight: bold;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 20px 30px;
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 32px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .free-badge {
+            background: linear-gradient(135deg, #00ff00, #00cc00);
+            color: #000;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0,255,0,0.3);
+        }
+
+        /* Skill Level Selector */
+        .skill-selector {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .skill-selector h2 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 28px;
+        }
+
+        .skill-levels {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .skill-card {
+            background: rgba(255,255,255,0.15);
+            border: 2px solid transparent;
+            border-radius: 15px;
+            padding: 25px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255,255,255,0.5);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .skill-card.active {
+            background: rgba(255,255,255,0.3);
+            border-color: #00ff00;
+            box-shadow: 0 0 30px rgba(0,255,0,0.4);
+        }
+
+        .skill-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .skill-name {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .skill-description {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 15px;
+        }
+
+        .skill-features {
+            text-align: left;
+            font-size: 12px;
+            opacity: 0.8;
+        }
+
+        .skill-features li {
+            margin: 5px 0;
+        }
+
+        /* GitHub Repo Launcher */
+        .repo-launcher {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .repo-launcher h2 {
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .github-login {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .github-login input {
+            flex: 1;
+            padding: 12px 20px;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #00ff00, #00cc00);
+            color: #000;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+        }
+
+        .repos-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .repo-card {
+            background: rgba(255,255,255,0.15);
+            border-radius: 15px;
+            padding: 20px;
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .repo-card:hover {
+            background: rgba(255,255,255,0.25);
+            transform: translateY(-5px);
+        }
+
+        .repo-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .repo-description {
+            font-size: 14px;
+            opacity: 0.9;
+            margin-bottom: 15px;
+        }
+
+        .repo-stats {
+            display: flex;
+            gap: 15px;
+            font-size: 12px;
+        }
+
+        .repo-actions {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+        }
+
+        /* Companion Selection Panel */
+        .companion-panel {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+        }
+
+        .companions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .companion-card {
+            background: rgba(255,255,255,0.15);
+            border: 2px solid transparent;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .companion-card:hover {
+            transform: scale(1.05);
+            border-color: rgba(255,255,255,0.5);
+        }
+
+        .companion-card.active {
+            border-color: #00ff00;
+            background: rgba(255,255,255,0.3);
+            box-shadow: 0 0 20px rgba(0,255,0,0.4);
+        }
+
+        .companion-avatar {
+            font-size: 60px;
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .companion-name {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .companion-type {
+            font-size: 12px;
+            opacity: 0.8;
+            margin-bottom: 10px;
+        }
+
+        .companion-care {
+            margin-top: 15px;
+            display: flex;
+            gap: 5px;
+            justify-content: center;
+        }
+
+        .care-btn {
+            background: rgba(255,255,255,0.2);
+            border: none;
+            padding: 8px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            transition: all 0.2s;
+        }
+
+        .care-btn:hover {
+            background: rgba(255,255,255,0.4);
+            transform: scale(1.1);
+        }
+
+        /* Companion Mini Home */
+        .companion-home {
+            background: rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .home-interior {
+            background: linear-gradient(135deg, #ffeaa7, #fdcb6e);
+            border-radius: 15px;
+            padding: 40px;
+            margin: 20px 0;
+            min-height: 200px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .home-furniture {
+            position: absolute;
+            font-size: 40px;
+        }
+
+        .furniture-bed {
+            bottom: 20px;
+            left: 20px;
+        }
+
+        .furniture-table {
+            bottom: 20px;
+            right: 20px;
+        }
+
+        .furniture-plant {
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .companion-in-home {
+            font-size: 60px;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation: homeIdle 2s ease-in-out infinite;
+        }
+
+        @keyframes homeIdle {
+            0%, 100% { transform: translate(-50%, -50%); }
+            50% { transform: translate(-50%, -55%); }
+        }
+
+        /* Work/Rest Monitor */
+        .work-monitor {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.8);
+            padding: 15px 20px;
+            border-radius: 15px;
+            z-index: 999;
+            min-width: 250px;
+        }
+
+        .work-timer {
+            font-size: 24px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .work-status {
+            text-align: center;
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .break-reminder {
+            background: linear-gradient(135deg, #ff6b6b, #ff5252);
+            color: white;
+            padding: 15px;
+            border-radius: 10px;
+            margin-top: 10px;
+            animation: pulse 1s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .skill-levels {
+                grid-template-columns: 1fr;
+            }
+            
+            .repos-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .companions-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="container">
+        <div class="header">
+            <div class="logo">
+                <i class="fas fa-rocket"></i>
+                <span>FORGE Codespaces</span>
+                <span class="free-badge">100% FREE</span>
+            </div>
+            <div>
+                <button class="btn btn-success" onclick="showPricing()">
+                    <i class="fas fa-dollar-sign"></i>
+                    Pricing: $0.00
+                </button>
+            </div>
+        </div>
+
+        <!-- Skill Level Selector -->
+        <div class="skill-selector">
+            <h2>🎯 Choose Your Skill Level</h2>
+            <div class="skill-levels" id="skillLevels">
+                <!-- Loaded dynamically -->
+            </div>
+        </div>
+
+        <!-- GitHub Repository Launcher -->
+        <div class="repo-launcher">
+            <h2>
+                <i class="fab fa-github"></i>
+                GitHub Repository Launcher
+            </h2>
+            
+            <div class="github-login">
+                <input type="text" id="githubUsername" placeholder="GitHub Username" value="YourUsername">
+                <input type="password" id="githubToken" placeholder="Personal Access Token (optional)">
+                <button class="btn btn-primary" onclick="connectGitHub()">
+                    <i class="fas fa-plug"></i>
+                    Connect
+                </button>
+            </div>
+            
+            <div class="repos-grid" id="reposGrid">
+                <!-- Repos loaded here -->
+            </div>
+        </div>
+
+        <!-- AI Companion Selection -->
+        <div class="companion-panel">
+            <h2>🐾 Choose Your AI Companion</h2>
+            <div class="companions-grid" id="companionsGrid">
+                <!-- Companions loaded here -->
+            </div>
+        </div>
+
+        <!-- Companion Mini Home -->
+        <div class="companion-home">
+            <h2>🏠 Companion's Home</h2>
+            <div class="home-interior">
+                <div class="home-furniture furniture-bed">🛏️</div>
+                <div class="home-furniture furniture-table">🪑</div>
+                <div class="home-furniture furniture-plant">🌿</div>
+                <div class="companion-in-home" id="companionInHome">🦖</div>
+            </div>
+            <p>Your companion rests here when you take breaks!</p>
+        </div>
+    </div>
+
+    <!-- Floating AI Companion -->
+    <div class="ai-companion" id="aiCompanion" onclick="toggleCompanionChat()">
+        <div class="companion-stats">
+            <span class="stat-bar">
+                <span class="stat-icon">❤️</span>
+                <span class="stat-value" id="happinessValue">100</span>%
+            </span>
+            <span class="stat-bar">
+                <span class="stat-icon">⚡</span>
+                <span class="stat-value" id="energyValue">100</span>%
+            </span>
+            <span class="stat-bar">
+                <span class="stat-icon">🍕</span>
+                <span class="stat-value" id="hungerValue">0</span>%
+            </span>
+        </div>
+        <div class="companion-character" id="companionCharacter">🦖</div>
+        <div class="companion-speech-bubble" id="speechBubble">
+            <p id="companionMessage">Hi! I'm Codie! Click on me for help! 🚀</p>
+        </div>
+    </div>
+
+    <!-- Work/Rest Monitor -->
+    <div class="work-monitor">
+        <div class="work-timer" id="workTimer">00:00:00</div>
+        <div class="work-status" id="workStatus">Coding Session Active</div>
+        <div id="breakReminderDiv"></div>
+    </div>
+
+    <script>
+        let activeCompanion = 'codie';
+        let companions = {};
+        let skillLevel = 'beginner';
+        let workStartTime = Date.now();
+        let speechBubbleTimeout;
+
+        // Load skill levels
+        async function loadSkillLevels() {
+            try {
+                const response = await fetch('/api/skill-levels');
+                const levels = await response.json();
+                
+                const container = document.getElementById('skillLevels');
+                container.innerHTML = '';
+                
+                for (const [id, level] of Object.entries(levels)) {
+                    const card = document.createElement('div');
+                    card.className = `skill-card ${id === skillLevel ? 'active' : ''}`;
+                    card.onclick = () => selectSkillLevel(id);
+                    card.innerHTML = `
+                        <div class="skill-icon">${level.icon}</div>
+                        <div class="skill-name">${level.name}</div>
+                        <div class="skill-description">${level.description}</div>
+                        <ul class="skill-features">
+                            ${level.features.map(f => `<li>✓ ${f}</li>`).join('')}
+                        </ul>
+                    `;
+                    container.appendChild(card);
+                }
+            } catch (error) {
+                console.error('Error loading skill levels:', error);
+            }
+        }
+
+        function selectSkillLevel(level) {
+            skillLevel = level;
+            document.querySelectorAll('.skill-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+            showCompanionMessage(`Great! I'll adjust my help for ${level} level! 🎯`);
+        }
+
+        // Load companions
+        async function loadCompanions() {
+            try {
+                const response = await fetch('/api/creatures');
+                companions = await response.json();
+                
+                const container = document.getElementById('companionsGrid');
+                container.innerHTML = '';
+                
+                for (const [id, companion] of Object.entries(companions)) {
+                    const card = document.createElement('div');
+                    card.className = `companion-card ${id === activeCompanion ? 'active' : ''}`;
+                    card.innerHTML = `
+                        <span class="companion-avatar">${companion.emoji}</span>
+                        <div class="companion-name">${companion.name}</div>
+                        <div class="companion-type">${companion.type}</div>
+                        <div style="font-size: 11px; opacity: 0.8;">${companion.specialty}</div>
+                        <div class="companion-care">
+                            <button class="care-btn" onclick="feedCompanion('${id}')" title="Feed">
+                                🍕
+                            </button>
+                            <button class="care-btn" onclick="playWithCompanion('${id}')" title="Play">
+                                🎮
+                            </button>
+                            <button class="care-btn" onclick="restCompanion('${id}')" title="Rest">
+                                😴
+                            </button>
+                            <button class="care-btn" onclick="spaceshipMode('${id}')" title="Spaceship Mode">
+                                🚀
+                            </button>
+                        </div>
+                    `;
+                    card.onclick = (e) => {
+                        if (!e.target.classList.contains('care-btn')) {
+                            activateCompanion(id);
+                        }
+                    };
+                    container.appendChild(card);
+                }
+            } catch (error) {
+                console.error('Error loading companions:', error);
+            }
+        }
+
+        function activateCompanion(id) {
+            activeCompanion = id;
+            const companion = companions[id];
+            
+            document.getElementById('companionCharacter').textContent = companion.emoji;
+            document.getElementById('companionInHome').textContent = companion.emoji;
+            
+            document.querySelectorAll('.companion-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+            
+            showCompanionMessage(`Hi! I'm ${companion.name}! ${companion.personality} Let's code together! 💻`);
+            updateCompanionStats(id);
+        }
+
+        async function updateCompanionStats(id) {
+            try {
+                const response = await fetch(`/api/creatures/${id}/status`);
+                const status = await response.json();
+                
+                document.getElementById('happinessValue').textContent = Math.round(status.happiness);
+                document.getElementById('energyValue').textContent = Math.round(status.energy_level);
+                document.getElementById('hungerValue').textContent = Math.round(status.hunger);
+            } catch (error) {
+                console.error('Error updating stats:', error);
+            }
+        }
+
+        async function feedCompanion(id) {
+            try {
+                const companion = companions[id];
+                const response = await fetch(`/api/creatures/${id}/feed`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ food_type: companion.favorite_food })
+                });
+                const result = await response.json();
+                
+                showCompanionMessage(result.message);
+                updateCompanionStats(id);
+            } catch (error) {
+                console.error('Error feeding companion:', error);
+            }
+        }
+
+        async function playWithCompanion(id) {
+            try {
+                const response = await fetch(`/api/creatures/${id}/play`, {
+                    method: 'POST'
+                });
+                const result = await response.json();
+                
+                showCompanionMessage(result.message);
+                updateCompanionStats(id);
+            } catch (error) {
+                console.error('Error playing with companion:', error);
+            }
+        }
+
+        async function restCompanion(id) {
+            try {
+                const response = await fetch(`/api/creatures/${id}/rest`, {
+                    method: 'POST'
+                });
+                const result = await response.json();
+                
+                showCompanionMessage(result.message);
+                updateCompanionStats(id);
+                
+                // Show companion in home
+                document.getElementById('companionInHome').textContent = companions[id].emoji;
+            } catch (error) {
+                console.error('Error resting companion:', error);
+            }
+        }
+
+        function spaceshipMode(id) {
+            const companion = companions[id];
+            const char = document.getElementById('companionCharacter');
+            char.textContent = '🚀';
+            char.style.animation = 'none';
+            setTimeout(() => {
+                char.style.animation = '';
+            }, 10);
+            
+            showCompanionMessage(`${companion.animations.spaceship} Zooming through the code!`);
+            
+            setTimeout(() => {
+                char.textContent = companion.emoji;
+            }, 3000);
+        }
+
+        function showCompanionMessage(message) {
+            const bubble = document.getElementById('speechBubble');
+            document.getElementById('companionMessage').textContent = message;
+            bubble.classList.add('show');
+            
+            clearTimeout(speechBubbleTimeout);
+            speechBubbleTimeout = setTimeout(() => {
+                bubble.classList.remove('show');
+            }, 5000);
+        }
+
+        function toggleCompanionChat() {
+            const bubble = document.getElementById('speechBubble');
+            bubble.classList.toggle('show');
+            
+            if (bubble.classList.contains('show')) {
+                const messages = [
+                    "Need help? Just ask! 🤗",
+                    "You're doing great! Keep coding! 💪",
+                    "Remember to take breaks! 🌟",
+                    "I'm here to help you succeed! 🚀",
+                    "Let's build something amazing! ✨"
+                ];
+                const randomMessage = messages[Math.floor(Math.random() * messages.length)];
+                document.getElementById('companionMessage').textContent = randomMessage;
+            }
+        }
+
+        // GitHub Functions
+        async function connectGitHub() {
+            const username = document.getElementById('githubUsername').value;
+            const token = document.getElementById('githubToken').value;
+            
+            try {
+                const response = await fetch('/api/github/auth', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ username, token })
+                });
+                const result = await response.json();
+                
+                if (result.success) {
+                    showCompanionMessage(result.message);
+                    loadRepositories(username);
+                }
+            } catch (error) {
+                console.error('Error connecting to GitHub:', error);
+            }
+        }
+
+        async function loadRepositories(username) {
+            try {
+                const response = await fetch(`/api/github/repos?username=${username}`);
+                const repos = await response.json();
+                
+                const container = document.getElementById('reposGrid');
+                container.innerHTML = '';
+                
+                repos.forEach(repo => {
+                    const card = document.createElement('div');
+                    card.className = 'repo-card';
+                    card.innerHTML = `
+                        <div class="repo-name">
+                            <i class="fab fa-github"></i>
+                            ${repo.name}
+                        </div>
+                        <div class="repo-description">${repo.description || 'No description'}</div>
+                        <div class="repo-stats">
+                            <span><i class="fas fa-star"></i> ${repo.stars}</span>
+                            <span><i class="fas fa-code-branch"></i> ${repo.forks}</span>
+                            <span><i class="fas fa-circle" style="color: #4CAF50;"></i> ${repo.language}</span>
+                        </div>
+                        <div class="repo-actions">
+                            <button class="btn btn-primary" onclick="cloneRepo('${repo.clone_url}', '${repo.name}')">
+                                <i class="fas fa-download"></i> Clone
+                            </button>
+                            <button class="btn btn-success" onclick="openRepo('${repo.url}')">
+                                <i class="fas fa-external-link-alt"></i> Open
+                            </button>
+                        </div>
+                    `;
+                    container.appendChild(card);
+                });
+            } catch (error) {
+                console.error('Error loading repositories:', error);
+            }
+        }
+
+        async function cloneRepo(cloneUrl, repoName) {
+            showCompanionMessage(`Cloning ${repoName}... 📥`);
+            
+            try {
+                const response = await fetch('/api/github/clone', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        clone_url: cloneUrl,
+                        workspace_path: `/tmp/repos/${repoName}`
+                    })
+                });
+                const result = await response.json();
+                
+                if (result.success) {
+                    showCompanionMessage(`✅ ${repoName} cloned successfully!`);
+                } else {
+                    showCompanionMessage(`❌ Error cloning repository: ${result.error}`);
+                }
+            } catch (error) {
+                console.error('Error cloning repo:', error);
+                showCompanionMessage('❌ Error cloning repository');
+            }
+        }
+
+        function openRepo(url) {
+            window.open(url, '_blank');
+        }
+
+        // Work Timer
+        function updateWorkTimer() {
+            const elapsed = Date.now() - workStartTime;
+            const hours = Math.floor(elapsed / 3600000);
+            const minutes = Math.floor((elapsed % 3600000) / 60000);
+            const seconds = Math.floor((elapsed % 60000) / 1000);
+            
+            const timeStr = `${String(hours).padStart(2, '0')}:${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+            document.getElementById('workTimer').textContent = timeStr;
+            
+            // Check for break reminder
+            checkBreakReminder();
+        }
+
+        async function checkBreakReminder() {
+            try {
+                const response = await fetch('/api/work/check-break');
+                const result = await response.json();
+                
+                const reminderDiv = document.getElementById('breakReminderDiv');
+                
+                if (result.needs_break) {
+                    reminderDiv.innerHTML = `
+                        <div class="break-reminder">
+                            <strong>⏰ Time for a break!</strong>
+                            <p>${result.message}</p>
+                            <button class="btn btn-success" onclick="takeBreak()" style="width: 100%; margin-top: 10px;">
+                                Take Break
+                            </button>
+                        </div>
+                    `;
+                    
+                    // Show companion reminder
+                    showCompanionMessage(result.message);
+                } else {
+                    reminderDiv.innerHTML = '';
+                }
+            } catch (error) {
+                console.error('Error checking break:', error);
+            }
+        }
+
+        async function takeBreak() {
+            try {
+                const response = await fetch('/api/work/break', {
+                    method: 'POST'
+                });
+                const result = await response.json();
+                
+                showCompanionMessage('Great! Time to rest! Your companion will rest with you! 😴');
+                
+                // Rest the active companion
+                restCompanion(activeCompanion);
+                
+                // Reset work timer after break
+                setTimeout(() => {
+                    workStartTime = Date.now();
+                    fetch('/api/work/start', { method: 'POST' });
+                    showCompanionMessage('Break over! Let\'s get back to coding! 💪');
+                }, 5 * 60 * 1000); // 5 minute break
+            } catch (error) {
+                console.error('Error taking break:', error);
+            }
+        }
+
+        function showPricing() {
+            showCompanionMessage('💰 This is 100% FREE! No $10/month, no hidden fees! Save $768/year! 🎉');
+        }
+
+        // Initialize
+        window.addEventListener('DOMContentLoaded', () => {
+            loadSkillLevels();
+            loadCompanions();
+            
+            // Start work session
+            fetch('/api/work/start', { method: 'POST' });
+            
+            // Update timer every second
+            setInterval(updateWorkTimer, 1000);
+            
+            // Update companion stats periodically
+            setInterval(() => {
+                updateCompanionStats(activeCompanion);
+            }, 10000);
+            
+            // Show welcome message
+            setTimeout(() => {
+                showCompanionMessage('Welcome to FREE Codespaces! I\'m here to help you code! 🚀');
+            }, 1000);
+            
+            // Auto-load default username's repos
+            setTimeout(() => {
+                loadRepositories('YourUsername');
+            }, 2000);
+        });
+    </script>
+</body>
+</html>

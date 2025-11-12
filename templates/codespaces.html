@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🦖 AI Codespaces - THE FORGE Edition</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- CodeMirror for code editing -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/theme/dracula.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e0e0e0;
+            overflow: hidden;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #0f3460 0%, #16213e 100%);
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid #533483;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 24px;
+            font-weight: bold;
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4, #45b7d1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-success {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            color: white;
+        }
+
+        .btn-github {
+            background: linear-gradient(135deg, #333 0%, #24292e 100%);
+            color: white;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        /* Main Container */
+        .container {
+            display: grid;
+            grid-template-columns: 250px 1fr 300px;
+            height: calc(100vh - 60px);
+            gap: 0;
+        }
+
+        /* Sidebar - File Explorer */
+        .sidebar {
+            background: #1a1a2e;
+            border-right: 2px solid #533483;
+            overflow-y: auto;
+            padding: 20px;
+        }
+
+        .sidebar h3 {
+            color: #4ecdc4;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .file-list {
+            list-style: none;
+        }
+
+        .file-item {
+            padding: 8px;
+            margin: 4px 0;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .file-item:hover {
+            background: #2a2a4e;
+            transform: translateX(5px);
+        }
+
+        .file-item.active {
+            background: #533483;
+            color: #4ecdc4;
+        }
+
+        /* Editor Area */
+        .editor-container {
+            display: flex;
+            flex-direction: column;
+            background: #1e1e1e;
+        }
+
+        .editor-tabs {
+            background: #252526;
+            padding: 5px;
+            display: flex;
+            gap: 5px;
+            border-bottom: 1px solid #3c3c3c;
+        }
+
+        .editor-tab {
+            padding: 8px 16px;
+            background: #2d2d30;
+            border: none;
+            border-radius: 4px 4px 0 0;
+            color: #ccc;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .editor-tab.active {
+            background: #1e1e1e;
+            color: #4ecdc4;
+        }
+
+        .editor-wrapper {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .CodeMirror {
+            height: 100% !important;
+            font-size: 14px;
+        }
+
+        /* AI Monster Panel */
+        .ai-panel {
+            background: #1a1a2e;
+            border-left: 2px solid #533483;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .monster-selector {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 15px;
+            text-align: center;
+        }
+
+        .monster-selector h3 {
+            color: white;
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .monsters-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+            margin-top: 10px;
+        }
+
+        .monster-card {
+            background: rgba(255,255,255,0.1);
+            padding: 10px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-align: center;
+            border: 2px solid transparent;
+        }
+
+        .monster-card:hover {
+            transform: scale(1.05);
+            background: rgba(255,255,255,0.2);
+        }
+
+        .monster-card.active {
+            border-color: #4ecdc4;
+            background: rgba(78, 205, 196, 0.2);
+            box-shadow: 0 0 20px rgba(78, 205, 196, 0.4);
+        }
+
+        .monster-emoji {
+            font-size: 32px;
+            display: block;
+            margin-bottom: 5px;
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        .monster-name {
+            font-size: 10px;
+            color: white;
+            font-weight: bold;
+        }
+
+        /* Active Monster Display */
+        .active-monster {
+            background: #2a2a4e;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 2px solid #533483;
+        }
+
+        .active-monster-emoji {
+            font-size: 60px;
+            display: block;
+            margin-bottom: 10px;
+            animation: bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            25% { transform: translateY(-15px) rotate(-5deg); }
+            50% { transform: translateY(0) rotate(0deg); }
+            75% { transform: translateY(-10px) rotate(5deg); }
+        }
+
+        .active-monster-info h4 {
+            color: #4ecdc4;
+            margin-bottom: 5px;
+        }
+
+        .active-monster-info p {
+            font-size: 12px;
+            color: #aaa;
+        }
+
+        /* AI Suggestions */
+        .ai-suggestions {
+            padding: 15px;
+            flex: 1;
+            overflow-y: auto;
+        }
+
+        .suggestion-card {
+            background: linear-gradient(135deg, #2a2a4e 0%, #1a1a2e 100%);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid #4ecdc4;
+            animation: slideIn 0.3s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .suggestion-header {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .suggestion-icon {
+            font-size: 24px;
+        }
+
+        .suggestion-content {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #e0e0e0;
+        }
+
+        /* Code Analysis Panel */
+        .analysis-panel {
+            background: #1e1e1e;
+            padding: 15px;
+            border-top: 2px solid #533483;
+        }
+
+        .analysis-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .stat-box {
+            background: linear-gradient(135deg, #2a2a4e 0%, #1a1a2e 100%);
+            padding: 10px;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #4ecdc4;
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: #aaa;
+            margin-top: 4px;
+        }
+
+        /* Terminal */
+        .terminal {
+            background: #000;
+            color: #0f0;
+            font-family: 'Courier New', monospace;
+            padding: 10px;
+            height: 200px;
+            overflow-y: auto;
+            font-size: 13px;
+            border-top: 2px solid #533483;
+        }
+
+        .terminal-input {
+            display: flex;
+            gap: 5px;
+            margin-top: 5px;
+        }
+
+        .terminal-input input {
+            flex: 1;
+            background: #1a1a1a;
+            border: 1px solid #333;
+            color: #0f0;
+            padding: 8px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .terminal-output {
+            margin-bottom: 10px;
+        }
+
+        /* GitHub Panel */
+        .github-panel {
+            background: #2a2a4e;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 15px;
+        }
+
+        .github-status {
+            font-size: 12px;
+            color: #aaa;
+            margin-bottom: 10px;
+        }
+
+        .github-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        /* Notifications */
+        .notification {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            z-index: 1000;
+            animation: slideInRight 0.3s ease-out;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100%);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            display: inline-block;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255,255,255,0.3);
+            border-radius: 50%;
+            border-top-color: white;
+            animation: spin 0.6s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1a1a2e;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #533483;
+            border-radius: 4px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #667eea;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <div class="header">
+        <div class="logo">
+            <i class="fas fa-code"></i>
+            <span>AI Codespaces - THE FORGE</span>
+        </div>
+        <div class="header-actions">
+            <button class="btn btn-primary" onclick="analyzeCode()">
+                <i class="fas fa-magic"></i> AI Analyze
+            </button>
+            <button class="btn btn-success" onclick="saveFile()">
+                <i class="fas fa-save"></i> Save
+            </button>
+            <button class="btn btn-github" onclick="showGitPanel()">
+                <i class="fab fa-github"></i> GitHub
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Container -->
+    <div class="container">
+        <!-- Sidebar - File Explorer -->
+        <div class="sidebar">
+            <h3><i class="fas fa-folder-open"></i> Files</h3>
+            <ul class="file-list" id="fileList">
+                <li class="file-item active" onclick="loadFile('main.py')">
+                    <i class="fab fa-python"></i> main.py
+                </li>
+                <li class="file-item" onclick="loadFile('app.js')">
+                    <i class="fab fa-js"></i> app.js
+                </li>
+                <li class="file-item" onclick="loadFile('style.css')">
+                    <i class="fab fa-css3"></i> style.css
+                </li>
+            </ul>
+            
+            <button class="btn btn-primary" style="width: 100%; margin-top: 20px;" onclick="createNewFile()">
+                <i class="fas fa-plus"></i> New File
+            </button>
+        </div>
+
+        <!-- Editor Area -->
+        <div class="editor-container">
+            <div class="editor-tabs">
+                <div class="editor-tab active">
+                    <i class="fab fa-python"></i>
+                    <span id="currentFile">main.py</span>
+                </div>
+            </div>
+            
+            <div class="editor-wrapper">
+                <textarea id="codeEditor"># Welcome to AI Codespaces - THE FORGE Edition! 🦖
+# Your AI monster companions are ready to help you code!
+
+def hello_world():
+    """A simple function to get started"""
+    print("Hello from THE FORGE!")
+    print("Meet your AI coding companions!")
+    
+    # TODO: Add your amazing code here!
+    
+if __name__ == "__main__":
+    hello_world()
+</textarea>
+            </div>
+
+            <!-- Code Analysis Panel -->
+            <div class="analysis-panel">
+                <div class="analysis-stats">
+                    <div class="stat-box">
+                        <div class="stat-value" id="qualityScore">95</div>
+                        <div class="stat-label">Quality</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="issuesCount">0</div>
+                        <div class="stat-label">Issues</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-value" id="complexityScore">Low</div>
+                        <div class="stat-label">Complexity</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Terminal -->
+            <div class="terminal" id="terminal">
+                <div class="terminal-output">
+                    <div>🦖 AI Codespaces Terminal - Ready!</div>
+                    <div>Type 'help' for available commands</div>
+                    <div>$ <span style="color: #0ff;">_</span></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Monster Panel -->
+        <div class="ai-panel">
+            <!-- Monster Selector -->
+            <div class="monster-selector">
+                <h3>🎮 AI Companions</h3>
+                <div class="monsters-grid" id="monstersGrid">
+                    <!-- Monsters will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Active Monster -->
+            <div class="active-monster">
+                <span class="active-monster-emoji" id="activeMonsterEmoji">🦖</span>
+                <div class="active-monster-info">
+                    <h4 id="activeMonsterName">Codie the Code Monster</h4>
+                    <p id="activeMonsterSpecialty">Python & Backend Development</p>
+                </div>
+            </div>
+
+            <!-- GitHub Panel -->
+            <div class="github-panel">
+                <h4 style="color: #4ecdc4; margin-bottom: 10px;">
+                    <i class="fab fa-github"></i> GitHub
+                </h4>
+                <div class="github-status" id="githubStatus">
+                    Not connected to repository
+                </div>
+                <div class="github-actions">
+                    <button class="btn btn-github" onclick="gitCommit()" style="width: 100%;">
+                        <i class="fas fa-code-branch"></i> Commit
+                    </button>
+                    <button class="btn btn-github" onclick="gitPush()" style="width: 100%;">
+                        <i class="fas fa-upload"></i> Push to GitHub
+                    </button>
+                </div>
+            </div>
+
+            <!-- AI Suggestions -->
+            <div class="ai-suggestions" id="aiSuggestions">
+                <h4 style="color: #4ecdc4; margin-bottom: 15px;">
+                    <i class="fas fa-lightbulb"></i> AI Suggestions
+                </h4>
+                <div class="suggestion-card">
+                    <div class="suggestion-header">
+                        <span class="suggestion-icon">🦖</span>
+                        <strong>Codie says:</strong>
+                    </div>
+                    <div class="suggestion-content">
+                        Welcome! I'm Codie, your Python expert! Click on me or any other monster companion to get personalized coding help. I'm here to make your code awesome! 🚀
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- CodeMirror -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/python/python.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/javascript/javascript.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.2/mode/css/css.min.js"></script>
+    
+    <script>
+        // Initialize CodeMirror
+        const editor = CodeMirror.fromTextArea(document.getElementById('codeEditor'), {
+            mode: 'python',
+            theme: 'dracula',
+            lineNumbers: true,
+            autoCloseBrackets: true,
+            matchBrackets: true,
+            indentUnit: 4,
+            tabSize: 4,
+            lineWrapping: true,
+            extraKeys: {
+                'Ctrl-Space': 'autocomplete',
+                'Ctrl-S': function() { saveFile(); }
+            }
+        });
+
+        let currentFile = 'main.py';
+        let activeMonster = 'codie';
+        let monsters = {};
+
+        // Load monsters
+        async function loadMonsters() {
+            try {
+                const response = await fetch('/api/monsters');
+                monsters = await response.json();
+                
+                const grid = document.getElementById('monstersGrid');
+                grid.innerHTML = '';
+                
+                for (const [id, monster] of Object.entries(monsters)) {
+                    const card = document.createElement('div');
+                    card.className = `monster-card ${id === activeMonster ? 'active' : ''}`;
+                    card.onclick = () => activateMonster(id);
+                    card.innerHTML = `
+                        <span class="monster-emoji">${monster.emoji}</span>
+                        <div class="monster-name">${monster.name.split(' ')[0]}</div>
+                    `;
+                    grid.appendChild(card);
+                }
+            } catch (error) {
+                console.error('Error loading monsters:', error);
+            }
+        }
+
+        // Activate monster
+        async function activateMonster(monsterId) {
+            try {
+                const response = await fetch(`/api/monster/${monsterId}/activate`, {
+                    method: 'POST'
+                });
+                const data = await response.json();
+                
+                if (data.success) {
+                    activeMonster = monsterId;
+                    const monster = data.monster;
+                    
+                    document.getElementById('activeMonsterEmoji').textContent = monster.emoji;
+                    document.getElementById('activeMonsterName').textContent = monster.name;
+                    document.getElementById('activeMonsterSpecialty').textContent = monster.specialty;
+                    
+                    // Update active state
+                    document.querySelectorAll('.monster-card').forEach(card => {
+                        card.classList.remove('active');
+                    });
+                    event.currentTarget.classList.add('active');
+                    
+                    // Get AI suggestion
+                    getSuggestion();
+                }
+            } catch (error) {
+                console.error('Error activating monster:', error);
+            }
+        }
+
+        // Get AI suggestion
+        async function getSuggestion() {
+            try {
+                const response = await fetch('/api/suggest', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        prompt: editor.getValue(),
+                        monster_id: activeMonster
+                    })
+                });
+                const data = await response.json();
+                
+                const suggestionsDiv = document.getElementById('aiSuggestions');
+                const newSuggestion = document.createElement('div');
+                newSuggestion.className = 'suggestion-card';
+                newSuggestion.innerHTML = `
+                    <div class="suggestion-header">
+                        <span class="suggestion-icon">${data.monster.emoji}</span>
+                        <strong>${data.monster.name.split(' ')[0]} says:</strong>
+                    </div>
+                    <div class="suggestion-content">${data.suggestion}</div>
+                `;
+                
+                // Keep only last 3 suggestions
+                if (suggestionsDiv.children.length > 3) {
+                    suggestionsDiv.removeChild(suggestionsDiv.lastChild);
+                }
+                suggestionsDiv.insertBefore(newSuggestion, suggestionsDiv.children[1]);
+            } catch (error) {
+                console.error('Error getting suggestion:', error);
+            }
+        }
+
+        // Analyze code
+        async function analyzeCode() {
+            try {
+                const response = await fetch('/api/analyze', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        code: editor.getValue(),
+                        language: 'python'
+                    })
+                });
+                const data = await response.json();
+                
+                // Update stats
+                document.getElementById('qualityScore').textContent = data.quality_score;
+                document.getElementById('issuesCount').textContent = data.issues.length;
+                document.getElementById('complexityScore').textContent = data.complexity.level;
+                
+                // Show notification
+                showNotification(`Code analyzed! Quality: ${data.quality_score}/100`, 'success');
+                
+                // Add suggestions for issues
+                if (data.issues.length > 0 || data.suggestions.length > 0) {
+                    const suggestionsDiv = document.getElementById('aiSuggestions');
+                    
+                    [...data.issues, ...data.suggestions].forEach(item => {
+                        const card = document.createElement('div');
+                        card.className = 'suggestion-card';
+                        card.innerHTML = `
+                            <div class="suggestion-header">
+                                <span class="suggestion-icon">${item.type === 'warning' ? '⚠️' : 'ℹ️'}</span>
+                                <strong>Line ${item.line}</strong>
+                            </div>
+                            <div class="suggestion-content">${item.message}</div>
+                        `;
+                        suggestionsDiv.appendChild(card);
+                    });
+                }
+            } catch (error) {
+                console.error('Error analyzing code:', error);
+                showNotification('Error analyzing code', 'error');
+            }
+        }
+
+        // Save file
+        async function saveFile() {
+            try {
+                const response = await fetch('/api/files/write', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        filepath: currentFile,
+                        content: editor.getValue()
+                    })
+                });
+                const data = await response.json();
+                
+                if (data.success) {
+                    showNotification('File saved successfully! 💾', 'success');
+                } else {
+                    showNotification('Error saving file', 'error');
+                }
+            } catch (error) {
+                console.error('Error saving file:', error);
+                showNotification('Error saving file', 'error');
+            }
+        }
+
+        // Git commit
+        async function gitCommit() {
+            const message = prompt('Enter commit message:', 'Update code');
+            if (!message) return;
+            
+            try {
+                const response = await fetch('/api/git/commit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ message })
+                });
+                const data = await response.json();
+                
+                if (data.success) {
+                    showNotification('✅ Changes committed! ' + monsters.gitty.emoji, 'success');
+                    updateGitStatus();
+                } else {
+                    showNotification('Commit failed: ' + data.error, 'error');
+                }
+            } catch (error) {
+                console.error('Error committing:', error);
+                showNotification('Error committing changes', 'error');
+            }
+        }
+
+        // Git push
+        async function gitPush() {
+            if (!confirm('Push changes to GitHub?')) return;
+            
+            try {
+                const response = await fetch('/api/git/push', {
+                    method: 'POST'
+                });
+                const data = await response.json();
+                
+                if (data.success) {
+                    showNotification('🚀 Pushed to GitHub! ' + monsters.gitty.emoji, 'success');
+                } else {
+                    showNotification('Push failed: ' + data.error, 'error');
+                }
+            } catch (error) {
+                console.error('Error pushing:', error);
+                showNotification('Error pushing to GitHub', 'error');
+            }
+        }
+
+        // Update Git status
+        async function updateGitStatus() {
+            try {
+                const response = await fetch('/api/git/status');
+                const data = await response.json();
+                
+                if (data.success && data.output) {
+                    document.getElementById('githubStatus').textContent = data.output || 'Working tree clean';
+                }
+            } catch (error) {
+                console.error('Error getting git status:', error);
+            }
+        }
+
+        // Show notification
+        function showNotification(message, type) {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.textContent = message;
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.opacity = '0';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // Load file
+        function loadFile(filename) {
+            currentFile = filename;
+            document.getElementById('currentFile').textContent = filename;
+            
+            // Update active file
+            document.querySelectorAll('.file-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            event.currentTarget.classList.add('active');
+            
+            // Set editor mode based on file type
+            if (filename.endsWith('.py')) {
+                editor.setOption('mode', 'python');
+            } else if (filename.endsWith('.js')) {
+                editor.setOption('mode', 'javascript');
+            } else if (filename.endsWith('.css')) {
+                editor.setOption('mode', 'css');
+            }
+        }
+
+        // Create new file
+        function createNewFile() {
+            const filename = prompt('Enter filename:', 'newfile.py');
+            if (!filename) return;
+            
+            const fileList = document.getElementById('fileList');
+            const newFile = document.createElement('li');
+            newFile.className = 'file-item';
+            newFile.onclick = () => loadFile(filename);
+            newFile.innerHTML = `<i class="fas fa-file-code"></i> ${filename}`;
+            fileList.appendChild(newFile);
+            
+            showNotification(`Created ${filename}`, 'success');
+        }
+
+        // Auto-analyze on code change (debounced)
+        let analyzeTimeout;
+        editor.on('change', () => {
+            clearTimeout(analyzeTimeout);
+            analyzeTimeout = setTimeout(() => {
+                // Auto-analyze after 2 seconds of no typing
+                // analyzeCode();
+            }, 2000);
+        });
+
+        // Initialize
+        window.addEventListener('DOMContentLoaded', () => {
+            loadMonsters();
+            updateGitStatus();
+            
+            // Auto-get suggestion every 30 seconds
+            setInterval(() => {
+                if (Math.random() > 0.5) {
+                    getSuggestion();
+                }
+            }, 30000);
+        });
+    </script>
+</body>
+</html>
