@@ -12,7 +12,7 @@ Features:
 - Multiple creature personalities (friendly, playful, serious)
 """
 
-from flask import Flask, render_template, request, jsonify, session, redirect, url_for
+from flask import Flask, render_template, request, jsonify, session, redirect, url_for, send_file
 from flask_cors import CORS
 import os
 import json
@@ -21,6 +21,9 @@ import subprocess
 import secrets
 import sqlite3
 import time
+
+# Import REAL code execution engine
+from real_code_executor import RealCodeExecutor, RealBuildSystem, RealAICodeAssistant
 
 app = Flask(__name__)
 app.secret_key = secrets.token_hex(16)
@@ -402,11 +405,40 @@ work_monitor = WorkMonitor()
 github_manager = GitHubRepoManager()
 creature_care = CreatureCareSystem()
 
+# Initialize REAL code execution systems
+code_executor = RealCodeExecutor()
+ai_code_assistant = RealAICodeAssistant()
+
+print("\n✅ REAL Code Execution Engine Loaded!")
+print("   Supports: Python, JavaScript, C/C++, Rust, Java, TypeScript, C#")
+print("   This is NOT a simulation - actual compilation and execution!")
+
 # Routes
 @app.route('/')
 def index():
-    """Main interface with AI companions"""
-    return render_template('advanced_codespaces.html')
+    """Launcher interface"""
+    return render_template('launcher.html')
+
+@app.route('/vscode')
+def vscode_interface():
+    """VS Code clone interface"""
+    return render_template('vscode_clone.html')
+
+@app.route('/download')
+def download_page():
+    """Download page for installer"""
+    return render_template('download.html')
+
+@app.route('/api/download/installer/<platform>')
+def download_installer(platform):
+    """Download installer for specific platform"""
+    # In production, serve actual installers
+    return jsonify({
+        'success': True,
+        'platform': platform,
+        'download_url': f'/static/installers/forge-codespaces-{platform}.zip',
+        'message': f'Installer for {platform} ready!'
+    })
 
 @app.route('/api/creatures')
 def get_creatures():
@@ -487,6 +519,60 @@ def clone_repo():
         data.get('workspace_path', '/tmp/repo')
     )
     return jsonify(result)
+
+# REAL Code Execution Routes
+@app.route('/api/code/execute', methods=['POST'])
+def execute_code():
+    """Execute code in REAL compiler/interpreter"""
+    data = request.json
+    code = data.get('code', '')
+    language = data.get('language', 'python')
+    filename = data.get('filename')
+    
+    result = code_executor.execute_code(code, language, filename)
+    return jsonify(result)
+
+@app.route('/api/code/analyze', methods=['POST'])
+def analyze_code():
+    """Analyze code quality"""
+    data = request.json
+    code = data.get('code', '')
+    language = data.get('language', 'python')
+    
+    analysis = ai_code_assistant.analyze_code_quality(code, language)
+    return jsonify(analysis)
+
+@app.route('/api/code/complete', methods=['POST'])
+def code_complete():
+    """Get AI code completions"""
+    data = request.json
+    code = data.get('code', '')
+    cursor_position = data.get('cursor_position', len(code))
+    language = data.get('language', 'python')
+    
+    completions = ai_code_assistant.get_smart_completion(code, cursor_position, language)
+    return jsonify(completions)
+
+@app.route('/api/build', methods=['POST'])
+def build_project():
+    """Build project using detected build system"""
+    data = request.json
+    project_dir = data.get('project_dir', '/tmp/project')
+    build_system = data.get('build_system')
+    
+    builder = RealBuildSystem(project_dir)
+    result = builder.build(build_system)
+    return jsonify(result)
+
+@app.route('/api/build/detect', methods=['POST'])
+def detect_build():
+    """Detect project build system"""
+    data = request.json
+    project_dir = data.get('project_dir', '/tmp/project')
+    
+    builder = RealBuildSystem(project_dir)
+    detected = builder.detect_build_system()
+    return jsonify({'build_systems': detected})
 
 if __name__ == '__main__':
     print("""
