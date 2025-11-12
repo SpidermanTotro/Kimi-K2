@@ -1,0 +1,15 @@
+{
+  "name": "Kimi K2 - THE FORGE AI",
+  "description": "Web-based AI assistant with 865+ capabilities. Access from anywhere!",
+  "website": "https://github.com/SpidermanTotro/Kimi-K2",
+  "repository": "https://github.com/SpidermanTotro/Kimi-K2",
+  "logo": "https://raw.githubusercontent.com/SpidermanTotro/Kimi-K2/main/figures/kimi-logo.png",
+  "keywords": [
+    "ai",
+    "kimi",
+    "flask",
+    "rest-api",
+    "python",
+    "web-app"
+  ]
+}
