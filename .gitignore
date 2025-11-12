@@ -1,0 +1,55 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Databases
+*.db
+*.sqlite
+*.sqlite3
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Temporary
+/tmp/
+*.tmp
+.forge_initialized
+
+# Compiled
+*.class
+*.o
+*.rlib
+/target/
+*.exe
+
+# Node
+node_modules/
+package-lock.json
+
+# Rust
+Cargo.lock
+
+# Build artifacts
+SessionTracker.class
+*.pyc
+
+# Config
+forge_remote_config.json
