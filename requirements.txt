@@ -3,6 +3,7 @@
 # Core dependencies for REST API server
 Flask>=2.3.0
 Flask-CORS>=4.0.0
+gunicorn>=21.2.0
 
 # Core implementation (no external dependencies required!)
 

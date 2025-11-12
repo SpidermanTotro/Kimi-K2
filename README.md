@@ -130,7 +130,34 @@
 
 ### 🚀 Quick Start - Run THE FORGE ❤️ KIMI K2
 
-**Option 1: Run Unified System (Recommended)**
+**🌐 Option 1: Deploy to Free Web Hosting (No Hardware Required!) ✨**
+
+Deploy Kimi K2 as a live web application accessible from anywhere:
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy)
+
+```bash
+# 1. Fork this repo to your GitHub
+# 2. Sign up at render.com, railway.app, or fly.io (all have free tiers)
+# 3. Connect your repo and deploy!
+# 4. Access your AI at https://your-app.onrender.com
+
+# Or deploy manually:
+./setup.sh              # Install dependencies
+python3 forge_server.py # Start REST API server
+python3 forge_gui.py    # Start Web GUI interface
+```
+
+**✨ Live Web Features:**
+- 🌐 Access from any browser, no installation needed
+- 🔥 Full REST API for integration
+- 💻 Professional web interface with chat
+- 📱 Mobile-friendly responsive design
+- 🆓 Deploy on free hosting (Render, Railway, Fly.io)
+
+📖 **[Complete Deployment Guide →](DEPLOYMENT.md)**
+
+**Option 2: Run Unified System Locally**
 ```bash
 # Run the complete FORGE ❤️ KIMI K2 integrated system
 python3 kimi_forge_unified.py
@@ -142,7 +169,7 @@ python3 kimi_forge_unified.py
 # ✅ Marriage Complete! ❤️
 ```
 
-**Option 2: Build THE FORGE**
+**Option 3: Build THE FORGE**
 ```bash
 # Clone and build
 git clone https://github.com/SpidermanTotro/Kimi-K2.git
@@ -152,7 +179,7 @@ make dist                   # Create distribution package
 make run-gui                # Start GUI at http://localhost:5050
 ```
 
-**Option 3: Use Kimi K2 with FORGE Tools**
+**Option 4: Use Kimi K2 with FORGE Tools (Python API)**
 ```python
 from kimi_forge_unified import KimiForgeUnified
 
@@ -171,6 +198,7 @@ response = system.process("Restore this 1956 footage to 8K")
 ```
 
 **See complete guides:**
+- 🌐 [Web Deployment Guide - Deploy to Free Hosting](DEPLOYMENT.md) **← NEW!**
 - 📖 [FORGE ❤️ KIMI K2 Marriage Guide](FORGE_KIMI_MARRIAGE.md)
 - 🎯 [Ultimate Guide - Everything on One Page](docs/ULTIMATE_GUIDE.md)
 - 🔨 [Builder Guide - Multi-Language Build System](BUILDER_README.md)

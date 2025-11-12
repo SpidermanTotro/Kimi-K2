@@ -287,6 +287,67 @@ class ForgeAI:
             }
         
         return stats
+    
+    def get_all_capabilities(self) -> List[str]:
+        """Get all capabilities as a list"""
+        if not self.loaded:
+            self.initialize()
+        
+        capabilities = []
+        for doc_name in self.loader.list_documents():
+            content = self.loader.get_document(doc_name)
+            # Extract capabilities from documentation
+            for line in content.split('\n'):
+                if '✅' in line or '🔄' in line or '🌱' in line:
+                    # Clean up the line and extract capability
+                    cap = line.strip().replace('✅', '').replace('🔄', '').replace('🌱', '').strip()
+                    if cap and len(cap) > 3:
+                        capabilities.append(cap)
+        
+        return capabilities
+    
+    @property
+    def capabilities(self):
+        """Get capabilities as structured data"""
+        if not self.loaded:
+            self.initialize()
+        
+        caps = []
+        for doc_name in self.loader.list_documents():
+            content = self.loader.get_document(doc_name)
+            # Determine category from document name
+            category = doc_name.replace('.md', '').replace('_', ' ').title()
+            
+            # Extract capabilities
+            for line in content.split('\n'):
+                if '✅' in line or '🔄' in line or '🌱' in line:
+                    cap = line.strip().replace('✅', '').replace('🔄', '').replace('🌱', '').strip()
+                    if cap and len(cap) > 3:
+                        caps.append({
+                            'name': cap[:50],
+                            'description': cap,
+                            'category': category,
+                            'source': doc_name
+                        })
+        
+        return caps
+    
+    @property
+    def documents(self):
+        """Get all documents"""
+        if not self.loaded:
+            self.initialize()
+        
+        docs_list = []
+        for filename, content in self.loader.documents.items():
+            docs_list.append({
+                'name': filename,
+                'content': content,
+                'size': len(content),
+                'capabilities': [cap for cap in self.capabilities if cap['source'] == filename]
+            })
+        
+        return docs_list
 
 
 def main():
