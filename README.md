@@ -26,7 +26,7 @@
 </p>
 
 <p align="center">
-<b>📚&nbsp;&nbsp;<a href="docs/COMPLETE_GUIDE.md">Complete Guide</a></b> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <b>🎯&nbsp;&nbsp;<a href="docs/ALL_SKILLS.md">365+ Skills</a></b> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <b>📝&nbsp;&nbsp;<a href="docs/BOOK_WRITING_MASTERY.md">Book Writing</a></b> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <b>🎮&nbsp;&nbsp;<a href="docs/gaming_enhancement_guide.md">Gaming</a></b> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <b>💡&nbsp;&nbsp;<a href="docs/examples_guide.md">Examples</a></b>
+<b>📚&nbsp;&nbsp;<a href="docs/COMPLETE_GUIDE.md">Complete Guide</a></b> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <b>🎯&nbsp;&nbsp;<a href="docs/ALL_SKILLS.md">575+ Skills</a></b> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <b>📝&nbsp;&nbsp;<a href="docs/BOOK_WRITING_MASTERY.md">Book Writing</a></b> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <b>🎮&nbsp;&nbsp;<a href="docs/gaming_enhancement_guide.md">Gaming</a></b> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <b>💡&nbsp;&nbsp;<a href="docs/examples_guide.md">Examples</a></b>
 </p>
 
 <p align="center">
@@ -940,7 +940,7 @@ For streaming output and manual tool-parsing, see the [Tool Calling Guide](docs/
 ### 📚 Specialized Guides
 
 #### Core Documentation
-- 🎯 **[ALL_SKILLS.md](docs/ALL_SKILLS.md)** - Complete catalog of all 365+ skills
+- 🎯 **[ALL_SKILLS.md](docs/ALL_SKILLS.md)** - Complete catalog of all 575+ skills
 - 📘 **[COMPLETE_GUIDE.md](docs/COMPLETE_GUIDE.md)** - Merged reference guide
 - 🌳 **[THE_FORGE_EXPLAINED.md](docs/THE_FORGE_EXPLAINED.md)** - Ecosystem architecture & progress
 
@@ -958,7 +958,7 @@ For streaming output and manual tool-parsing, see the [Tool Calling Guide](docs/
 ### 🌟 What Makes THE FORGE Unique
 
 ```
-✅ 1 Trillion Parameters              ✅ 365+ Skills Documented
+✅ 1 Trillion Parameters              ✅ 575+ Skills Documented
 ✅ 50+ Pokemon Games Enhanced         ✅ 12 WoW Expansions Supported
 ✅ Publishing-Grade Book Writing      ✅ Video Upscaling (SD→8K)
 ✅ Never-Reset Memory System          ✅ Living Character Worlds
@@ -992,7 +992,7 @@ For streaming output and manual tool-parsing, see the [Tool Calling Guide](docs/
 ```
 Total Lines:          6,900+
 Total Files:          13
-Skills Documented:    365+
+Skills Documented:    575+
 Code Examples:        60+
 Languages Covered:    20+
 Pokemon Games:        50+

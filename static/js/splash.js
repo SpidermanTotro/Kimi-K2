@@ -39,7 +39,7 @@ async function startSplashSequence() {
 
 function animateStats() {
     // Capabilities counter
-    animateCounter('capabilitiesLoading', 0, 865, 2000);
+    animateCounter('capabilitiesLoading', 0, 575, 2000);
     
     // Documents counter
     animateCounter('documentsLoading', 0, 15, 1500);

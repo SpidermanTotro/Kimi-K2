@@ -4,7 +4,7 @@
 > **🔥🔥🔥 NEW: [ULTIMATE GUIDE - EVERYTHING ON ONE PAGE](ULTIMATE_GUIDE.md) 🔥🔥🔥**
 > 
 > **The complete, single-page reference (2,500+ lines) with ALL documentation merged!**
-> - ALL 365+ skills documented
+> - ALL 575+ skills documented
 > - Programming AI (20+ languages, 60+ skills)
 > - Professional Book Writing (50+ genres, 80+ skills)
 > - Gaming Enhancement (50+ Pokemon games, 12 WoW expansions)
@@ -22,7 +22,7 @@ Welcome to the complete documentation for Kimi K2 and THE FORGE AI ecosystem!
 
 0. **[📖 ULTIMATE GUIDE - EVERYTHING ON ONE PAGE](ULTIMATE_GUIDE.md)** - 🔥 **NEW!** Complete single-page reference (2,500+ lines)
 1. **[📚 COMPLETE GUIDE - Merged Reference](COMPLETE_GUIDE.md)** - Everything merged: Programming, Writing, Gaming, Examples (1,000+ lines)
-2. **[🎯 ALL SKILLS - Complete Catalog](ALL_SKILLS.md)** - All 365+ skills organized by category (950+ lines)
+2. **[🎯 ALL SKILLS - Complete Catalog](ALL_SKILLS.md)** - All 575+ skills organized by category (950+ lines)
 3. **[Main README](../README.md)** - Overview, model specs, and benchmark results
 4. **[Quick Start Examples](quick_start_examples.md)** - Get running in 5 minutes
 
@@ -31,7 +31,7 @@ Welcome to the complete documentation for Kimi K2 and THE FORGE AI ecosystem!
 ### 🌟 Comprehensive Guides
 
 - **[ULTIMATE GUIDE](ULTIMATE_GUIDE.md)** 🔥 - Complete single-page reference (2,500+ lines)
-  - ALL 365+ skills in one place
+  - ALL 575+ skills in one place
   - Programming, Book Writing, Gaming, Media Processing
   - THE FORGE ecosystem explained
   - Code examples and tutorials
@@ -44,7 +44,7 @@ Welcome to the complete documentation for Kimi K2 and THE FORGE AI ecosystem!
   - All examples in one document
   
 - **[ALL_SKILLS](ALL_SKILLS.md)** - Complete skills catalog (950+ lines)
-  - 365+ skills organized by category
+  - 575+ skills organized by category
   - Status indicators (production/in-progress/planned)
   - Comparison with other AIs
   - Unique FORGE features
