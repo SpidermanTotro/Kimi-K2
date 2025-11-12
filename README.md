@@ -79,7 +79,9 @@
 
 ### 🎯 What's New - THE FORGE ❤️ KIMI K2 Edition
 
-**🔥 Latest: Complete Marriage System (v1.0)**
+**🔥 Latest: Research Engine & Complete Marriage System (v1.0)**
+- **🔍 Research Engine** - Web search, astronomical data, fact-checking, NO FAKE NEWS (**NEW!**)
+- **🌟 Comet 3I/ATLAS Support** - Query astronomical objects, verified scientific data (**NEW!**)
 - **💍 FORGE ❤️ KIMI K2 Marriage** - Complete integration merging THE FORGE into Kimi K2 (**NEW!**)
 - **📈 Benchmark Optimization** - Expected 6-15% improvements across all tests (**NEW!**)
 - **🛠️ 1,450+ Tools for Kimi K2** - All FORGE capabilities as function calls (**NEW!**)
@@ -152,7 +154,27 @@ make dist                   # Create distribution package
 make run-gui                # Start GUI at http://localhost:5050
 ```
 
-**Option 3: Use Kimi K2 with FORGE Tools**
+**Option 3: Use Research Engine**
+```python
+from forge_research_engine import ForgeResearchEngine
+
+# Initialize research engine
+engine = ForgeResearchEngine()
+
+# Research Comet 3I/ATLAS
+results = engine.search("Comet 3I/ATLAS")
+print(results[0].content)
+
+# Get detailed astronomical data
+comet = engine.get_astronomical_object("3I/2019 Q4")
+print(f"{comet.name} - {comet.object_type}")
+
+# Fact-check information
+fact = engine.fact_check("Comet 3I is an interstellar object")
+print(f"Verified: {fact['verified']} (Confidence: {fact['confidence']:.0%})")
+```
+
+**Option 4: Use Kimi K2 with FORGE Tools**
 ```python
 from kimi_forge_unified import KimiForgeUnified
 
@@ -160,8 +182,11 @@ from kimi_forge_unified import KimiForgeUnified
 system = KimiForgeUnified()
 
 # Use FORGE tools through Kimi K2
+response = system.process("Tell me about Comet 3I/ATLAS")
+# Kimi K2 intelligently uses the research engine
+
 response = system.process("Edit this video professionally")
-# Kimi K2 intelligently selects and uses FORGE's video editor
+# Uses FORGE's video editor
 
 response = system.process("Find all WW2 movies about D-Day")
 # Uses FORGE's 10M+ movie database
@@ -171,6 +196,7 @@ response = system.process("Restore this 1956 footage to 8K")
 ```
 
 **See complete guides:**
+- 🔍 [Research Engine Guide - Web Search & Astronomy](docs/RESEARCH_CAPABILITIES.md)
 - 📖 [FORGE ❤️ KIMI K2 Marriage Guide](FORGE_KIMI_MARRIAGE.md)
 - 🎯 [Ultimate Guide - Everything on One Page](docs/ULTIMATE_GUIDE.md)
 - 🔨 [Builder Guide - Multi-Language Build System](BUILDER_README.md)

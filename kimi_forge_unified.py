@@ -96,6 +96,11 @@ class ForgeToolRegistry:
                 "capabilities": ["universal_conversion", "quality_enhancement", "batch_conversion"],
                 "implementation": "universal_format_converter.py"
             },
+            "research_engine": {
+                "description": "Web search and research engine with fact-checking, astronomical data, verified sources",
+                "capabilities": ["web_search", "astronomical_objects", "fact_checking", "academic_research", "no_fake_news"],
+                "implementation": "forge_research_engine.py"
+            },
             # Add all 1,450+ capabilities here
             "all_forge_tools": {
                 "description": "Complete access to all 1,450+ FORGE capabilities",
@@ -104,7 +109,7 @@ class ForgeToolRegistry:
                     "video_editing", "movie_database", "code_generation",
                     "book_writing", "media_restoration", "linux_building",
                     "library_upgrading", "format_conversion", "gaming",
-                    "imaging", "audio_processing", "ai_learning"
+                    "imaging", "audio_processing", "ai_learning", "research_engine"
                 ]
             }
         }
