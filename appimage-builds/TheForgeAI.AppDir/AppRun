@@ -1,0 +1,27 @@
+#!/bin/bash
+# THE FORGE AI Launcher
+
+APPDIR="$(dirname "$(readlink -f "$0")")"
+export PYTHONPATH="$APPDIR/usr/bin:$PYTHONPATH"
+
+cd "$APPDIR/usr/bin/web_interface"
+
+# Check if server is running
+if pgrep -f "python.*server.py" > /dev/null; then
+    echo "Server already running"
+else
+    # Start server
+    python3 server.py > /tmp/forge-ai.log 2>&1 &
+    sleep 2
+fi
+
+# Open browser
+if command -v xdg-open &> /dev/null; then
+    xdg-open "http://localhost:9001"
+elif command -v firefox &> /dev/null; then
+    firefox "http://localhost:9001"
+else
+    echo "Open http://localhost:9001 in your browser"
+fi
+
+wait

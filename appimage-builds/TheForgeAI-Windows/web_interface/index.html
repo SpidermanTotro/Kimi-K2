@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE FORGE AI - ChatGPT 2.0 Style Interface</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#10a37f">
+    <link rel="icon" type="image/png" href="favicon.png">
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <button class="new-chat-btn" id="newChatBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M12 5v14M5 12h14" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    New Chat
+                </button>
+            </div>
+            
+            <div class="conversations-list" id="conversationsList">
+                <!-- Conversations will be dynamically added here -->
+            </div>
+            
+            <div class="sidebar-footer">
+                <button class="sidebar-btn" id="settingsBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <circle cx="12" cy="12" r="3"/>
+                        <path d="M12 1v6m0 6v6m-9-9h6m6 0h6" stroke-width="2"/>
+                    </svg>
+                    Settings
+                </button>
+                <button class="sidebar-btn" id="themeToggle">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <circle cx="12" cy="12" r="5"/>
+                        <path d="M12 1v2m0 18v2M4.22 4.22l1.42 1.42m12.72 12.72l1.42 1.42M1 12h2m18 0h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42" stroke-width="2"/>
+                    </svg>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Chat Area -->
+        <main class="main-content">
+            <div class="chat-header">
+                <button class="menu-toggle" id="menuToggle">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                        <path d="M3 12h18M3 6h18M3 18h18" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </button>
+                <div class="model-selector">
+                    <select id="modelSelect">
+                        <option value="kimi-k2">Kimi K2</option>
+                        <option value="gpt-4">GPT-4</option>
+                        <option value="claude-3">Claude 3</option>
+                        <option value="local">Local LLM</option>
+                    </select>
+                </div>
+                <div class="status-indicator" id="statusIndicator">
+                    <span class="status-dot online"></span>
+                    <span class="status-text">Online</span>
+                </div>
+            </div>
+
+            <div class="chat-container" id="chatContainer">
+                <div class="welcome-screen" id="welcomeScreen">
+                    <div class="logo">
+                        <h1>🔥 THE FORGE AI</h1>
+                        <p>ChatGPT 2.0 Style Interface</p>
+                    </div>
+                    <div class="capabilities-grid">
+                        <div class="capability-card">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path d="M12 2L2 7l10 5 10-5-10-5z"/>
+                                <path d="M2 17l10 5 10-5M2 12l10 5 10-5"/>
+                            </svg>
+                            <h3>575+ Skills</h3>
+                            <p>Programming, writing, multimedia, and more</p>
+                        </div>
+                        <div class="capability-card">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <rect x="3" y="3" width="18" height="18" rx="2"/>
+                                <path d="M9 3v18"/>
+                            </svg>
+                            <h3>Multiple LLMs</h3>
+                            <p>Switch between Kimi K2, GPT-4, Claude, and local models</p>
+                        </div>
+                        <div class="capability-card">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
+                            </svg>
+                            <h3>Offline Mode</h3>
+                            <p>Works without internet using local models</p>
+                        </div>
+                        <div class="capability-card">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                                <polyline points="16 18 22 12 16 6"/>
+                                <polyline points="8 6 2 12 8 18"/>
+                            </svg>
+                            <h3>Code Execution</h3>
+                            <p>Run code, analyze files, and more</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="messages-container" id="messagesContainer">
+                    <!-- Messages will be dynamically added here -->
+                </div>
+            </div>
+
+            <div class="input-container">
+                <div class="input-wrapper">
+                    <button class="attach-btn" id="attachBtn" title="Attach file">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/>
+                        </svg>
+                    </button>
+                    <textarea 
+                        id="messageInput" 
+                        placeholder="Message THE FORGE AI..." 
+                        rows="1"
+                        maxlength="4000"
+                    ></textarea>
+                    <button class="send-btn" id="sendBtn" disabled>
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z"/>
+                        </svg>
+                    </button>
+                </div>
+                <div class="input-footer">
+                    <span class="char-count" id="charCount">0 / 4000</span>
+                    <span class="model-info">Using <strong id="currentModel">Kimi K2</strong></span>
+                </div>
+            </div>
+        </main>
+
+        <!-- Settings Modal -->
+        <div class="modal" id="settingsModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2>Settings</h2>
+                    <button class="close-btn" id="closeSettings">×</button>
+                </div>
+                <div class="modal-body">
+                    <div class="setting-group">
+                        <h3>Appearance</h3>
+                        <label class="setting-item">
+                            <span>Theme</span>
+                            <select id="themeSelect">
+                                <option value="dark">Dark</option>
+                                <option value="light">Light</option>
+                                <option value="auto">Auto</option>
+                            </select>
+                        </label>
+                    </div>
+                    
+                    <div class="setting-group">
+                        <h3>Model Settings</h3>
+                        <label class="setting-item">
+                            <span>Default Model</span>
+                            <select id="defaultModel">
+                                <option value="kimi-k2">Kimi K2</option>
+                                <option value="gpt-4">GPT-4</option>
+                                <option value="claude-3">Claude 3</option>
+                                <option value="local">Local LLM</option>
+                            </select>
+                        </label>
+                        <label class="setting-item">
+                            <span>Temperature</span>
+                            <input type="range" id="temperature" min="0" max="2" step="0.1" value="0.7">
+                            <span id="tempValue">0.7</span>
+                        </label>
+                    </div>
+                    
+                    <div class="setting-group">
+                        <h3>Features</h3>
+                        <label class="setting-item checkbox">
+                            <input type="checkbox" id="codeHighlight" checked>
+                            <span>Code Syntax Highlighting</span>
+                        </label>
+                        <label class="setting-item checkbox">
+                            <input type="checkbox" id="autoSave" checked>
+                            <span>Auto-save Conversations</span>
+                        </label>
+                        <label class="setting-item checkbox">
+                            <input type="checkbox" id="soundEffects">
+                            <span>Sound Effects</span>
+                        </label>
+                    </div>
+                    
+                    <div class="setting-group">
+                        <h3>Data</h3>
+                        <button class="btn-secondary" id="exportData">Export All Data</button>
+                        <button class="btn-danger" id="clearData">Clear All Data</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <input type="file" id="fileInput" style="display: none;" multiple>
+
+    <script src="app.js"></script>
+</body>
+</html>

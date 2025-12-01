@@ -1,0 +1,145 @@
+╔═══════════════════════════════════════════════════════════╗
+║                                                           ║
+║          KIMI K2 - INSTALLATION GUIDE v2.0                ║
+║                                                           ║
+╚═══════════════════════════════════════════════════════════╝
+
+QUICK START - 3 STEPS
+=====================
+
+STEP 1: Choose Your Platform
+-----------------------------
+Linux Users:   Use *-Portable.tar.gz files
+Windows Users: Use *-Windows.zip files
+
+STEP 2: Extract
+---------------
+Linux:   tar -xzf <filename>.tar.gz
+Windows: Right-click → Extract All
+
+STEP 3: Run
+-----------
+Linux:   ./run-*.sh
+Windows: Double-click run-*.bat
+
+
+DETAILED INSTRUCTIONS
+=====================
+
+THE FORGE AI (Web Interface)
+-----------------------------
+
+Linux:
+1. Extract: tar -xzf TheForgeAI-Portable.tar.gz
+2. Enter: cd TheForgeAI-Portable
+3. Run: ./run-forge.sh
+4. Browser opens automatically to http://localhost:9001
+
+Windows:
+1. Extract TheForgeAI-Windows.zip
+2. Open the extracted folder
+3. Double-click run-forge.bat
+4. Browser opens automatically
+
+First Run:
+- Dependencies install automatically (requires internet)
+- Takes 1-2 minutes on first launch
+- Subsequent launches are instant
+
+
+NEXUS AI (Terminal Interface)
+------------------------------
+
+Linux:
+1. Extract: tar -xzf NexusAI-Portable.tar.gz
+2. Enter: cd NexusAI-Portable
+3. Setup: cp .env .env.local
+4. Edit .env.local and add: OPENAI_API_KEY=sk-your-key-here
+5. Run: ./run-nexus.sh
+
+Windows:
+1. Extract NexusAI-Windows.zip
+2. Open the extracted folder
+3. Copy .env to .env.local
+4. Edit .env.local and add your OpenAI API key
+5. Double-click run-nexus.bat
+
+Getting OpenAI API Key:
+1. Go to https://platform.openai.com/api-keys
+2. Sign up or log in
+3. Click "Create new secret key"
+4. Copy the key (starts with sk-)
+5. Paste into .env.local file
+
+
+TROUBLESHOOTING
+===============
+
+Problem: "Python not found"
+Solution (Linux): sudo apt install python3 python3-pip python3-venv
+Solution (Windows): Install from https://www.python.org/
+                    ⚠️ Check "Add Python to PATH"!
+
+Problem: "Port already in use"
+Solution: Another app is using the port
+         - Close other web servers
+         - Or edit server.py to change port
+
+Problem: "Permission denied"
+Solution (Linux): chmod +x run-*.sh
+
+Problem: Dependencies fail to install
+Solution: - Check internet connection
+         - Update pip: pip install --upgrade pip
+         - Try manual install: pip install -r requirements.txt
+
+Problem: OpenAI API errors
+Solution: - Verify API key is correct
+         - Check you have credits at platform.openai.com
+         - Ensure key has proper permissions
+
+
+SYSTEM REQUIREMENTS
+===================
+
+Minimum:
+- Python 3.7+ (THE FORGE AI)
+- Python 3.11+ (NEXUS AI)
+- 4 GB RAM
+- 500 MB free space
+- Internet connection
+
+Recommended:
+- Python 3.11+
+- 8 GB RAM
+- 2 GB free space
+- Broadband internet
+
+
+WHAT TO TRY FIRST
+==================
+
+THE FORGE AI:
+1. Open http://localhost:9001
+2. Try: "Write a Python function to sort a list"
+3. Try: "Help me write a blog post about AI"
+4. Explore the 575+ capabilities!
+
+NEXUS AI:
+1. Select "chat" mode
+2. Try: "Explain quantum computing"
+3. Select "code" mode
+4. Try: "Create a web scraper"
+5. Select "reason" mode
+6. Try: "Solve this math problem: [your problem]"
+
+
+GETTING HELP
+============
+
+Documentation: See README.md
+GitHub: https://github.com/SpidermanTotro/Kimi-K2
+Issues: Report on GitHub Issues
+
+
+Enjoy exploring AI! 🚀

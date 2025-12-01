@@ -1,0 +1,4 @@
+3eac0d515da6821e07d0e507ab599be2d57c1e5d0af83a429ffb78c3a82405c5  NexusAI-Portable.tar.gz
+e3242e439a35c4d3b42880ed2f18a1e3e10ae8cd436a117c3efbb26cb3278051  TheForgeAI-Portable.tar.gz
+67b393b04b3565bcbbb06c0ac920f1a034715d07d47e52bee0bf949e3835bd58  NexusAI-Windows.zip
+6b7adb786d56521fa107a11ab70e80acf8f392b43a66b4f4a08e7414d9a05f87  TheForgeAI-Windows.zip

@@ -1,0 +1,124 @@
+{
+  "scan_time": "2025-12-01T04:43:37.800747",
+  "total_issues": 8,
+  "critical_issues": 0,
+  "update_candidates": 2,
+  "issues": [
+    {
+      "issue_id": "ca2ca175",
+      "type": "security",
+      "severity": "important",
+      "title": "Unsafe eval() usage",
+      "description": "Found eval() in intelligent_monitor.py",
+      "file_path": "live_programs/intelligent_monitor.py",
+      "line_number": null,
+      "suggestion": "Replace eval() with safer alternatives like ast.literal_eval()",
+      "detected_at": "2025-12-01T04:43:37.798471",
+      "resolved": false
+    },
+    {
+      "issue_id": "5c00be3b",
+      "type": "security",
+      "severity": "important",
+      "title": "Unsafe eval() usage",
+      "description": "Found eval() in multimedia_suite.py",
+      "file_path": "live_programs/multimedia_suite.py",
+      "line_number": null,
+      "suggestion": "Replace eval() with safer alternatives like ast.literal_eval()",
+      "detected_at": "2025-12-01T04:43:37.798518",
+      "resolved": false
+    },
+    {
+      "issue_id": "a3e41cb2",
+      "type": "code_smell",
+      "severity": "minor",
+      "title": "Long function: generate_system_prompt",
+      "description": "Function has 76 lines",
+      "file_path": "forge_implementation.py",
+      "line_number": 111,
+      "suggestion": "Consider breaking into smaller functions",
+      "detected_at": "2025-12-01T04:43:37.798980",
+      "resolved": false
+    },
+    {
+      "issue_id": "e20ada21",
+      "type": "code_smell",
+      "severity": "minor",
+      "title": "Long function: chat",
+      "description": "Function has 64 lines",
+      "file_path": "forge_server.py",
+      "line_number": 87,
+      "suggestion": "Consider breaking into smaller functions",
+      "detected_at": "2025-12-01T04:43:37.799113",
+      "resolved": false
+    },
+    {
+      "issue_id": "f87e7431",
+      "type": "code_smell",
+      "severity": "minor",
+      "title": "Long function: code_review",
+      "description": "Function has 58 lines",
+      "file_path": "forge_server.py",
+      "line_number": 240,
+      "suggestion": "Consider breaking into smaller functions",
+      "detected_at": "2025-12-01T04:43:37.799134",
+      "resolved": false
+    },
+    {
+      "issue_id": "a0fae45d",
+      "type": "code_smell",
+      "severity": "minor",
+      "title": "Long function: generate_benchmark_improvements",
+      "description": "Function has 61 lines",
+      "file_path": "kimi_enhancement_toolkit.py",
+      "line_number": 196,
+      "suggestion": "Consider breaking into smaller functions",
+      "detected_at": "2025-12-01T04:43:37.799267",
+      "resolved": false
+    },
+    {
+      "issue_id": "bb10b9ac",
+      "type": "code_smell",
+      "severity": "minor",
+      "title": "Long function: create_integration_guide",
+      "description": "Function has 90 lines",
+      "file_path": "kimi_forge_integration.py",
+      "line_number": 204,
+      "suggestion": "Consider breaking into smaller functions",
+      "detected_at": "2025-12-01T04:43:37.799397",
+      "resolved": false
+    },
+    {
+      "issue_id": "eba08b74",
+      "type": "code_smell",
+      "severity": "minor",
+      "title": "Long function: _load_forge_tools",
+      "description": "Function has 57 lines",
+      "file_path": "kimi_forge_unified.py",
+      "line_number": 55,
+      "suggestion": "Consider breaking into smaller functions",
+      "detected_at": "2025-12-01T04:43:37.799495",
+      "resolved": false
+    }
+  ],
+  "updates": [
+    {
+      "name": "Flask",
+      "current_version": "2.3.0",
+      "latest_version": "2.3.0",
+      "update_type": "unknown",
+      "breaking_changes": false,
+      "security_fix": false,
+      "changelog_url": null
+    },
+    {
+      "name": "Flask-CORS",
+      "current_version": "4.0.0",
+      "latest_version": "4.0.0",
+      "update_type": "unknown",
+      "breaking_changes": false,
+      "security_fix": false,
+      "changelog_url": null
+    }
+  ]
+}

@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=THE FORGE AI
+Comment=ChatGPT 2.0 Style Interface
+Exec=AppRun
+Icon=TheForgeAI
+Categories=Development;Utility;
+Terminal=false
