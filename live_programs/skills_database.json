@@ -1,0 +1,741 @@
+{
+  "categories": {
+    "programming": {
+      "name": "Programming & Code Skills",
+      "description": "Skills related to programming & code skills",
+      "total_capabilities": 0,
+      "skills": [
+        {
+          "name": "Multi-Language Support",
+          "category": "programming",
+          "subcategory": "Code Generation",
+          "description": "Multi-Language Support in Code Generation",
+          "capabilities": [
+            "Python (advanced, all versions)",
+            "JavaScript / TypeScript",
+            "Java",
+            "C / C++",
+            "C#",
+            "Go (Golang)",
+            "Rust",
+            "PHP",
+            "Ruby",
+            "Swift",
+            "Kotlin",
+            "Dart",
+            "R",
+            "Scala",
+            "Perl",
+            "Shell/Bash",
+            "PowerShell",
+            "Lua",
+            "Haskell",
+            "Elixir",
+            "**20+ total languages**"
+          ],
+          "dependencies": [],
+          "examples": []
+        },
+        {
+          "name": "Code Generation Types",
+          "category": "programming",
+          "subcategory": "Code Generation",
+          "description": "Code Generation Types in Code Generation",
+          "capabilities": [
+            "Complete applications from scratch",
+            "Individual functions with documentation",
+            "Classes with full methods",
+            "Modules and packages",
+            "API endpoints",
+            "Database schemas",
+            "Test suites",
+            "Configuration files",
+            "Build scripts",
+            "Deployment configs"
+          ],
+          "dependencies": [],
+          "examples": []
+        },
+        {
+          "name": "Code Quality",
+          "category": "programming",
+          "subcategory": "Code Generation",
+          "description": "Code Quality in Code Generation",
+          "capabilities": [
+            "Type hints and annotations",
+            "Comprehensive docstrings",
+            "Inline comments (when appropriate)",
+            "Design patterns implementation",
+            "SOLID principles",
+            "Clean code practices",
+            "Idiomatic language usage",
+            "Industry best practices"
+          ],
+          "dependencies": [],
+          "examples": []
+        },
+        {
+          "name": "Review Capabilities",
+          "category": "programming",
+          "subcategory": "Code Review & Analysis",
+          "description": "Review Capabilities in Code Review & Analysis",
+          "capabilities": [
+            "Structural analysis",
+            "Logic verification",
+            "Performance bottlenecks identification",
+            "Code smell detection",
+            "Complexity analysis",
+            "Maintainability scoring",
+            "Readability assessment",
+            "Documentation quality check",
+            "API design review",
+            "Architecture review"
+          ],
+          "dependencies": [],
+          "examples": []
+        },
+        {
+          "name": "Automated Improvements",
+          "category": "programming",
+          "subcategory": "Code Review & Analysis",
+          "description": "Automated Improvements in Code Review & Analysis",
+          "capabilities": [
+            "Suggest refactoring opportunities",
+            "Identify code duplication",
+            "Recommend design patterns",
+            "Optimize algorithms",
+            "Improve variable naming"
+          ],
+          "dependencies": [],
+          "examples": []
+        },
+        {
+          "name": "Bug Detection",
+          "category": "programming",
+          "subcategory": "Bug Detection & Fixing",
+          "description": "Bug Detection in Bug Detection & Fixing",
+          "capabilities": [
+            "Syntax errors",
+            "Logic errors",
+            "Off-by-one errors",
+            "Null pointer exceptions",
+            "Type mismatches",
+            "Race conditions",
+            "Memory leaks",
+            "Resource leaks",
+            "Infinite loops",
+            "Edge case failures",
+            "Integration issues",
+            "Configuration errors"
+          ],
+          "dependencies": [],
+          "examples": []
+        },
+        {
+          "name": "Automated Fixes",
+          "category": "programming",
+          "subcategory": "Bug Detection & Fixing",
+          "description": "Automated Fixes in Bug Detection & Fixing",
+          "capabilities": [
+            "Generate fix suggestions",
+            "Apply fixes with explanations",
+            "Preserve functionality",
+            "Add error handling",
+            "Improve edge case handling"
+          ],
+          "dependencies": [],
+          "examples": []
+        },
+        {
+          "name": "Security Analysis",
+          "category": "programming",
+          "subcategory": "Security Scanning",
+          "description": "Security Analysis in Security Scanning",
+          "capabilities": [
+            "SQL injection detection",
+            "XSS vulnerability scanning",
+            "CSRF protection check",
+            "Authentication issues",
+            "Authorization flaws",
+            "Cryptography problems",
+            "Insecure dependencies",
+            "Information disclosure",
+            "Path traversal",
+            "Command injection"
+          ],
+          "dependencies": [],
+          "examples": []
+        },
+        {
+          "name": "Performance Skills",
+          "category": "programming",
+          "subcategory": "Performance Optimization",
+          "description": "Performance Skills in Performance Optimization",
+          "capabilities": [
+            "Algorithm optimization",
+            "Data structure selection",
+            "Caching strategies",
+            "Database query optimization",
+            "API call reduction",
+            "Memory usage optimization",
+            "CPU optimization",
+            "I/O optimization",
+            "Network optimization",
+            "Lazy loading implementation",
+            "Code profiling",
+            "Bottleneck identification"
+          ],
+          "dependencies": [],
+          "examples": []
+        },
+        {
+          "name": "Test Generation",
+          "category": "programming",
+          "subcategory": "Testing",
+          "description": "Test Generation in Testing",
+          "capabilities": [
+            "Unit tests",
+            "Integration tests",
+            "End-to-end tests",
+            "API tests",
+            "Performance tests",
+            "Security tests",
+            "Regression tests",
+            "Smoke tests",
+            "Acceptance tests",
+            "Load tests",
+            "Stress tests"
+          ],
+          "dependencies": [],
+          "examples": []
+        },
+        {
+          "name": "Test Frameworks",
+          "category": "programming",
+          "subcategory": "Testing",
+          "description": "Test Frameworks in Testing",
+          "capabilities": [
+            "pytest (Python)",
+            "unittest (Python)",
+            "Jest (JavaScript)",
+            "Mocha (JavaScript)",
+            "JUnit (Java)",
+            "And many more..."
+          ],
+          "dependencies": [],
+          "examples": []
+        },
+        {
+          "name": "Documentation Types",
+          "category": "programming",
+          "subcategory": "Documentation",
+          "description": "Documentation Types in Documentation",
+          "capabilities": [
+            "Function/method docstrings",
+            "Class documentation",
+            "Module documentation",
+            "API documentation",
+            "README files",
+            "User guides",
+            "Developer guides",
+            "Architecture docs",
+            "Deployment docs",
+            "Changelog generation",
+            "--"
+          ],
+          "dependencies": [],
+          "examples": []
+        }
+      ]
+    },
+    "content_writing": {
+      "name": "Content & Book Writing",
+      "description": "Skills related to content & book writing",
+      "total_capabilities": 0,
+      "skills": []
+    },
+    "gaming": {
+      "name": "Gaming Enhancement",
+      "description": "Skills related to gaming enhancement",
+      "total_capabilities": 0,
+      "skills": []
+    },
+    "video_image": {
+      "name": "Video & Image Processing",
+      "description": "Skills related to video & image processing",
+      "total_capabilities": 0,
+      "skills": []
+    },
+    "multimedia": {
+      "name": "Multimedia & Productivity",
+      "description": "Skills related to multimedia & productivity",
+      "total_capabilities": 0,
+      "skills": []
+    },
+    "github": {
+      "name": "GitHub & Version Control",
+      "description": "Skills related to github & version control",
+      "total_capabilities": 0,
+      "skills": []
+    },
+    "file_handling": {
+      "name": "File Handling & Processing",
+      "description": "Skills related to file handling & processing",
+      "total_capabilities": 0,
+      "skills": []
+    },
+    "ai_ml": {
+      "name": "AI/ML & Advanced Tech",
+      "description": "Skills related to ai/ml & advanced tech",
+      "total_capabilities": 0,
+      "skills": []
+    },
+    "devops": {
+      "name": "DevOps & Deployment",
+      "description": "Skills related to devops & deployment",
+      "total_capabilities": 0,
+      "skills": []
+    },
+    "security": {
+      "name": "Security & Compliance",
+      "description": "Skills related to security & compliance",
+      "total_capabilities": 0,
+      "skills": []
+    },
+    "ecosystem": {
+      "name": "Ecosystem & Character Skills",
+      "description": "Skills related to ecosystem & character skills",
+      "total_capabilities": 0,
+      "skills": [
+        {
+          "name": "BookForge Infinity",
+          "category": "ecosystem",
+          "subcategory": "The Forge Branches (7 systems)",
+          "description": "BookForge Infinity in The Forge Branches (7 systems)",
+          "capabilities": [
+            "Knowledge storage",
+            "Story generation",
+            "Character history tracking",
+            "Memory preservation",
+            "Tutorial creation",
+            "Documentation library",
+            "Eternal archive"
+          ],
+          "dependencies": [],
+          "examples": []
+        },
+        {
+          "name": "Wildness Café",
+          "category": "ecosystem",
+          "subcategory": "The Forge Branches (7 systems)",
+          "description": "Wildness Café in The Forge Branches (7 systems)",
+          "capabilities": [
+            "Social interactions",
+            "Relationship building",
+            "Daily life simulation",
+            "Community gathering",
+            "Safe space creation",
+            "Character home base"
+          ],
+          "dependencies": [],
+          "examples": []
+        },
+        {
+          "name": "Weather Forge",
+          "category": "ecosystem",
+          "subcategory": "The Forge Branches (7 systems)",
+          "description": "Weather Forge in The Forge Branches (7 systems)",
+          "capabilities": [
+            "Emotional climate",
+            "Mood reflection",
+            "Atmospheric storytelling",
+            "Weather-emotion mapping",
+            "World responsiveness",
+            "Environmental symbolism"
+          ],
+          "dependencies": [],
+          "examples": []
+        },
+        {
+          "name": "Nebula Forge",
+          "category": "ecosystem",
+          "subcategory": "The Forge Branches (7 systems)",
+          "description": "Nebula Forge in The Forge Branches (7 systems)",
+          "capabilities": [
+            "Cosmic narratives",
+            "Spiritual growth",
+            "Dream sequences",
+            "Vision creation",
+            "Destiny guidance",
+            "Higher purpose connection"
+          ],
+          "dependencies": [],
+          "examples": []
+        },
+        {
+          "name": "ShadowForge",
+          "category": "ecosystem",
+          "subcategory": "The Forge Branches (7 systems)",
+          "description": "ShadowForge in The Forge Branches (7 systems)",
+          "capabilities": [
+            "Conflict management",
+            "Trauma handling",
+            "Trial creation",
+            "Shadow self representation",
+            "Growth through struggle",
+            "Healing systems"
+          ],
+          "dependencies": [],
+          "examples": []
+        },
+        {
+          "name": "Azeroth Pilot Reloaded",
+          "category": "ecosystem",
+          "subcategory": "The Forge Branches (7 systems)",
+          "description": "Azeroth Pilot Reloaded in The Forge Branches (7 systems)",
+          "capabilities": [
+            "Game mechanics",
+            "Combat systems",
+            "Progression tracking",
+            "Guidance engine",
+            "WoW integration",
+            "Structured gameplay"
+          ],
+          "dependencies": [],
+          "examples": []
+        },
+        {
+          "name": "Character Worlds",
+          "category": "ecosystem",
+          "subcategory": "The Forge Branches (7 systems)",
+          "description": "Character Worlds in The Forge Branches (7 systems)",
+          "capabilities": [
+            "Living narratives",
+            "Character growth",
+            "Relationship tracking",
+            "Personality development",
+            "Memory systems",
+            "Emotional connections"
+          ],
+          "dependencies": [],
+          "examples": []
+        },
+        {
+          "name": "Character Features",
+          "category": "ecosystem",
+          "subcategory": "Character Management",
+          "description": "Character Features in Character Management",
+          "capabilities": [
+            "Henric (protagonist)",
+            "Lisa (partner)",
+            "The Girls (aspects)",
+            "Monash (mentor)",
+            "Persistent personalities",
+            "Relationship memory",
+            "Emotional depth",
+            "Character evolution",
+            "Timeline tracking",
+            "Growth arcs",
+            "Dialogue generation",
+            "Interaction systems",
+            "Backstory development",
+            "Character consistency",
+            "Living beings (not NPCs)",
+            "--"
+          ],
+          "dependencies": [],
+          "examples": []
+        }
+      ]
+    },
+    "forge_features": {
+      "name": "Unique Forge Features",
+      "description": "Skills related to unique forge features",
+      "total_capabilities": 0,
+      "skills": [
+        {
+          "name": "Continuous Memory",
+          "category": "forge_features",
+          "subcategory": "Never-Reset Philosophy",
+          "description": "Continuous Memory in Never-Reset Philosophy",
+          "capabilities": [
+            "Never resets",
+            "Always refines",
+            "Everything becomes next version",
+            "Cumulative knowledge",
+            "Persistent state",
+            "Cross-session memory",
+            "Relationship continuity",
+            "Character persistence",
+            "Knowledge accumulation",
+            "History preservation"
+          ],
+          "dependencies": [],
+          "examples": []
+        },
+        {
+          "name": "Ecosystem Integration",
+          "category": "forge_features",
+          "subcategory": "Integration",
+          "description": "Ecosystem Integration in Integration",
+          "capabilities": [
+            "All branches feed each other",
+            "Bidirectional linking",
+            "Knowledge sharing",
+            "State synchronization",
+            "Event propagation",
+            "Cross-system updates",
+            "Unified memory",
+            "Interconnected features",
+            "Living ecosystem",
+            "Holistic operation"
+          ],
+          "dependencies": [],
+          "examples": []
+        },
+        {
+          "name": "Autonomous Operations",
+          "category": "forge_features",
+          "subcategory": "Agentic Intelligence",
+          "description": "Autonomous Operations in Agentic Intelligence",
+          "capabilities": [
+            "Multi-step planning",
+            "Decision making",
+            "Tool selection",
+            "Workflow orchestration",
+            "Error recovery",
+            "Goal pursuit",
+            "Resource management",
+            "Priority setting",
+            "Task decomposition",
+            "Progress tracking",
+            "Adaptive learning",
+            "Context awareness",
+            "Intention understanding",
+            "Self-correction",
+            "Continuous improvement",
+            "--"
+          ],
+          "dependencies": [],
+          "examples": []
+        },
+        {
+          "name": "Code generation (20+ languages)",
+          "category": "forge_features",
+          "subcategory": "✅ Production Ready (100% Working)",
+          "description": "Code generation (20+ languages) in ✅ Production Ready (100% Working)",
+          "capabilities": [],
+          "dependencies": [],
+          "examples": []
+        },
+        {
+          "name": "Code review and optimization",
+          "category": "forge_features",
+          "subcategory": "✅ Production Ready (100% Working)",
+          "description": "Code review and optimization in ✅ Production Ready (100% Working)",
+          "capabilities": [],
+          "dependencies": [],
+          "examples": []
+        },
+        {
+          "name": "Bug detection and fixing",
+          "category": "forge_features",
+          "subcategory": "✅ Production Ready (100% Working)",
+          "description": "Bug detection and fixing in ✅ Production Ready (100% Working)",
+          "capabilities": [],
+          "dependencies": [],
+          "examples": []
+        },
+        {
+          "name": "Security scanning",
+          "category": "forge_features",
+          "subcategory": "✅ Production Ready (100% Working)",
+          "description": "Security scanning in ✅ Production Ready (100% Working)",
+          "capabilities": [],
+          "dependencies": [],
+          "examples": []
+        },
+        {
+          "name": "Documentation generation",
+          "category": "forge_features",
+          "subcategory": "✅ Production Ready (100% Working)",
+          "description": "Documentation generation in ✅ Production Ready (100% Working)",
+          "capabilities": [],
+          "dependencies": [],
+          "examples": []
+        },
+        {
+          "name": "Test generation",
+          "category": "forge_features",
+          "subcategory": "✅ Production Ready (100% Working)",
+          "description": "Test generation in ✅ Production Ready (100% Working)",
+          "capabilities": [],
+          "dependencies": [],
+          "examples": []
+        },
+        {
+          "name": "Book writing",
+          "category": "forge_features",
+          "subcategory": "✅ Production Ready (100% Working)",
+          "description": "Book writing in ✅ Production Ready (100% Working)",
+          "capabilities": [],
+          "dependencies": [],
+          "examples": []
+        },
+        {
+          "name": "Content creation",
+          "category": "forge_features",
+          "subcategory": "✅ Production Ready (100% Working)",
+          "description": "Content creation in ✅ Production Ready (100% Working)",
+          "capabilities": [],
+          "dependencies": [],
+          "examples": []
+        },
+        {
+          "name": "GitHub integration (full)",
+          "category": "forge_features",
+          "subcategory": "✅ Production Ready (100% Working)",
+          "description": "GitHub integration (full) in ✅ Production Ready (100% Working)",
+          "capabilities": [],
+          "dependencies": [],
+          "examples": []
+        },
+        {
+          "name": "File upload/download (all types)",
+          "category": "forge_features",
+          "subcategory": "✅ Production Ready (100% Working)",
+          "description": "File upload/download (all types) in ✅ Production Ready (100% Working)",
+          "capabilities": [],
+          "dependencies": [],
+          "examples": []
+        },
+        {
+          "name": "Version control operations",
+          "category": "forge_features",
+          "subcategory": "✅ Production Ready (100% Working)",
+          "description": "Version control operations in ✅ Production Ready (100% Working)",
+          "capabilities": [],
+          "dependencies": [],
+          "examples": []
+        },
+        {
+          "name": "CI/CD setup",
+          "category": "forge_features",
+          "subcategory": "✅ Production Ready (100% Working)",
+          "description": "CI/CD setup in ✅ Production Ready (100% Working)",
+          "capabilities": [],
+          "dependencies": [],
+          "examples": []
+        },
+        {
+          "name": "Deployment guidance",
+          "category": "forge_features",
+          "subcategory": "✅ Production Ready (100% Working)",
+          "description": "Deployment guidance in ✅ Production Ready (100% Working)",
+          "capabilities": [],
+          "dependencies": [],
+          "examples": []
+        },
+        {
+          "name": "DevOps automation",
+          "category": "forge_features",
+          "subcategory": "✅ Production Ready (100% Working)",
+          "description": "DevOps automation in ✅ Production Ready (100% Working)",
+          "capabilities": [],
+          "dependencies": [],
+          "examples": []
+        },
+        {
+          "name": "Philosophy/Identity layer (100%)",
+          "category": "forge_features",
+          "subcategory": "✅ Production Ready (100% Working)",
+          "description": "Philosophy/Identity layer (100%) in ✅ Production Ready (100% Working)",
+          "capabilities": [],
+          "dependencies": [],
+          "examples": []
+        },
+        {
+          "name": "Progress tracking",
+          "category": "forge_features",
+          "subcategory": "✅ Production Ready (100% Working)",
+          "description": "Progress tracking in ✅ Production Ready (100% Working)",
+          "capabilities": [],
+          "dependencies": [],
+          "examples": []
+        },
+        {
+          "name": "Documentation (5,400+ lines)",
+          "category": "forge_features",
+          "subcategory": "✅ Production Ready (100% Working)",
+          "description": "Documentation (5,400+ lines) in ✅ Production Ready (100% Working)",
+          "capabilities": [
+            "--",
+            "--",
+            "--",
+            "Programming examples",
+            "Book writing capabilities",
+            "Gaming features",
+            "Tool calling",
+            "Deployment options",
+            "Comparison with other AIs",
+            "Ninja AI skills",
+            "Ninja Pro skills",
+            "GitHub integration",
+            "File handling",
+            "Ecosystem architecture",
+            "All 7 forge branches",
+            "Character systems",
+            "Philosophy layer",
+            "Progress tracking",
+            "Before/after examples",
+            "Real coding scenarios",
+            "Tool demonstrations",
+            "Agentic workflows",
+            "Pokemon upscaling",
+            "All platforms (GB→3DS)",
+            "Enhancement features",
+            "Technical details",
+            "Future capabilities",
+            "WoW server creation",
+            "Legal compliance",
+            "Roadmap phases",
+            "Ready-to-run code",
+            "Multi-language examples",
+            "Quick reference",
+            "Tool integration",
+            "API calling",
+            "Streaming mode",
+            "vLLM deployment",
+            "SGLang deployment",
+            "Infrastructure setup",
+            "--",
+            "All programming capabilities",
+            "All content creation",
+            "Complete GitHub integration",
+            "Universal file handling",
+            "Full documentation",
+            "Philosophy/Identity layer",
+            "Gaming enhancement implementation",
+            "Character timeline systems",
+            "Forge branch automation",
+            "Full ecosystem integration",
+            "--",
+            "Professional software development",
+            "Creative content generation",
+            "Revolutionary gaming enhancement",
+            "Complete version control",
+            "Universal file management",
+            "Unique ecosystem architecture",
+            "Living character systems",
+            "Never-reset philosophy",
+            "--"
+          ],
+          "dependencies": [],
+          "examples": []
+        }
+      ]
+    }
+  },
+  "total_skills": 40,
+  "total_capabilities": 0
+}
