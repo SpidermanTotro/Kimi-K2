@@ -1,0 +1,415 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE FORGE AI - Complete AI Platform</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="toolbar.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://sites.super.myninja.ai/_assets/ninja-daytona-script.js"></script>
+</head>
+<body>
+    <!-- Startup Screen -->
+    <div id="startupScreen" class="startup-screen">
+        <div class="startup-content">
+            <div class="logo-container">
+                <div class="forge-logo">
+                    <i class="fas fa-fire"></i>
+                    <h1>THE FORGE AI</h1>
+                </div>
+                <p class="tagline">The Most Comprehensive AI Platform - 575+ Skills Integrated</p>
+            </div>
+            
+            <div class="startup-stats">
+                <div class="stat-item">
+                    <span class="stat-number">575+</span>
+                    <span class="stat-label">Skills</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">12</span>
+                    <span class="stat-label">Categories</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">1T</span>
+                    <span class="stat-label">Parameters</span>
+                </div>
+                <div class="stat-item">
+                    <span class="stat-number">128K</span>
+                    <span class="stat-label">Context</span>
+                </div>
+            </div>
+            
+            <div class="startup-progress">
+                <div class="progress-bar">
+                    <div class="progress-fill" id="loadingProgress"></div>
+                </div>
+                <p class="loading-text" id="loadingText">Initializing THE FORGE AI...</p>
+            </div>
+            
+            <div class="quick-actions">
+                <button class="action-btn primary" onclick="enterMainInterface()">
+                    <i class="fas fa-rocket"></i> Launch Platform
+                </button>
+                <button class="action-btn secondary" onclick="showQuickTour()">
+                    <i class="fas fa-play-circle"></i> Quick Tour
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Interface -->
+    <div id="mainInterface" class="main-interface hidden">
+        <!-- Professional Toolbar -->
+        <header class="toolbar">
+            <div class="toolbar-left">
+                <div class="app-logo">
+                    <i class="fas fa-fire"></i>
+                    <span>THE FORGE AI</span>
+                </div>
+                
+                <nav class="toolbar-nav">
+                    <button class="nav-btn active" data-category="programming">
+                        <i class="fas fa-code"></i>
+                        <span>Programming</span>
+                    </button>
+                    <button class="nav-btn" data-category="writing">
+                        <i class="fas fa-book"></i>
+                        <span>Book Writing</span>
+                    </button>
+                    <button class="nav-btn" data-category="gaming">
+                        <i class="fas fa-gamepad"></i>
+                        <span>Gaming</span>
+                    </button>
+                    <button class="nav-btn" data-category="multimedia">
+                        <i class="fas fa-photo-video"></i>
+                        <span>Multimedia</span>
+                    </button>
+                    <button class="nav-btn" data-category="github">
+                        <i class="fas fa-github"></i>
+                        <span>GitHub</span>
+                    </button>
+                </nav>
+            </div>
+            
+            <div class="toolbar-right">
+                <div class="toolbar-tools">
+                    <button class="tool-btn" onclick="toggleSearch()" title="Search">
+                        <i class="fas fa-search"></i>
+                    </button>
+                    <button class="tool-btn" onclick="toggleSettings()" title="Settings">
+                        <i class="fas fa-cog"></i>
+                    </button>
+                    <button class="tool-btn" onclick="toggleTheme()" title="Toggle Theme">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button class="tool-btn" onclick="showHelp()" title="Help">
+                        <i class="fas fa-question-circle"></i>
+                    </button>
+                </div>
+                
+                <div class="user-profile">
+                    <div class="profile-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="profile-info">
+                        <span class="profile-name">Forge User</span>
+                        <span class="profile-status">Pro Mode</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Tool Panels Container -->
+        <div class="tool-panels">
+            <!-- Quick Access Toolbar -->
+            <div class="quick-toolbar">
+                <div class="tool-group">
+                    <h3>Code Generation</h3>
+                    <button class="quick-tool" onclick="startCodeGeneration()">
+                        <i class="fas fa-code"></i>
+                        <span>Generate Code</span>
+                    </button>
+                    <button class="quick-tool" onclick="startCodeReview()">
+                        <i class="fas fa-search-code"></i>
+                        <span>Review Code</span>
+                    </button>
+                    <button class="quick-tool" onclick="startBugFix()">
+                        <i class="fas fa-bug"></i>
+                        <span>Fix Bugs</span>
+                    </button>
+                </div>
+                
+                <div class="tool-group">
+                    <h3>Book Writing</h3>
+                    <button class="quick-tool" onclick="startBookWriting()">
+                        <i class="fas fa-pen-fancy"></i>
+                        <span>Write Book</span>
+                    </button>
+                    <button class="quick-tool" onclick="startEditing()">
+                        <i class="fas fa-edit"></i>
+                        <span>Edit Content</span>
+                    </button>
+                    <button class="quick-tool" onclick="startPublishing()">
+                        <i class="fas fa-book-open"></i>
+                        <span>Publish</span>
+                    </button>
+                </div>
+                
+                <div class="tool-group">
+                    <h3>Gaming</h3>
+                    <button class="quick-tool" onclick="startPokemonEnhance()">
+                        <i class="fas fa-dragon"></i>
+                        <span>Enhance Pokémon</span>
+                    </button>
+                    <button class="quick-tool" onclick="startWoWServer()">
+                        <i class="fas fa-server"></i>
+                        <span>WoW Server</span>
+                    </button>
+                    <button class="quick-tool" onclick="startGraphics()">
+                        <i class="fas fa-palette"></i>
+                        <span>Graphics</span>
+                    </button>
+                </div>
+                
+                <div class="tool-group">
+                    <h3>Multimedia</h3>
+                    <button class="quick-tool" onclick="startVideoEdit()">
+                        <i class="fas fa-video"></i>
+                        <span>Video Edit</span>
+                    </button>
+                    <button class="quick-tool" onclick="startPhotoEdit()">
+                        <i class="fas fa-image"></i>
+                        <span>Photo Edit</span>
+                    </button>
+                    <button class="quick-tool" onclick="startAudioEdit()">
+                        <i class="fas fa-music"></i>
+                        <span>Audio Edit</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Main Content Area -->
+            <main class="main-content">
+                <div class="content-header">
+                    <h2 id="categoryTitle">Programming & Development</h2>
+                    <p id="categoryDescription">Advanced code generation and analysis powered by 1 trillion parameters</p>
+                </div>
+                
+                <div class="workspace-container">
+                    <!-- Chat Interface Area -->
+                    <div class="chat-container">
+                        <div class="chat-messages" id="chatMessages">
+                            <div class="system-message">
+                                <div class="message-content">
+                                    <h3>Welcome to THE FORGE AI</h3>
+                                    <p>I'm your comprehensive AI assistant with 575+ integrated skills. I can help you with:</p>
+                                    <ul>
+                                        <li><strong>Programming:</strong> Code generation in 20+ languages, review, debugging</li>
+                                        <li><strong>Book Writing:</strong> Professional publishing-quality content creation</li>
+                                        <li><strong>Gaming:</strong> Pokémon enhancement, MMO server creation</li>
+                                        <li><strong>Multimedia:</strong> Video/photo editing, YouTube optimization</li>
+                                        <li><strong>GitHub:</strong> Repository management, CI/CD automation</li>
+                                        <li><strong>And much more!</strong></li>
+                                    </ul>
+                                    <p>What would you like to create today?</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="chat-input-container">
+                            <div class="input-toolbar">
+                                <button class="input-tool" onclick="attachFile()" title="Attach File">
+                                    <i class="fas fa-paperclip"></i>
+                                </button>
+                                <button class="input-tool" onclick="insertCode()" title="Insert Code">
+                                    <i class="fas fa-code"></i>
+                                </button>
+                                <button class="input-tool" onclick="insertImage()" title="Insert Image">
+                                    <i class="fas fa-image"></i>
+                                </button>
+                                <button class="input-tool" onclick="insertTable()" title="Insert Table">
+                                    <i class="fas fa-table"></i>
+                                </button>
+                                <button class="input-tool" onclick="voiceInput()" title="Voice Input">
+                                    <i class="fas fa-microphone"></i>
+                                </button>
+                            </div>
+                            
+                            <div class="chat-input-area">
+                                <textarea id="chatInput" placeholder="Ask me anything - I can code, write books, enhance games, and more!" rows="1"></textarea>
+                                <button id="sendButton" onclick="sendMessage()">
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Side Panel for Tools -->
+                    <div class="side-panel">
+                        <div class="panel-tabs">
+                            <button class="tab-btn active" data-tab="tools">Tools</button>
+                            <button class="tab-btn" data-tab="files">Files</button>
+                            <button class="tab-btn" data-tab="history">History</button>
+                            <button class="tab-btn" data-tab="settings">Settings</button>
+                        </div>
+                        
+                        <div class="panel-content">
+                            <div id="toolsTab" class="tab-content active">
+                                <h4>Active Tools</h4>
+                                <div class="tool-list">
+                                    <div class="tool-item active">
+                                        <i class="fas fa-code"></i>
+                                        <span>Code Generator</span>
+                                        <button class="tool-close"><i class="fas fa-times"></i></button>
+                                    </div>
+                                    <div class="tool-item">
+                                        <i class="fas fa-pen-fancy"></i>
+                                        <span>Book Writer</span>
+                                        <button class="tool-close"><i class="fas fa-times"></i></button>
+                                    </div>
+                                    <div class="tool-item">
+                                        <i class="fas fa-dragon"></i>
+                                        <span>Pokémon Enhancer</span>
+                                        <button class="tool-close"><i class="fas fa-times"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div id="filesTab" class="tab-content">
+                                <h4>Recent Files</h4>
+                                <div class="file-list">
+                                    <div class="file-item">
+                                        <i class="fas fa-file-code"></i>
+                                        <div class="file-info">
+                                            <span class="file-name">main.py</span>
+                                            <span class="file-size">2.4 KB</span>
+                                        </div>
+                                    </div>
+                                    <div class="file-item">
+                                        <i class="fas fa-file-alt"></i>
+                                        <div class="file-info">
+                                            <span class="file-name">chapter1.md</span>
+                                            <span class="file-size">15.7 KB</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div id="historyTab" class="tab-content">
+                                <h4>Conversation History</h4>
+                                <div class="history-list">
+                                    <div class="history-item">
+                                        <span class="history-title">Python API Development</span>
+                                        <span class="history-time">2 hours ago</span>
+                                    </div>
+                                    <div class="history-item">
+                                        <span class="history-title">Book Chapter Writing</span>
+                                        <span class="history-time">5 hours ago</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div id="settingsTab" class="tab-content">
+                                <h4>Quick Settings</h4>
+                                <div class="settings-form">
+                                    <div class="setting-item">
+                                        <label>Model</label>
+                                        <select>
+                                            <option>THE FORGE AI (1T params)</option>
+                                            <option>Fast Mode</option>
+                                            <option>Quality Mode</option>
+                                        </select>
+                                    </div>
+                                    <div class="setting-item">
+                                        <label>Language</label>
+                                        <select>
+                                            <option>English</option>
+                                            <option>Spanish</option>
+                                            <option>Chinese</option>
+                                        </select>
+                                    </div>
+                                    <div class="setting-item">
+                                        <label>Theme</label>
+                                        <select>
+                                            <option>Dark</option>
+                                            <option>Light</option>
+                                            <option>Auto</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <!-- Status Bar -->
+        <footer class="status-bar">
+            <div class="status-left">
+                <span class="status-item">
+                    <i class="fas fa-circle text-success"></i> Connected
+                </span>
+                <span class="status-item">
+                    <i class="fas fa-bolt"></i> 1T Parameters Active
+                </span>
+                <span class="status-item">
+                    <i class="fas fa-memory"></i> 128K Context
+                </span>
+            </div>
+            
+            <div class="status-center">
+                <span class="status-item">Ready</span>
+            </div>
+            
+            <div class="status-right">
+                <span class="status-item">
+                    <i class="fas fa-chart-line"></i> 575 Skills Loaded
+                </span>
+                <span class="status-item">
+                    <i class="fas fa-users"></i> 1,234 Active Users
+                </span>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Search Overlay -->
+    <div id="searchOverlay" class="search-overlay hidden">
+        <div class="search-container">
+            <div class="search-input-container">
+                <i class="fas fa-search"></i>
+                <input type="text" id="searchInput" placeholder="Search 575+ skills, tools, and features..." />
+                <button onclick="toggleSearch()"><i class="fas fa-times"></i></button>
+            </div>
+            <div class="search-results" id="searchResults">
+                <div class="search-category">
+                    <h4>Programming</h4>
+                    <div class="search-item">
+                        <i class="fas fa-code"></i>
+                        <span>Python Code Generation</span>
+                    </div>
+                    <div class="search-item">
+                        <i class="fas fa-bug"></i>
+                        <span>Bug Detection & Fixing</span>
+                    </div>
+                </div>
+                <div class="search-category">
+                    <h4>Book Writing</h4>
+                    <div class="search-item">
+                        <i class="fas fa-pen-fancy"></i>
+                        <span>Professional Book Writing</span>
+                    </div>
+                    <div class="search-item">
+                        <i class="fas fa-edit"></i>
+                        <span>Content Editing</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
