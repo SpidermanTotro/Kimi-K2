@@ -1,6 +1,6 @@
-# 🗺️ THE FORGE ❤️ KIMI K2 - Development Roadmap
+# 🗺️ THE FORGE ❤️ KIMI K3 - Development Roadmap
 
-**Vision:** Create the ultimate AI-powered creative platform by combining Kimi K2's world-class intelligence with THE FORGE's 1,450+ practical capabilities.
+**Vision:** Create the ultimate AI-powered creative platform by combining Kimi K3's world-class intelligence with THE FORGE's 1,450+ practical capabilities.
 
 ---
 
@@ -11,7 +11,7 @@
 - **1,450+ capabilities** across all domains
 - **167+ Python files** with complete implementations
 - **Multi-language build system** (Python, JS, C++, Rust, Go)
-- **Kimi K2 integration** complete with unified system
+- **Kimi K3 integration** complete with unified system
 
 **Major Components Complete:**
 - ✅ Professional video editing suite (38,650 lines)
@@ -21,7 +21,7 @@
 - ✅ Universal format converter (38,220 lines)
 - ✅ Complete movie database (68,980 lines) - 10M+ films
 - ✅ Multi-language build system (539 lines)
-- ✅ Kimi K2 integration system (22,496 lines)
+- ✅ Kimi K3 integration system (22,496 lines)
 - ✅ Professional web GUI (2,070 lines)
 - ✅ Interactive tutorial system (3,430 lines)
 - ✅ Intelligent RAM management (13,150 lines)
@@ -31,7 +31,7 @@
 
 ## 📅 Phase 1: Benchmark Validation (Q1 2025) - IN PROGRESS 🚧
 
-**Goal:** Validate and improve Kimi K2's benchmark performance with THE FORGE integration.
+**Goal:** Validate and improve Kimi K3's benchmark performance with THE FORGE integration.
 
 ### Coding Tasks
 - [ ] LiveCodeBench v6: Target 60%+ (current: 53.7%)
@@ -65,7 +65,7 @@
 
 ## 📅 Phase 2: Training Data Integration (Q2 2025) - PLANNED 📋
 
-**Goal:** Convert THE FORGE's 430,845+ lines into high-quality training data for Kimi K2.
+**Goal:** Convert THE FORGE's 430,845+ lines into high-quality training data for Kimi K3.
 
 ### Training Data Export
 - [ ] Convert all Python implementations to instruction-tuning format
@@ -75,7 +75,7 @@
 - [ ] Build multi-modal training data (code + video + audio)
 
 ### Fine-Tuning Preparation
-- [ ] Create LoRA fine-tuning scripts for Kimi K2
+- [ ] Create LoRA fine-tuning scripts for Kimi K3
 - [ ] Prepare domain-specific datasets (coding, math, tools)
 - [ ] Build data quality validation pipeline
 - [ ] Document fine-tuning best practices
@@ -91,7 +91,7 @@
 
 ## 📅 Phase 3: Production Deployment (Q3 2025) - PLANNED 📋
 
-**Goal:** Make the unified FORGE ❤️ KIMI K2 system production-ready for real users.
+**Goal:** Make the unified FORGE ❤️ KIMI K3 system production-ready for real users.
 
 ### Core Infrastructure
 - [ ] Optimize inference performance (target: 2x speedup)
@@ -159,7 +159,7 @@
 
 ## 📅 Phase 5: Ecosystem Growth (2026+) - VISION 🔮
 
-**Goal:** Build a thriving ecosystem around THE FORGE ❤️ KIMI K2 platform.
+**Goal:** Build a thriving ecosystem around THE FORGE ❤️ KIMI K3 platform.
 
 ### Community Building
 - [ ] Plugin marketplace for community extensions
@@ -193,7 +193,7 @@
 
 ## 🎯 Long-Term Vision
 
-**THE FORGE ❤️ KIMI K2 aims to become:**
+**THE FORGE ❤️ KIMI K3 aims to become:**
 
 1. **The Ultimate Creative Platform** - One system for all creative work
 2. **The Best AI Assistant** - Outperforming all closed-source competitors
@@ -230,7 +230,7 @@
 
 ## 🤝 How to Contribute
 
-We're building THE FORGE ❤️ KIMI K2 together as a community!
+We're building THE FORGE ❤️ KIMI K3 together as a community!
 
 ### For Developers
 - **Code Contributions**: Submit PRs for new features or bug fixes
@@ -264,7 +264,7 @@ We're building THE FORGE ❤️ KIMI K2 together as a community!
 
 ## 📞 Stay Connected
 
-- **GitHub**: [SpidermanTotro/Kimi-K2](https://github.com/SpidermanTotro/Kimi-K2)
+- **GitHub**: [SpidermanTotro/Kimi-K3](https://github.com/SpidermanTotro/Kimi-K3)
 - **Issues**: Report bugs and request features
 - **Discussions**: Join conversations about the roadmap
 - **PRs**: Submit code contributions
@@ -275,7 +275,7 @@ We're building THE FORGE ❤️ KIMI K2 together as a community!
 ## 💖 Acknowledgments
 
 **Special thanks to:**
-- **Moonshot AI** - For creating and open-sourcing Kimi K2
+- **Moonshot AI** - For creating and open-sourcing Kimi K3
 - **The Kimi Team** - For their groundbreaking research and commitment to open AI
 - **The Community** - For feedback, contributions, and support
 - **Contributors** - Everyone who has helped build THE FORGE
@@ -286,7 +286,7 @@ We're building THE FORGE ❤️ KIMI K2 together as a community!
 
 ## 📝 Version History
 
-- **v1.0 (Current)** - Complete FORGE ❤️ KIMI K2 integration, 430,845+ lines
+- **v1.0 (Current)** - Complete FORGE ❤️ KIMI K3 integration, 430,845+ lines
 - **v0.9** - Multi-language build system, downloadable distributions
 - **v0.8** - Complete movie database integration (10M+ films)
 - **v0.7** - Professional video editor, Linux OS builder

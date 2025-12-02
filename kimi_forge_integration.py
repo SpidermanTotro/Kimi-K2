@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Kimi K2 + THE FORGE Integration System
-Merges THE FORGE capabilities into Kimi K2 for enhanced benchmark performance
+Kimi K3 + THE FORGE Integration System
+Merges THE FORGE capabilities into Kimi K3 for enhanced benchmark performance
 """
 
 import json
@@ -10,7 +10,7 @@ from pathlib import Path
 from typing import Dict, List, Any
 
 class KimiForgeIntegration:
-    """Integrates THE FORGE with Kimi K2 for benchmark improvements"""
+    """Integrates THE FORGE with Kimi K3 for benchmark improvements"""
     
     def __init__(self):
         self.forge_root = Path(__file__).parent
@@ -18,19 +18,19 @@ class KimiForgeIntegration:
         
     def export_training_data(self) -> Dict[str, Any]:
         """
-        Export THE FORGE knowledge as training data for Kimi K2
+        Export THE FORGE knowledge as training data for Kimi K3
         
         This converts THE FORGE's 408K+ lines into instruction-tuning format
-        suitable for enhancing Kimi K2's capabilities
+        suitable for enhancing Kimi K3's capabilities
         """
-        print("🔄 Exporting THE FORGE training data for Kimi K2...")
+        print("🔄 Exporting THE FORGE training data for Kimi K3...")
         
         training_data = {
             "metadata": {
                 "source": "THE FORGE AI",
                 "total_lines": "408,349+",
                 "capabilities": "1,450+",
-                "purpose": "Kimi K2 Enhancement"
+                "purpose": "Kimi K3 Enhancement"
             },
             "datasets": {
                 "coding": self._export_coding_examples(),
@@ -41,7 +41,7 @@ class KimiForgeIntegration:
             }
         }
         
-        output_path = self.forge_root / "kimi_k2_training_data.json"
+        output_path = self.forge_root / "kimi_k3_training_data.json"
         with open(output_path, 'w') as f:
             json.dump(training_data, f, indent=2)
         
@@ -166,10 +166,10 @@ class KimiForgeIntegration:
         return improvements
     
     def generate_fine_tuning_config(self) -> Dict[str, Any]:
-        """Generate configuration for fine-tuning Kimi K2 with FORGE data"""
+        """Generate configuration for fine-tuning Kimi K3 with FORGE data"""
         return {
-            "model": "Kimi-K2-Base",
-            "training_data": "kimi_k2_training_data.json",
+            "model": "Kimi-K3-Base",
+            "training_data": "kimi_k3_training_data.json",
             "objective": "Improve benchmark performance across all categories",
             "enhancements": {
                 "coding": {
@@ -202,12 +202,12 @@ class KimiForgeIntegration:
         }
     
     def create_integration_guide(self) -> str:
-        """Create step-by-step guide for integrating FORGE with Kimi K2"""
+        """Create step-by-step guide for integrating FORGE with Kimi K3"""
         guide = """
-# Kimi K2 + THE FORGE Integration Guide
+# Kimi K3 + THE FORGE Integration Guide
 
 ## Overview
-Merge THE FORGE's 408,349+ lines of capabilities into Kimi K2 to boost benchmark performance.
+Merge THE FORGE's 408,349+ lines of capabilities into Kimi K3 to boost benchmark performance.
 
 ## Step 1: Export Training Data
 ```python
@@ -224,18 +224,18 @@ Convert FORGE knowledge into instruction-tuning format:
 - Math examples → AIME, MATH improvement
 - Agentic examples → SWE-bench Multilingual improvement
 
-## Step 3: Fine-Tune Kimi K2
+## Step 3: Fine-Tune Kimi K3
 ```bash
 # Using vLLM
 python -m vllm.entrypoints.openai.api_server \\
-    --model Kimi-K2-Base \\
-    --training-data kimi_k2_training_data.json \\
-    --output-dir Kimi-K2-FORGE
+    --model Kimi-K3-Base \\
+    --training-data kimi_k3_training_data.json \\
+    --output-dir Kimi-K3-FORGE
 
 # Using SGLang
 python -m sglang.launch_server \\
-    --model-path Kimi-K2-Base \\
-    --training-data kimi_k2_training_data.json
+    --model-path Kimi-K3-Base \\
+    --training-data kimi_k3_training_data.json
 ```
 
 ## Step 4: Integrate FORGE Tools
@@ -247,16 +247,16 @@ Enable function calling with FORGE's 1,450+ capabilities:
 - Historical restoration
 
 ## Step 5: Benchmark Testing
-Run enhanced Kimi K2 on all benchmarks:
+Run enhanced Kimi K3 on all benchmarks:
 ```bash
 # LiveCodeBench
-python benchmark_runner.py --benchmark livecode --model Kimi-K2-FORGE
+python benchmark_runner.py --benchmark livecode --model Kimi-K3-FORGE
 
 # SWE-bench
-python benchmark_runner.py --benchmark swebench --model Kimi-K2-FORGE
+python benchmark_runner.py --benchmark swebench --model Kimi-K3-FORGE
 
 # AIME
-python benchmark_runner.py --benchmark aime --model Kimi-K2-FORGE
+python benchmark_runner.py --benchmark aime --model Kimi-K3-FORGE
 ```
 
 ## Expected Improvements
@@ -274,14 +274,14 @@ python benchmark_runner.py --benchmark aime --model Kimi-K2-FORGE
 5. **Comprehensive knowledge** from 60K+ documentation lines
 
 ## Result
-Kimi K2 enhanced with THE FORGE becomes more capable across:
+Kimi K3 enhanced with THE FORGE becomes more capable across:
 - ✅ Coding (LiveCodeBench, SWE-bench)
 - ✅ Tool use (Tau2, AceBench)
 - ✅ Math/STEM (AIME, MATH)
 - ✅ Agentic tasks (SWE-bench Multilingual)
 - ✅ General knowledge (MMLU, GPQA)
 
-Both projects benefit: THE FORGE provides practical tools, Kimi K2 gains benchmark performance.
+Both projects benefit: THE FORGE provides practical tools, Kimi K3 gains benchmark performance.
 """
         
         integration_path = self.forge_root / "KIMI_K2_FORGE_INTEGRATION.md"
@@ -294,7 +294,7 @@ Both projects benefit: THE FORGE provides practical tools, Kimi K2 gains benchma
 def main():
     """Run complete integration workflow"""
     print("=" * 70)
-    print("🔥 KIMI K2 + THE FORGE INTEGRATION")
+    print("🔥 KIMI K3 + THE FORGE INTEGRATION")
     print("=" * 70)
     print()
     
@@ -315,7 +315,7 @@ def main():
     # Step 3: Generate fine-tuning config
     print("⚙️  Step 3: Generating fine-tuning configuration...")
     config = integrator.generate_fine_tuning_config()
-    config_path = integrator.forge_root / "kimi_k2_finetuning_config.json"
+    config_path = integrator.forge_root / "kimi_k3_finetuning_config.json"
     with open(config_path, 'w') as f:
         json.dump(config, f, indent=2)
     print(f"   ✅ Configuration saved: {config_path}")
@@ -332,13 +332,13 @@ def main():
     print("=" * 70)
     print()
     print("📦 Created Files:")
-    print("   - kimi_k2_training_data.json (Training dataset)")
-    print("   - kimi_k2_finetuning_config.json (Fine-tuning config)")
+    print("   - kimi_k3_training_data.json (Training dataset)")
+    print("   - kimi_k3_finetuning_config.json (Fine-tuning config)")
     print("   - KIMI_K2_FORGE_INTEGRATION.md (Integration guide)")
     print()
     print("🎯 Next Steps:")
     print("   1. Review training data and configuration")
-    print("   2. Fine-tune Kimi K2 with FORGE data")
+    print("   2. Fine-tune Kimi K3 with FORGE data")
     print("   3. Integrate FORGE tools as function calls")
     print("   4. Run benchmark testing")
     print("   5. Monitor performance improvements")
@@ -350,7 +350,7 @@ def main():
     print("   - Enhanced tool use (Tau2, AceBench) from FORGE tools")
     print("   - Stronger general knowledge from documentation")
     print()
-    print("💡 THE FORGE + Kimi K2 = Ultimate AI System!")
+    print("💡 THE FORGE + Kimi K3 = Ultimate AI System!")
 
 if __name__ == "__main__":
     main()

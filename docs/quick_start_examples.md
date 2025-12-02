@@ -1,6 +1,6 @@
-# Quick Start Examples for Kimi K2
+# Quick Start Examples for Kimi K3
 
-This guide provides simple, ready-to-run examples to get started with Kimi K2 quickly. Perfect for developers who want to see the AI in action immediately.
+This guide provides simple, ready-to-run examples to get started with Kimi K3 quickly. Perfect for developers who want to see the AI in action immediately.
 
 ## Table of Contents
 - [Setup](#setup)
@@ -14,7 +14,7 @@ This guide provides simple, ready-to-run examples to get started with Kimi K2 qu
 
 ## Setup
 
-First, ensure you have Kimi K2 running locally or access to the API:
+First, ensure you have Kimi K3 running locally or access to the API:
 
 ```python
 from openai import OpenAI
@@ -31,7 +31,7 @@ client = OpenAI(
 #     api_key="your-api-key-here"
 # )
 
-MODEL_NAME = "kimi-k2"
+MODEL_NAME = "kimi-k3"
 ```
 
 ---
@@ -42,7 +42,7 @@ MODEL_NAME = "kimi-k2"
 
 ```python
 def simple_chat():
-    """Basic chat interaction with Kimi K2."""
+    """Basic chat interaction with Kimi K3."""
     response = client.chat.completions.create(
         model=MODEL_NAME,
         messages=[
@@ -79,7 +79,7 @@ I'm designed specifically for agentic applications, making me ideal for autonomo
 
 ```python
 def generate_code():
-    """Ask Kimi K2 to generate a specific function."""
+    """Ask Kimi K3 to generate a specific function."""
     response = client.chat.completions.create(
         model=MODEL_NAME,
         messages=[
@@ -138,7 +138,7 @@ print(get_top_n_unique(numbers, 5))  # Output: [9, 8, 7, 5, 3]
 
 ```python
 def generate_class():
-    """Ask Kimi K2 to generate a complete class."""
+    """Ask Kimi K3 to generate a complete class."""
     response = client.chat.completions.create(
         model=MODEL_NAME,
         messages=[
@@ -168,7 +168,7 @@ generate_class()
 
 ```python
 def review_code():
-    """Ask Kimi K2 to review code and suggest improvements."""
+    """Ask Kimi K3 to review code and suggest improvements."""
     code_to_review = """
 def calculate_average(numbers):
     total = 0
@@ -245,7 +245,7 @@ Improvements made:
 
 ```python
 def find_security_issues():
-    """Ask Kimi K2 to identify security vulnerabilities."""
+    """Ask Kimi K3 to identify security vulnerabilities."""
     code = """
 def login(username, password):
     query = "SELECT * FROM users WHERE username = '" + username + "' AND password = '" + password + "'"
@@ -284,7 +284,7 @@ find_security_issues()
 
 ```python
 def solve_algorithm_problem():
-    """Ask Kimi K2 to solve an algorithmic problem."""
+    """Ask Kimi K3 to solve an algorithmic problem."""
     response = client.chat.completions.create(
         model=MODEL_NAME,
         messages=[
@@ -319,7 +319,7 @@ solve_algorithm_problem()
 
 ```python
 def debug_code():
-    """Ask Kimi K2 to help debug problematic code."""
+    """Ask Kimi K3 to help debug problematic code."""
     buggy_code = """
 def fibonacci(n):
     if n <= 1:
@@ -473,7 +473,7 @@ For real-time output (useful for long responses):
 
 ```python
 def streaming_example():
-    """Example of streaming responses from Kimi K2."""
+    """Example of streaming responses from Kimi K3."""
     print("Streaming response:\n")
     
     stream = client.chat.completions.create(
@@ -539,7 +539,7 @@ codes = [
 
 ## Advanced: Custom System Prompts
 
-Customize Kimi K2's behavior with system prompts:
+Customize Kimi K3's behavior with system prompts:
 
 ```python
 def custom_assistant():
@@ -582,7 +582,7 @@ custom_assistant()
 
 2. **Token Limits**:
    - Set appropriate `max_tokens` based on expected response length
-   - Kimi K2 supports up to 128K context length
+   - Kimi K3 supports up to 128K context length
 
 3. **Error Handling**:
    ```python

@@ -1,6 +1,6 @@
-# Kimi K2 Skills and Examples Guide
+# Kimi K3 Skills and Examples Guide
 
-This guide demonstrates Kimi K2's powerful AI capabilities through practical before-and-after examples and real-world coding scenarios. Learn how to leverage Kimi K2's agentic intelligence for various development tasks.
+This guide demonstrates Kimi K3's powerful AI capabilities through practical before-and-after examples and real-world coding scenarios. Learn how to leverage Kimi K3's agentic intelligence for various development tasks.
 
 ## Table of Contents
 - [AI Skills Overview](#ai-skills-overview)
@@ -13,7 +13,7 @@ This guide demonstrates Kimi K2's powerful AI capabilities through practical bef
 
 ## AI Skills Overview
 
-Kimi K2 excels in several key areas:
+Kimi K3 excels in several key areas:
 
 1. **Coding & Development**: Write, debug, and optimize code across multiple languages
 2. **Reasoning & Problem Solving**: Break down complex problems into manageable steps
@@ -41,9 +41,9 @@ data = [1, -2, 3, -4, 5]
 print(process_data(data))
 ```
 
-**After: Using Kimi K2 for Optimization**
+**After: Using Kimi K3 for Optimization**
 ```python
-# Kimi K2 refactored - efficient and readable
+# Kimi K3 refactored - efficient and readable
 def process_data(data):
     """Process data by doubling positive values.
     
@@ -85,9 +85,9 @@ function findMaxValue(arr) {
 console.log(findMaxValue([1, 5, 3, 9, 2])); // Returns 5, should be 9!
 ```
 
-**After: Kimi K2 Identified and Fixed**
+**After: Kimi K3 Identified and Fixed**
 ```javascript
-// Kimi K2 fixed version
+// Kimi K3 fixed version
 function findMaxValue(arr) {
     if (!arr || arr.length === 0) {
         throw new Error('Array must not be empty');
@@ -130,9 +130,9 @@ numbers = [1, 2, 3, 2, 4, 5, 1, 6]
 print(find_duplicates(numbers))
 ```
 
-**After: Kimi K2 Optimized**
+**After: Kimi K3 Optimized**
 ```python
-# Kimi K2 optimized - O(n) complexity
+# Kimi K3 optimized - O(n) complexity
 def find_duplicates(arr):
     """Find all duplicate elements in an array.
     
@@ -445,7 +445,7 @@ if __name__ == '__main__':
 import json
 from openai import OpenAI
 
-# Initialize client (pointing to Kimi K2)
+# Initialize client (pointing to Kimi K3)
 client = OpenAI(
     base_url="http://localhost:8000/v1",
     api_key="dummy-key"
@@ -470,7 +470,7 @@ def get_weather(city: str, units: str = "celsius") -> dict:
     data["city"] = city
     return data
 
-# Tool schema for Kimi K2
+# Tool schema for Kimi K3
 tools = [{
     "type": "function",
     "function": {
@@ -501,7 +501,7 @@ tool_map = {
 }
 
 def chat_with_weather_tool(user_message: str):
-    """Chat with Kimi K2 using weather tool."""
+    """Chat with Kimi K3 using weather tool."""
     messages = [
         {"role": "system", "content": "You are a helpful weather assistant. When users ask about weather, use the available tool to get accurate information."},
         {"role": "user", "content": user_message}
@@ -512,7 +512,7 @@ def chat_with_weather_tool(user_message: str):
     # Tool calling loop
     while finish_reason is None or finish_reason == "tool_calls":
         response = client.chat.completions.create(
-            model="kimi-k2",
+            model="kimi-k3",
             messages=messages,
             temperature=0.6,
             tools=tools,
@@ -710,7 +710,7 @@ def database_assistant(user_question: str, conn: sqlite3.Connection):
     
     while finish_reason is None or finish_reason == "tool_calls":
         response = client.chat.completions.create(
-            model="kimi-k2",
+            model="kimi-k3",
             messages=messages,
             temperature=0.3,
             tools=db_tools,
@@ -782,7 +782,7 @@ class CodeReviewAgent:
     
     def __init__(self, client):
         self.client = client
-        self.model = "kimi-k2"
+        self.model = "kimi-k3"
     
     def analyze_code(self, code: str, language: str) -> Dict[str, Any]:
         """Perform comprehensive code analysis."""
@@ -954,27 +954,27 @@ def get_user(user_id):
 
 ## Summary
 
-This guide demonstrates Kimi K2's capabilities through:
+This guide demonstrates Kimi K3's capabilities through:
 
-1. **Before & After Examples**: Shows how Kimi K2 improves code quality, fixes bugs, and optimizes performance
+1. **Before & After Examples**: Shows how Kimi K3 improves code quality, fixes bugs, and optimizes performance
 2. **Real Coding Examples**: Practical implementations of REST APIs, async pipelines, and TDD
 3. **Tool Use**: Integration with external tools and APIs for enhanced functionality
 4. **Agentic Workflows**: Multi-step problem solving with autonomous decision-making
 
 ### Key Takeaways
 
-- ✅ Kimi K2 excels at understanding context and making intelligent decisions
+- ✅ Kimi K3 excels at understanding context and making intelligent decisions
 - ✅ Tool integration enables powerful agentic workflows
 - ✅ Multi-step reasoning allows complex problem solving
 - ✅ Code quality improvements are automatic and intelligent
-- ✅ Real-world applications benefit from Kimi K2's capabilities
+- ✅ Real-world applications benefit from Kimi K3's capabilities
 
 ### Next Steps
 
-1. Deploy Kimi K2 following the [Deployment Guide](./deploy_guidance.md)
+1. Deploy Kimi K3 following the [Deployment Guide](./deploy_guidance.md)
 2. Implement tool calling using the [Tool Calling Guide](./tool_call_guidance.md)
 3. Experiment with your own use cases
-4. Build agentic applications leveraging Kimi K2's capabilities
+4. Build agentic applications leveraging Kimi K3's capabilities
 
 ---
 

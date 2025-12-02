@@ -1,4 +1,4 @@
-# Kimi K2 / THE FORGE Documentation Index
+# Kimi K3 / THE FORGE Documentation Index
 
 > [!NOTE]
 > **🔥🔥🔥 NEW: [ULTIMATE GUIDE - EVERYTHING ON ONE PAGE](ULTIMATE_GUIDE.md) 🔥🔥🔥**
@@ -14,11 +14,11 @@
 > - Vision & Roadmap
 > - **Everything in ONE place - no jumping between files!**
 
-Welcome to the complete documentation for Kimi K2 and THE FORGE AI ecosystem!
+Welcome to the complete documentation for Kimi K3 and THE FORGE AI ecosystem!
 
 ## 🚀 Getting Started
 
-**New to Kimi K2 / THE FORGE? Start here:**
+**New to Kimi K3 / THE FORGE? Start here:**
 
 0. **[📖 ULTIMATE GUIDE - EVERYTHING ON ONE PAGE](ULTIMATE_GUIDE.md)** - 🔥 **NEW!** Complete single-page reference (2,500+ lines)
 1. **[📚 COMPLETE GUIDE - Merged Reference](COMPLETE_GUIDE.md)** - Everything merged: Programming, Writing, Gaming, Examples (1,000+ lines)
@@ -69,12 +69,12 @@ Welcome to the complete documentation for Kimi K2 and THE FORGE AI ecosystem!
   - File handling and processing
 
 ### Deployment & Setup
-- **[Deployment Guide](deploy_guidance.md)** - Deploy Kimi K2 with vLLM, SGLang, KTransformers, or TensorRT-LLM
+- **[Deployment Guide](deploy_guidance.md)** - Deploy Kimi K3 with vLLM, SGLang, KTransformers, or TensorRT-LLM
   - Multi-node setup
   - Configuration options
   - Performance tuning
 
-### Using Kimi K2
+### Using Kimi K3
 - **[Tool Calling Guide](tool_call_guidance.md)** - Integrate external tools and APIs
   - Tool definitions
   - Streaming mode
@@ -116,7 +116,7 @@ Welcome to the complete documentation for Kimi K2 and THE FORGE AI ecosystem!
 
 **I want to...**
 
-- **Deploy Kimi K2** → [Deployment Guide](deploy_guidance.md)
+- **Deploy Kimi K3** → [Deployment Guide](deploy_guidance.md)
 - **See what it can do** → [Examples & Skills Guide](examples_guide.md)
 - **Start coding immediately** → [Quick Start Examples](quick_start_examples.md)
 - **Use external tools** → [Tool Calling Guide](tool_call_guidance.md)
@@ -159,8 +159,8 @@ Welcome to the complete documentation for Kimi K2 and THE FORGE AI ecosystem!
 
 ## 🔗 External Resources
 
-- **Hugging Face:** [moonshotai/Kimi-K2-Instruct](https://huggingface.co/moonshotai/Kimi-K2-Instruct)
-- **Tech Blog:** [moonshotai.github.io/Kimi-K2/](https://moonshotai.github.io/Kimi-K2/)
+- **Hugging Face:** [moonshotai/Kimi-K3-Instruct](https://huggingface.co/moonshotai/Kimi-K3-Instruct)
+- **Tech Blog:** [moonshotai.github.io/Kimi-K3/](https://moonshotai.github.io/Kimi-K3/)
 - **Research Paper:** [arxiv.org/abs/2507.20534](https://www.arxiv.org/abs/2507.20534)
 - **Discord Community:** [discord.gg/TYU2fdJykW](https://discord.gg/TYU2fdJykW)
 - **Twitter:** [@kimi_moonshot](https://twitter.com/kimi_moonshot)

@@ -119,7 +119,7 @@ def chat():
         # Generate response
         response_content = f"THE FORGE AI processing your request: {message}\n\n"
         response_content += "This is a demonstration response. In production, this would:\n"
-        response_content += "- Use the Kimi K2 model for generation\n"
+        response_content += "- Use the Kimi K3 model for generation\n"
         response_content += "- Apply the complete system prompt from all documentation\n"
         response_content += "- Utilize appropriate capabilities based on request\n"
         response_content += "- Learn from interaction patterns\n"

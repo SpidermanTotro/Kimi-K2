@@ -1,4 +1,4 @@
-# KIMI K2 - THE COMPLETE GUIDE
+# KIMI K3 - THE COMPLETE GUIDE
 ## Programming AI • Book Writing AI • Gaming AI • Everything in One Place
 
 **The Ultimate Comprehensive Documentation - All Features, All Capabilities, All in One Document**
@@ -6,14 +6,14 @@
 > [!NOTE]
 > **Thank You, Kimi Team!** 🙏
 > 
-> This comprehensive guide represents our deepest gratitude to the Kimi Team at Moonshot AI for creating and open-sourcing this revolutionary 1 trillion parameter AI model. By making Kimi K2 freely available, you've empowered developers and gamers worldwide. Thank you for advancing AI and making it accessible to everyone!
+> This comprehensive guide represents our deepest gratitude to the Kimi Team at Moonshot AI for creating and open-sourcing this revolutionary 1 trillion parameter AI model. By making Kimi K3 freely available, you've empowered developers and gamers worldwide. Thank you for advancing AI and making it accessible to everyone!
 
 ---
 
 ## 📑 TABLE OF CONTENTS
 
 ### PART 1: INTRODUCTION & SETUP
-1. [What is Kimi K2?](#what-is-kimi-k2)
+1. [What is Kimi K3?](#what-is-kimi-k3)
 2. [Quick Start - Get Running in 5 Minutes](#quick-start)
 3. [Deployment Guide](#deployment-guide)
 
@@ -47,10 +47,10 @@
 
 # PART 1: INTRODUCTION & SETUP
 
-<a name="what-is-kimi-k2"></a>
-## What is Kimi K2?
+<a name="what-is-kimi-k3"></a>
+## What is Kimi K3?
 
-Kimi K2 is a state-of-the-art mixture-of-experts (MoE) language model with **32 billion activated parameters** and **1 trillion total parameters**. Trained with the Muon optimizer, Kimi K2 achieves exceptional performance across:
+Kimi K3 is a state-of-the-art mixture-of-experts (MoE) language model with **32 billion activated parameters** and **1 trillion total parameters**. Trained with the Muon optimizer, Kimi K3 achieves exceptional performance across:
 
 - 🧠 **Frontier Knowledge** - Cutting-edge information and reasoning
 - 💻 **Coding Excellence** - State-of-the-art programming capabilities
@@ -62,7 +62,7 @@ Kimi K2 is a state-of-the-art mixture-of-experts (MoE) language model with **32 
 
 ```
 ┌─────────────────────────────────────────────────────────┐
-│  KIMI K2 MODEL SPECIFICATIONS                          │
+│  KIMI K3 MODEL SPECIFICATIONS                          │
 ├─────────────────────────────────────────────────────────┤
 │  Total Parameters:        1 Trillion                   │
 │  Activated Parameters:    32 Billion                   │
@@ -112,7 +112,7 @@ pip install vllm torch transformers
 ```python
 from openai import OpenAI
 
-# Connect to Kimi K2
+# Connect to Kimi K3
 client = OpenAI(
     base_url="http://localhost:8000/v1",  # Local deployment
     # base_url="https://platform.moonshot.ai/v1",  # Or use API
@@ -121,7 +121,7 @@ client = OpenAI(
 
 # Simple chat
 response = client.chat.completions.create(
-    model="kimi-k2",
+    model="kimi-k3",
     messages=[
         {"role": "system", "content": "You are Kimi, an AI assistant created by Moonshot AI."},
         {"role": "user", "content": "Write a Python function to calculate fibonacci numbers."}
@@ -171,11 +171,11 @@ def fibonacci(n: int) -> int:
 # Tensor Parallelism (16 GPUs)
 vllm serve $MODEL_PATH \
   --port 8000 \
-  --served-model-name kimi-k2 \
+  --served-model-name kimi-k3 \
   --trust-remote-code \
   --tensor-parallel-size 16 \
   --enable-auto-tool-choice \
-  --tool-call-parser kimi_k2
+  --tool-call-parser kimi_k3
 ```
 
 ### Option 2: SGLang
@@ -189,7 +189,7 @@ python -m sglang.launch_server \
   --nnodes 2 \
   --node-rank 0 \
   --trust-remote-code \
-  --tool-call-parser kimi_k2
+  --tool-call-parser kimi_k3
 ```
 
 ### Option 3: Local Testing (Single GPU)
@@ -197,7 +197,7 @@ python -m sglang.launch_server \
 ```python
 from transformers import AutoTokenizer, AutoModelForCausalLM
 
-model_name = "moonshotai/Kimi-K2-Instruct"
+model_name = "moonshotai/Kimi-K3-Instruct"
 tokenizer = AutoTokenizer.from_pretrained(model_name, trust_remote_code=True)
 model = AutoModelForCausalLM.from_pretrained(
     model_name,
@@ -213,7 +213,7 @@ model = AutoModelForCausalLM.from_pretrained(
 <a name="ai-skills-overview"></a>
 ## AI Skills Overview
 
-Kimi K2 excels in multiple programming domains:
+Kimi K3 excels in multiple programming domains:
 
 ### 1. **Code Generation**
 - Write complete applications from scratch
@@ -262,7 +262,7 @@ def process_data(data):
     return result
 ```
 
-**AFTER: Optimized by Kimi K2**
+**AFTER: Optimized by Kimi K3**
 ```python
 def process_data(data: list[float]) -> list[float]:
     """
@@ -305,7 +305,7 @@ function findMaxValue(arr) {
 console.log(findMaxValue([1, 5, 3, 9, 2]));  // Returns 5, should be 9!
 ```
 
-**AFTER: Fixed by Kimi K2**
+**AFTER: Fixed by Kimi K3**
 ```javascript
 function findMaxValue(arr) {
     if (!arr || arr.length === 0) {
@@ -340,7 +340,7 @@ def get_user(user_id):
     return result
 ```
 
-**AFTER: Secured by Kimi K2**
+**AFTER: Secured by Kimi K3**
 ```python
 def get_user(user_id: int) -> Optional[dict]:
     """
@@ -718,7 +718,7 @@ func processCSV(inputFile, outputFile string) error {
 <a name="book-writing-ai"></a>
 ## Book Writing AI
 
-Kimi K2 is not just a programming AI—it's also a **powerful content creation tool** that can help you write:
+Kimi K3 is not just a programming AI—it's also a **powerful content creation tool** that can help you write:
 
 - 📚 **Books** (fiction, non-fiction, technical)
 - 📄 **Documentation** (user guides, API docs, READMEs)
@@ -735,7 +735,7 @@ from openai import OpenAI
 client = OpenAI(base_url="http://localhost:8000/v1", api_key="dummy")
 
 def generate_book_chapter(topic: str, chapter_num: int) -> str:
-    """Generate a book chapter using Kimi K2."""
+    """Generate a book chapter using Kimi K3."""
     
     prompt = f"""
 You are writing Chapter {chapter_num} of a technical book about {topic}.
@@ -752,7 +752,7 @@ and practical applications.
 """
     
     response = client.chat.completions.create(
-        model="kimi-k2",
+        model="kimi-k3",
         messages=[
             {"role": "system", "content": "You are an expert technical writer."},
             {"role": "user", "content": prompt}
@@ -795,7 +795,7 @@ Make it comprehensive, well-structured, and professional.
 """
     
     response = client.chat.completions.create(
-        model="kimi-k2",
+        model="kimi-k3",
         messages=[{"role": "user", "content": prompt}],
         temperature=0.6,
         max_tokens=3000
@@ -842,7 +842,7 @@ Make it informative, engaging, and valuable for readers.
 """
     
     response = client.chat.completions.create(
-        model="kimi-k2",
+        model="kimi-k3",
         messages=[
             {"role": "system", "content": "You are an expert content writer specializing in technical topics."},
             {"role": "user", "content": prompt}
@@ -878,7 +878,7 @@ Make it clear, practical, and easy to follow.
 """
     
     response = client.chat.completions.create(
-        model="kimi-k2",
+        model="kimi-k3",
         messages=[{"role": "user", "content": prompt}],
         temperature=0.6,
         max_tokens=3500
@@ -924,7 +924,7 @@ Format in Markdown with code examples.
 """
     
     response = client.chat.completions.create(
-        model="kimi-k2",
+        model="kimi-k3",
         messages=[{"role": "user", "content": prompt}],
         temperature=0.4,
         max_tokens=4000
@@ -954,11 +954,11 @@ print(api_docs)
 
 ### 🎮 The Ultimate Gaming AI - ALL BUILT INTO 16GB!
 
-Kimi K2 includes a **revolutionary gaming enhancement platform** that transforms classic games with AI-powered upscaling and modern graphics. All packaged into a compact **16GB AI system**!
+Kimi K3 includes a **revolutionary gaming enhancement platform** that transforms classic games with AI-powered upscaling and modern graphics. All packaged into a compact **16GB AI system**!
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│       KIMI K2 GAMING PLATFORM - 16GB PACKAGE               │
+│       KIMI K3 GAMING PLATFORM - 16GB PACKAGE               │
 ├─────────────────────────────────────────────────────────────┤
 │                                                             │
 │  ✅ ALL Game Boy games enhanced                            │
@@ -1145,7 +1145,7 @@ AFTER (AI Enhanced):
 ### All WoW Expansions Supported
 
 ```python
-from kimi_k2 import WoWServerBuilder
+from kimi_k3 import WoWServerBuilder
 
 # ALL expansions available:
 expansions = [
@@ -1241,7 +1241,7 @@ finish_reason = None
 
 while finish_reason is None or finish_reason == "tool_calls":
     response = client.chat.completions.create(
-        model="kimi-k2",
+        model="kimi-k3",
         messages=messages,
         temperature=0.6,
         tools=tools,
@@ -1285,7 +1285,7 @@ class CodeReviewAgent:
     
     def __init__(self, client):
         self.client = client
-        self.model = "kimi-k2"
+        self.model = "kimi-k3"
     
     def analyze_code(self, code: str, language: str) -> dict:
         """Perform multi-step code analysis."""
@@ -1373,7 +1373,7 @@ We're building toward an AI that doesn't just assist—it **acts autonomously** 
 Future Vision:
 You: "Create a movie poster"
 
-Kimi K2:
+Kimi K3:
 1. Detects GIMP is needed
 2. Automatically installs GIMP
 3. Learns GIMP interface
@@ -1389,7 +1389,7 @@ No manual setup required!
 Future Vision:
 You: "Make a 2-minute tutorial video"
 
-Kimi K2:
+Kimi K3:
 1. Writes script
 2. Generates voiceover
 3. Creates animations
@@ -1421,7 +1421,7 @@ Extensions (on-demand):
 #### 🔄 **Self-Updating Intelligence**
 
 ```
-Kimi K2 automatically:
+Kimi K3 automatically:
 - Scans for updates
 - Downloads improvements
 - Updates tool integrations
@@ -1474,7 +1474,7 @@ Always improving!
 ### How to Contribute
 
 1. **Test & Provide Feedback**
-   - Try Kimi K2 on real-world tasks
+   - Try Kimi K3 on real-world tasks
    - Report issues and successes
    - Share your use cases
 
@@ -1489,7 +1489,7 @@ Always improving!
    - Record demos
 
 4. **Spread the Word**
-   - Tell others about Kimi K2
+   - Tell others about Kimi K3
    - Share your projects
    - Help build the community
 
@@ -1531,7 +1531,7 @@ GAMING FEATURES:
 
 ---
 
-## 🎯 What Kimi K2 Does
+## 🎯 What Kimi K3 Does
 
 ### Programming AI
 ✅ Code generation across 20+ languages
@@ -1579,7 +1579,7 @@ from openai import OpenAI
 client = OpenAI(base_url="http://localhost:8000/v1", api_key="key")
 
 response = client.chat.completions.create(
-    model="kimi-k2",
+    model="kimi-k3",
     messages=[{"role": "user", "content": "Your task here"}],
     temperature=0.6
 )
@@ -1606,7 +1606,7 @@ Thank you for creating and open-sourcing this incredible AI. You've empowered de
 
 **To the Community:**
 
-Every contribution, every use case, every bit of feedback makes Kimi K2 better. You're not just using AI—you're shaping its future.
+Every contribution, every use case, every bit of feedback makes Kimi K3 better. You're not just using AI—you're shaping its future.
 
 **To Everyone:**
 
@@ -1616,8 +1616,8 @@ The future of AI is open, accessible, and community-driven. Together, we're buil
 
 ## 📚 Resources
 
-- **GitHub:** [github.com/moonshotai/Kimi-K2](https://github.com/moonshotai/Kimi-K2)
-- **Hugging Face:** [huggingface.co/moonshotai/Kimi-K2-Instruct](https://huggingface.co/moonshotai/Kimi-K2-Instruct)
+- **GitHub:** [github.com/moonshotai/Kimi-K3](https://github.com/moonshotai/Kimi-K3)
+- **Hugging Face:** [huggingface.co/moonshotai/Kimi-K3-Instruct](https://huggingface.co/moonshotai/Kimi-K3-Instruct)
 - **Discord:** [discord.gg/TYU2fdJykW](https://discord.gg/TYU2fdJykW)
 - **API:** [platform.moonshot.ai](https://platform.moonshot.ai)
 - **Support:** support@moonshot.cn
@@ -1626,7 +1626,7 @@ The future of AI is open, accessible, and community-driven. Together, we're buil
 
 ## ⚖️ License
 
-Kimi K2 is released under the **Modified MIT License**. Free to use, modify, and share.
+Kimi K3 is released under the **Modified MIT License**. Free to use, modify, and share.
 
 ---
 
@@ -1638,11 +1638,11 @@ Kimi K2 is released under the **Modified MIT License**. Free to use, modify, and
 **16GB Package ✓**
 **Nothing Left Behind ✓**
 
-**ALL IN KIMI K2! 🚀**
+**ALL IN KIMI K3! 🚀**
 
 ---
 
 *Last Updated: November 2025*
-*This is a living document - it grows as Kimi K2 grows*
+*This is a living document - it grows as Kimi K3 grows*
 
-**THANK YOU FOR BEING PART OF THE KIMI K2 REVOLUTION! 🎉**
+**THANK YOU FOR BEING PART OF THE KIMI K3 REVOLUTION! 🎉**

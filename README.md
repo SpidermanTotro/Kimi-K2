@@ -1,6 +1,6 @@
 <div align="center">
   <picture>
-      <img src="figures/kimi-logo.png" width="30%" alt="Kimi K2: Open Agentic Intelligence">
+      <img src="figures/kimi-logo.png" width="30%" alt="Kimi K3: Open Agentic Intelligence">
   </picture>
 </div>
 
@@ -18,7 +18,7 @@
 </div>
 
 <div align="center" style="line-height: 1;">
-  <a href="https://github.com/moonshotai/Kimi-K2/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/badge/License-Modified_MIT-f5de53?&color=f5de53"/></a>
+  <a href="https://github.com/moonshotai/Kimi-K3/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/badge/License-Modified_MIT-f5de53?&color=f5de53"/></a>
 </div>
 
 <p align="center">
@@ -30,19 +30,19 @@
 </p>
 
 <p align="center">
-<b>📰&nbsp;&nbsp;<a href="https://moonshotai.github.io/Kimi-K2/">Tech Blog</a></b> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <b>📄&nbsp;&nbsp;<a href="https://www.arxiv.org/abs/2507.20534">Full Report</a></b> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <b>🚀&nbsp;&nbsp;<a href="docs/vision_and_roadmap.md">Vision & Roadmap</a></b> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <b>🔧&nbsp;&nbsp;<a href="docs/deploy_guidance.md">Deployment</a></b>
+<b>📰&nbsp;&nbsp;<a href="https://moonshotai.github.io/Kimi-K3/">Tech Blog</a></b> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <b>📄&nbsp;&nbsp;<a href="https://www.arxiv.org/abs/2507.20534">Full Report</a></b> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <b>🚀&nbsp;&nbsp;<a href="docs/vision_and_roadmap.md">Vision & Roadmap</a></b> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <b>🔧&nbsp;&nbsp;<a href="docs/deploy_guidance.md">Deployment</a></b>
 </p>
 
 <div align="center">
 
-## 💍 THE FORGE ❤️ KIMI K2 - The Perfect Marriage 🔥
+## 💍 THE FORGE ❤️ KIMI K3 - The Perfect Marriage 🔥
 
 ```
 ╔════════════════════════════════════════════════════════════════════════════╗
-║  🔥 FORGE + KIMI K2 = ULTIMATE AI 🔥  │  🚀 430,845+ Lines of Power       ║
+║  🔥 FORGE + KIMI K3 = ULTIMATE AI 🔥  │  🚀 430,845+ Lines of Power       ║
 ╠════════════════════════════════════════════════════════════════════════════╣
 ║  💍 Complete Integration System       │  ⚡ 1 Trillion MoE Parameters      ║
-║  🎯 1,450+ FORGE Tools for Kimi K2    │  📊 6-15% Benchmark Improvements   ║
+║  🎯 1,450+ FORGE Tools for Kimi K3    │  📊 6-15% Benchmark Improvements   ║
 ║  💻 Programming (20+ languages)       │  📚 Book Writing (50+ genres)      ║
 ║  🎬 Video Editor (Premiere Pro-level) │  🐧 Bootable Linux OS Builder      ║
 ║  🎮 Gaming Enhancement (50+ Pokemon)  │  📀 Media Processing (VHS→8K)      ║
@@ -55,9 +55,9 @@
 
 ### 💍 Marriage Highlights
 
-**🎉 THE FORGE marries into Kimi K2's heart!**
+**🎉 THE FORGE marries into Kimi K3's heart!**
 - ✅ Complete integration system (22,496 lines)
-- ✅ All 1,450+ FORGE capabilities now available as Kimi K2 tools
+- ✅ All 1,450+ FORGE capabilities now available as Kimi K3 tools
 - ✅ 408K+ lines become training data for better performance
 - ✅ Expected 6-15% benchmark improvements across all tests
 - ✅ Unified system: World-class AI + Practical power
@@ -75,14 +75,14 @@
 | **Movie Database** | 10M+ films |
 | **Documentation** | 69,000+ lines |
 | **Build System** | Multi-language (Python, JS, C++, Rust, Go) |
-| **Kimi K2 Integration** | Complete ❤️ |
+| **Kimi K3 Integration** | Complete ❤️ |
 
-### 🎯 What's New - THE FORGE ❤️ KIMI K2 Edition
+### 🎯 What's New - THE FORGE ❤️ KIMI K3 Edition
 
 **🔥 Latest: Complete Marriage System (v1.0)**
-- **💍 FORGE ❤️ KIMI K2 Marriage** - Complete integration merging THE FORGE into Kimi K2 (**NEW!**)
+- **💍 FORGE ❤️ KIMI K3 Marriage** - Complete integration merging THE FORGE into Kimi K3 (**NEW!**)
 - **📈 Benchmark Optimization** - Expected 6-15% improvements across all tests (**NEW!**)
-- **🛠️ 1,450+ Tools for Kimi K2** - All FORGE capabilities as function calls (**NEW!**)
+- **🛠️ 1,450+ Tools for Kimi K3** - All FORGE capabilities as function calls (**NEW!**)
 - **📚 Training Data Export** - 408K+ lines for model fine-tuning (**NEW!**)
 - **🚀 430,845+ Lines** - Massive ecosystem (+34,000% growth from original)
 - **🔨 Multi-Language Build** - Python, JavaScript, C++, Rust, Go support
@@ -97,7 +97,7 @@
 ### 🗺️ Roadmap - What's Coming Next
 
 **Phase 1: Integration & Validation (✅ COMPLETE)**
-- ✅ FORGE ❤️ KIMI K2 marriage system
+- ✅ FORGE ❤️ KIMI K3 marriage system
 - ✅ Tool registry with 1,450+ capabilities
 - ✅ Unified system implementation
 - ✅ Complete documentation
@@ -111,7 +111,7 @@
 **Phase 3: Training Data Enhancement (📋 PLANNED)**
 - 📋 Export FORGE to instruction-tuning format
 - 📋 Create benchmark-specific training sets
-- 📋 Fine-tune Kimi K2 with FORGE knowledge
+- 📋 Fine-tune Kimi K3 with FORGE knowledge
 - 📋 Validate benchmark score improvements
 
 **Phase 4: Production Deployment (📋 PLANNED)**
@@ -128,15 +128,15 @@
 
 **See full roadmap:** [ROADMAP.md](ROADMAP.md)
 
-### 🚀 Quick Start - Run THE FORGE ❤️ KIMI K2
+### 🚀 Quick Start - Run THE FORGE ❤️ KIMI K3
 
 **Option 1: Run Unified System (Recommended)**
 ```bash
-# Run the complete FORGE ❤️ KIMI K2 integrated system
+# Run the complete FORGE ❤️ KIMI K3 integrated system
 python3 kimi_forge_unified.py
 
 # Output:
-# ✅ Kimi K2 Model: kimi-k2-instruct  
+# ✅ Kimi K3 Model: kimi-k3-instruct  
 # ✅ FORGE Tools: 8+ categories
 # ✅ Total Capabilities: 1,450+
 # ✅ Marriage Complete! ❤️
@@ -145,23 +145,23 @@ python3 kimi_forge_unified.py
 **Option 2: Build THE FORGE**
 ```bash
 # Clone and build
-git clone https://github.com/SpidermanTotro/Kimi-K2.git
-cd Kimi-K2
+git clone https://github.com/SpidermanTotro/Kimi-K3.git
+cd Kimi-K3
 make all                    # Build entire system
 make dist                   # Create distribution package
 make run-gui                # Start GUI at http://localhost:5050
 ```
 
-**Option 3: Use Kimi K2 with FORGE Tools**
+**Option 3: Use Kimi K3 with FORGE Tools**
 ```python
 from kimi_forge_unified import KimiForgeUnified
 
 # Initialize unified system
 system = KimiForgeUnified()
 
-# Use FORGE tools through Kimi K2
+# Use FORGE tools through Kimi K3
 response = system.process("Edit this video professionally")
-# Kimi K2 intelligently selects and uses FORGE's video editor
+# Kimi K3 intelligently selects and uses FORGE's video editor
 
 response = system.process("Find all WW2 movies about D-Day")
 # Uses FORGE's 10M+ movie database
@@ -182,11 +182,11 @@ response = system.process("Restore this 1956 footage to 8K")
 > [!NOTE]
 > **Thank You, Kimi Team!** 🙏
 > 
-> We extend our deepest gratitude to the Kimi Team at Moonshot AI for creating and open-sourcing this revolutionary AI model. By making Kimi K2 freely available, you've empowered developers worldwide and advanced the entire field of AI. Your commitment to open science and accessible AI is changing the world. Thank you! 
+> We extend our deepest gratitude to the Kimi Team at Moonshot AI for creating and open-sourcing this revolutionary AI model. By making Kimi K3 freely available, you've empowered developers worldwide and advanced the entire field of AI. Your commitment to open science and accessible AI is changing the world. Thank you! 
 >
 > See our [Vision & Roadmap](docs/vision_and_roadmap.md) to learn how we're building on your amazing work.
 
-Kimi K2 is a state-of-the-art mixture-of-experts (MoE) language model with 32 billion activated parameters and 1 trillion total parameters. Trained with the Muon optimizer, Kimi K2 achieves exceptional performance across frontier knowledge, reasoning, and coding tasks while being meticulously optimized for agentic capabilities.
+Kimi K3 is a state-of-the-art mixture-of-experts (MoE) language model with 32 billion activated parameters and 1 trillion total parameters. Trained with the Muon optimizer, Kimi K3 achieves exceptional performance across frontier knowledge, reasoning, and coding tasks while being meticulously optimized for agentic capabilities.
 
 ### Key Features
 - Large-Scale Training: Pre-trained a 1T parameter MoE model on 15.5T tokens with zero training instability.
@@ -194,8 +194,8 @@ Kimi K2 is a state-of-the-art mixture-of-experts (MoE) language model with 32 bi
 - Agentic Intelligence: Specifically designed for tool use, reasoning, and autonomous problem-solving.
 
 ### Model Variants
-- **Kimi-K2-Base**: The foundation model, a strong start for researchers and builders who want full control for fine-tuning and custom solutions.
-- **Kimi-K2-Instruct**: The post-trained model, best for drop-in, general-purpose chat and agentic experiences. It is a reflex-grade model without long thinking.
+- **Kimi-K3-Base**: The foundation model, a strong start for researchers and builders who want full control for fine-tuning and custom solutions.
+- **Kimi-K3-Instruct**: The post-trained model, best for drop-in, general-purpose chat and agentic experiences. It is a reflex-grade model without long thinking.
 
 <div align="center">
   <picture>
@@ -237,7 +237,7 @@ Kimi K2 is a state-of-the-art mixture-of-experts (MoE) language model with 32 bi
 <tr>
 <th align="center">Benchmark</th>
 <th align="center">Metric</th>
-<th align="center"><sup>Kimi K2 Instruct</sup></th>
+<th align="center"><sup>Kimi K3 Instruct</sup></th>
 <th align="center"><sup>DeepSeek-V3-0324</sup></th>
 <th align="center"><sup>Qwen3-235B-A22B <br><sup>(non-thinking)</sup></sup></th>
 <th align="center"><sup>Claude Sonnet 4 <br><sup>(w/o extended thinking)</sup></sup></th>
@@ -641,7 +641,7 @@ Kimi K2 is a state-of-the-art mixture-of-experts (MoE) language model with 32 bi
 </sup><br/><sup>
 • All metrics, except for SWE-bench Verified (Agentless), are evaluated with an 8k output token length. SWE-bench Verified (Agentless) is limited to a 16k output token length.
 </sup><br/><sup>
-• Kimi K2 achieves 65.8% pass@1 on the SWE-bench Verified tests with bash/editor tools (single-attempt patches, no test-time compute). It also achieves a 47.3% pass@1 on the SWE-bench Multilingual tests under the same conditions. Additionally, we report results on SWE-bench Verified tests (71.6%) that leverage parallel test-time compute by sampling multiple sequences and selecting the single best via an internal scoring model.
+• Kimi K3 achieves 65.8% pass@1 on the SWE-bench Verified tests with bash/editor tools (single-attempt patches, no test-time compute). It also achieves a 47.3% pass@1 on the SWE-bench Multilingual tests under the same conditions. Additionally, we report results on SWE-bench Verified tests (71.6%) that leverage parallel test-time compute by sampling multiple sequences and selecting the single best via an internal scoring model.
 </sup><br/><sup>
 • To ensure the stability of the evaluation, we employed avg@k on the AIME, HMMT, CNMO, PolyMath-en, GPQA-Diamond, EvalPlus, Tau2.
 </sup><br/><sup>
@@ -660,7 +660,7 @@ Kimi K2 is a state-of-the-art mixture-of-experts (MoE) language model with 32 bi
 <th align="center">Benchmark</th>
 <th align="center">Metric</th>
 <th align="center">Shot</th>
-<th align="center">Kimi K2 Base</th>
+<th align="center">Kimi K3 Base</th>
 <th align="center">Deepseek-V3-Base</th>
 <th align="center">Qwen2.5-72B</th>
 <th align="center">Llama 4 Maverick</th>
@@ -809,13 +809,13 @@ Kimi K2 is a state-of-the-art mixture-of-experts (MoE) language model with 32 bi
 
 ## 4. Deployment
 > [!Note]
-> You can access Kimi K2's API on https://platform.moonshot.ai , we provide an OpenAI/Anthropic-compatible API for you.
+> You can access Kimi K3's API on https://platform.moonshot.ai , we provide an OpenAI/Anthropic-compatible API for you.
 >
 > The Anthropic-compatible API maps temperature by `real_temperature = request_temperature * 0.6` for better compatiblity with existing applications.
 
-Our model checkpoints are stored in block-fp8 format, you can find it on [Huggingface](https://huggingface.co/moonshotai/Kimi-K2-Instruct).
+Our model checkpoints are stored in block-fp8 format, you can find it on [Huggingface](https://huggingface.co/moonshotai/Kimi-K3-Instruct).
 
-Currently, it is recommended to run Kimi-K2 on the following inference engines:
+Currently, it is recommended to run Kimi-K3 on the following inference engines:
 
 * vLLM
 * SGLang
@@ -849,14 +849,14 @@ def simple_chat(client: OpenAI, model_name: str):
 ```
 
 > [!NOTE]
-> The recommended temperature for Kimi-K2-Instruct is `temperature = 0.6`.
+> The recommended temperature for Kimi-K3-Instruct is `temperature = 0.6`.
 > If no special instructions are required, the system prompt is a good default.
 
 ---
 
 ### Tool Calling
 
-Kimi-K2-Instruct has strong tool-calling capabilities.
+Kimi-K3-Instruct has strong tool-calling capabilities.
 To enable them, you need to pass the list of available tools in each request, then the model will autonomously decide when and how to invoke them.
 
 The following example demonstrates calling a weather tool end-to-end:
@@ -926,7 +926,7 @@ def tool_call_with_client(client: OpenAI, model_name: str):
 ```
 
 The `tool_call_with_client` function implements the pipeline from user query to tool execution.
-This pipeline requires the inference engine to support Kimi-K2’s native tool-parsing logic.
+This pipeline requires the inference engine to support Kimi-K3’s native tool-parsing logic.
 For streaming output and manual tool-parsing, see the [Tool Calling Guide](docs/tool_call_guidance.md).
 
 ---
@@ -999,7 +999,7 @@ Pokemon Games:        50+
 Book Genres:          50+
 ```
 
-Perfect for understanding how to build real applications with Kimi K2's agentic intelligence!
+Perfect for understanding how to build real applications with Kimi K3's agentic intelligence!
 
 ---
 
@@ -1040,7 +1040,7 @@ Both the code and the model weights are released under the [Modified MIT License
 
 ```
 @misc{kimiteam2025kimik2openagentic,
-      title={Kimi K2: Open Agentic Intelligence}, 
+      title={Kimi K3: Open Agentic Intelligence}, 
       author={Kimi Team and Yifan Bai and Yiping Bao and Guanduo Chen and Jiahao Chen and Ningxin Chen and Ruijue Chen and Yanru Chen and Yuankun Chen and Yutian Chen and Zhuofu Chen and Jialei Cui and Hao Ding and Mengnan Dong and Angang Du and Chenzhuang Du and Dikang Du and Yulun Du and Yu Fan and Yichen Feng and Kelin Fu and Bofei Gao and Hongcheng Gao and Peizhong Gao and Tong Gao and Xinran Gu and Longyu Guan and Haiqing Guo and Jianhang Guo and Hao Hu and Xiaoru Hao and Tianhong He and Weiran He and Wenyang He and Chao Hong and Yangyang Hu and Zhenxing Hu and Weixiao Huang and Zhiqi Huang and Zihao Huang and Tao Jiang and Zhejun Jiang and Xinyi Jin and Yongsheng Kang and Guokun Lai and Cheng Li and Fang Li and Haoyang Li and Ming Li and Wentao Li and Yanhao Li and Yiwei Li and Zhaowei Li and Zheming Li and Hongzhan Lin and Xiaohan Lin and Zongyu Lin and Chengyin Liu and Chenyu Liu and Hongzhang Liu and Jingyuan Liu and Junqi Liu and Liang Liu and Shaowei Liu and T. Y. Liu and Tianwei Liu and Weizhou Liu and Yangyang Liu and Yibo Liu and Yiping Liu and Yue Liu and Zhengying Liu and Enzhe Lu and Lijun Lu and Shengling Ma and Xinyu Ma and Yingwei Ma and Shaoguang Mao and Jie Mei and Xin Men and Yibo Miao and Siyuan Pan and Yebo Peng and Ruoyu Qin and Bowen Qu and Zeyu Shang and Lidong Shi and Shengyuan Shi and Feifan Song and Jianlin Su and Zhengyuan Su and Xinjie Sun and Flood Sung and Heyi Tang and Jiawen Tao and Qifeng Teng and Chensi Wang and Dinglu Wang and Feng Wang and Haiming Wang and Jianzhou Wang and Jiaxing Wang and Jinhong Wang and Shengjie Wang and Shuyi Wang and Yao Wang and Yejie Wang and Yiqin Wang and Yuxin Wang and Yuzhi Wang and Zhaoji Wang and Zhengtao Wang and Zhexu Wang and Chu Wei and Qianqian Wei and Wenhao Wu and Xingzhe Wu and Yuxin Wu and Chenjun Xiao and Xiaotong Xie and Weimin Xiong and Boyu Xu and Jing Xu and Jinjing Xu and L. H. Xu and Lin Xu and Suting Xu and Weixin Xu and Xinran Xu and Yangchuan Xu and Ziyao Xu and Junjie Yan and Yuzi Yan and Xiaofei Yang and Ying Yang and Zhen Yang and Zhilin Yang and Zonghan Yang and Haotian Yao and Xingcheng Yao and Wenjie Ye and Zhuorui Ye and Bohong Yin and Longhui Yu and Enming Yuan and Hongbang Yuan and Mengjie Yuan and Haobing Zhan and Dehao Zhang and Hao Zhang and Wanlu Zhang and Xiaobin Zhang and Yangkun Zhang and Yizhi Zhang and Yongting Zhang and Yu Zhang and Yutao Zhang and Yutong Zhang and Zheng Zhang and Haotian Zhao and Yikai Zhao and Huabin Zheng and Shaojie Zheng and Jianren Zhou and Xinyu Zhou and Zaida Zhou and Zhen Zhu and Weiyu Zhuang and Xinxing Zu},
       year={2025},
       eprint={2507.20534},

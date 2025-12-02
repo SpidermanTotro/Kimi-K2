@@ -1,8 +1,8 @@
-# Kimi K2: Vision for Agentic AI Revolution
+# Kimi K3: Vision for Agentic AI Revolution
 
 ## A Thank You to the Kimi Team
 
-First and foremost, we want to express our deepest gratitude to the **Kimi Team at Moonshot AI** for creating and open-sourcing this incredible AI model. Kimi K2 represents a monumental leap forward in artificial intelligence, and by making it freely available, you've empowered developers worldwide to build the future.
+First and foremost, we want to express our deepest gratitude to the **Kimi Team at Moonshot AI** for creating and open-sourcing this incredible AI model. Kimi K3 represents a monumental leap forward in artificial intelligence, and by making it freely available, you've empowered developers worldwide to build the future.
 
 **Thank you for:**
 - 🎁 **Open sourcing** a state-of-the-art 1 trillion parameter model
@@ -11,15 +11,15 @@ First and foremost, we want to express our deepest gratitude to the **Kimi Team 
 - 📚 **Comprehensive documentation** that helps us build amazing things
 - 💪 **Setting new benchmarks** in coding, reasoning, and problem-solving
 
-In the spirit of free and open-source software, we say **THANK YOU** not just with words, but by building upon your work, contributing back, and showing the world what Kimi K2 can truly do!
+In the spirit of free and open-source software, we say **THANK YOU** not just with words, but by building upon your work, contributing back, and showing the world what Kimi K3 can truly do!
 
 ---
 
 ## Showcasing AI's True Potential
 
-Kimi K2 isn't just another language model—it's a glimpse into the future of AI. This document showcases its **incredible skills** and demonstrates **how far AI has come**.
+Kimi K3 isn't just another language model—it's a glimpse into the future of AI. This document showcases its **incredible skills** and demonstrates **how far AI has come**.
 
-### What Makes Kimi K2 Revolutionary
+### What Makes Kimi K3 Revolutionary
 
 #### 🧠 **Massive Scale, Incredible Efficiency**
 - **1 Trillion total parameters** with 32B active parameters
@@ -28,7 +28,7 @@ Kimi K2 isn't just another language model—it's a glimpse into the future of AI
 - **MuonClip optimizer** - trained at unprecedented scale with zero instability
 
 #### 🤖 **True Agentic Intelligence**
-Unlike traditional AI that just responds, Kimi K2 **acts autonomously**:
+Unlike traditional AI that just responds, Kimi K3 **acts autonomously**:
 - Makes intelligent decisions
 - Plans multi-step solutions
 - Uses tools without being told how
@@ -36,7 +36,7 @@ Unlike traditional AI that just responds, Kimi K2 **acts autonomously**:
 - Executes complex workflows independently
 
 #### 💻 **Coding Mastery**
-Kimi K2 achieves **state-of-the-art results** in coding:
+Kimi K3 achieves **state-of-the-art results** in coding:
 - **53.7% on LiveCodeBench** (beating GPT-4.1, Claude, and others)
 - **65.8% on SWE-bench Verified** (single attempt, agentic coding)
 - **71.6% on SWE-bench Verified** (multiple attempts)
@@ -50,7 +50,7 @@ Excels at using external tools and APIs:
 - **65.8% on Tau2 telecom** benchmark  
 - **76.5% on AceBench** for agent capabilities
 
-Kimi K2 doesn't just call APIs—it **understands when to use them, how to combine them, and how to handle errors gracefully**.
+Kimi K3 doesn't just call APIs—it **understands when to use them, how to combine them, and how to handle errors gracefully**.
 
 #### 🧮 **Mathematical Reasoning**
 Solves problems that challenge even experts:
@@ -64,12 +64,12 @@ Solves problems that challenge even experts:
 
 ### 1. Autonomous Software Development
 
-Kimi K2 can build complete applications from scratch:
+Kimi K3 can build complete applications from scratch:
 
 ```
 You: "Build me a REST API for a task management system with authentication"
 
-Kimi K2: *Analyzes requirements*
+Kimi K3: *Analyzes requirements*
          *Designs database schema*
          *Implements authentication*
          *Creates CRUD endpoints*
@@ -91,7 +91,7 @@ def process(data):
             results.append(data[i] * 2)
     return results
 
-# Kimi K2 automatically:
+# Kimi K3 automatically:
 # 1. Identifies inefficiencies
 # 2. Spots potential bugs (None vs null handling)
 # 3. Suggests better algorithms
@@ -105,13 +105,13 @@ def process(data: List[Optional[float]]) -> List[float]:
 
 ### 3. Multi-Tool Orchestration
 
-Kimi K2 can coordinate multiple tools to solve complex tasks:
+Kimi K3 can coordinate multiple tools to solve complex tasks:
 
 ```
 Task: "Analyze our codebase for security issues, create tickets for problems found,
        and generate a report"
 
-Kimi K2 Actions:
+Kimi K3 Actions:
 1. Uses CodeQL tool to scan for vulnerabilities
 2. Uses JIRA API to create tickets for each issue
 3. Uses GitHub API to link commits to issues
@@ -126,7 +126,7 @@ All done autonomously!
 ```
 You: "Create a Python function that finds the longest palindromic substring"
 
-Kimi K2: *Generates optimal solution*
+Kimi K3: *Generates optimal solution*
          *Includes multiple approaches*
          *Provides complexity analysis*
          *Adds comprehensive tests*
@@ -140,7 +140,7 @@ Scenario: Production bug at 3 AM
 
 You: "Our API is returning 500 errors. Here are the logs: [paste logs]"
 
-Kimi K2: *Analyzes stack trace*
+Kimi K3: *Analyzes stack trace*
          *Identifies root cause*
          *Suggests immediate fix*
          *Provides long-term solution*
@@ -164,7 +164,7 @@ We're working toward an AI that doesn't just assist—it **acts autonomously** t
 ```
 You: "Create a movie poster for our project"
 
-Future Kimi K2:
+Future Kimi K3:
 1. Detects GIMP is needed
 2. Automatically installs GIMP
 3. Learns GIMP interface through documentation
@@ -187,7 +187,7 @@ No manual software setup required!
 ```
 You: "Make a 2-minute tutorial video about Python functions"
 
-Future Kimi K2:
+Future Kimi K3:
 1. Writes script with explanations
 2. Generates voiceover audio
 3. Creates visual animations
@@ -227,7 +227,7 @@ Pokémon Enhancement Pipeline:
 
 You: "Load Pokémon Red and enhance it to modern quality"
 
-Kimi K2:
+Kimi K3:
 1. Scans original Game Boy ROM
 2. Generates upscaling code on-the-fly
 3. Applies AI visual enhancement
@@ -366,7 +366,7 @@ The same AI upscaling works for:
 
 **The Community Gaming Revolution:**
 
-Many players are frustrated with corporate decisions in modern gaming—from aggressive monetization to controversial features. Kimi K2 empowers the community to create their own gaming experiences.
+Many players are frustrated with corporate decisions in modern gaming—from aggressive monetization to controversial features. Kimi K3 empowers the community to create their own gaming experiences.
 
 ```
 Private Server Creation Examples:
@@ -388,10 +388,10 @@ Why This Matters:
 **AI-Assisted Server Setup - ALL WoW Expansions:**
 
 ```python
-# Kimi K2 assists with TrinityCore-based server setup
+# Kimi K3 assists with TrinityCore-based server setup
 # For educational, preservation, and community purposes
 
-from kimi_k2 import WoWServerBuilder
+from kimi_k3 import WoWServerBuilder
 
 # Choose your WoW expansion/version
 server = WoWServerBuilder()
@@ -450,7 +450,7 @@ print("⚖️ Legal compliance: Private, non-commercial use only")
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│  KIMI K2 WOW SERVER ASSISTANCE - ALL EXPANSIONS            │
+│  KIMI K3 WOW SERVER ASSISTANCE - ALL EXPANSIONS            │
 ├─────────────────────────────────────────────────────────────┤
 │                                                             │
 │  ✅ Classic WoW (Vanilla 1.12.1)                           │
@@ -475,7 +475,7 @@ print("⚖️ Legal compliance: Private, non-commercial use only")
 └─────────────────────────────────────────────────────────────┘
 ```
 
-**What Kimi K2 Provides (Legally Compliant):**
+**What Kimi K3 Provides (Legally Compliant):**
 
 1. **Server Setup Assistance**
    - TrinityCore installation guides
@@ -524,7 +524,7 @@ print("⚖️ Legal compliance: Private, non-commercial use only")
 > 
 > **IMPORTANT: READ CAREFULLY**
 > 
-> Private game servers exist in a complex legal area. **Kimi K2 provides tools and knowledge ONLY for legitimate purposes:**
+> Private game servers exist in a complex legal area. **Kimi K3 provides tools and knowledge ONLY for legitimate purposes:**
 > 
 > **✅ LEGAL USES:**
 > - **Educational purposes** - Learning server architecture, networking, databases
@@ -551,7 +551,7 @@ print("⚖️ Legal compliance: Private, non-commercial use only")
 > 7. **Follow local laws** - Laws vary by country
 > 
 > **⚠️ DISCLAIMER:**
-> This documentation is for **educational purposes only**. Running private servers may violate Terms of Service and can have legal consequences. Kimi K2 and its developers:
+> This documentation is for **educational purposes only**. Running private servers may violate Terms of Service and can have legal consequences. Kimi K3 and its developers:
 > - Do NOT encourage illegal activity
 > - Do NOT provide copyrighted game files
 > - Do NOT support commercial private servers
@@ -601,7 +601,7 @@ Gaming should be:
    - Preserve gaming history
 ```
 
-**Kimi K2's Role:**
+**Kimi K3's Role:**
 
 The AI doesn't judge or restrict—it **empowers**. Whether you're:
 - Preserving classic games
@@ -609,7 +609,7 @@ The AI doesn't judge or restrict—it **empowers**. Whether you're:
 - Learning server technology
 - Building educational projects
 
-Kimi K2 provides the knowledge and tools to succeed, while encouraging responsible and legal use.
+Kimi K3 provides the knowledge and tools to succeed, while encouraging responsible and legal use.
 
 ---
 
@@ -656,7 +656,7 @@ Extensions (on-demand download):
 **Vision:** AI that keeps itself current
 
 ```
-Kimi K2 automatically:
+Kimi K3 automatically:
 - Scans for security updates
 - Downloads performance improvements
 - Updates tool integrations
@@ -684,7 +684,7 @@ Just like Linux, Python, and other open-source successes, we believe in:
 ### Current Projects in Development
 
 #### Project 1: Autonomous System Integration
-**Goal:** Let Kimi K2 install and configure software autonomously
+**Goal:** Let Kimi K3 install and configure software autonomously
 
 **Status:** 🔄 In Progress
 - Designing safe sandboxed execution environment
@@ -724,7 +724,7 @@ Just like Linux, Python, and other open-source successes, we believe in:
 ### How You Can Contribute
 
 1. **Test & Provide Feedback**
-   - Try Kimi K2 on real-world tasks
+   - Try Kimi K3 on real-world tasks
    - Report issues and successes
    - Share your use cases
 
@@ -739,7 +739,7 @@ Just like Linux, Python, and other open-source successes, we believe in:
    - Record demos
 
 4. **Spread the Word**
-   - Tell others about Kimi K2
+   - Tell others about Kimi K3
    - Share your projects
    - Help build the community
 
@@ -812,19 +812,19 @@ This is more than just an AI model—it's a **movement** toward truly intelligen
 ## A Message to the Community
 
 **To the Kimi Team:**
-Your gift to the world is changing what's possible. By open-sourcing Kimi K2, you've enabled a revolution in how we think about and build with AI. Thank you for trusting the community with such powerful technology.
+Your gift to the world is changing what's possible. By open-sourcing Kimi K3, you've enabled a revolution in how we think about and build with AI. Thank you for trusting the community with such powerful technology.
 
 **To Contributors:**
-Every line of code, every bug report, every example you create makes Kimi K2 better. You're not just using AI—you're shaping its future. Thank you for your contributions!
+Every line of code, every bug report, every example you create makes Kimi K3 better. You're not just using AI—you're shaping its future. Thank you for your contributions!
 
 **To Users:**
-By choosing Kimi K2, you're supporting open AI development and helping prove that the best technology doesn't have to be locked behind paywalls. Share your successes, help others, and let's show the world what we can build together!
+By choosing Kimi K3, you're supporting open AI development and helping prove that the best technology doesn't have to be locked behind paywalls. Share your successes, help others, and let's show the world what we can build together!
 
 ---
 
 ## Let's Build the Future Together
 
-This is just the beginning. With Kimi K2, we have:
+This is just the beginning. With Kimi K3, we have:
 - The **most advanced open-source AI** for coding and reasoning
 - A **proven agentic framework** for autonomous task execution  
 - A **growing community** of developers and contributors
@@ -832,13 +832,13 @@ This is just the beginning. With Kimi K2, we have:
 
 **The future isn't something that happens to us—it's something we build.**
 
-Join us in making Kimi K2 the most capable, most accessible, most amazing AI the world has ever seen!
+Join us in making Kimi K3 the most capable, most accessible, most amazing AI the world has ever seen!
 
 ---
 
 ## Resources
 
-- **Main Repository:** [GitHub](https://github.com/moonshotai/Kimi-K2)
+- **Main Repository:** [GitHub](https://github.com/moonshotai/Kimi-K3)
 - **Documentation:** [README](../README.md) | [Examples](examples_guide.md) | [Quick Start](quick_start_examples.md)
 - **Deployment:** [Deployment Guide](deploy_guidance.md)
 - **Tool Usage:** [Tool Calling Guide](tool_call_guidance.md)
@@ -849,7 +849,7 @@ Join us in making Kimi K2 the most capable, most accessible, most amazing AI the
 
 ## License
 
-Like Kimi K2 itself, this vision is built on **open principles**. All documentation and examples are available under the Modified MIT License—free to use, modify, and share.
+Like Kimi K3 itself, this vision is built on **open principles**. All documentation and examples are available under the Modified MIT License—free to use, modify, and share.
 
 **Let's make AI amazing, together! 🚀**
 
@@ -861,7 +861,7 @@ Like Kimi K2 itself, this vision is built on **open principles**. All documentat
 ---
 
 ### Quick Links
-- [See Kimi K2 in Action](examples_guide.md) - Live examples and demos
+- [See Kimi K3 in Action](examples_guide.md) - Live examples and demos
 - [Get Started in 5 Minutes](quick_start_examples.md) - Quick start guide
 - [Technical Details](../README.md) - Full model documentation
 - [Deploy Your Own](deploy_guidance.md) - Deployment instructions

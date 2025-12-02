@@ -1,10 +1,10 @@
-# Kimi K2 Gaming Enhancement Guide
+# Kimi K3 Gaming Enhancement Guide
 
 ## 🎮 The Ultimate Gaming Revolution - ALL Built Into 16GB! 🚀
 
 ### **EVERY Pokémon Game. EVERY Nintendo Handheld. The HIGHEST Quality Ever Seen.**
 
-Kimi K2 isn't just an AI for coding—it's a **VISIONARY, IMPRESSIVE gaming enhancement platform** that transforms EVERY classic game into something **NEVER SEEN BEFORE**. All built into a massive yet compact **16GB AI powerhouse**!
+Kimi K3 isn't just an AI for coding—it's a **VISIONARY, IMPRESSIVE gaming enhancement platform** that transforms EVERY classic game into something **NEVER SEEN BEFORE**. All built into a massive yet compact **16GB AI powerhouse**!
 
 ---
 
@@ -14,7 +14,7 @@ Kimi K2 isn't just an AI for coding—it's a **VISIONARY, IMPRESSIVE gaming enha
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│           KIMI K2 - 16GB GAMING AI REVOLUTION              │
+│           KIMI K3 - 16GB GAMING AI REVOLUTION              │
 ├─────────────────────────────────────────────────────────────┤
 │                                                             │
 │  ✅ ALL Game Boy games enhanced                            │
@@ -439,7 +439,7 @@ enhancer.enable_learning_mode(True)
 ```python
 class AICodeGenerator:
     """
-    Kimi K2 generates the upscaling code automatically
+    Kimi K3 generates the upscaling code automatically
     """
     
     def analyze_game_structure(self, rom: bytes) -> GameStructure:
@@ -528,11 +528,11 @@ class RealtimeEnhancer:
 ### Complete Workflow
 
 ```python
-from kimi_k2 import KimiAI
+from kimi_k3 import KimiAI
 from kimi_gaming import PokemonEnhancer
 
-# Initialize Kimi K2 AI
-ai = KimiAI(model="kimi-k2-instruct")
+# Initialize Kimi K3 AI
+ai = KimiAI(model="kimi-k3-instruct")
 
 # Create gaming enhancer
 enhancer = PokemonEnhancer(ai=ai)
@@ -700,8 +700,8 @@ All games playable on modest hardware!
 ## 🚀 Get Started
 
 ```bash
-# Install Kimi K2 Gaming Enhancement
-pip install kimi-k2-gaming
+# Install Kimi K3 Gaming Enhancement
+pip install kimi-k3-gaming
 
 # Download enhancement models
 kimi-download --models pokemon_upscaler
@@ -714,7 +714,7 @@ kimi-enhance pokemon_red.gb --quality legends_arceus
 
 ## 💡 Summary
 
-Kimi K2's gaming enhancement system:
+Kimi K3's gaming enhancement system:
 - ✅ Makes old games look modern
 - ✅ AI generates upscaling code automatically
 - ✅ Pokémon look like Legends Arceus / Z-A

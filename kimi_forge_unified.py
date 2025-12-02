@@ -1,11 +1,11 @@
 #!/usr/bin/env python3
 """
-THE FORGE ❤️ KIMI K2: Unified System
+THE FORGE ❤️ KIMI K3: Unified System
 =====================================
 
-This module implements the marriage between THE FORGE and Kimi K2,
+This module implements the marriage between THE FORGE and Kimi K3,
 creating a unified AI system that combines:
-- Kimi K2's 1T parameter MoE model
+- Kimi K3's 1T parameter MoE model
 - THE FORGE's 1,450+ capabilities
 - Integrated tool calling
 - Benchmark optimization
@@ -39,14 +39,14 @@ class ForgeToolCall:
 
 @dataclass
 class KimiResponse:
-    """Represents Kimi K2 response with optional tool calls"""
+    """Represents Kimi K3 response with optional tool calls"""
     text: str
     tool_calls: List[ForgeToolCall] = None
     confidence: float = 1.0
 
 
 class ForgeToolRegistry:
-    """Registry of all FORGE capabilities available to Kimi K2"""
+    """Registry of all FORGE capabilities available to Kimi K3"""
     
     def __init__(self):
         self.tools = self._load_forge_tools()
@@ -136,26 +136,26 @@ class ForgeToolRegistry:
 
 
 class KimiK2Model:
-    """Wrapper for Kimi K2 model with FORGE integration"""
+    """Wrapper for Kimi K3 model with FORGE integration"""
     
-    def __init__(self, model_path: str = "kimi-k2-instruct"):
+    def __init__(self, model_path: str = "kimi-k3-instruct"):
         self.model_path = model_path
         self.forge_tools = ForgeToolRegistry()
-        logger.info(f"✅ Kimi K2 model initialized: {model_path}")
+        logger.info(f"✅ Kimi K3 model initialized: {model_path}")
         logger.info(f"✅ FORGE integration enabled with {len(self.forge_tools.tools)} tools")
     
     def generate(self, prompt: str, enable_tools: bool = True) -> KimiResponse:
-        """Generate response from Kimi K2, optionally using FORGE tools"""
+        """Generate response from Kimi K3, optionally using FORGE tools"""
         
-        # In production, this would call actual Kimi K2 model
+        # In production, this would call actual Kimi K3 model
         # For now, we simulate intelligent tool selection
         
         tool_calls = []
         if enable_tools:
             tool_calls = self._select_tools(prompt)
         
-        # Simulate Kimi K2 response
-        response_text = f"Kimi K2 response for: {prompt}\n"
+        # Simulate Kimi K3 response
+        response_text = f"Kimi K3 response for: {prompt}\n"
         
         if tool_calls:
             response_text += f"\nUsing {len(tool_calls)} FORGE tool(s) to enhance response..."
@@ -192,31 +192,31 @@ class KimiK2Model:
 
 class KimiForgeUnified:
     """
-    THE FORGE ❤️ KIMI K2: The Unified System
+    THE FORGE ❤️ KIMI K3: The Unified System
     
-    Combines Kimi K2's world-class AI with THE FORGE's practical capabilities.
+    Combines Kimi K3's world-class AI with THE FORGE's practical capabilities.
     """
     
     def __init__(self, config: Optional[Dict] = None):
         """
-        Initialize unified Kimi K2 + FORGE system
+        Initialize unified Kimi K3 + FORGE system
         
         Args:
             config: Optional configuration dict
         """
         self.config = config or self._default_config()
         
-        # Initialize Kimi K2 with FORGE integration
-        self.kimi = KimiK2Model(self.config.get("model", "kimi-k2-instruct"))
+        # Initialize Kimi K3 with FORGE integration
+        self.kimi = KimiK2Model(self.config.get("model", "kimi-k3-instruct"))
         self.forge_tools = ForgeToolRegistry()
         
         # Load FORGE knowledge base
         self.knowledge_base = self._load_forge_knowledge()
         
         logger.info("=" * 60)
-        logger.info("🔥 THE FORGE ❤️ KIMI K2: UNIFIED SYSTEM READY")
+        logger.info("🔥 THE FORGE ❤️ KIMI K3: UNIFIED SYSTEM READY")
         logger.info("=" * 60)
-        logger.info(f"✅ Kimi K2 Model: {self.config['model']}")
+        logger.info(f"✅ Kimi K3 Model: {self.config['model']}")
         logger.info(f"✅ FORGE Tools: {len(self.forge_tools.tools)}")
         logger.info(f"✅ Knowledge Base: {len(self.knowledge_base)} entries")
         logger.info(f"✅ Total Capabilities: 1,450+")
@@ -225,7 +225,7 @@ class KimiForgeUnified:
     def _default_config(self) -> Dict:
         """Default configuration"""
         return {
-            "model": "kimi-k2-instruct",
+            "model": "kimi-k3-instruct",
             "temperature": 0.6,
             "enable_tools": True,
             "max_tokens": 4096,
@@ -242,7 +242,7 @@ class KimiForgeUnified:
     
     def process(self, user_input: str, use_tools: bool = True) -> str:
         """
-        Process user input through unified Kimi K2 + FORGE system
+        Process user input through unified Kimi K3 + FORGE system
         
         Args:
             user_input: User's question or request
@@ -253,7 +253,7 @@ class KimiForgeUnified:
         """
         logger.info(f"\n📝 User Input: {user_input}")
         
-        # Step 1: Get initial response from Kimi K2
+        # Step 1: Get initial response from Kimi K3
         kimi_response = self.kimi.generate(user_input, enable_tools=use_tools)
         
         # Step 2: Execute any FORGE tools that were selected
@@ -270,7 +270,7 @@ class KimiForgeUnified:
         return final_response
     
     def _integrate_results(self, response: KimiResponse) -> str:
-        """Integrate Kimi K2 response with FORGE tool results"""
+        """Integrate Kimi K3 response with FORGE tool results"""
         
         output = response.text
         
@@ -287,7 +287,7 @@ class KimiForgeUnified:
     def get_stats(self) -> Dict[str, Any]:
         """Get unified system statistics"""
         return {
-            "kimi_k2_model": self.config["model"],
+            "kimi_k3_model": self.config["model"],
             "forge_tools_available": len(self.forge_tools.tools),
             "total_capabilities": 1450,
             "knowledge_base_entries": len(self.knowledge_base),
@@ -328,10 +328,10 @@ class KimiForgeUnified:
 
 
 def main():
-    """Demo: THE FORGE ❤️ KIMI K2 in action"""
+    """Demo: THE FORGE ❤️ KIMI K3 in action"""
     
     print("\n" + "=" * 60)
-    print("🔥 THE FORGE ❤️ KIMI K2: UNIFIED SYSTEM DEMO")
+    print("🔥 THE FORGE ❤️ KIMI K3: UNIFIED SYSTEM DEMO")
     print("=" * 60 + "\n")
     
     # Initialize unified system
@@ -359,7 +359,7 @@ def main():
         print(f"  {key}: {value}")
     
     print(f"\n{'=' * 60}")
-    print("✅ THE FORGE ❤️ KIMI K2: Marriage Complete!")
+    print("✅ THE FORGE ❤️ KIMI K3: Marriage Complete!")
     print("=" * 60 + "\n")
 
 

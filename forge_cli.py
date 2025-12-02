@@ -162,7 +162,7 @@ class ForgeCLI:
         """Generate general chat response"""
         response = f"Processing: {message}\n\n"
         response += "This is THE FORGE AI in action. In production, this would:\n"
-        response += "- Use the Kimi K2 model with 1T parameters\n"
+        response += "- Use the Kimi K3 model with 1T parameters\n"
         response += "- Apply the complete system prompt from all 15 documentation files\n"
         response += "- Utilize 865+ capabilities as needed\n"
         response += "- Learn from your interaction patterns\n"

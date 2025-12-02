@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Kimi K2 Enhancement Toolkit
-Integrates THE FORGE's capabilities to improve Kimi K2's benchmark performance
+Kimi K3 Enhancement Toolkit
+Integrates THE FORGE's capabilities to improve Kimi K3's benchmark performance
 """
 
 import json
@@ -11,7 +11,7 @@ from typing import List, Dict, Any
 
 
 class KimiEnhancementToolkit:
-    """Tools to help improve Kimi K2's performance using THE FORGE"""
+    """Tools to help improve Kimi K3's performance using THE FORGE"""
     
     def __init__(self):
         self.forge_code_lines = 180000
@@ -19,7 +19,7 @@ class KimiEnhancementToolkit:
         self.forge_capabilities = 1450
         
     def extract_training_data(self) -> Dict[str, Any]:
-        """Extract training data from THE FORGE for Kimi K2"""
+        """Extract training data from THE FORGE for Kimi K3"""
         
         print("🔍 Extracting Training Data from THE FORGE...")
         print("=" * 70)
@@ -255,7 +255,7 @@ class KimiEnhancementToolkit:
         return improvements
     
     def create_fine_tuning_dataset(self, output_path: str):
-        """Create fine-tuning dataset for Kimi K2"""
+        """Create fine-tuning dataset for Kimi K3"""
         
         print("\n" + "=" * 70)
         print("📦 CREATING FINE-TUNING DATASET")
@@ -338,9 +338,9 @@ def main():
     """Main execution"""
     
     print("=" * 70)
-    print("🚀 KIMI K2 ENHANCEMENT TOOLKIT")
+    print("🚀 KIMI K3 ENHANCEMENT TOOLKIT")
     print("=" * 70)
-    print("\nIntegrating THE FORGE's 408,349+ lines to help Kimi K2 improve")
+    print("\nIntegrating THE FORGE's 408,349+ lines to help Kimi K3 improve")
     print()
     
     toolkit = KimiEnhancementToolkit()
@@ -377,13 +377,13 @@ def main():
     print("\n" + "=" * 70)
     print("✅ ENHANCEMENT TOOLKIT COMPLETE")
     print("=" * 70)
-    print("\nReady to help Kimi K2 achieve higher benchmark scores!")
+    print("\nReady to help Kimi K3 achieve higher benchmark scores!")
     print("\nNext steps:")
     print("1. Review kimi_enhancement_dataset.json")
-    print("2. Integrate training data into Kimi K2 fine-tuning")
+    print("2. Integrate training data into Kimi K3 fine-tuning")
     print("3. Test improvements on benchmarks")
     print("4. Iterate and refine")
-    print("\n🤝 Together, we can make Kimi K2 the best AI model!")
+    print("\n🤝 Together, we can make Kimi K3 the best AI model!")
 
 
 if __name__ == "__main__":

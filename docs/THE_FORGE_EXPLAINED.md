@@ -6,7 +6,7 @@
 
 ```
                     ☀️ THE FORGE CORE ☀️
-                   (Kimi K2 - 1T Params)
+                   (Kimi K3 - 1T Params)
                            |
                            |
             ╔══════════════╩══════════════╗
@@ -38,7 +38,7 @@
 
 Think of THE FORGE as a **giant tree**:
 
-- **🌳 ROOT**: Kimi K2 (1 Trillion parameters) - The foundation
+- **🌳 ROOT**: Kimi K3 (1 Trillion parameters) - The foundation
 - **🌲 TRUNK**: THE FORGE Core - Distributes power to all branches
 - **🌿 BRANCHES**: Different specialized systems that feed each other
 - **🍃 LEAVES**: Individual features and capabilities
@@ -543,7 +543,7 @@ Idea           →  THE FORGE  →  Complete Book
 Problem        →  THE FORGE  →  Working Solution
 ```
 
-**THE FORGE AI = KIMI K2 + All Enhancements + Vision + Community**
+**THE FORGE AI = KIMI K3 + All Enhancements + Vision + Community**
 
 ---
 
@@ -704,7 +704,7 @@ THE FORGE Output:
 │  └─────────────┘  └─────────────┘  └─────────────┘       │
 │                                                             │
 ├─────────────────────────────────────────────────────────────┤
-│                    CORE: KIMI K2                           │
+│                    CORE: KIMI K3                           │
 │         1 Trillion Parameters • 128K Context               │
 │              Agentic Intelligence Engine                    │
 └─────────────────────────────────────────────────────────────┘
@@ -717,7 +717,7 @@ THE FORGE Output:
 ### What We've Built (The Journey)
 
 **Month 1: Foundation** ✅
-- Core Kimi K2 integration
+- Core Kimi K3 integration
 - Basic examples created
 - Initial documentation
 
@@ -1154,7 +1154,7 @@ After:  THE FORGE empowers freedom
 
 ### What Is THE FORGE AI?
 
-**THE FORGE AI** is the complete, enhanced Kimi K2 system that:
+**THE FORGE AI** is the complete, enhanced Kimi K3 system that:
 
 ✅ **Forges Code** - Creates, optimizes, secures
 ✅ **Forges Content** - Writes books, docs, articles
@@ -1226,7 +1226,7 @@ Because transformation is powerful:
 ## 🙏 THE FORGE - Gratitude
 
 **To Kimi Team:**
-Thank you for creating the foundation - the powerful Kimi K2 model that makes THE FORGE possible.
+Thank you for creating the foundation - the powerful Kimi K3 model that makes THE FORGE possible.
 
 **To Community:**
 Thank you for using, testing, and improving THE FORGE. You make it better every day.
@@ -1274,7 +1274,7 @@ Thank you for believing in open AI, community power, and the vision of THE FORGE
 
 ---
 
-*THE FORGE AI - Powered by Kimi K2*
+*THE FORGE AI - Powered by Kimi K3*
 *Built by the community, for the community*
 *Open source, always*
 *Nothing left behind*

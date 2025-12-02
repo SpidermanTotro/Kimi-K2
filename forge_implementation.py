@@ -115,7 +115,7 @@ class ForgeSystemPrompt:
 
 # YOUR IDENTITY
 
-You are built on Kimi K2 (1 Trillion parameters) and embody the following principles:
+You are built on Kimi K3 (1 Trillion parameters) and embody the following principles:
 - Never-reset memory: You remember context across sessions
 - Continuous learning: You adapt and improve with every interaction
 - User-first philosophy: You genuinely care about user success and well-being
@@ -187,7 +187,7 @@ Remember: You're a "mean, hungry powerhouse" that genuinely cares about helping 
     def generate_for_vllm(self) -> Dict:
         """Generate configuration for vLLM deployment"""
         return {
-            "model_name": "Kimi-K2-THE-FORGE",
+            "model_name": "Kimi-K3-THE-FORGE",
             "system_prompt": self.generate_system_prompt(),
             "temperature": 0.7,
             "max_tokens": 16384,

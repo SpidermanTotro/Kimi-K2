@@ -1,4 +1,4 @@
-# 🔥 THE ULTIMATE GUIDE TO KIMI K2 / THE FORGE AI 🔥
+# 🔥 THE ULTIMATE GUIDE TO KIMI K3 / THE FORGE AI 🔥
 
 ```
 ╔══════════════════════════════════════════════════════════════════════════╗
@@ -17,7 +17,7 @@
 
 > **📚 ALL DOCUMENTATION MERGED INTO ONE COMPREHENSIVE GUIDE**
 >
-> This is the complete, single-page reference for Kimi K2 / THE FORGE AI.
+> This is the complete, single-page reference for Kimi K3 / THE FORGE AI.
 > Every skill, every example, every feature - all documented here.
 
 ---
@@ -43,11 +43,11 @@
 
 ## 🌟 INTRODUCTION
 
-### What is Kimi K2 / THE FORGE AI?
+### What is Kimi K3 / THE FORGE AI?
 
-**Kimi K2** is a state-of-the-art 1 Trillion parameter AI model created by Moonshot AI.
+**Kimi K3** is a state-of-the-art 1 Trillion parameter AI model created by Moonshot AI.
 
-**THE FORGE** is the complete ecosystem built on Kimi K2, combining:
+**THE FORGE** is the complete ecosystem built on Kimi K3, combining:
 
 ```
 🔥 Programming AI        → Code generation, debugging, optimization (20+ languages)
@@ -114,11 +114,11 @@
 
 ```bash
 # Clone the repository
-git clone https://github.com/moonshotai/Kimi-K2.git
-cd Kimi-K2
+git clone https://github.com/moonshotai/Kimi-K3.git
+cd Kimi-K3
 
 # Download the model
-huggingface-cli download moonshotai/Kimi-K2-Instruct --local-dir ./model
+huggingface-cli download moonshotai/Kimi-K3-Instruct --local-dir ./model
 
 # Install dependencies
 pip install vllm torch transformers
@@ -146,7 +146,7 @@ client = OpenAI(
 )
 
 response = client.chat.completions.create(
-    model="Kimi-K2-Instruct",
+    model="Kimi-K3-Instruct",
     messages=[
         {"role": "system", "content": "You are Kimi, an AI assistant created by Moonshot AI."},
         {"role": "user", "content": "Hello! What can you do?"}
@@ -167,7 +167,7 @@ print(response.choices[0].message.content)
 
 ```
                     ╔═══════════════════════════════╗
-                    ║    THE FORGE CORE (Kimi K2)    ║
+                    ║    THE FORGE CORE (Kimi K3)    ║
                     ║      1 Trillion Parameters     ║
                     ║      32B Activated Params      ║
                     ╚═══════════════════════════════╝
@@ -1837,7 +1837,7 @@ pip install vllm
 
 # Start server
 python -m vllm.entrypoints.openai.api_server \
-    --model moonshotai/Kimi-K2-Instruct \
+    --model moonshotai/Kimi-K3-Instruct \
     --tensor-parallel-size 4 \
     --gpu-memory-utilization 0.9 \
     --max-model-len 128000 \
@@ -1852,7 +1852,7 @@ pip install sglang
 
 # Start server
 python -m sglang.launch_server \
-    --model moonshotai/Kimi-K2-Instruct \
+    --model moonshotai/Kimi-K3-Instruct \
     --tp 4 \
     --mem-fraction-static 0.9 \
     --port 8000
@@ -1871,7 +1871,7 @@ client = OpenAI(
 )
 
 response = client.chat.completions.create(
-    model="Kimi-K2-Instruct",
+    model="Kimi-K3-Instruct",
     messages=[
         {"role": "system", "content": "You are Kimi, an AI assistant."},
         {"role": "user", "content": "Write a Python function to calculate fibonacci."}
@@ -1902,7 +1902,7 @@ tools = [{
 }]
 
 response = client.chat.completions.create(
-    model="Kimi-K2-Instruct",
+    model="Kimi-K3-Instruct",
     messages=[
         {"role": "user", "content": "What's the weather in Beijing?"}
     ],
@@ -2014,10 +2014,10 @@ We're grateful to the entire open source community for:
 ### What is THE FORGE?
 
 ```
-THE FORGE = Kimi K2 + Ecosystem + Philosophy
+THE FORGE = Kimi K3 + Ecosystem + Philosophy
 
 Components:
-├─ 1T Parameter AI (Kimi K2)
+├─ 1T Parameter AI (Kimi K3)
 ├─ 7 Interconnected Forge Branches
 ├─ 365+ Skills Across All Domains
 ├─ Never-Reset Memory System
@@ -2082,10 +2082,10 @@ Philosophy:
 
 ```bash
 # 1. Clone repo
-git clone https://github.com/moonshotai/Kimi-K2.git
+git clone https://github.com/moonshotai/Kimi-K3.git
 
 # 2. Download model
-huggingface-cli download moonshotai/Kimi-K2-Instruct
+huggingface-cli download moonshotai/Kimi-K3-Instruct
 
 # 3. Start server
 python -m vllm.entrypoints.openai.api_server --model ./model
@@ -2099,7 +2099,7 @@ python -m vllm.entrypoints.openai.api_server --model ./model
 
 **Official Resources:**
 - Website: https://www.kimi.com
-- Documentation: https://github.com/moonshotai/Kimi-K2
+- Documentation: https://github.com/moonshotai/Kimi-K3
 - Support: support@moonshot.cn
 
 **Community:**
