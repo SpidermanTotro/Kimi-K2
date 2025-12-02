@@ -1003,6 +1003,33 @@ Perfect for understanding how to build real applications with Kimi K2's agentic 
 
 ---
 
+## 6.1 Dependencies & Changelog
+
+### Core Dependencies
+
+**Python (requirements.txt)**
+- Flask ≥3.0.0 (Web framework)
+- Flask-CORS ≥5.0.0 (Cross-origin resource sharing)
+
+**Go (go.mod)**
+- github.com/gin-gonic/gin v1.11.0 (HTTP web framework)
+- github.com/spf13/cobra v1.10.1 (CLI framework)
+
+**Rust (Cargo.toml)**
+- tokio (Async runtime)
+- serde, serde_json (Serialization)
+
+### Recent Updates
+
+**December 2025**
+- Updated Flask from ≥2.3.0 to ≥3.0.0
+- Updated Flask-CORS from ≥4.0.0 to ≥5.0.0
+- Updated gin-gonic/gin from v1.9.1 to v1.11.0
+- Updated spf13/cobra from v1.8.0 to v1.10.1
+- Added .gitignore for build artifacts
+
+---
+
 ## 7. License
 
 Both the code and the model weights are released under the [Modified MIT License](LICENSE).

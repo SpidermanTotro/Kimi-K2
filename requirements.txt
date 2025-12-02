@@ -1,8 +1,8 @@
 # THE FORGE Implementation Requirements
 
 # Core dependencies for REST API server
-Flask>=2.3.0
-Flask-CORS>=4.0.0
+Flask>=3.0.0
+Flask-CORS>=5.0.0
 
 # Core implementation (no external dependencies required!)
 
