@@ -126,7 +126,7 @@
 - 📋 Multi-modal capabilities
 - 📋 International language support
 
-**See full roadmap:** [FORGE_KIMI_MARRIAGE.md](FORGE_KIMI_MARRIAGE.md)
+**See full roadmap:** [ROADMAP.md](ROADMAP.md)
 
 ### 🚀 Quick Start - Run THE FORGE ❤️ KIMI K2
 
@@ -171,9 +171,9 @@ response = system.process("Restore this 1956 footage to 8K")
 ```
 
 **See complete guides:**
-- 📖 [FORGE ❤️ KIMI K2 Marriage Guide](FORGE_KIMI_MARRIAGE.md)
 - 🎯 [Ultimate Guide - Everything on One Page](docs/ULTIMATE_GUIDE.md)
 - 🔨 [Builder Guide - Multi-Language Build System](BUILDER_README.md)
+- 🚀 [Full Roadmap](ROADMAP.md)
 
 </div>
 
