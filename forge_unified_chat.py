@@ -29,7 +29,6 @@ from forge_codex import get_codex, CodexSystem
 from forge_collaboration import get_collaboration, CollaborationSystem
 from forge_plugins import get_plugins, PluginSystem
 
-logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 

@@ -27,7 +27,6 @@ import logging
 from abc import ABC, abstractmethod
 import inspect
 
-logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 

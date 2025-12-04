@@ -13,8 +13,12 @@ import os
 import sys
 import tempfile
 import shutil
+import logging
 from pathlib import Path
 from datetime import datetime
+
+# Configure logging for tests
+logging.basicConfig(level=logging.INFO)
 
 # Add parent directory to path
 sys.path.insert(0, str(Path(__file__).parent))

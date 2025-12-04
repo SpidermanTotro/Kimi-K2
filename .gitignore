@@ -54,3 +54,9 @@ kimi_k2_training_data.json
 kimi_k2_finetuning_config.json
 kimi_enhancement_dataset.json
 KIMI_K2_FORGE_INTEGRATION.md
+
+# Runtime storage directories
+.forge_memory/
+.forge_codex/
+.forge_collaboration/
+plugins/

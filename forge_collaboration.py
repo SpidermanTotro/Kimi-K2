@@ -26,7 +26,6 @@ from enum import Enum
 import threading
 from queue import Queue
 
-logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
@@ -153,12 +152,15 @@ class EventBus:
     
     def _process_events(self):
         """Process events from the queue"""
+        import queue
         while self._running:
             try:
                 event = self.event_queue.get(timeout=0.1)
                 self._deliver_event(event)
-            except Exception:
-                pass
+            except queue.Empty:
+                pass  # Expected when queue is empty, continue loop
+            except Exception as e:
+                logger.error(f"❌ Event processing error: {e}")
     
     def _deliver_event(self, event: CollaborationEvent):
         """Deliver event to subscribers"""
