@@ -19,10 +19,15 @@ import os
 import sqlite3
 import hashlib
 import re
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from typing import Dict, List, Optional, Any, Tuple
 from dataclasses import dataclass, asdict, field
 from pathlib import Path
+
+
+def utc_now() -> datetime:
+    """Get current UTC time in a timezone-aware way"""
+    return datetime.now(timezone.utc)
 import logging
 
 # Configure logging
@@ -224,7 +229,7 @@ class ForgeMemorySystem:
     
     def _generate_id(self, content: str) -> str:
         """Generate a unique ID for a memory"""
-        timestamp = datetime.utcnow().isoformat()
+        timestamp = utc_now().isoformat()
         return hashlib.sha256(f"{content}{timestamp}".encode()).hexdigest()[:16]
     
     # ==================== MEMORY OPERATIONS ====================
@@ -252,7 +257,7 @@ class ForgeMemorySystem:
         Returns:
             Memory ID
         """
-        now = datetime.utcnow().isoformat()
+        now = utc_now().isoformat()
         memory_id = self._generate_id(content)
         
         memory = MemoryEntry(
@@ -438,7 +443,7 @@ class ForgeMemorySystem:
     
     def _update_access(self, memory: MemoryEntry):
         """Update memory access statistics"""
-        memory.last_accessed = datetime.utcnow().isoformat()
+        memory.last_accessed = utc_now().isoformat()
         memory.access_count += 1
         
         # Update in database
@@ -478,7 +483,7 @@ class ForgeMemorySystem:
         metadata: Optional[Dict] = None
     ):
         """Store a conversation turn"""
-        now = datetime.utcnow().isoformat()
+        now = utc_now().isoformat()
         
         turn = ConversationTurn(
             role=role,
@@ -601,7 +606,7 @@ class ForgeMemorySystem:
         attributes: Optional[Dict] = None
     ):
         """Store or update an entity"""
-        now = datetime.utcnow().isoformat()
+        now = utc_now().isoformat()
         
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
@@ -674,7 +679,7 @@ class ForgeMemorySystem:
                 created_at=row[7] or ''
             )
         else:
-            now = datetime.utcnow().isoformat()
+            now = utc_now().isoformat()
             profile = UserProfile(
                 user_id=user_id,
                 created_at=now,
@@ -703,7 +708,7 @@ class ForgeMemorySystem:
                 if topic not in profile.topics_of_interest:
                     profile.topics_of_interest.append(topic)
         
-        profile.last_interaction = datetime.utcnow().isoformat()
+        profile.last_interaction = utc_now().isoformat()
         profile.total_interactions += 1
         
         self._save_profile(profile)
@@ -929,7 +934,7 @@ class ForgeMemorySystem:
         
         Note: Important memories (importance >= min_importance) are never deleted
         """
-        cutoff = (datetime.utcnow() - timedelta(days=days)).isoformat()
+        cutoff = (utc_now() - timedelta(days=days)).isoformat()
         
         conn = sqlite3.connect(self.db_path)
         cursor = conn.cursor()
