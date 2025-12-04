@@ -387,14 +387,14 @@ class KimiForgeUnified:
         # Step 2: Apply advanced skills
         skills_output = None
         if self.skills and self.config.get("enable_skills", True):
-            user_prefs = result.get("user_profile", {})
-            if isinstance(user_prefs, dict):
-                skills_output = self.skills.process_request(
-                    message=user_input,
-                    context={"memory_context": result["context_used"]} if result["context_used"] else None,
-                    user_preferences=user_prefs
-                )
-                result["skills_applied"] = skills_output.get("skills_used", [])
+            # user_prefs is always a dict (from UserProfile.to_dict() or default empty dict)
+            user_prefs = result.get("user_profile") or {}
+            skills_output = self.skills.process_request(
+                message=user_input,
+                context={"memory_context": result["context_used"]} if result["context_used"] else None,
+                user_preferences=user_prefs
+            )
+            result["skills_applied"] = skills_output.get("skills_used", [])
         
         # Step 3: Generate response with Kimi K2
         kimi_response = self.kimi.generate(user_input, enable_tools=use_tools)

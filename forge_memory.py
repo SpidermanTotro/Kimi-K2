@@ -562,7 +562,7 @@ class ForgeMemorySystem:
         
         # Extract potential entities (capitalized words)
         words = content.split()
-        potential_entities = [w for w in words if w[0].isupper() and len(w) > 2]
+        potential_entities = [w for w in words if len(w) > 2 and w[0].isupper()]
         
         for entity in potential_entities:
             self._store_entity(entity.strip('.,!?'), "unknown", session_id)

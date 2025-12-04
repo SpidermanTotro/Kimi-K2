@@ -935,6 +935,9 @@ class AdvancedSkillsEngine:
     This is the core of "ChatGPT 2.0" capabilities
     """
     
+    # Threshold for applying chain-of-thought reasoning
+    COMPLEX_MESSAGE_LENGTH_THRESHOLD = 100
+    
     def __init__(self):
         self.reasoning = AdvancedReasoning()
         self.code_skills = CodeAnalysisSkills()
@@ -997,7 +1000,7 @@ class AdvancedSkillsEngine:
                     results["outputs"].append(writing_result.output)
         
         # Apply reasoning for complex questions
-        if intent == "question" or len(message) > 100:
+        if intent == "question" or len(message) > self.COMPLEX_MESSAGE_LENGTH_THRESHOLD:
             reasoning_result = self.reasoning.chain_of_thought(
                 message,
                 context=str(context) if context else None
