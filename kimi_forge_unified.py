@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-THE FORGE ❤️ KIMI K2: Unified System
-=====================================
+THE FORGE ❤️ KIMI K2: Unified System (ChatGPT 2.0 Edition)
+===========================================================
 
 This module implements the marriage between THE FORGE and Kimi K2,
 creating a unified AI system that combines:
@@ -10,23 +10,49 @@ creating a unified AI system that combines:
 - Integrated tool calling
 - Benchmark optimization
 - Production deployment
+- **NEW: Persistent Memory System** - Never-reset memory across sessions
+- **NEW: Advanced Skills Engine** - Chain-of-thought reasoning, personalization
+- **NEW: User Profile Learning** - Adapts to user preferences over time
 
 Usage:
     from kimi_forge_unified import KimiForgeUnified
     
     system = KimiForgeUnified()
-    response = system.process("Edit this video professionally")
+    response = system.process("Edit this video professionally", user_id="user123")
+    
+    # With memory-enhanced processing
+    response = system.process_with_memory(
+        "Continue our previous discussion about Python optimization",
+        user_id="user123",
+        session_id="session456"
+    )
 """
 
 import json
 import os
 from typing import Dict, List, Any, Optional
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 import logging
+from datetime import datetime
 
 # Setup logging
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
+
+# Import memory and skills systems
+try:
+    from forge_memory import ForgeMemorySystem, create_memory_system
+    MEMORY_AVAILABLE = True
+except ImportError:
+    MEMORY_AVAILABLE = False
+    logger.warning("⚠️ Memory system not available - running without persistent memory")
+
+try:
+    from forge_skills import AdvancedSkillsEngine
+    SKILLS_AVAILABLE = True
+except ImportError:
+    SKILLS_AVAILABLE = False
+    logger.warning("⚠️ Advanced skills not available - running with basic capabilities")
 
 
 @dataclass
@@ -192,17 +218,23 @@ class KimiK2Model:
 
 class KimiForgeUnified:
     """
-    THE FORGE ❤️ KIMI K2: The Unified System
+    THE FORGE ❤️ KIMI K2: The Unified System (ChatGPT 2.0 Edition)
     
-    Combines Kimi K2's world-class AI with THE FORGE's practical capabilities.
+    Combines Kimi K2's world-class AI with THE FORGE's practical capabilities,
+    enhanced with:
+    - Persistent memory system (never-reset philosophy)
+    - Advanced reasoning and skills
+    - User preference learning
+    - Context-aware personalization
     """
     
-    def __init__(self, config: Optional[Dict] = None):
+    def __init__(self, config: Optional[Dict] = None, db_path: str = "forge_memory.db"):
         """
-        Initialize unified Kimi K2 + FORGE system
+        Initialize unified Kimi K2 + FORGE system with memory and skills
         
         Args:
             config: Optional configuration dict
+            db_path: Path to the memory database
         """
         self.config = config or self._default_config()
         
@@ -213,12 +245,30 @@ class KimiForgeUnified:
         # Load FORGE knowledge base
         self.knowledge_base = self._load_forge_knowledge()
         
+        # Initialize memory system (ChatGPT 2.0 feature)
+        self.memory = None
+        if MEMORY_AVAILABLE:
+            self.memory = create_memory_system(db_path)
+            logger.info("✅ Memory System: Enabled (never-reset philosophy)")
+        else:
+            logger.warning("⚠️ Memory System: Disabled")
+        
+        # Initialize advanced skills engine (ChatGPT 2.0 feature)
+        self.skills = None
+        if SKILLS_AVAILABLE:
+            self.skills = AdvancedSkillsEngine()
+            logger.info("✅ Skills Engine: Enabled (chain-of-thought, personalization)")
+        else:
+            logger.warning("⚠️ Skills Engine: Disabled")
+        
         logger.info("=" * 60)
-        logger.info("🔥 THE FORGE ❤️ KIMI K2: UNIFIED SYSTEM READY")
+        logger.info("🔥 THE FORGE ❤️ KIMI K2: ChatGPT 2.0 EDITION READY")
         logger.info("=" * 60)
         logger.info(f"✅ Kimi K2 Model: {self.config['model']}")
         logger.info(f"✅ FORGE Tools: {len(self.forge_tools.tools)}")
         logger.info(f"✅ Knowledge Base: {len(self.knowledge_base)} entries")
+        logger.info(f"✅ Memory System: {'Enabled' if self.memory else 'Disabled'}")
+        logger.info(f"✅ Skills Engine: {'Enabled' if self.skills else 'Disabled'}")
         logger.info(f"✅ Total Capabilities: 1,450+")
         logger.info("=" * 60)
     
@@ -228,6 +278,8 @@ class KimiForgeUnified:
             "model": "kimi-k2-instruct",
             "temperature": 0.6,
             "enable_tools": True,
+            "enable_memory": True,
+            "enable_skills": True,
             "max_tokens": 4096,
             "forge_tools": "all"
         }
@@ -240,13 +292,14 @@ class KimiForgeUnified:
                 return json.load(f)
         return {}
     
-    def process(self, user_input: str, use_tools: bool = True) -> str:
+    def process(self, user_input: str, use_tools: bool = True, user_id: str = "default") -> str:
         """
         Process user input through unified Kimi K2 + FORGE system
         
         Args:
             user_input: User's question or request
             use_tools: Whether to enable FORGE tools
+            user_id: User identifier for personalization
             
         Returns:
             Complete response with tool results integrated
@@ -269,6 +322,203 @@ class KimiForgeUnified:
         
         return final_response
     
+    def process_with_memory(
+        self,
+        user_input: str,
+        user_id: str = "default",
+        session_id: Optional[str] = None,
+        use_tools: bool = True
+    ) -> Dict[str, Any]:
+        """
+        Process user input with full memory integration (ChatGPT 2.0 feature)
+        
+        This method:
+        1. Retrieves relevant context from memory
+        2. Uses advanced skills for reasoning
+        3. Generates personalized response
+        4. Stores interaction in memory
+        5. Learns from the interaction
+        
+        Args:
+            user_input: User's question or request
+            user_id: User identifier for personalization
+            session_id: Session identifier (auto-generated if not provided)
+            use_tools: Whether to enable FORGE tools
+            
+        Returns:
+            Dict with response, context, skills used, and metadata
+        """
+        if not session_id:
+            session_id = f"session_{datetime.utcnow().strftime('%Y%m%d%H%M%S')}"
+        
+        logger.info(f"\n📝 Processing with memory: {user_input[:50]}...")
+        logger.info(f"👤 User: {user_id}, Session: {session_id}")
+        
+        result = {
+            "response": "",
+            "context_used": None,
+            "skills_applied": [],
+            "memories_retrieved": 0,
+            "user_profile": None,
+            "session_id": session_id
+        }
+        
+        # Step 1: Retrieve context from memory
+        if self.memory and self.config.get("enable_memory", True):
+            context = self.memory.get_context_for_prompt(
+                user_id=user_id,
+                session_id=session_id,
+                query=user_input,
+                max_memories=5
+            )
+            result["context_used"] = context
+            
+            # Get user profile
+            profile = self.memory.get_or_create_profile(user_id)
+            result["user_profile"] = profile.to_dict()
+            
+            # Store conversation turn
+            self.memory.store_conversation_turn(
+                session_id=session_id,
+                role="user",
+                content=user_input
+            )
+        
+        # Step 2: Apply advanced skills
+        skills_output = None
+        if self.skills and self.config.get("enable_skills", True):
+            user_prefs = result.get("user_profile", {})
+            if isinstance(user_prefs, dict):
+                skills_output = self.skills.process_request(
+                    message=user_input,
+                    context={"memory_context": result["context_used"]} if result["context_used"] else None,
+                    user_preferences=user_prefs
+                )
+                result["skills_applied"] = skills_output.get("skills_used", [])
+        
+        # Step 3: Generate response with Kimi K2
+        kimi_response = self.kimi.generate(user_input, enable_tools=use_tools)
+        
+        # Step 4: Execute any FORGE tools
+        if kimi_response.tool_calls:
+            logger.info(f"🔧 Executing {len(kimi_response.tool_calls)} FORGE tool(s)...")
+            for tool_call in kimi_response.tool_calls:
+                self.forge_tools.execute_tool(tool_call)
+        
+        # Step 5: Build enhanced response
+        response_parts = []
+        
+        # Add reasoning if available
+        if skills_output and skills_output.get("reasoning"):
+            response_parts.append(f"**Reasoning**: {skills_output['reasoning']}")
+        
+        # Add main response
+        response_parts.append(self._integrate_results(kimi_response))
+        
+        # Add skill outputs if any
+        if skills_output and skills_output.get("outputs"):
+            for output in skills_output["outputs"]:
+                if isinstance(output, dict):
+                    response_parts.append(f"\n**Analysis**: {json.dumps(output, indent=2)}")
+        
+        result["response"] = "\n\n".join(response_parts)
+        
+        # Step 6: Store assistant response in memory
+        if self.memory:
+            self.memory.store_conversation_turn(
+                session_id=session_id,
+                role="assistant",
+                content=result["response"][:1000]  # Store first 1000 chars
+            )
+            
+            # Learn from interaction
+            self.memory.learn_from_interaction(
+                user_id=user_id,
+                message=user_input,
+                response=result["response"],
+                session_id=session_id
+            )
+        
+        return result
+    
+    def recall_conversation(self, session_id: str, limit: int = 20) -> List[Dict[str, str]]:
+        """
+        Recall previous conversation from memory
+        
+        Args:
+            session_id: Session identifier
+            limit: Maximum turns to retrieve
+            
+        Returns:
+            List of conversation turns
+        """
+        if not self.memory:
+            return []
+        
+        history = self.memory.get_conversation_history(session_id, limit)
+        return [{"role": turn.role, "content": turn.content, "timestamp": turn.timestamp} 
+                for turn in history]
+    
+    def remember_fact(
+        self,
+        fact: str,
+        importance: float = 0.5,
+        tags: Optional[List[str]] = None
+    ) -> str:
+        """
+        Store a fact in long-term memory
+        
+        Args:
+            fact: The fact to remember
+            importance: Importance score (0.0 to 1.0)
+            tags: Optional tags for categorization
+            
+        Returns:
+            Memory ID
+        """
+        if not self.memory:
+            return ""
+        
+        return self.memory.store_memory(
+            content=fact,
+            memory_type="fact",
+            importance=importance,
+            tags=tags or []
+        )
+    
+    def search_memory(self, query: str, limit: int = 5) -> List[Dict[str, Any]]:
+        """
+        Search through stored memories
+        
+        Args:
+            query: Search query
+            limit: Maximum results
+            
+        Returns:
+            List of matching memories
+        """
+        if not self.memory:
+            return []
+        
+        memories = self.memory.search_memories(query, limit=limit)
+        return [mem.to_dict() for mem in memories]
+    
+    def get_user_profile(self, user_id: str) -> Optional[Dict[str, Any]]:
+        """
+        Get user profile with learned preferences
+        
+        Args:
+            user_id: User identifier
+            
+        Returns:
+            User profile dictionary
+        """
+        if not self.memory:
+            return None
+        
+        profile = self.memory.get_or_create_profile(user_id)
+        return profile.to_dict()
+    
     def _integrate_results(self, response: KimiResponse) -> str:
         """Integrate Kimi K2 response with FORGE tool results"""
         
@@ -285,15 +535,31 @@ class KimiForgeUnified:
         return output
     
     def get_stats(self) -> Dict[str, Any]:
-        """Get unified system statistics"""
-        return {
+        """Get unified system statistics including memory stats"""
+        stats = {
             "kimi_k2_model": self.config["model"],
             "forge_tools_available": len(self.forge_tools.tools),
             "total_capabilities": 1450,
             "knowledge_base_entries": len(self.knowledge_base),
             "status": "operational",
-            "marriage_status": "complete ❤️"
+            "marriage_status": "complete ❤️",
+            "chatgpt_2_features": {
+                "memory_system": "enabled" if self.memory else "disabled",
+                "skills_engine": "enabled" if self.skills else "disabled",
+                "personalization": "enabled" if self.memory else "disabled"
+            }
         }
+        
+        # Add memory stats if available
+        if self.memory:
+            memory_stats = self.memory.get_memory_stats()
+            stats["memory"] = memory_stats
+        
+        # Add available skills if engine is loaded
+        if self.skills:
+            stats["available_skills"] = self.skills.get_available_skills()
+        
+        return stats
     
     def benchmark_mode(self, benchmark: str) -> "KimiForgeUnified":
         """
@@ -328,21 +594,23 @@ class KimiForgeUnified:
 
 
 def main():
-    """Demo: THE FORGE ❤️ KIMI K2 in action"""
+    """Demo: THE FORGE ❤️ KIMI K2 ChatGPT 2.0 Edition"""
     
-    print("\n" + "=" * 60)
-    print("🔥 THE FORGE ❤️ KIMI K2: UNIFIED SYSTEM DEMO")
-    print("=" * 60 + "\n")
+    print("\n" + "=" * 70)
+    print("🔥 THE FORGE ❤️ KIMI K2: ChatGPT 2.0 EDITION DEMO")
+    print("=" * 70 + "\n")
     
-    # Initialize unified system
+    # Initialize unified system with memory and skills
     system = KimiForgeUnified()
     
-    # Demo queries
+    print("\n" + "=" * 70)
+    print("📝 DEMO 1: Basic Processing")
+    print("=" * 70)
+    
+    # Demo basic queries
     demos = [
         "Search for the movie Saving Private Ryan in the database",
         "Write a function to process video frames",
-        "Help me restore old VHS footage to 4K quality",
-        "Create a professional book outline for a fantasy novel"
     ]
     
     for demo in demos:
@@ -350,17 +618,99 @@ def main():
         response = system.process(demo)
         print(response)
     
-    # Show stats
-    print(f"\n{'=' * 60}")
-    print("📊 UNIFIED SYSTEM STATISTICS:")
-    print("=" * 60)
-    stats = system.get_stats()
-    for key, value in stats.items():
-        print(f"  {key}: {value}")
+    print("\n" + "=" * 70)
+    print("🧠 DEMO 2: Memory-Enhanced Processing (ChatGPT 2.0 Feature)")
+    print("=" * 70)
     
-    print(f"\n{'=' * 60}")
-    print("✅ THE FORGE ❤️ KIMI K2: Marriage Complete!")
-    print("=" * 60 + "\n")
+    user_id = "demo_user"
+    session_id = "demo_session"
+    
+    # Demo memory-enhanced processing
+    memory_demos = [
+        "Help me write a Python function for data processing",
+        "Can you review my code style preferences?",
+        "What topics have we discussed before?",
+    ]
+    
+    for demo in memory_demos:
+        print(f"\n{'─' * 60}")
+        print(f"📝 Query: {demo}")
+        result = system.process_with_memory(
+            demo,
+            user_id=user_id,
+            session_id=session_id
+        )
+        print(f"\n🔧 Skills Applied: {result.get('skills_applied', [])}")
+        print(f"💬 Response: {result['response'][:300]}...")
+    
+    print("\n" + "=" * 70)
+    print("💾 DEMO 3: Memory Operations")
+    print("=" * 70)
+    
+    # Store a fact
+    if system.memory:
+        fact_id = system.remember_fact(
+            "User prefers Python and detailed code explanations",
+            importance=0.8,
+            tags=["preference", "programming"]
+        )
+        print(f"\n✅ Stored fact with ID: {fact_id[:16]}...")
+        
+        # Search memories
+        memories = system.search_memory("Python", limit=3)
+        print(f"\n🔍 Found {len(memories)} memories about 'Python'")
+        
+        # Get user profile
+        profile = system.get_user_profile(user_id)
+        print(f"\n👤 User Profile: {json.dumps(profile, indent=2)[:200]}...")
+        
+        # Recall conversation
+        history = system.recall_conversation(session_id, limit=5)
+        print(f"\n💬 Conversation History: {len(history)} turns")
+    else:
+        print("\n⚠️ Memory system not available for demo")
+    
+    # Show comprehensive stats
+    print(f"\n{'=' * 70}")
+    print("📊 UNIFIED SYSTEM STATISTICS (ChatGPT 2.0 Edition):")
+    print("=" * 70)
+    stats = system.get_stats()
+    
+    # Print basic stats
+    for key, value in stats.items():
+        if not isinstance(value, dict):
+            print(f"  {key}: {value}")
+    
+    # Print ChatGPT 2.0 features
+    if "chatgpt_2_features" in stats:
+        print("\n  ChatGPT 2.0 Features:")
+        for feature, status in stats["chatgpt_2_features"].items():
+            print(f"    - {feature}: {status}")
+    
+    # Print memory stats
+    if "memory" in stats:
+        print("\n  Memory Statistics:")
+        for key, value in stats["memory"].items():
+            if not isinstance(value, dict):
+                print(f"    - {key}: {value}")
+    
+    # Print available skills
+    if "available_skills" in stats:
+        print("\n  Available Skills:")
+        for category, skills in stats["available_skills"].items():
+            print(f"    - {category}: {', '.join(skills)}")
+    
+    print(f"\n{'=' * 70}")
+    print("✅ THE FORGE ❤️ KIMI K2: ChatGPT 2.0 Edition - Demo Complete!")
+    print("=" * 70)
+    print("\n🎯 Key ChatGPT 2.0 Features Demonstrated:")
+    print("   • Persistent memory across sessions")
+    print("   • User preference learning")
+    print("   • Chain-of-thought reasoning")
+    print("   • Personalization based on history")
+    print("   • Fact storage and retrieval")
+    print("   • Conversation history recall")
+    print("=" * 70 + "\n")
 
 
 if __name__ == "__main__":
