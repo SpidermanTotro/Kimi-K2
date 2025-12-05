@@ -15,9 +15,10 @@ This document provides comprehensive documentation for the ChatGPT 2.0 unified f
 5. [Memory System](#memory-system)
 6. [Collaboration System](#collaboration-system)
 7. [Plugin System](#plugin-system)
-8. [Unified Chat Interface](#unified-chat-interface)
-9. [API Reference](#api-reference)
-10. [Examples](#examples)
+8. [System Manager](#system-manager)
+9. [Unified Chat Interface](#unified-chat-interface)
+10. [API Reference](#api-reference)
+11. [Examples](#examples)
 
 ---
 
@@ -29,6 +30,7 @@ The ChatGPT 2.0 unified framework integrates several key components:
 - **Memory System**: Hierarchical memory with persistent context sharing
 - **Collaboration System**: Inter-module communication and task coordination
 - **Plugin System**: Extensible plugin architecture
+- **System Manager**: Centralized version tracking and system-wide updates
 - **Unified Chat Interface**: Single interface merging all chat capabilities
 
 ### Key Features
@@ -39,6 +41,8 @@ The ChatGPT 2.0 unified framework integrates several key components:
 - ✅ Codex integration for documentation
 - ✅ Plugin-based extensibility
 - ✅ Event-driven collaboration
+- ✅ Centralized version management
+- ✅ System-wide health monitoring and updates
 
 ---
 
@@ -363,6 +367,75 @@ found = plugins.find_plugins_by_capability("enhance")
 
 # Get statistics
 stats = plugins.get_stats()
+```
+
+---
+
+## System Manager
+
+The System Manager provides centralized version tracking and system-wide updates.
+
+### Features
+
+- Unified version tracking across all modules
+- System-wide health monitoring
+- Coordinated updates
+- Diagnostics and rollback support
+
+### Usage
+
+```python
+from forge_system_manager import get_system_manager
+
+manager = get_system_manager()
+
+# Get system status
+status = manager.get_system_status()
+print(f"Version: {status['version']}")
+print(f"Health: {status['health']['overall_status']}")
+
+# Get all module versions
+for name, version in status['modules'].items():
+    print(f"  {name}: v{version}")
+
+# Update all systems
+result = manager.update_all_systems()
+print(f"Updated: {len(result['modules_updated'])} modules")
+
+# Run diagnostics
+diagnostics = manager.run_diagnostics()
+print(f"Total Capabilities: {diagnostics['system_info']['total_capabilities']}")
+```
+
+### Version Compatibility
+
+```python
+from forge_system_manager import SystemVersionManager
+
+version_manager = SystemVersionManager()
+
+# Check module version
+version = version_manager.get_version("forge_memory")
+print(f"Memory System: v{version}")
+
+# Check compatibility
+is_compatible = version_manager.check_compatibility("forge_memory", "1.5.0")
+```
+
+### Health Monitoring
+
+```python
+from forge_system_manager import SystemHealthChecker, SystemVersionManager
+
+version_manager = SystemVersionManager()
+health_checker = SystemHealthChecker(version_manager)
+
+# Perform health check
+health = health_checker.check_health()
+print(f"Overall Status: {health.overall_status}")
+
+for module, status in health.modules_status.items():
+    print(f"  {module}: {status}")
 ```
 
 ---

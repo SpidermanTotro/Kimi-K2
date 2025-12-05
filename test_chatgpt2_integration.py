@@ -27,6 +27,10 @@ from forge_memory import HierarchicalMemory, MemoryEntry, PersistentContextManag
 from forge_codex import CodexSystem, CodexDocument, CodexQuery, get_codex
 from forge_collaboration import CollaborationSystem, EventType, CollaborationEvent, get_collaboration
 from forge_plugins import PluginSystem, PluginInfo, HookRegistry, get_plugins
+from forge_system_manager import (
+    ChatGPT2SystemManager, SystemVersionManager, SystemHealthChecker,
+    SystemUpdateCoordinator, get_system_manager, CHATGPT2_VERSION
+)
 
 
 class TestHierarchicalMemory(unittest.TestCase):
@@ -545,6 +549,86 @@ class TestScalability(unittest.TestCase):
             self.assertIsNotNone(context)
 
 
+class TestSystemManager(unittest.TestCase):
+    """Test cases for the System Manager"""
+    
+    def test_version_manager(self):
+        """Test version management"""
+        version_manager = SystemVersionManager()
+        
+        # Check core modules are registered
+        versions = version_manager.get_all_versions()
+        self.assertIn("forge_memory", versions)
+        self.assertIn("forge_codex", versions)
+        self.assertIn("forge_collaboration", versions)
+        self.assertIn("forge_plugins", versions)
+        self.assertIn("forge_unified_chat", versions)
+    
+    def test_get_version(self):
+        """Test getting specific module version"""
+        version_manager = SystemVersionManager()
+        
+        version = version_manager.get_version("forge_memory")
+        self.assertIsNotNone(version)
+        self.assertEqual(version, "2.0.0")
+    
+    def test_compatibility_check(self):
+        """Test version compatibility checking"""
+        version_manager = SystemVersionManager()
+        
+        # Should be compatible with 2.0.0
+        self.assertTrue(version_manager.check_compatibility("forge_memory", "2.0.0"))
+        # Should be compatible with older versions
+        self.assertTrue(version_manager.check_compatibility("forge_memory", "1.0.0"))
+    
+    def test_system_info(self):
+        """Test getting system information"""
+        version_manager = SystemVersionManager()
+        
+        info = version_manager.get_system_info()
+        self.assertEqual(info["chatgpt_version"], CHATGPT2_VERSION)
+        self.assertIn("modules", info)
+        self.assertGreater(info["total_modules"], 0)
+    
+    def test_health_checker(self):
+        """Test system health checking"""
+        version_manager = SystemVersionManager()
+        health_checker = SystemHealthChecker(version_manager)
+        
+        health = health_checker.check_health()
+        self.assertIn(health.overall_status, ["healthy", "degraded", "critical"])
+        self.assertIsInstance(health.modules_status, dict)
+    
+    def test_update_coordinator(self):
+        """Test update coordination"""
+        version_manager = SystemVersionManager()
+        update_coordinator = SystemUpdateCoordinator(version_manager)
+        
+        result = update_coordinator.update_all()
+        self.assertIn("status", result)
+        self.assertIn("modules_updated", result)
+        self.assertIn(result["status"], ["success", "partial"])
+    
+    def test_system_manager(self):
+        """Test the main system manager"""
+        manager = ChatGPT2SystemManager()
+        
+        # Test get status
+        status = manager.get_system_status()
+        self.assertIn("version", status)
+        self.assertIn("health", status)
+        self.assertIn("modules", status)
+        
+        # Test update
+        update_result = manager.update_all_systems()
+        self.assertIn("status", update_result)
+        
+        # Test diagnostics
+        diagnostics = manager.run_diagnostics()
+        self.assertIn("system_info", diagnostics)
+        self.assertIn("health_check", diagnostics)
+
+
 def run_tests():
     """Run all tests"""
     print("=" * 70)
@@ -563,6 +647,7 @@ def run_tests():
     suite.addTests(loader.loadTestsFromTestCase(TestPluginSystem))
     suite.addTests(loader.loadTestsFromTestCase(TestIntegration))
     suite.addTests(loader.loadTestsFromTestCase(TestScalability))
+    suite.addTests(loader.loadTestsFromTestCase(TestSystemManager))
     
     # Run tests
     runner = unittest.TextTestRunner(verbosity=2)
