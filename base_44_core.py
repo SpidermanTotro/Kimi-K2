@@ -469,6 +469,11 @@ Version: {self.config.version}
     
     def export_config(self, filepath: str = "base_44_config.json"):
         """Export configuration for transparency"""
+        stats = self.get_stats()
+        # Convert datetime to string for JSON serialization
+        if "uptime_start" in stats:
+            del stats["uptime_start"]
+        
         config_data = {
             "version": self.config.version,
             "edition": self.config.edition,
@@ -476,7 +481,7 @@ Version: {self.config.version}
             "enable_all_features": self.config.enable_all_features,
             "quality_tier": self.config.quality_tier,
             "capabilities": self.list_capabilities(),
-            "stats": self.get_stats()
+            "stats": stats
         }
         
         with open(filepath, 'w') as f:

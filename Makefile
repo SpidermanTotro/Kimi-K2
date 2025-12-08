@@ -35,6 +35,13 @@ test:
 	@python3 -m py_compile *.py 2>/dev/null || true
 	@echo "✅ Tests passed"
 
+test-all: test test-base44 test-base44-comprehensive
+	@echo "✅ All tests passed"
+
+test-base44-comprehensive:
+	@echo "🧪 Running comprehensive BASE 44 tests..."
+	@python3 test_base_44.py
+
 clean:
 	@echo "🧹 Cleaning build artifacts..."
 	@rm -rf $(BUILD_DIR) $(DIST_DIR)
