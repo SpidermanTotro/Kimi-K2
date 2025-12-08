@@ -9,7 +9,7 @@ on expectations.
 
 Key Principles:
 - 100% Free: No hidden costs, no paid tiers
-- 100% Accessible: All 1,450+ capabilities available
+- 100% Accessible: All 35+ capabilities available
 - 100% Reliable: Consistent, dependable responses
 - 100% Open: Full transparency and open source
 

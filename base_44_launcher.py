@@ -209,7 +209,7 @@ def run_demo_mode(base44: Base44Core):
         },
         {
             "title": "REST API Design",
-            "request": "Design a RESTful API for a e-commerce platform"
+            "request": "Design a RESTful API for an e-commerce platform"
         }
     ]
     

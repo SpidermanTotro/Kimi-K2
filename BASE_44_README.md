@@ -38,8 +38,12 @@ BASE 44 is a powerful, completely free AI system that beats competitors by actua
 | **AI/ML** | Model training, deployment, optimization | Premium | FREE |
 | **DevOps** | CI/CD, deployment, containerization | Premium | FREE |
 
-**Total Capabilities: 40+** (and growing)  
+**Total Capabilities: 35+** (and growing)  
 **Total Cost: $0** (forever)
+
+> **Note:** The broader Kimi K2 + FORGE ecosystem provides 1,450+ capabilities.  
+> BASE 44 focuses on the core foundation with 35+ essential capabilities,  
+> all freely accessible without restrictions. More capabilities coming soon!
 
 ## 🚀 Quick Start
 
