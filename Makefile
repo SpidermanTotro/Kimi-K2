@@ -62,6 +62,27 @@ run-cli:
 	@echo "💻 Starting THE FORGE CLI..."
 	@python3 forge_cli.py
 
+# BASE 44 targets
+run-base44:
+	@echo "🚀 Starting BASE 44 (Free Forever Edition)..."
+	@python3 base_44_core.py
+
+run-base44-interactive:
+	@echo "💬 Starting BASE 44 Interactive Mode..."
+	@python3 base_44_launcher.py --mode interactive
+
+run-base44-api:
+	@echo "🌐 Starting BASE 44 API Server..."
+	@python3 base_44_launcher.py --mode api
+
+run-base44-demo:
+	@echo "🎭 Starting BASE 44 Demo Mode..."
+	@python3 base_44_launcher.py --mode demo
+
+test-base44:
+	@echo "🧪 Testing BASE 44..."
+	@python3 -c "from base_44_core import Base44Core; b=Base44Core(); print('✅ BASE 44 initialized successfully'); print(f'✅ {len(b.capabilities)} capabilities loaded (ALL FREE)')"
+
 help:
 	@echo "THE FORGE - Build System"
 	@echo ""
@@ -75,3 +96,10 @@ help:
 	@echo "  make run-gui   - Start GUI"
 	@echo "  make run-server - Start server"
 	@echo "  make run-cli   - Start CLI"
+	@echo ""
+	@echo "BASE 44 targets (Free Forever Edition):"
+	@echo "  make run-base44            - Run BASE 44 demo"
+	@echo "  make run-base44-interactive - Interactive CLI mode"
+	@echo "  make run-base44-api        - Start REST API server"
+	@echo "  make run-base44-demo       - Run demonstration"
+	@echo "  make test-base44           - Test BASE 44"

@@ -35,6 +35,40 @@
 
 <div align="center">
 
+## 🚀 BASE 44 - The Free, Unrestricted Version 🆓
+
+```
+╔════════════════════════════════════════════════════════════════════════════╗
+║  🎯 BASE 44: The AI That Actually Delivers  │  💯 100% FREE FOREVER         ║
+╠════════════════════════════════════════════════════════════════════════════╣
+║  ✅ Zero Restrictions - All Features FREE  │  ✅ Premium Quality - No Limits ║
+║  ✅ 35+ Capabilities Unlocked              │  ✅ No Paid Upgrades Required   ║
+║  ✅ No Watermarks, No Degradation          │  ✅ Open Source & Transparent   ║
+╚════════════════════════════════════════════════════════════════════════════╝
+```
+
+### 🌟 Quick Start BASE 44
+
+```bash
+# Run BASE 44 (100% Free)
+python3 base_44_core.py
+
+# Interactive mode
+python3 base_44_launcher.py --mode interactive
+
+# REST API server
+python3 base_44_launcher.py --mode api
+
+# Using Make
+make run-base44              # Demo mode
+make run-base44-interactive  # Interactive CLI
+make run-base44-api         # API server
+```
+
+📖 **Full Documentation:** [BASE_44_README.md](BASE_44_README.md)
+
+---
+
 ## 💍 THE FORGE ❤️ KIMI K2 - The Perfect Marriage 🔥
 
 ```

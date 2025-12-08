@@ -1,0 +1,292 @@
+{
+  "version": "44.0.0",
+  "edition": "Free Forever Edition",
+  "paid_restrictions": false,
+  "enable_all_features": true,
+  "quality_tier": "maximum",
+  "capabilities": [
+    {
+      "name": "python_development",
+      "description": "Advanced Python development with best practices",
+      "category": "coding",
+      "free": true,
+      "enabled": true,
+      "quality": "premium"
+    },
+    {
+      "name": "javascript_development",
+      "description": "Modern JavaScript/TypeScript development",
+      "category": "coding",
+      "free": true,
+      "enabled": true,
+      "quality": "premium"
+    },
+    {
+      "name": "rust_development",
+      "description": "Systems programming with Rust",
+      "category": "coding",
+      "free": true,
+      "enabled": true,
+      "quality": "premium"
+    },
+    {
+      "name": "go_development",
+      "description": "Concurrent programming with Go",
+      "category": "coding",
+      "free": true,
+      "enabled": true,
+      "quality": "premium"
+    },
+    {
+      "name": "cpp_development",
+      "description": "High-performance C++ development",
+      "category": "coding",
+      "free": true,
+      "enabled": true,
+      "quality": "premium"
+    },
+    {
+      "name": "code_review",
+      "description": "Comprehensive code review and analysis",
+      "category": "coding",
+      "free": true,
+      "enabled": true,
+      "quality": "premium"
+    },
+    {
+      "name": "refactoring",
+      "description": "Code refactoring and optimization",
+      "category": "coding",
+      "free": true,
+      "enabled": true,
+      "quality": "premium"
+    },
+    {
+      "name": "testing",
+      "description": "Unit testing, integration testing, TDD",
+      "category": "coding",
+      "free": true,
+      "enabled": true,
+      "quality": "premium"
+    },
+    {
+      "name": "debugging",
+      "description": "Advanced debugging and troubleshooting",
+      "category": "coding",
+      "free": true,
+      "enabled": true,
+      "quality": "premium"
+    },
+    {
+      "name": "documentation",
+      "description": "Code documentation and API docs",
+      "category": "coding",
+      "free": true,
+      "enabled": true,
+      "quality": "premium"
+    },
+    {
+      "name": "video_editing",
+      "description": "Professional video editing (Premiere Pro level)",
+      "category": "video",
+      "free": true,
+      "enabled": true,
+      "quality": "premium"
+    },
+    {
+      "name": "color_grading",
+      "description": "Professional color grading and correction",
+      "category": "video",
+      "free": true,
+      "enabled": true,
+      "quality": "premium"
+    },
+    {
+      "name": "video_effects",
+      "description": "Visual effects and compositing",
+      "category": "video",
+      "free": true,
+      "enabled": true,
+      "quality": "premium"
+    },
+    {
+      "name": "video_upscaling",
+      "description": "AI-powered video upscaling (SD\u21924K\u21928K)",
+      "category": "video",
+      "free": true,
+      "enabled": true,
+      "quality": "premium"
+    },
+    {
+      "name": "video_restoration",
+      "description": "Historical video restoration (1956\u21928K)",
+      "category": "video",
+      "free": true,
+      "enabled": true,
+      "quality": "premium"
+    },
+    {
+      "name": "video_encoding",
+      "description": "Optimized video encoding and compression",
+      "category": "video",
+      "free": true,
+      "enabled": true,
+      "quality": "premium"
+    },
+    {
+      "name": "audio_editing",
+      "description": "Professional audio editing and mixing",
+      "category": "audio",
+      "free": true,
+      "enabled": true,
+      "quality": "premium"
+    },
+    {
+      "name": "audio_restoration",
+      "description": "Audio restoration and enhancement",
+      "category": "audio",
+      "free": true,
+      "enabled": true,
+      "quality": "premium"
+    },
+    {
+      "name": "music_production",
+      "description": "Music composition and production",
+      "category": "audio",
+      "free": true,
+      "enabled": true,
+      "quality": "premium"
+    },
+    {
+      "name": "image_editing",
+      "description": "Professional image editing (Photoshop level)",
+      "category": "image",
+      "free": true,
+      "enabled": true,
+      "quality": "premium"
+    },
+    {
+      "name": "image_upscaling",
+      "description": "AI-powered image upscaling",
+      "category": "image",
+      "free": true,
+      "enabled": true,
+      "quality": "premium"
+    },
+    {
+      "name": "image_restoration",
+      "description": "Photo restoration and enhancement",
+      "category": "image",
+      "free": true,
+      "enabled": true,
+      "quality": "premium"
+    },
+    {
+      "name": "book_writing",
+      "description": "Professional book writing (50+ genres)",
+      "category": "writing",
+      "free": true,
+      "enabled": true,
+      "quality": "premium"
+    },
+    {
+      "name": "technical_writing",
+      "description": "Technical documentation and guides",
+      "category": "writing",
+      "free": true,
+      "enabled": true,
+      "quality": "premium"
+    },
+    {
+      "name": "creative_writing",
+      "description": "Creative fiction and storytelling",
+      "category": "writing",
+      "free": true,
+      "enabled": true,
+      "quality": "premium"
+    },
+    {
+      "name": "copywriting",
+      "description": "Marketing and advertising copy",
+      "category": "writing",
+      "free": true,
+      "enabled": true,
+      "quality": "premium"
+    },
+    {
+      "name": "data_analysis",
+      "description": "Advanced data analysis and visualization",
+      "category": "data",
+      "free": true,
+      "enabled": true,
+      "quality": "premium"
+    },
+    {
+      "name": "database_management",
+      "description": "Database design and optimization",
+      "category": "data",
+      "free": true,
+      "enabled": true,
+      "quality": "premium"
+    },
+    {
+      "name": "data_migration",
+      "description": "Data migration and transformation",
+      "category": "data",
+      "free": true,
+      "enabled": true,
+      "quality": "premium"
+    },
+    {
+      "name": "build_systems",
+      "description": "Multi-language build systems (Make, CMake, Cargo)",
+      "category": "tools",
+      "free": true,
+      "enabled": true,
+      "quality": "premium"
+    },
+    {
+      "name": "deployment",
+      "description": "Docker, Kubernetes, cloud deployment",
+      "category": "tools",
+      "free": true,
+      "enabled": true,
+      "quality": "premium"
+    },
+    {
+      "name": "ci_cd",
+      "description": "CI/CD pipeline setup and optimization",
+      "category": "tools",
+      "free": true,
+      "enabled": true,
+      "quality": "premium"
+    },
+    {
+      "name": "model_training",
+      "description": "Train and fine-tune AI models",
+      "category": "ai",
+      "free": true,
+      "enabled": true,
+      "quality": "premium"
+    },
+    {
+      "name": "model_deployment",
+      "description": "Deploy models to production",
+      "category": "ai",
+      "free": true,
+      "enabled": true,
+      "quality": "premium"
+    },
+    {
+      "name": "prompt_engineering",
+      "description": "Advanced prompt engineering",
+      "category": "ai",
+      "free": true,
+      "enabled": true,
+      "quality": "premium"
+    }
+  ],
+  "stats": {
+    "total_requests": 3,
+    "successful_responses": 3,
+    "uptime_start": 
