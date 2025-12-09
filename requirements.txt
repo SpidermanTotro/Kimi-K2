@@ -4,6 +4,9 @@
 Flask>=2.3.0
 Flask-CORS>=4.0.0
 
+# AI Analysis Enhancement Toolkit
+numpy>=1.24.0  # Required for AI analysis modules
+
 # Core implementation (no external dependencies required!)
 
 # Optional: For vLLM model deployment
@@ -15,3 +18,9 @@ Flask-CORS>=4.0.0
 # fastapi>=0.100.0  # Alternative to Flask
 # uvicorn>=0.20.0  # For running FastAPI
 # pydantic>=2.0.0  # For data validation
+
+# Optional: For full AI framework support
+# torch>=2.0.0  # PyTorch support
+# tensorflow>=2.13.0  # TensorFlow support
+# onnx>=1.14.0  # ONNX support
+# coremltools>=6.0  # CoreML support

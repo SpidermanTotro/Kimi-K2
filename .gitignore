@@ -1,0 +1,61 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# AI Analysis Reports (generated files)
+ai_analysis_reports/
+model_lineage/
+model_versions/
+vulnerability_reports/
+compliance_reports/
+debug_visualizations/
+modular_units/
+exports/
+*.json.bak
+lineage_report.json
+vulnerability_report.json
+debug_report.json
+compatibility_report.json
+compliance_report.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
+# Test coverage
+.coverage
+htmlcov/
