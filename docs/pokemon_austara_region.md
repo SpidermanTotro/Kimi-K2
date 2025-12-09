@@ -12,7 +12,7 @@ The Austara Region is a land of dramatic contrasts, from the sun-scorched desert
 
 ### Major Locations
 
-#### 🏙️ Canberrra
+#### 🏙️ Canberra
 **The Modern Capital**
 - The bustling and modern capital city, serving as the player's starting point
 - A hub of culture and innovation
@@ -271,7 +271,7 @@ The legends of the Austara Region are deeply rooted in the rich mythology of Aus
 
 ### Story Arc
 
-**Beginning:** The player starts their journey in Canberrra, receiving their first Pokémon from Professor Acacia. Early encounters with Team Grasp seem harmless.
+**Beginning:** The player starts their journey in Canberra, receiving their first Pokémon from Professor Acacia. Early encounters with Team Grasp seem harmless.
 
 **Rising Action:** As the player progresses through gyms, Team Grasp's operations become more destructive. The player learns about the Dreamkeepers and their mission.
 
@@ -491,7 +491,7 @@ The game's soundtrack features:
 - Multiple battle facilities with unique challenges
 - Battle Tower overlooking the Gold Coast
 - Battle Factory in the outback
-- Battle Dome in Canberrra
+- Battle Dome in Canberra
 
 ### Legendary Hunting
 - Find and capture The Bunyip
@@ -534,7 +534,7 @@ The game's soundtrack features:
 
 ## 🎯 Conclusion
 
-**Pokémon Opal and Pokémon Jasper** invite players to explore the vast and untamed beauty of the Austara Region. From the bustling streets of Canberrra to the sacred monolith of Uluru's Heart, from the colorful Great Coral Maze to the mysterious Daintree Jungle, adventure awaits at every turn.
+**Pokémon Opal and Pokémon Jasper** invite players to explore the vast and untamed beauty of the Austara Region. From the bustling streets of Canberra to the sacred monolith of Uluru's Heart, from the colorful Great Coral Maze to the mysterious Daintree Jungle, adventure awaits at every turn.
 
 **Key Takeaways:**
 - Choose from three unique starter Pokémon inspired by Australian wildlife
