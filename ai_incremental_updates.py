@@ -277,15 +277,16 @@ class IncrementalUpdateManager:
         return improvements
     
     def _estimate_version_size(self, update_type: str) -> float:
-        """Estimate version size based on update type"""
-        base_size = 1000000  # 1TB for full model (simplified)
+        """Estimate version size based on update type (in MB)"""
+        # Base size: 1TB = 1,000,000 MB
+        base_size_mb = 1000000.0
         
         if update_type == "fine_tuning":
-            return base_size * 0.1  # Fine-tuning typically smaller
+            return base_size_mb * 0.1  # Fine-tuning typically smaller
         elif update_type == "weights":
-            return base_size
+            return base_size_mb
         else:
-            return base_size * 1.05  # Architecture changes slightly larger
+            return base_size_mb * 1.05  # Architecture changes slightly larger
     
     def _estimate_delta_size(self, layers: List[str]) -> float:
         """Estimate size of weight delta"""

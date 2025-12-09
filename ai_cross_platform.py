@@ -273,8 +273,9 @@ class CrossPlatformConverter:
         }
     
     def _estimate_export_size(self, framework: str, optimization: str) -> float:
-        """Estimate exported model size"""
-        base_size = 1000000  # 1TB base model
+        """Estimate exported model size (in MB)"""
+        # Base size: 1TB = 1,000,000 MB
+        base_size_mb = 1000000.0
         
         framework_factors = {
             "pytorch": 1.0,
@@ -291,7 +292,7 @@ class CrossPlatformConverter:
             "speed": 1.1
         }
         
-        return base_size * framework_factors.get(framework, 1.0) * optimization_factors.get(optimization, 1.0) / 1024  # Convert to MB
+        return base_size_mb * framework_factors.get(framework, 1.0) * optimization_factors.get(optimization, 1.0)
     
     def _estimate_inference_time(self, framework: str) -> float:
         """Estimate inference time for framework"""

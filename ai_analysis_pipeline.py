@@ -11,7 +11,7 @@ from datetime import datetime
 from typing import Dict, List, Any, Optional
 
 # Import all analysis modules
-from ai_model_tracer import ModelLineageTracker, DatasetInfo, ArchitectureChange, FineTuningRun
+from ai_model_tracer import ModelLineageTracker
 from ai_modular_splitter import LLMModularSplitter
 from ai_incremental_updates import IncrementalUpdateManager
 from ai_vulnerability_analyzer import AIVulnerabilityAnalyzer

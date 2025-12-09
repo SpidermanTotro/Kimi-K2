@@ -92,10 +92,7 @@ jobs:
           if [ -f "vulnerability_report.json" ]; then
             SCORE=$(python -c "import json; print(json.load(open('vulnerability_report.json'))['overall_security_score'])")
             echo "Security Score: $SCORE"
-            if (( $(echo "$SCORE < 70" | bc -l) )); then
-              echo "::error::Security score below threshold (70)"
-              exit 1
-            fi
+            python -c "import sys; score = $SCORE; sys.exit(1) if score < 70 else sys.exit(0)"
           fi
       
       - name: Upload vulnerability report
@@ -292,15 +289,19 @@ jobs:
           CERT_LEVEL=$(python -c "import json; print(json.load(open('compliance_report.json'))['compliance_certificate']['certification_level'])")
           echo "Certification Level: $CERT_LEVEL"
           
-          # Gate conditions
-          if (( $(echo "$SECURITY_SCORE < 75" | bc -l) )); then
-            echo "::error::Security score too low for deployment"
-            exit 1
-          fi
-          
-          if [ "$CERT_LEVEL" == "Not Certified" ] || [ "$CERT_LEVEL" == "Bronze" ]; then
-            echo "::error::Insufficient compliance certification for deployment"
-            exit 1
-          fi
-          
-          echo "::notice::All deployment gates passed ✓"
+          # Gate conditions using Python
+          python -c "
+import sys
+security_score = float($SECURITY_SCORE)
+cert_level = '$CERT_LEVEL'
+
+if security_score < 75:
+    print('::error::Security score too low for deployment')
+    sys.exit(1)
+
+if cert_level in ['Not Certified', 'Bronze']:
+    print('::error::Insufficient compliance certification for deployment')
+    sys.exit(1)
+
+print('::notice::All deployment gates passed ✓')
+"
