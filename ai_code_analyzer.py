@@ -280,7 +280,7 @@ class AICodeAnalyzer:
                     'recommendation': 'Use std::vector or std::unique_ptr<T[]>'
                 },
                 {
-                    'pattern': r'delete\s+(?!new)',
+                    'pattern': r'(?<!new\s)\bdelete\s+\w+\s*;',
                     'severity': 'medium',
                     'type': 'Memory Management',
                     'description': 'Manual memory management prone to leaks',
@@ -303,7 +303,7 @@ class AICodeAnalyzer:
                     'recommendation': 'Pass command arguments separately'
                 },
                 {
-                    'pattern': r'go\s+func\s*\([^)]*\)\s*{[^}]*range',
+                    'pattern': r'go\s+func\s*\([^)]*\)\s*{\s*for\s+\w+\s*:=\s*range',
                     'severity': 'medium',
                     'type': 'Goroutine Range Variable',
                     'description': 'Range variable captured in goroutine may cause race condition',
@@ -542,36 +542,51 @@ class AICodeAnalyzer:
             
             # Track multiline strings (Python)
             if extension == '.py':
-                if '"""' in line:
-                    if in_multiline_string and string_delimiter == '"""':
-                        in_multiline_string = False
-                        string_delimiter = None
-                    elif not in_multiline_string:
-                        in_multiline_string = True
-                        string_delimiter = '"""'
-                    continue
-                elif "'''" in line:
-                    if in_multiline_string and string_delimiter == "'''":
-                        in_multiline_string = False
-                        string_delimiter = None
-                    elif not in_multiline_string:
-                        in_multiline_string = True
-                        string_delimiter = "'''"
-                    continue
+                # Count triple quotes to handle same-line docstrings
+                triple_double = line.count('"""')
+                triple_single = line.count("'''")
+                
+                if triple_double > 0:
+                    if triple_double == 1:  # Opening or closing
+                        if in_multiline_string and string_delimiter == '"""':
+                            in_multiline_string = False
+                            string_delimiter = None
+                        elif not in_multiline_string:
+                            in_multiline_string = True
+                            string_delimiter = '"""'
+                    # If triple_double == 2 or more (even), it's same-line, skip the line
+                    if triple_double >= 2:
+                        continue
+                elif triple_single > 0:
+                    if triple_single == 1:  # Opening or closing
+                        if in_multiline_string and string_delimiter == "'''":
+                            in_multiline_string = False
+                            string_delimiter = None
+                        elif not in_multiline_string:
+                            in_multiline_string = True
+                            string_delimiter = "'''"
+                    # If triple_single == 2 or more (even), it's same-line, skip the line
+                    if triple_single >= 2:
+                        continue
                 
                 if in_multiline_string:
                     continue
             
-            # Skip if it's inside a pattern definition (has 'pattern': or "pattern": nearby)
-            if is_pattern_file and ("'pattern':" in stripped or '"pattern":' in stripped or 'r"' in stripped or "r'" in stripped):
+            # Skip if it's inside a pattern definition (more specific check)
+            if is_pattern_file and ("'pattern':" in stripped or '"pattern":' in stripped):
+                # Also check for raw string patterns
+                if re.search(r"['\"]pattern['\"]:\s*r['\"]", stripped):
+                    continue
                 continue
             
             # Skip commented lines
             if stripped.startswith('#') or stripped.startswith('//'):
                 continue
             
-            # Skip lines with 'example' or 'test' in variable names or comments
-            if 'example' in line.lower() or 'test' in line.lower() or 'sample' in line.lower():
+            # Skip lines with 'example' or 'test' in comments (not variable names)
+            # Only skip if these words appear in comments or at the start
+            if stripped.startswith(('example', 'test', 'sample')) or \
+               (('#' in line or '//' in line) and ('example' in line.lower() or 'test' in line.lower())):
                 continue
             
             # Skip dictionary/object literals containing patterns
