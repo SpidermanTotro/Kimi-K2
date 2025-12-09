@@ -96,15 +96,26 @@ class ForgeToolRegistry:
                 "capabilities": ["universal_conversion", "quality_enhancement", "batch_conversion"],
                 "implementation": "universal_format_converter.py"
             },
+            "code_clinging_tool": {
+                "description": "AI-powered code analysis that 'clings' to code finding everything - vulnerabilities, weak spots, complete analysis",
+                "capabilities": ["deep_analysis", "vulnerability_detection", "file_breakdown", "weak_spot_finding", "dependency_mapping"],
+                "implementation": "code_clinging_tool.py"
+            },
+            "ai_code_analyzer": {
+                "description": "Advanced code analyzer that scans and finds everything in source code, breaks down large files",
+                "capabilities": ["comprehensive_scanning", "code_segmentation", "quality_scoring", "complexity_analysis"],
+                "implementation": "ai_code_analyzer.py"
+            },
             # Add all 1,450+ capabilities here
             "all_forge_tools": {
-                "description": "Complete access to all 1,450+ FORGE capabilities",
-                "count": 1450,
+                "description": "Complete access to all 1,452+ FORGE capabilities",
+                "count": 1452,
                 "categories": [
                     "video_editing", "movie_database", "code_generation",
                     "book_writing", "media_restoration", "linux_building",
                     "library_upgrading", "format_conversion", "gaming",
-                    "imaging", "audio_processing", "ai_learning"
+                    "imaging", "audio_processing", "ai_learning",
+                    "code_analysis", "vulnerability_scanning"
                 ]
             }
         }
