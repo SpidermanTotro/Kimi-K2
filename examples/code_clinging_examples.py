@@ -68,17 +68,18 @@ def example_break_down_file():
     # Create a test file
     import tempfile
     
-    with tempfile.NamedTemporaryFile(mode='w', suffix='.py', delete=False) as f:
-        # Write a large file with multiple functions
-        f.write("# Large file example\n\n")
-        for i in range(20):
-            f.write(f"def function_{i}():\n")
-            f.write(f"    '''Function {i}'''\n")
-            f.write(f"    result = {i} * 2\n")
-            f.write(f"    return result\n\n")
-        temp_file = f.name
-    
+    temp_file = None
     try:
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.py', delete=False) as f:
+            # Write a large file with multiple functions
+            f.write("# Large file example\n\n")
+            for i in range(20):
+                f.write(f"def function_{i}():\n")
+                f.write(f"    '''Function {i}'''\n")
+                f.write(f"    result = {i} * 2\n")
+                f.write(f"    return result\n\n")
+            temp_file = f.name
+        
         # Break it down
         segments = tool.break_down_large_file(temp_file, "/tmp/example_segments")
         
@@ -86,7 +87,8 @@ def example_break_down_file():
         print("Segments saved to: /tmp/example_segments/")
     finally:
         # Clean up
-        os.unlink(temp_file)
+        if temp_file and os.path.exists(temp_file):
+            os.unlink(temp_file)
 
 
 def example_comprehensive_scan():

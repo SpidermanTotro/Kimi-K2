@@ -210,8 +210,9 @@ class CodeClingingTool:
             print(f"   File is small ({result.total_lines} lines), no breakdown needed")
             return []
         
+        file_path_obj = Path(file_path)
         if output_dir is None:
-            output_dir = Path(file_path).parent / f"{Path(file_path).stem}_segments"
+            output_dir = file_path_obj.parent / f"{file_path_obj.stem}_segments"
         
         output_path = Path(output_dir)
         output_path.mkdir(exist_ok=True, parents=True)
@@ -220,10 +221,10 @@ class CodeClingingTool:
         
         # Break down by segments
         for i, segment in enumerate(result.segments):
-            segment_file = output_path / f"segment_{i+1:03d}_{segment.type}.{Path(file_path).suffix}"
+            segment_file = output_path / f"segment_{i+1:03d}_{segment.type}{file_path_obj.suffix}"
             
             with open(segment_file, 'w', encoding='utf-8') as f:
-                f.write(f"# Segment {i+1} from {Path(file_path).name}\n")
+                f.write(f"# Segment {i+1} from {file_path_obj.name}\n")
                 f.write(f"# Type: {segment.type}\n")
                 f.write(f"# Lines: {segment.start_line}-{segment.end_line}\n\n")
                 f.write(segment.content)

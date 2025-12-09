@@ -132,14 +132,14 @@ class AICodeAnalyzer:
                     'recommendation': 'Use SHA256 or stronger hash functions'
                 },
                 {
-                    'pattern': r'password\s*=\s*["\'][\w]+["\']',
+                    'pattern': r'password\s*=\s*["\'][^"\']+["\']',
                     'severity': 'critical',
                     'type': 'Hardcoded Credentials',
                     'description': 'Hardcoded password in source code',
                     'recommendation': 'Use environment variables or secure credential storage'
                 },
                 {
-                    'pattern': r'(?:api_key|secret|token)\s*=\s*["\'][\w-]+["\']',
+                    'pattern': r'(?:api_key|secret|token)\s*=\s*["\'][^"\']+["\']',
                     'severity': 'critical',
                     'type': 'Hardcoded Secrets',
                     'description': 'Hardcoded API key or secret in source code',
@@ -360,11 +360,22 @@ class AICodeAnalyzer:
                 tree = ast.parse(content)
                 for node in ast.walk(tree):
                     if isinstance(node, (ast.FunctionDef, ast.ClassDef)):
+                        # Handle Python 3.7 and earlier
+                        end_line = getattr(node, 'end_lineno', node.lineno + 10)
+                        
+                        # Get source segment if available (Python 3.8+)
+                        try:
+                            segment_content = ast.get_source_segment(content, node) or ""
+                        except AttributeError:
+                            # Fallback for Python < 3.8
+                            lines_list = content.split('\n')
+                            segment_content = '\n'.join(lines_list[node.lineno-1:end_line])
+                        
                         segment = CodeSegment(
                             file_path="",
                             start_line=node.lineno,
-                            end_line=node.end_lineno or node.lineno,
-                            content=ast.get_source_segment(content, node) or "",
+                            end_line=end_line,
+                            content=segment_content,
                             type='function' if isinstance(node, ast.FunctionDef) else 'class'
                         )
                         segments.append(segment)
@@ -469,7 +480,7 @@ class AICodeAnalyzer:
                     result = self.analyze_file(str(file_path))
                     results[str(file_path)] = result
                 except Exception as e:
-                    print(f"Error analyzing {file_path}: {e}")
+                    logger.warning(f"Error analyzing {file_path}: {type(e).__name__}: {e}")
         
         return results
     
