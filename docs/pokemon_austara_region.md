@@ -209,3 +209,203 @@ To bring Pokémon Opal and Pokémon Jasper from concept to reality, the followin
 **Development Timeline:** 3-4 years with a team of 100+ developers, artists, and designers.
 
 **Estimated Budget:** $20-30 million USD for a full AAA Pokémon title.
+
+---
+
+## Development Tools & Software
+
+Professional game studios use these industry-standard tools to create Pokémon games:
+
+### Game Engines
+**Unity** (Most Likely for Pokémon)
+- Download: https://unity.com/
+- License: Free (Personal), $185/month (Plus), $399/month (Pro)
+- Features: Cross-platform support, C# scripting, asset store
+- Pokémon Brilliant Diamond/Shining Pearl were built with Unity
+
+**Unreal Engine 5**
+- Download: https://www.unrealengine.com/
+- License: Free (5% royalty on revenue over $1M)
+- Features: Advanced graphics, Blueprint visual scripting, C++
+- Best for high-fidelity 3D environments
+
+**Godot** (Open-Source Alternative)
+- Download: https://godotengine.org/
+- License: Free and open-source (MIT)
+- Features: GDScript/C#, lightweight, 2D/3D support
+- Great for indie developers learning game development
+
+### 3D Modeling & Animation
+**Blender** (Free & Professional)
+- Download: https://www.blender.org/
+- License: Free and open-source (GPL)
+- Use: Character models, Pokémon models, environments
+- Features: Modeling, rigging, animation, rendering
+- Industry-standard, used by AAA studios
+
+**Autodesk Maya**
+- Download: https://www.autodesk.com/products/maya/
+- License: $235/month, $1,875/year
+- Use: Professional character animation and modeling
+- Industry standard for game studios
+
+**ZBrush**
+- Download: https://www.maxon.net/en/zbrush
+- License: $39.95/month or $895 perpetual
+- Use: High-detail Pokémon sculpting and texturing
+- Best for organic character creation
+
+### Texturing & Materials
+**Substance Painter**
+- Download: https://www.adobe.com/products/substance3d-painter.html
+- License: $19.99/month
+- Use: Creating realistic textures for Pokémon and environments
+- Industry standard for game texturing
+
+**Substance Designer**
+- License: $19.99/month
+- Use: Procedural material creation
+- Create reusable texture materials
+
+### Programming & Scripting
+**Visual Studio Code** (Free)
+- Download: https://code.visualstudio.com/
+- Use: C#/C++ coding for game logic
+- Free, lightweight, excellent for Unity/Unreal
+
+**JetBrains Rider**
+- Download: https://www.jetbrains.com/rider/
+- License: $16.90/month (individual)
+- Use: Advanced C# development for Unity
+- Professional IDE with debugging tools
+
+**Git & GitHub**
+- Download: https://git-scm.com/
+- Use: Version control for code and assets
+- Essential for team collaboration
+
+### Audio Production
+**FMOD Studio**
+- Download: https://www.fmod.com/
+- License: Free (indie), Custom pricing (commercial)
+- Use: Interactive game audio and music
+- Used in many AAA games
+
+**Wwise**
+- Download: https://www.audiokinetic.com/
+- License: Free (indie), Custom pricing (commercial)
+- Use: Advanced audio implementation
+- Alternative to FMOD
+
+**Reaper** or **FL Studio**
+- Use: Music composition and sound design
+- License: $60-$99 (Reaper), $99-$499 (FL Studio)
+- Create battle themes and environmental music
+
+### UI/UX Design
+**Figma** (Recommended)
+- Download: https://www.figma.com/
+- License: Free (starter), $12/month (professional)
+- Use: Menu design, battle UI, Pokédex interface
+- Collaborative, browser-based
+
+**Adobe Photoshop**
+- License: $22.99/month
+- Use: UI graphics, icons, textures
+- Industry standard for graphics
+
+### Level Design & World Building
+**Tiled Map Editor** (Free)
+- Download: https://www.mapeditor.org/
+- Use: Route and town layout design
+- Free, open-source, 2D map creation
+
+**Terrain Tools** (Built into Unity/Unreal)
+- Use: Creating mountains, forests, deserts
+- Sculpt the Austara Region's diverse landscapes
+
+### Project Management
+**Jira**
+- Download: https://www.atlassian.com/software/jira
+- License: Free (up to 10 users), $7.75/user/month
+- Use: Task tracking, sprint planning, bug tracking
+
+**Trello** (Simpler Alternative)
+- Download: https://trello.com/
+- License: Free (basic), $5/month (premium)
+- Use: Visual task management
+
+**Notion**
+- Download: https://www.notion.so/
+- License: Free (personal), $8/month (team)
+- Use: Documentation, design docs, wikis
+
+### Testing & QA
+**Unity Test Framework** / **Unreal Automation**
+- Built into game engines
+- Use: Automated testing for game systems
+
+**TestRail**
+- Use: Test case management
+- License: $30/user/month
+
+### Recommended Starter Toolkit (Free/Low Cost)
+
+For indie developers starting out:
+
+1. **Game Engine:** Unity (Free Personal) or Godot (Free)
+2. **3D Modeling:** Blender (Free)
+3. **Code Editor:** VS Code (Free)
+4. **Audio:** Audacity (Free) + FMOD Studio (Free for indie)
+5. **UI Design:** Figma (Free starter)
+6. **Version Control:** Git + GitHub (Free)
+7. **Project Management:** Trello (Free)
+8. **Texturing:** Krita (Free alternative) or GIMP (Free)
+
+**Total Cost to Start:** $0 using entirely free tools!
+
+### Learning Resources
+
+**Free Tutorials:**
+- Unity Learn: https://learn.unity.com/
+- Unreal Online Learning: https://dev.epicgames.com/community/learning
+- Blender Fundamentals: https://www.blender.org/support/tutorials/
+- YouTube channels: Brackeys, Sebastian Lague, GameDev.tv
+
+**Paid Courses:**
+- Udemy: Game development courses ($10-200)
+- Coursera: Game Design specializations
+- GameDev.tv: Complete game development courses
+
+**Communities:**
+- r/gamedev (Reddit)
+- Unity Forums
+- Discord: Game Dev League, Brackeys server
+- Pokémon ROM hacking communities for Pokémon-specific knowledge
+
+### Development Workflow Example
+
+1. **Pre-Production (3-6 months)**
+   - Design documents in Notion/Google Docs
+   - Concept art in Photoshop/Krita
+   - Prototype in Unity with placeholder assets
+
+2. **Production (2-3 years)**
+   - Model Pokémon in Blender, texture in Substance Painter
+   - Build environments in Unity/Unreal
+   - Code game systems in C# (Unity) or C++ (Unreal)
+   - Implement audio with FMOD
+   - Design UI in Figma, implement in engine
+
+3. **Testing (6-12 months)**
+   - Internal playtesting
+   - Bug fixing and balancing
+   - Performance optimization
+   - Localization
+
+4. **Release**
+   - Final builds for Nintendo Switch
+   - Day-one patch preparation
+   - Post-launch support planning
+
+With these tools and dedication, a small indie team could create a Pokémon-inspired game. While it won't be an official Pokémon title (due to licensing), you can create an original monster-catching RPG inspired by the Austara Region concept!
