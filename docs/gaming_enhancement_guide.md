@@ -43,6 +43,21 @@ Kimi K2 isn't just an AI for coding—it's a **VISIONARY, IMPRESSIVE gaming enha
 
 ---
 
+## 🌏 NEW: Pokémon Opal & Pokémon Jasper - The Austara Region
+
+**Explore an entirely new Pokémon region inspired by Australia!**
+
+Discover the **Austara Region** in the brand new **Pokémon Opal** and **Pokémon Jasper** games! Experience:
+- 🦘 Unique starter Pokémon: Koalaif, Fluroo, and Platypuddle
+- 🏜️ Diverse locations from the Great Coral Maze to Uluru's Heart
+- 🌈 Legendary Pokémon based on Aboriginal mythology
+- 🇦🇺 Authentic Australian culture and slang
+- ⚔️ Epic battle between Team Grasp and The Dreamkeepers
+
+📖 **[Read the Complete Austara Region Guide](pokemon_austara_region.md)**
+
+---
+
 ## 🎮 Pokémon Game Enhancement System
 
 ### The Vision: Old Becomes New
@@ -729,6 +744,7 @@ Kimi K2's gaming enhancement system:
 ---
 
 For more information:
+- [Pokémon Opal & Jasper - Austara Region Guide](pokemon_austara_region.md) - NEW! 🌏
 - [Vision & Roadmap](vision_and_roadmap.md)
 - [Examples Guide](examples_guide.md)
 - [Main README](../README.md)
