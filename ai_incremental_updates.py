@@ -40,6 +40,10 @@ class WeightUpdate:
 class IncrementalUpdateManager:
     """Manages incremental model updates and versioning"""
     
+    # Model size constants (in MB)
+    BASE_MODEL_SIZE_MB = 1000000.0  # 1TB base model size
+    ESTIMATED_LAYER_SIZE_MB = 1024.0  # Estimated size per layer
+    
     def __init__(self, model_id: str, storage_dir: str = "model_versions"):
         self.model_id = model_id
         self.storage_dir = Path(storage_dir)
@@ -278,20 +282,16 @@ class IncrementalUpdateManager:
     
     def _estimate_version_size(self, update_type: str) -> float:
         """Estimate version size based on update type (in MB)"""
-        # Base size: 1TB = 1,000,000 MB
-        base_size_mb = 1000000.0
-        
         if update_type == "fine_tuning":
-            return base_size_mb * 0.1  # Fine-tuning typically smaller
+            return self.BASE_MODEL_SIZE_MB * 0.1  # Fine-tuning typically smaller
         elif update_type == "weights":
-            return base_size_mb
+            return self.BASE_MODEL_SIZE_MB
         else:
-            return base_size_mb * 1.05  # Architecture changes slightly larger
+            return self.BASE_MODEL_SIZE_MB * 1.05  # Architecture changes slightly larger
     
     def _estimate_delta_size(self, layers: List[str]) -> float:
-        """Estimate size of weight delta"""
-        # Simplified: assume each layer is ~1GB
-        return len(layers) * 1024.0
+        """Estimate size of weight delta (in MB)"""
+        return len(layers) * self.ESTIMATED_LAYER_SIZE_MB
     
     def _save_state(self) -> None:
         """Save state to disk"""
