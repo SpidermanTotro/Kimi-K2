@@ -9,10 +9,15 @@ on:
     # Run weekly security scans
     - cron: '0 0 * * 0'
 
+permissions:
+  contents: read
+
 jobs:
   model-tracing:
     name: Model Lineage Tracing
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v3
       
@@ -40,6 +45,8 @@ jobs:
   modular-splitting:
     name: Model Segmentation Tests
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v3
       
@@ -68,6 +75,8 @@ jobs:
   vulnerability-analysis:
     name: Security Vulnerability Scan
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v3
       
@@ -104,6 +113,8 @@ jobs:
   visual-debugging:
     name: Layer Performance Analysis
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v3
       
@@ -143,6 +154,8 @@ jobs:
   cross-platform-compatibility:
     name: Framework Compatibility Tests
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     strategy:
       matrix:
         framework: [pytorch, tensorflow, onnx]
@@ -173,6 +186,8 @@ jobs:
   compliance-ethics:
     name: Compliance and Ethics Review
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v3
       
@@ -214,6 +229,8 @@ jobs:
   incremental-updates:
     name: Version Management Tests
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v3
       
@@ -235,6 +252,8 @@ jobs:
   integration-test:
     name: Full Integration Test
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     needs: [model-tracing, modular-splitting, vulnerability-analysis, visual-debugging, compliance-ethics]
     steps:
       - uses: actions/checkout@v3
@@ -262,6 +281,8 @@ jobs:
   deployment-gate:
     name: Deployment Quality Gate
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     needs: [vulnerability-analysis, compliance-ethics]
     if: github.event_name == 'pull_request'
     steps:
