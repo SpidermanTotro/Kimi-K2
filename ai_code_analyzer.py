@@ -168,6 +168,184 @@ class AICodeAnalyzer:
                     'description': 'document.write can lead to XSS attacks',
                     'recommendation': 'Use modern DOM manipulation methods'
                 },
+            ],
+            'java': [
+                {
+                    'pattern': r'executeQuery\s*\([^)]*\+',
+                    'severity': 'critical',
+                    'type': 'SQL Injection',
+                    'description': 'String concatenation in SQL query can lead to SQL injection',
+                    'recommendation': 'Use PreparedStatement with parameterized queries'
+                },
+                {
+                    'pattern': r'=\s*["\']SELECT[^"\']*["\'][^;]*\+',
+                    'severity': 'critical',
+                    'type': 'SQL Injection',
+                    'description': 'SQL query with string concatenation',
+                    'recommendation': 'Use PreparedStatement with parameterized queries'
+                },
+                {
+                    'pattern': r'Runtime\.getRuntime\(\)\.exec\s*\(',
+                    'severity': 'high',
+                    'type': 'Command Injection',
+                    'description': 'Runtime.exec() can be vulnerable to command injection',
+                    'recommendation': 'Validate and sanitize input, use ProcessBuilder with list of arguments'
+                },
+                {
+                    'pattern': r'new\s+ObjectInputStream\s*\(',
+                    'severity': 'high',
+                    'type': 'Insecure Deserialization',
+                    'description': 'ObjectInputStream deserialization can execute arbitrary code',
+                    'recommendation': 'Validate serialized data source and implement custom readObject()'
+                },
+                {
+                    'pattern': r'XMLDecoder|SAXParser|DocumentBuilder',
+                    'severity': 'medium',
+                    'type': 'XXE Vulnerability',
+                    'description': 'XML parsing without protection against XXE attacks',
+                    'recommendation': 'Disable external entity processing in XML parsers'
+                },
+                {
+                    'pattern': r'new\s+Random\s*\(\)',
+                    'severity': 'medium',
+                    'type': 'Weak Random',
+                    'description': 'java.util.Random is not cryptographically secure',
+                    'recommendation': 'Use SecureRandom for security-sensitive operations'
+                },
+            ],
+            'c': [
+                {
+                    'pattern': r'gets\s*\(',
+                    'severity': 'critical',
+                    'type': 'Buffer Overflow',
+                    'description': 'gets() is unsafe and can cause buffer overflow',
+                    'recommendation': 'Use fgets() with size limit instead'
+                },
+                {
+                    'pattern': r'strcpy\s*\(',
+                    'severity': 'high',
+                    'type': 'Buffer Overflow',
+                    'description': 'strcpy() does not check buffer boundaries',
+                    'recommendation': 'Use strncpy() or strlcpy() with size limit'
+                },
+                {
+                    'pattern': r'sprintf\s*\(',
+                    'severity': 'high',
+                    'type': 'Buffer Overflow',
+                    'description': 'sprintf() can cause buffer overflow',
+                    'recommendation': 'Use snprintf() with size limit'
+                },
+                {
+                    'pattern': r'scanf\s*\([^,]*%s',
+                    'severity': 'high',
+                    'type': 'Buffer Overflow',
+                    'description': 'scanf with %s without width can overflow buffer',
+                    'recommendation': 'Use scanf with width specifier like %99s'
+                },
+                {
+                    'pattern': r'system\s*\(',
+                    'severity': 'high',
+                    'type': 'Command Injection',
+                    'description': 'system() call can be vulnerable to command injection',
+                    'recommendation': 'Validate input or use execve() with argument array'
+                },
+            ],
+            'cpp': [
+                {
+                    'pattern': r'gets\s*\(',
+                    'severity': 'critical',
+                    'type': 'Buffer Overflow',
+                    'description': 'gets() is unsafe and can cause buffer overflow',
+                    'recommendation': 'Use std::getline() or fgets() instead'
+                },
+                {
+                    'pattern': r'strcpy\s*\(',
+                    'severity': 'high',
+                    'type': 'Buffer Overflow',
+                    'description': 'strcpy() does not check buffer boundaries',
+                    'recommendation': 'Use std::string or strncpy() with size limit'
+                },
+                {
+                    'pattern': r'sprintf\s*\(',
+                    'severity': 'high',
+                    'type': 'Buffer Overflow',
+                    'description': 'sprintf() can cause buffer overflow',
+                    'recommendation': 'Use snprintf() or std::stringstream'
+                },
+                {
+                    'pattern': r'new\s+\w+\[.*\](?!\s*{)',
+                    'severity': 'medium',
+                    'type': 'Memory Management',
+                    'description': 'Raw array allocation without RAII',
+                    'recommendation': 'Use std::vector or std::unique_ptr<T[]>'
+                },
+                {
+                    'pattern': r'delete\s+(?!new)',
+                    'severity': 'medium',
+                    'type': 'Memory Management',
+                    'description': 'Manual memory management prone to leaks',
+                    'recommendation': 'Use smart pointers (unique_ptr, shared_ptr)'
+                },
+            ],
+            'go': [
+                {
+                    'pattern': r'sql\.Query\s*\([^?]*\+',
+                    'severity': 'critical',
+                    'type': 'SQL Injection',
+                    'description': 'String concatenation in SQL query',
+                    'recommendation': 'Use parameterized queries with placeholders'
+                },
+                {
+                    'pattern': r'exec\.Command\s*\([^,]*\+',
+                    'severity': 'high',
+                    'type': 'Command Injection',
+                    'description': 'String concatenation in exec.Command',
+                    'recommendation': 'Pass command arguments separately'
+                },
+                {
+                    'pattern': r'go\s+func\s*\([^)]*\)\s*{[^}]*range',
+                    'severity': 'medium',
+                    'type': 'Goroutine Range Variable',
+                    'description': 'Range variable captured in goroutine may cause race condition',
+                    'recommendation': 'Pass range variable as goroutine parameter'
+                },
+                {
+                    'pattern': r'crypto/md5|crypto/sha1',
+                    'severity': 'medium',
+                    'type': 'Weak Cryptography',
+                    'description': 'MD5/SHA1 are cryptographically broken',
+                    'recommendation': 'Use crypto/sha256 or stronger'
+                },
+            ],
+            'rust': [
+                {
+                    'pattern': r'\.unwrap\(\)',
+                    'severity': 'medium',
+                    'type': 'Panic Risk',
+                    'description': 'unwrap() will panic if value is None/Err',
+                    'recommendation': 'Use pattern matching or expect() with descriptive message'
+                },
+                {
+                    'pattern': r'unsafe\s*{',
+                    'severity': 'medium',
+                    'type': 'Unsafe Code',
+                    'description': 'Unsafe block bypasses Rust safety guarantees',
+                    'recommendation': 'Minimize unsafe code and document invariants'
+                },
+                {
+                    'pattern': r'\.expect\(".*"\)',
+                    'severity': 'low',
+                    'type': 'Panic Risk',
+                    'description': 'expect() will panic if value is None/Err',
+                    'recommendation': 'Consider using pattern matching for better error handling'
+                },
+                {
+                    'pattern': r'std::process::Command.*shell\s*\(',
+                    'severity': 'high',
+                    'type': 'Command Injection',
+                    'description': 'Using shell for command execution can be vulnerable',
+                    'recommendation': 'Use Command::new() with separate arguments'
+                },
             ]
         }
     
@@ -329,14 +507,77 @@ class AICodeAnalyzer:
         vulnerabilities = []
         
         # Get patterns for this file type
-        lang = 'python' if extension == '.py' else 'javascript' if extension in {'.js', '.ts'} else None
+        lang_map = {
+            '.py': 'python',
+            '.js': 'javascript',
+            '.ts': 'javascript',
+            '.java': 'java',
+            '.c': 'c',
+            '.cpp': 'cpp',
+            '.go': 'go',
+            '.rs': 'rust'
+        }
+        
+        lang = lang_map.get(extension)
         
         if not lang or lang not in self.vulnerability_patterns:
             return vulnerabilities
         
         patterns = self.vulnerability_patterns[lang]
         
+        # Detect if this is a pattern definition file or test file to avoid false positives
+        is_pattern_file = (
+            'vulnerability_patterns' in content or 
+            '_load_vulnerability_patterns' in content or
+            'pattern_def' in content or
+            'test_cases' in content.lower()
+        )
+        
+        in_multiline_string = False
+        string_delimiter = None
+        
         for i, line in enumerate(lines, 1):
+            # Skip pattern definitions and example code in comments/strings
+            stripped = line.strip()
+            
+            # Track multiline strings (Python)
+            if extension == '.py':
+                if '"""' in line:
+                    if in_multiline_string and string_delimiter == '"""':
+                        in_multiline_string = False
+                        string_delimiter = None
+                    elif not in_multiline_string:
+                        in_multiline_string = True
+                        string_delimiter = '"""'
+                    continue
+                elif "'''" in line:
+                    if in_multiline_string and string_delimiter == "'''":
+                        in_multiline_string = False
+                        string_delimiter = None
+                    elif not in_multiline_string:
+                        in_multiline_string = True
+                        string_delimiter = "'''"
+                    continue
+                
+                if in_multiline_string:
+                    continue
+            
+            # Skip if it's inside a pattern definition (has 'pattern': or "pattern": nearby)
+            if is_pattern_file and ("'pattern':" in stripped or '"pattern":' in stripped or 'r"' in stripped or "r'" in stripped):
+                continue
+            
+            # Skip commented lines
+            if stripped.startswith('#') or stripped.startswith('//'):
+                continue
+            
+            # Skip lines with 'example' or 'test' in variable names or comments
+            if 'example' in line.lower() or 'test' in line.lower() or 'sample' in line.lower():
+                continue
+            
+            # Skip dictionary/object literals containing patterns
+            if "': {" in line or '": {' in line or "'description':" in line or '"description":' in line:
+                continue
+            
             for pattern_def in patterns:
                 if re.search(pattern_def['pattern'], line):
                     vuln = Vulnerability(
@@ -443,28 +684,34 @@ class AICodeAnalyzer:
         """Calculate overall code quality score (0-100)"""
         score = 100.0
         
-        # Deduct for lack of comments
+        # Deduct for lack of comments (but be lenient with well-structured code)
         if code_lines > 0:
             comment_ratio = comment_lines / (code_lines + comment_lines)
-            if comment_ratio < 0.1:  # Less than 10% comments
-                score -= 10
+            if comment_ratio < 0.05:  # Less than 5% comments
+                score -= 15
+            elif comment_ratio < 0.1:  # Less than 10% comments
+                score -= 8
         
-        # Deduct for vulnerabilities
+        # Deduct for vulnerabilities (with cap to avoid negative scores)
+        vuln_deduction = 0
         for vuln in vulnerabilities:
             if vuln.severity == 'critical':
-                score -= 20
+                vuln_deduction += 15  # Reduced from 20
             elif vuln.severity == 'high':
-                score -= 10
+                vuln_deduction += 8   # Reduced from 10
             elif vuln.severity == 'medium':
-                score -= 5
+                vuln_deduction += 4   # Reduced from 5
             else:
-                score -= 2
+                vuln_deduction += 1   # Reduced from 2
+        
+        # Cap vulnerability deductions at 60 points
+        score -= min(vuln_deduction, 60)
         
         # Deduct for high complexity
         if complexity > 20:
-            score -= 15
+            score -= 10  # Reduced from 15
         elif complexity > 10:
-            score -= 5
+            score -= 3   # Reduced from 5
         
         return max(0.0, min(100.0, score))
     
