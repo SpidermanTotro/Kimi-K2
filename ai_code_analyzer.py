@@ -303,7 +303,7 @@ class AICodeAnalyzer:
                     elif isinstance(node, ast.ImportFrom):
                         if node.module:
                             imports.append(node.module)
-            except:
+            except SyntaxError:
                 # Fallback to regex if AST parsing fails
                 functions = re.findall(r'def\s+(\w+)\s*\(', content)
                 classes = re.findall(r'class\s+(\w+)\s*[\(:]', content)
@@ -368,7 +368,8 @@ class AICodeAnalyzer:
                             type='function' if isinstance(node, ast.FunctionDef) else 'class'
                         )
                         segments.append(segment)
-            except:
+            except (SyntaxError, ValueError) as e:
+                # AST parsing failed, will fall through to chunking
                 pass
         
         # If no segments found or not Python, create chunks

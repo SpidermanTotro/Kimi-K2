@@ -22,7 +22,12 @@ from dataclasses import dataclass
 import json
 
 # Import our AI analyzer
-from ai_code_analyzer import AICodeAnalyzer, AnalysisResult
+try:
+    from ai_code_analyzer import AICodeAnalyzer, AnalysisResult
+except ImportError as e:
+    print(f"Error: Cannot import ai_code_analyzer module: {e}")
+    print("Please ensure ai_code_analyzer.py is in the same directory.")
+    sys.exit(1)
 
 
 @dataclass
@@ -61,11 +66,13 @@ class CodeClingingTool:
     Like having an AI that hungrily analyzes your entire codebase!
     """
     
-    def __init__(self):
+    def __init__(self, verbose: bool = True):
         self.analyzer = AICodeAnalyzer()
         self.analysis_cache = {}
-        print("🔧 Code Clinging Tool initialized")
-        print("   Ready to analyze and find EVERYTHING in your code!")
+        self.verbose = verbose
+        if self.verbose:
+            print("🔧 Code Clinging Tool initialized")
+            print("   Ready to analyze and find EVERYTHING in your code!")
     
     def cling_to_file(self, file_path: str) -> AnalysisResult:
         """
