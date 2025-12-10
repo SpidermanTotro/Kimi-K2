@@ -15,6 +15,10 @@ from typing import Optional
 from ai_ripper import AIRipper, SystemResources
 
 
+# Constants
+MB_TO_BYTES = 1024 * 1024
+
+
 class Colors:
     """ANSI color codes for terminal output"""
     HEADER = '\033[95m'
@@ -158,11 +162,11 @@ def interactive_mode():
             if isinstance(path, dict):
                 print(f"   {format_name}:")
                 for variant_name, variant_path in path.items():
-                    size_mb = os.path.getsize(variant_path) / (1024*1024)
+                    size_mb = os.path.getsize(variant_path) / MB_TO_BYTES
                     print(f"      {variant_name}: {variant_path} ({size_mb:.2f}MB)")
             else:
                 if os.path.isfile(path):
-                    size_mb = os.path.getsize(path) / (1024*1024)
+                    size_mb = os.path.getsize(path) / MB_TO_BYTES
                     print(f"   {format_name}: {path} ({size_mb:.2f}MB)")
                 else:
                     print(f"   {format_name}: {path}")

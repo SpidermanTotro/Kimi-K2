@@ -15,6 +15,10 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from ai_ripper import AIRipper
 
 
+# Constants
+MB_TO_BYTES = 1024 * 1024
+
+
 def example_1_basic_scan():
     """Example 1: Basic AI scanning"""
     print("\n" + "="*60)
@@ -106,7 +110,7 @@ def example_5_size_variants():
     print(f"\nGenerated {len(variants)} variants:")
     
     for variant_name, variant_path in variants.items():
-        size_mb = os.path.getsize(variant_path) / (1024 * 1024)
+        size_mb = os.path.getsize(variant_path) / MB_TO_BYTES
         print(f"  - {variant_name}: {size_mb:.2f} MB")
 
 
