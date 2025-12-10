@@ -584,14 +584,16 @@ class AIModelExplorer:
         """
         os.makedirs(output_dir, exist_ok=True)
         
-        model_dir = os.path.join(output_dir, profile.model_name.replace(" ", "_"))
+        # Create safe directory and file names
+        safe_model_name = profile.model_name.replace(" ", "_").replace("-", "_")
+        model_dir = os.path.join(output_dir, safe_model_name)
         os.makedirs(model_dir, exist_ok=True)
         
         # Save profile
         profile.to_json(os.path.join(model_dir, "profile.json"))
         
         # Generate implementation
-        impl_path = os.path.join(model_dir, f"{profile.model_name}_implementation.py")
+        impl_path = os.path.join(model_dir, f"{safe_model_name}_implementation.py")
         self._generate_implementation(profile, impl_path)
         
         # Generate configuration
@@ -675,7 +677,7 @@ class {profile.model_name.replace(" ", "").replace("-", "")}:
         # Add helpful tone
         if "helpfulness" in [t.lower() for t in self.personality_traits]:
             if not response.endswith("?") and "help" not in response.lower():
-                response += "\\n\\nIs there anything else I can help you with?"
+                response += "\n\nIs there anything else I can help you with?"
         
         return response
     
@@ -835,11 +837,18 @@ if __name__ == "__main__":
             for cap in profile.multimodal_capabilities:
                 doc += f"- {cap}\n"
         
+        # Generate safe module name
+        safe_module_name = profile.model_name.replace(' ', '_').replace('-', '_')
+        safe_class_name = profile.model_name.replace(' ', '').replace('-', '')
+        
         doc += "\n## Usage\n\n"
         doc += "```python\n"
-        doc += f"from {profile.model_name}_implementation import {profile.model_name.replace(' ', '').replace('-', '')}\n\n"
+        doc += f"# Import the model\n"
+        doc += f"import sys\n"
+        doc += f"sys.path.append('./working_models/{safe_module_name}')\n"
+        doc += f"from {safe_module_name}_implementation import {safe_class_name}\n\n"
         doc += f"# Initialize model\n"
-        doc += f"model = {profile.model_name.replace(' ', '').replace('-', '')}()\n\n"
+        doc += f"model = {safe_class_name}()\n\n"
         doc += f"# Get capabilities\n"
         doc += f"capabilities = model.get_capabilities()\n"
         doc += f"print(capabilities)\n\n"
