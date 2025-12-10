@@ -8,6 +8,8 @@ Cross-platform graphical interface built with Tkinter
 import tkinter as tk
 from tkinter import ttk, scrolledtext, messagebox, filedialog
 import threading
+import datetime
+import numpy as np
 import matplotlib
 matplotlib.use('TkAgg')
 from matplotlib.figure import Figure
@@ -476,7 +478,6 @@ class AIRipperGUI:
         
         # Plot 3: Token attention heatmap (placeholder with sample data)
         self.ax3.set_title("Token Attention Heatmap (Sample)")
-        import numpy as np
         if self.ripper.extracted_models:
             data = np.random.rand(10, 10)
             im = self.ax3.imshow(data, cmap='hot', aspect='auto')
@@ -582,7 +583,7 @@ Do you agree to these terms?"""
             
     def log(self, message: str):
         """Add message to log"""
-        timestamp = tk.datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
         log_entry = f"[{timestamp}] {message}\n"
         self.log_text.insert(tk.END, log_entry)
         self.log_text.see(tk.END)
@@ -609,9 +610,6 @@ Do you agree to these terms?"""
 
 def main():
     """Main entry point"""
-    import datetime
-    tk.datetime = datetime  # Add datetime to tk namespace for log function
-    
     root = tk.Tk()
     
     # Set theme

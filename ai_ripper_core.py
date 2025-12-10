@@ -403,22 +403,33 @@ class AIRipper:
         try:
             metadata = self.extracted_models[endpoint_name]
             
-            python_code = f'''#!/usr/bin/env python3
+            # Safely serialize all data using JSON to prevent code injection
+            config_data = {
+                "name": metadata.name,
+                "endpoint_url": metadata.endpoint_url,
+                "model_type": metadata.model_type,
+                "architecture": metadata.architecture or 'unknown',
+                "vocabulary_size": metadata.vocabulary_size,
+                "context_length": metadata.context_length,
+                "capabilities": metadata.capabilities,
+                "parameters": metadata.parameters
+            }
+            
+            # Use json.dumps for safe serialization
+            config_json = json.dumps(config_data, indent=4)
+            
+            # Build Python code with safe JSON loading
+            python_code = '''#!/usr/bin/env python3
 """
-AI Model Configuration - Extracted from {metadata.endpoint_url}
-Generated: {metadata.extraction_timestamp}
+AI Model Configuration
+Extracted from endpoint
+Generated: {timestamp}
 """
 
-MODEL_CONFIG = {{
-    "name": "{metadata.name}",
-    "endpoint_url": "{metadata.endpoint_url}",
-    "model_type": "{metadata.model_type}",
-    "architecture": "{metadata.architecture or 'unknown'}",
-    "vocabulary_size": {metadata.vocabulary_size or 'None'},
-    "context_length": {metadata.context_length or 'None'},
-    "capabilities": {metadata.capabilities},
-    "parameters": {json.dumps(metadata.parameters, indent=4)}
-}}
+import json
+
+# Configuration data (safely serialized)
+MODEL_CONFIG = {config_str}
 
 def get_model_config():
     """Get the model configuration"""
@@ -429,7 +440,7 @@ if __name__ == "__main__":
     print(f"Model: {{config['name']}}")
     print(f"Type: {{config['model_type']}}")
     print(f"Capabilities: {{', '.join(config['capabilities'])}}")
-'''
+'''.format(timestamp=metadata.extraction_timestamp, config_str=config_json)
             
             with open(filepath, 'w') as f:
                 f.write(python_code)

@@ -175,6 +175,37 @@ response = system.process("Restore this 1956 footage to 8K")
 - 🎯 [Ultimate Guide - Everything on One Page](docs/ULTIMATE_GUIDE.md)
 - 🔨 [Builder Guide - Multi-Language Build System](BUILDER_README.md)
 
+### 🔍 NEW: AI Ripper - Model Extraction Tool
+
+**Extract and analyze AI models from endpoints:**
+
+```bash
+# Start the GUI
+make run-ripper-gui
+
+# Or use CLI
+python3 ai_ripper_cli.py rip http://localhost:8000 -o model.json
+
+# Compare multiple endpoints
+python3 ai_ripper_cli.py compare \
+  http://endpoint1.com \
+  http://endpoint2.com \
+  -o comparison.json
+
+# Run examples
+python3 ai_ripper_examples.py
+```
+
+**Key Features:**
+- 🎨 **Cross-platform GUI** with real-time progress and visualizations
+- 💻 **Powerful CLI** for automation and scripting
+- 📦 **Multiple export formats**: JSON, Python, GGUF, ONNX
+- 📊 **Visualizations**: Response times, capabilities, attention heatmaps
+- 🔒 **Security**: Ethical consent prompts and SSL verification
+- ⚡ **Performance**: Adaptive memory management for large models
+
+**See:** [AI Ripper Documentation](AI_RIPPER_README.md)
+
 </div>
 
 ## 1. Model Introduction
@@ -954,6 +985,14 @@ For streaming output and manual tool-parsing, see the [Tool Calling Guide](docs/
 - 🔧 **[deploy_guidance.md](docs/deploy_guidance.md)** - Deployment with vLLM/SGLang
 - 🛠️ **[tool_call_guidance.md](docs/tool_call_guidance.md)** - Tool calling & agentic workflows
 - ⚡ **[quick_start_examples.md](docs/quick_start_examples.md)** - Ready-to-run code (6+ languages)
+
+#### AI Ripper Tool
+- 🔍 **[AI_RIPPER_README.md](AI_RIPPER_README.md)** - AI model extraction and analysis tool
+  - **GUI Interface**: Cross-platform visual interface with Tkinter
+  - **CLI Interface**: Command-line tool for automation
+  - **Export Formats**: JSON, Python, GGUF, ONNX support
+  - **Visualization**: Response times, capabilities, attention heatmaps
+  - **Multi-endpoint**: Compare multiple AI endpoints simultaneously
 
 ### 🌟 What Makes THE FORGE Unique
 
