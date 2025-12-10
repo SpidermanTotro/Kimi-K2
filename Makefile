@@ -22,7 +22,7 @@ all: build
 setup:
 	@echo "🔥 Setting up THE FORGE build environment..."
 	@mkdir -p $(BUILD_DIR) $(DIST_DIR)
-	@pip3 install -q Flask Flask-CORS Pillow 2>/dev/null || true
+	@pip3 install -q Flask Flask-CORS Pillow requests matplotlib numpy 2>/dev/null || true
 	@echo "✅ Setup complete"
 
 build: setup
@@ -33,6 +33,7 @@ build: setup
 test:
 	@echo "🧪 Testing THE FORGE..."
 	@python3 -m py_compile *.py 2>/dev/null || true
+	@python3 test_ai_ripper.py
 	@echo "✅ Tests passed"
 
 clean:
@@ -62,16 +63,33 @@ run-cli:
 	@echo "💻 Starting THE FORGE CLI..."
 	@python3 forge_cli.py
 
+run-ripper-gui:
+	@echo "🎨 Starting AI Ripper GUI..."
+	@python3 ai_ripper_gui.py
+
+run-ripper-cli:
+	@echo "💻 AI Ripper CLI - use 'python3 ai_ripper_cli.py --help' for options"
+	@python3 ai_ripper_cli.py --help
+
+test-ripper:
+	@echo "🧪 Testing AI Ripper..."
+	@python3 test_ai_ripper.py
+
 help:
 	@echo "THE FORGE - Build System"
 	@echo ""
 	@echo "Available targets:"
-	@echo "  make all       - Build everything"
-	@echo "  make build     - Build THE FORGE"
-	@echo "  make test      - Run tests"
-	@echo "  make clean     - Clean build artifacts"
-	@echo "  make install   - Install THE FORGE"
-	@echo "  make dist      - Create distribution"
-	@echo "  make run-gui   - Start GUI"
-	@echo "  make run-server - Start server"
-	@echo "  make run-cli   - Start CLI"
+	@echo "  make all            - Build everything"
+	@echo "  make build          - Build THE FORGE"
+	@echo "  make test           - Run all tests (including AI Ripper)"
+	@echo "  make clean          - Clean build artifacts"
+	@echo "  make install        - Install THE FORGE"
+	@echo "  make dist           - Create distribution"
+	@echo "  make run-gui        - Start THE FORGE GUI"
+	@echo "  make run-server     - Start THE FORGE server"
+	@echo "  make run-cli        - Start THE FORGE CLI"
+	@echo ""
+	@echo "AI Ripper targets:"
+	@echo "  make run-ripper-gui - Start AI Ripper GUI"
+	@echo "  make run-ripper-cli - Show AI Ripper CLI help"
+	@echo "  make test-ripper    - Run AI Ripper tests"
