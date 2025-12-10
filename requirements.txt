@@ -4,6 +4,9 @@
 Flask>=2.3.0
 Flask-CORS>=4.0.0
 
+# AI Ripper dependencies
+psutil>=5.9.0
+
 # Core implementation (no external dependencies required!)
 
 # Optional: For vLLM model deployment

@@ -96,6 +96,12 @@ class ForgeToolRegistry:
                 "capabilities": ["universal_conversion", "quality_enhancement", "batch_conversion"],
                 "implementation": "universal_format_converter.py"
             },
+            "ai_ripper": {
+                "description": "The first-ever AI ripper - scan, analyze, and photocopy any AI model",
+                "capabilities": ["ai_scanning", "behavior_analysis", "gguf_export", "python_export", 
+                               "size_variants", "auto_training", "pattern_extraction"],
+                "implementation": "ai_ripper.py"
+            },
             # Add all 1,450+ capabilities here
             "all_forge_tools": {
                 "description": "Complete access to all 1,450+ FORGE capabilities",
@@ -186,6 +192,9 @@ class KimiK2Model:
         
         if any(word in prompt.lower() for word in ["restore", "vhs", "old", "vintage"]):
             tool_calls.append(ForgeToolCall("media_restorer", {"source": "vintage", "target": "4k"}))
+        
+        if any(word in prompt.lower() for word in ["rip", "copy", "scan", "extract", "ai model"]):
+            tool_calls.append(ForgeToolCall("ai_ripper", {"url": prompt, "formats": ["gguf", "python", "variants"]}))
         
         return tool_calls
 

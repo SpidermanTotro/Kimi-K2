@@ -79,11 +79,19 @@
 
 ### 🎯 What's New - THE FORGE ❤️ KIMI K2 Edition
 
-**🔥 Latest: Complete Marriage System (v1.0)**
-- **💍 FORGE ❤️ KIMI K2 Marriage** - Complete integration merging THE FORGE into Kimi K2 (**NEW!**)
-- **📈 Benchmark Optimization** - Expected 6-15% improvements across all tests (**NEW!**)
-- **🛠️ 1,450+ Tools for Kimi K2** - All FORGE capabilities as function calls (**NEW!**)
-- **📚 Training Data Export** - 408K+ lines for model fine-tuning (**NEW!**)
+**🔥 Latest: AI Ripper - The First-Ever AI Photocopying Tool (v1.1)**
+- **🤖 AI Ripper** - Scan, analyze, and "photocopy" any AI model from URL (**NEW!**)
+- **📦 GGUF Export** - Convert ripped models to GGUF format for llama.cpp (**NEW!**)
+- **🐍 Python Auto-Training** - Export models as Python packages with training scripts (**NEW!**)
+- **📏 Size Variants** - Generate tiny to huge model versions (6 variants) (**NEW!**)
+- **⚡ Smart Optimization** - Auto-detect system resources and recommend best size (**NEW!**)
+- **🔬 Deep Analysis** - Extract behaviors, patterns, and features from any AI (**NEW!**)
+
+**🔥 Previous: Complete Marriage System (v1.0)**
+- **💍 FORGE ❤️ KIMI K2 Marriage** - Complete integration merging THE FORGE into Kimi K2
+- **📈 Benchmark Optimization** - Expected 6-15% improvements across all tests
+- **🛠️ 1,450+ Tools for Kimi K2** - All FORGE capabilities as function calls
+- **📚 Training Data Export** - 408K+ lines for model fine-tuning
 - **🚀 430,845+ Lines** - Massive ecosystem (+34,000% growth from original)
 - **🔨 Multi-Language Build** - Python, JavaScript, C++, Rust, Go support
 - **📦 Downloadable Distributions** - One-command ZIP packaging (`make dist`)
@@ -130,19 +138,37 @@
 
 ### 🚀 Quick Start - Run THE FORGE ❤️ KIMI K2
 
-**Option 1: Run Unified System (Recommended)**
+**Option 1: AI Ripper - Photocopy Any AI Model (NEW!)**
+```bash
+# Interactive mode - guides you through the process
+python3 ai_ripper_cli.py
+
+# Quick mode - rip ChatGPT to all formats
+python3 ai_ripper.py https://chatgpt.com
+
+# Specific formats (GGUF, Python, or size variants)
+python3 ai_ripper.py https://claude.ai --formats gguf python
+
+# Python API
+from ai_ripper import AIRipper
+ripper = AIRipper()
+results = ripper.full_rip("https://chatgpt.com")
+# Creates: GGUF files, Python package, 6 size variants
+```
+
+**Option 2: Run Unified System**
 ```bash
 # Run the complete FORGE ❤️ KIMI K2 integrated system
 python3 kimi_forge_unified.py
 
 # Output:
 # ✅ Kimi K2 Model: kimi-k2-instruct  
-# ✅ FORGE Tools: 8+ categories
+# ✅ FORGE Tools: 9+ categories (including AI Ripper)
 # ✅ Total Capabilities: 1,450+
 # ✅ Marriage Complete! ❤️
 ```
 
-**Option 2: Build THE FORGE**
+**Option 3: Build THE FORGE**
 ```bash
 # Clone and build
 git clone https://github.com/SpidermanTotro/Kimi-K2.git
@@ -152,7 +178,7 @@ make dist                   # Create distribution package
 make run-gui                # Start GUI at http://localhost:5050
 ```
 
-**Option 3: Use Kimi K2 with FORGE Tools**
+**Option 4: Use Kimi K2 with FORGE Tools**
 ```python
 from kimi_forge_unified import KimiForgeUnified
 
@@ -168,9 +194,13 @@ response = system.process("Find all WW2 movies about D-Day")
 
 response = system.process("Restore this 1956 footage to 8K")
 # Uses FORGE's historical restoration tools
+
+response = system.process("Rip and analyze ChatGPT model")
+# Uses FORGE's AI Ripper to scan and extract AI features
 ```
 
-**See complete guides:**
+**See detailed guides:**
+- 🤖 [AI Ripper Guide - The First AI Photocopying Tool](AI_RIPPER_README.md) (**NEW!**)
 - 📖 [FORGE ❤️ KIMI K2 Marriage Guide](FORGE_KIMI_MARRIAGE.md)
 - 🎯 [Ultimate Guide - Everything on One Page](docs/ULTIMATE_GUIDE.md)
 - 🔨 [Builder Guide - Multi-Language Build System](BUILDER_README.md)
