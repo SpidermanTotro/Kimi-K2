@@ -26,11 +26,11 @@
 </p>
 
 <p align="center">
-<b>📚&nbsp;&nbsp;<a href="docs/COMPLETE_GUIDE.md">Complete Guide</a></b> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <b>🎯&nbsp;&nbsp;<a href="docs/ALL_SKILLS.md">365+ Skills</a></b> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <b>📝&nbsp;&nbsp;<a href="docs/BOOK_WRITING_MASTERY.md">Book Writing</a></b> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <b>🎮&nbsp;&nbsp;<a href="docs/gaming_enhancement_guide.md">Gaming</a></b> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <b>💡&nbsp;&nbsp;<a href="docs/examples_guide.md">Examples</a></b>
+<b>📚&nbsp;&nbsp;<a href="docs/COMPLETE_GUIDE.md">Complete Guide</a></b> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <b>🎯&nbsp;&nbsp;<a href="docs/ALL_SKILLS.md">550+ Skills</a></b> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <b>📝&nbsp;&nbsp;<a href="docs/BOOK_WRITING_MASTERY.md">Book Writing</a></b> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <b>🎮&nbsp;&nbsp;<a href="docs/gaming_enhancement_guide.md">Gaming</a></b> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <b>💡&nbsp;&nbsp;<a href="docs/examples_guide.md">Examples</a></b>
 </p>
 
 <p align="center">
-<b>📰&nbsp;&nbsp;<a href="https://moonshotai.github.io/Kimi-K2/">Tech Blog</a></b> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <b>📄&nbsp;&nbsp;<a href="https://www.arxiv.org/abs/2507.20534">Full Report</a></b> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <b>🚀&nbsp;&nbsp;<a href="docs/vision_and_roadmap.md">Vision & Roadmap</a></b> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <b>🔧&nbsp;&nbsp;<a href="docs/deploy_guidance.md">Deployment</a></b>
+<b>📰&nbsp;&nbsp;<a href="https://moonshotai.github.io/Kimi-K2/">Tech Blog</a></b> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <b>📄&nbsp;&nbsp;<a href="https://www.arxiv.org/abs/2507.20534">Full Report</a></b> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <b>🔍&nbsp;&nbsp;<a href="docs/CODE_CLINGING_TOOL.md">Code Analysis</a></b> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <b>🚀&nbsp;&nbsp;<a href="docs/vision_and_roadmap.md">Vision & Roadmap</a></b> &nbsp;&nbsp;&nbsp; | &nbsp;&nbsp;&nbsp; <b>🔧&nbsp;&nbsp;<a href="docs/deploy_guidance.md">Deployment</a></b>
 </p>
 
 <div align="center">
@@ -79,12 +79,18 @@
 
 ### 🎯 What's New - THE FORGE ❤️ KIMI K2 Edition
 
-**🔥 Latest: Complete Marriage System (v1.0)**
-- **🔍 AI Code Clinging Tool** - Deep code analysis that finds EVERYTHING, breaks down large files, detects vulnerabilities (**NEW!**)
-- **💍 FORGE ❤️ KIMI K2 Marriage** - Complete integration merging THE FORGE into Kimi K2 (**NEW!**)
-- **📈 Benchmark Optimization** - Expected 6-15% improvements across all tests (**NEW!**)
-- **🛠️ 1,452+ Tools for Kimi K2** - All FORGE capabilities as function calls (**NEW!**)
-- **📚 Training Data Export** - 408K+ lines for model fine-tuning (**NEW!**)
+**🔥 Latest: AI Code Analysis & Security (v1.1) - December 2025**
+- **🔍 AI Code Clinging Tool** - Revolutionary code analysis across 7 languages (**NEW!**)
+  - **34 vulnerability patterns**: SQL injection, buffer overflows, XSS, code injection, hardcoded secrets
+  - **7 languages supported**: Python, JavaScript, Java, C, C++, Go, Rust
+  - **Smart file segmentation**: Breaks down large files into manageable chunks
+  - **Quality scoring**: 0-100 assessment with complexity metrics
+  - **Zero dependencies**: Uses only Python standard library
+  - **Usage**: `python3 code_clinging_tool.py .` - instant security scan!
+- **💍 FORGE ❤️ KIMI K2 Marriage** - Complete integration merging THE FORGE into Kimi K2
+- **📈 Benchmark Optimization** - Expected 6-15% improvements across all tests
+- **🛠️ 1,452+ Tools for Kimi K2** - All FORGE capabilities as function calls
+- **📚 Training Data Export** - 408K+ lines for model fine-tuning
 - **🚀 430,845+ Lines** - Massive ecosystem (+34,000% growth from original)
 - **🔨 Multi-Language Build** - Python, JavaScript, C++, Rust, Go support
 - **📦 Downloadable Distributions** - One-command ZIP packaging (`make dist`)
