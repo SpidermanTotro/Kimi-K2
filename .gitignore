@@ -1,4 +1,5 @@
 __pycache__/
+**/__pycache__/
 
 # ── NullClaw runtime outputs ────────────────────────────────────────────────
 logs/build_*.log

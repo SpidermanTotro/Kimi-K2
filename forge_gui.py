@@ -2,7 +2,7 @@
 """
 THE FORGE AI - Complete Web-based GUI
 =====================================
-Professional interface with toolbars, icons, and all 865+ capabilities integrated.
+Professional interface with toolbars, icons, and all 1,453+ capabilities integrated.
 """
 
 from flask import Flask, render_template, request, jsonify, send_from_directory
@@ -173,6 +173,6 @@ if __name__ == '__main__':
     
     print("🔥 Starting THE FORGE GUI...")
     print("📍 Open http://localhost:5000 in your browser")
-    print("✨ Professional interface with all 865+ capabilities!")
+    print("✨ Professional interface with all 1,453+ capabilities!")
     
     app.run(debug=True, host='0.0.0.0', port=5000)

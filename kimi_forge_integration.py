@@ -29,7 +29,7 @@ class KimiForgeIntegration:
             "metadata": {
                 "source": "THE FORGE AI",
                 "total_lines": "408,349+",
-                "capabilities": "1,450+",
+                "capabilities": "1,453+",
                 "purpose": "Kimi K2 Enhancement"
             },
             "datasets": {
@@ -146,7 +146,7 @@ class KimiForgeIntegration:
             "TerminalBench": "Train on FORGE's CLI implementation and bash scripting",
             "Aider-Polyglot": "Leverage FORGE's polyglot build system (6 languages)",
             "Tau2 (retail/airline/telecom)": "Use FORGE's tool-calling examples (movie DB, library organizer)",
-            "AceBench": "Integrate FORGE's comprehensive tool suite (1,450+ capabilities)",
+            "AceBench": "Integrate FORGE's comprehensive tool suite (1,453+ capabilities)",
             "AIME 2024/2025": "Use FORGE's mathematical optimization algorithms (RAM, video processing)",
             "MATH-500": "Train on FORGE's computational implementations",
             "HMMT 2025": "Leverage FORGE's problem-solving approaches",
@@ -177,7 +177,7 @@ class KimiForgeIntegration:
                     "target_benchmarks": ["LiveCodeBench", "OJBench", "SWE-bench"]
                 },
                 "tool_use": {
-                    "source": "THE FORGE 1,450+ capabilities",
+                    "source": "THE FORGE 1,453+ capabilities",
                     "target_benchmarks": ["Tau2", "AceBench", "TerminalBench"]
                 },
                 "math_reasoning": {
@@ -239,7 +239,7 @@ python -m sglang.launch_server \\
 ```
 
 ## Step 4: Integrate FORGE Tools
-Enable function calling with FORGE's 1,450+ capabilities:
+Enable function calling with FORGE's 1,453+ capabilities:
 - Video editing tools
 - Movie database access
 - Library organization
@@ -268,7 +268,7 @@ python benchmark_runner.py --benchmark aime --model Kimi-K2-FORGE
 
 ## Integration Benefits
 1. **408K+ training examples** from FORGE implementation
-2. **1,450+ tools** for enhanced function calling
+2. **1,453+ tools** for enhanced function calling
 3. **Multi-language support** (Python, JS, C++, Rust, Go)
 4. **Agentic capabilities** from complete system implementations
 5. **Comprehensive knowledge** from 60K+ documentation lines

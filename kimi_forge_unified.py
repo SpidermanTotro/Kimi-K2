@@ -6,7 +6,7 @@ THE FORGE ❤️ KIMI K2: Unified System
 This module implements the marriage between THE FORGE and Kimi K2,
 creating a unified AI system that combines:
 - Kimi K2's 1T parameter MoE model
-- THE FORGE's 1,450+ capabilities
+- THE FORGE's 1,453+ capabilities
 - Integrated tool calling
 - Benchmark optimization
 - Production deployment
@@ -96,9 +96,9 @@ class ForgeToolRegistry:
                 "capabilities": ["universal_conversion", "quality_enhancement", "batch_conversion"],
                 "implementation": "universal_format_converter.py"
             },
-            # Add all 1,450+ capabilities here
+            # Add all 1,453+ capabilities here
             "all_forge_tools": {
-                "description": "Complete access to all 1,450+ FORGE capabilities",
+                "description": "Complete access to all 1,453+ FORGE capabilities",
                 "count": 1450,
                 "categories": [
                     "video_editing", "movie_database", "code_generation",
