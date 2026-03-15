@@ -1,1 +1,11 @@
 __pycache__/
+
+# NullClaw runtime outputs — never commit these
+logs/build_*.log
+reports/
+patches/generated/
+project_map.json
+repo.db
+memory.db
+repo.index
+repo_files.pkl
