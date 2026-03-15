@@ -1,0 +1,38 @@
+{
+  "_comment": "NullClaw config — copy to ~/projects/null-claw/config.json and edit",
+
+  "models": {
+    "provider":  "ollama",
+    "base_url":  "http://localhost:11434",
+    "primary":   "qwen2.5-coder:latest",
+    "planner":   "llama3:8b-instruct-q8_0",
+    "fallback":  ["codellama:latest", "llama3:latest"]
+  },
+
+  "workspace": {
+    "root":            "/home/henriclovelisababe/projects",
+    "max_file_size_mb": 10
+  },
+
+  "build": {
+    "default_cmd":     "npm run build",
+    "timeout_sec":     300
+  },
+
+  "repair": {
+    "max_passes":      5,
+    "auto_apply":      false,
+    "auto_git_branch": true,
+    "context_radius":  25
+  },
+
+  "autonomy": {
+    "level":           "supervised",
+    "allowed_paths": [
+      "/home/henriclovelisababe/projects"
+    ]
+  },
+
+  "_models_note": "Install models with: ollama pull qwen2.5-coder:7b",
+  "_free_key_note": "Free Gemini key: https://aistudio.google.com/apikey"
+}

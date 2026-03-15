@@ -205,6 +205,26 @@ class ForgeToolRegistry:
                 ],
                 "implementation": "gemini_code_fixer.py",
             },
+            "nullclaw": {
+                "description": (
+                    "NullClaw — Local AI programming agent that runs entirely on your GPU "
+                    "via Ollama (no cloud, no subscription). Runs builds, parses errors "
+                    "(TypeScript, Python, Rust, Go, C/C++), collects code context, asks a "
+                    "local coding model (qwen2.5-coder / codellama), extracts unified diffs, "
+                    "applies patches with git, and loops until the build passes. "
+                    "Three-agent pipeline: Planner → Debugger → Patcher. "
+                    "Falls back to free Gemini 1.5 Flash when Ollama is unavailable."
+                ),
+                "capabilities": [
+                    "repair_loop", "build_runner", "error_parser",
+                    "context_collector", "ollama_client", "patch_apply",
+                    "project_index", "code_search", "repo_map",
+                    "multi_agent_pipeline", "git_branch", "git_commit",
+                    "typescript_fix", "python_fix", "rust_fix",
+                    "go_fix", "c_fix", "npm_fix",
+                ],
+                "implementation": "nullclaw.py",
+            },
         }
     
     def get_tool(self, tool_name: str) -> Optional[Dict]:
@@ -322,6 +342,15 @@ class KimiK2Model:
                 "free gemini", "gemini fix", "replace copilot", "free ai",
                 "explain code", "explain file", "review code", "check code"]):
             tool_calls.append(ForgeToolCall("gemini_program_fixer", {"task": prompt}))
+
+        if any(word in prompt.lower() for word in
+               ["nullclaw", "null-claw", "null claw", "repair build",
+                "fix build", "build error", "typescript error", "ts error",
+                "rust error", "cargo error", "python error", "go error",
+                "local ai", "local model", "ollama", "qwen", "codellama",
+                "repair loop", "debug build", "build fail", "npm error",
+                "auto repair", "programming agent", "coding agent"]):
+            tool_calls.append(ForgeToolCall("nullclaw", {"task": prompt}))
 
         return tool_calls
 
