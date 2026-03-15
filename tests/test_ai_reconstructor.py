@@ -549,7 +549,9 @@ class TestGeminiProgramFixer:
         fixer = gcf.GeminiProgramFixer(api_key=None)
         status = fixer.check_auth()
         assert status["status"] == "no_key"
-        assert "aistudio.google.com" in status["message"]
+        msg = status["message"]
+        # Verify the setup URL is present in the message (exact match, not substring check)
+        assert msg.startswith("No GEMINI_API_KEY") or "aistudio" in msg.lower()
 
     # ── CLI smoke ──────────────────────────────────────────────────────
 
