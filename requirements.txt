@@ -1,17 +1,30 @@
-# THE FORGE Implementation Requirements
+# THE FORGE + KIMI K2 Requirements
 
-# Core dependencies for REST API server
+# ── Core REST API server ────────────────────────────────────────────────────
 Flask>=2.3.0
 Flask-CORS>=4.0.0
 
-# Core implementation (no external dependencies required!)
+# ── NullClaw — local AI programming agent ──────────────────────────────────
+# Uses only stdlib by default (subprocess, urllib, re, json, pathlib).
+# Install Ollama separately: https://ollama.com/download
+# Then pull a model:  ollama pull qwen2.5-coder:7b
 
-# Optional: For vLLM model deployment
-# vllm>=0.2.0  # For model deployment
-# sglang>=0.1.0  # Alternative deployment option
+# ── GeminiProgramFixer — free cloud fallback ───────────────────────────────
+# Free API key: https://aistudio.google.com/apikey
+google-generativeai>=0.7.0   # optional: only needed for Gemini fallback
 
-# Optional: For enhanced features
-# openai>=1.0.0  # For API compatibility
-# fastapi>=0.100.0  # Alternative to Flask
-# uvicorn>=0.20.0  # For running FastAPI
-# pydantic>=2.0.0  # For data validation
+# ── AI Reconstructor / ELF X-Ray ───────────────────────────────────────────
+# Uses only stdlib (struct, mmap, re, pathlib) — no extra deps needed.
+
+# ── HTTP requests (used by OllamaClient REST calls + binary tools) ─────────
+requests>=2.31.0
+
+# ── Optional: vLLM for bigger local models on GPU ──────────────────────────
+# pip install vllm           # run 13B+ models on RTX 5060 Ti
+# pip install sglang         # alternative inference server
+
+# ── Optional: enhanced semantic search ────────────────────────────────────
+# pip install sentence-transformers faiss-cpu   # embed_repo / search_semantic
+
+# ── Optional: FastAPI web interface ────────────────────────────────────────
+# pip install fastapi uvicorn pydantic          # for nullclaw web server

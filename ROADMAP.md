@@ -4,12 +4,12 @@
 
 ---
 
-## 🎯 Current Status (v1.0) - COMPLETE ✅
+## 🎯 Current Status (v1.1) - COMPLETE ✅
 
 **Project Statistics:**
-- **430,845+ lines** of production-ready code
-- **1,450+ capabilities** across all domains
-- **167+ Python files** with complete implementations
+- **443,000+ lines** of production-ready code
+- **1,453+ capabilities** across all domains
+- **30+ Python source files** with complete implementations
 - **Multi-language build system** (Python, JS, C++, Rust, Go)
 - **Kimi K2 integration** complete with unified system
 
@@ -26,6 +26,9 @@
 - ✅ Interactive tutorial system (3,430 lines)
 - ✅ Intelligent RAM management (13,150 lines)
 - ✅ Adaptive learning system (11,520 lines)
+- ✅ **NullClaw** — local AI programming agent (2,276 lines across 13 modules)
+- ✅ **GeminiProgramFixer** — free Gemini 1.5 Flash code repair (770 lines)
+- ✅ **AI Reconstructor / ELF X-Ray** — scroll-technique binary analysis (3,289 lines)
 
 ---
 

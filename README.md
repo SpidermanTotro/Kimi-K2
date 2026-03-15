@@ -68,22 +68,29 @@
 | Metric | Value |
 |:------:|:-----:|
 | **Total Parameters** | 1 Trillion |
-| **Total Lines** | 430,845+ |
-| **Total Skills** | 1,450+ |
-| **Python Files** | 167+ |
+| **Total Lines** | 443,000+ |
+| **Total Skills** | 1,453+ |
+| **Python Files** | 30+ |
 | **Code Examples** | 80+ |
 | **Movie Database** | 10M+ films |
 | **Documentation** | 69,000+ lines |
 | **Build System** | Multi-language (Python, JS, C++, Rust, Go) |
 | **Kimi K2 Integration** | Complete ❤️ |
+| **NullClaw** | Local AI repair agent (GPU, free) 🦀 |
+| **AI Reconstructor** | ELF X-Ray / scroll technique 🔬 |
 
 ### 🎯 What's New - THE FORGE ❤️ KIMI K2 Edition
 
-**🔥 Latest: Complete Marriage System (v1.0)**
-- **💍 FORGE ❤️ KIMI K2 Marriage** - Complete integration merging THE FORGE into Kimi K2 (**NEW!**)
-- **📈 Benchmark Optimization** - Expected 6-15% improvements across all tests (**NEW!**)
-- **🛠️ 1,450+ Tools for Kimi K2** - All FORGE capabilities as function calls (**NEW!**)
-- **📚 Training Data Export** - 408K+ lines for model fine-tuning (**NEW!**)
+**🦀 Latest: Local AI Tools (v1.1)**
+- **🦀 NullClaw** — Local AI programming agent. Runs on your GPU via Ollama. No cloud, no subscription. Detects errors (TypeScript, Python, Rust, Go, C), grabs source context, sends to `qwen2.5-coder` or `codellama`, extracts unified diffs, applies patches with `git apply`, and loops until the build passes. Three-agent pipeline: Planner → Debugger → Patcher. (**NEW!**)
+- **🆓 GeminiProgramFixer** — Fix broken programs with the **free** Gemini 1.5 Flash API. Replaces GitHub Copilot / ChatGPT for daily code repair. Falls back to 20+ built-in pattern fixes when offline. (**NEW!**)
+- **🔬 AI Reconstructor / ELF X-Ray** — Analyses ELF binaries like the Herculaneum scroll technique: six-layer CT-style scan (`BinaryXRay`), virtual unwrapping, AI pattern matching, confidence-annotated source reconstruction. Pure-Python `DeepElfParser` reads every ELF section with `struct` + `mmap` — no external tools needed. Progressive scan depth 1–6 (fast header → full reconstruction). (**NEW!**)
+
+**🔥 Complete Marriage System (v1.0)**
+- **💍 FORGE ❤️ KIMI K2 Marriage** - Complete integration merging THE FORGE into Kimi K2
+- **📈 Benchmark Optimization** - Expected 6-15% improvements across all tests
+- **🛠️ 1,450+ Tools for Kimi K2** - All FORGE capabilities as function calls
+- **📚 Training Data Export** - 408K+ lines for model fine-tuning
 - **🚀 430,845+ Lines** - Massive ecosystem (+34,000% growth from original)
 - **🔨 Multi-Language Build** - Python, JavaScript, C++, Rust, Go support
 - **📦 Downloadable Distributions** - One-command ZIP packaging (`make dist`)
@@ -93,6 +100,112 @@
 - **📀 Universal Media Upgrader** - DVD→4K/8K batch processing
 - **🎞️ Historical Restoration** - Restore 1956 Olympics to 8K quality
 - **💿 Universal Format Converter** - VHS→Vinyl, any format to any format
+
+---
+
+## 🦀 NullClaw — Local AI Programming Agent
+
+> **No cloud. No subscription. Runs on your GPU.**
+
+NullClaw is a self-repairing build tool that uses your local Ollama models to detect, diagnose, and patch build errors across TypeScript, Python, Rust, Go, and C/C++.
+
+### Hardware requirements
+| Component | Minimum | Recommended |
+|-----------|---------|-------------|
+| GPU | Any CUDA/Metal | RTX 5060 Ti 16 GB |
+| RAM | 8 GB | 31 GB |
+| Disk | 4 GB per model | 822 GB free |
+
+### Quick start
+```bash
+# 1. Install Ollama  https://ollama.com/download
+ollama pull qwen2.5-coder:7b          # best coding model
+ollama pull llama3:8b-instruct-q8_0   # planner model
+
+# 2. One-command repair loop
+python3 nullclaw.py repair ~/projects/my-broken-app
+
+# 3. Or use the shell launcher
+./run-nullclaw.sh ~/projects/my-broken-app qwen2.5-coder:latest
+```
+
+### Commands
+```
+python3 nullclaw.py repair  <project_dir> [model]   # full AI repair loop
+python3 nullclaw.py build   <project_dir> [cmd]     # run build, save log
+python3 nullclaw.py parse   <log_file>              # parse first error
+python3 nullclaw.py context <file> <line>           # show source context
+python3 nullclaw.py search  <pattern> [dir]         # search codebase
+python3 nullclaw.py analyze <project_dir>           # index + inventory
+python3 nullclaw.py map     <project_dir>           # print repo tree
+python3 nullclaw.py apply   <project_dir> <patch>   # apply patch file
+python3 nullclaw.py status                          # dashboard
+python3 nullclaw.py config                          # show config
+```
+
+### Repair loop
+```
+build → detect first error → collect context → Planner AI → Debugger AI
+     → Patcher AI → extract unified diff → git apply → rebuild → repeat
+```
+
+### Free Gemini fallback
+If Ollama is unavailable, NullClaw falls back to the **free** Gemini 1.5 Flash API automatically.
+```bash
+python3 gemini_code_fixer.py --save-key YOUR_FREE_KEY
+# Free key: https://aistudio.google.com/apikey
+```
+
+---
+
+## 🔬 AI Reconstructor — ELF X-Ray / Scroll Technique
+
+> **Analyse any ELF binary like scientists unrolled the Herculaneum scrolls.**
+
+Inspired by the CT-scan + virtual-unwrapping technique used to read carbonised ancient scrolls, the AI Reconstructor performs a non-destructive multi-layer scan of ELF binaries and reconstructs human-readable source understanding.
+
+### How it works (six-layer scan)
+| Depth | Layer | What it reads |
+|-------|-------|---------------|
+| 1 | Header | ELF magic, arch, endianness, entry point |
+| 2 | Structure | Program headers, section headers, flags |
+| 3 | Symbols | Symbol tables, exported/imported functions |
+| 4 | Debug | DWARF info, source paths, type info |
+| 5 | Strings | Embedded strings, version info, paths |
+| 6 | Full | Call graph, data patterns, algorithm fingerprints |
+
+### Quick start
+```bash
+# Full reconstruction pipeline (scroll analogy)
+python3 ai_reconstructor.py --full /path/to/binary
+
+# Progressive scan (like adjusting CT scanner depth)
+python3 ai_reconstructor.py --scan-depth 3 /path/to/binary
+
+# Pure-Python deep ELF parse (no readelf/objdump needed)
+python3 ai_reconstructor.py --deep /path/to/binary
+
+# Semantic understanding (purpose, algorithms, security grade)
+python3 ai_reconstructor.py --understand /path/to/binary
+
+# Individual stages
+python3 ai_reconstructor.py --xray    /path/to/binary   # CT scan
+python3 ai_reconstructor.py --unwrap  /path/to/binary   # virtual unwrap
+python3 ai_reconstructor.py --reconstruct /path/to/binary  # source fragments
+```
+
+### Example output (ripgrep ELF)
+```
+🔬 Deep ELF Parse: ripgrep  [Rust · x86-64 · PIE · RELRO]
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  34 Rust crates detected
+  355 logical modules
+  243 reconstructed source paths
+  497 confidence-annotated fragments
+
+Security grade: A+  (Rust memory-safe, PIE, full RELRO)
+Imports:  🔒 crypto ×3  🔤 regex ×12  📁 file/IO ×28  🧵 threads ×6
+```
 
 ### 🗺️ Roadmap - What's Coming Next
 
