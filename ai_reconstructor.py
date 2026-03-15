@@ -641,6 +641,1299 @@ class BinaryXRay:
 
 
 # ===========================================================================
+# DeepElfParser  — pure-Python ELF binary parser (no external tools)
+# ===========================================================================
+
+# ELF section-header types
+_SHT = {0:"NULL",1:"PROGBITS",2:"SYMTAB",3:"STRTAB",4:"RELA",5:"HASH",
+        6:"DYNAMIC",7:"NOTE",8:"NOBITS",9:"REL",10:"SHLIB",11:"DYNSYM",
+        14:"INIT_ARRAY",15:"FINI_ARRAY",16:"PREINIT_ARRAY",17:"GROUP",
+        18:"SYMTAB_SHNDX",0x6fffffff:"GNU_VERSYM",0x6ffffffe:"GNU_VERNEED",
+        0x6ffffffd:"GNU_VERDEF",0x6ffffff6:"GNU_HASH",0x6ffffff5:"GNU_PRELINK_MAP"}
+# ELF section-header flags
+_SHF = {1:"WRITE",2:"ALLOC",4:"EXECINSTR",16:"MERGE",32:"STRINGS",
+        64:"INFO_LINK",128:"LINK_ORDER",256:"OS_NONCONFORMING",512:"GROUP",
+        1024:"TLS",0x0ff00000:"MASKOS",0xf0000000:"MASKPROC"}
+# ELF program-header segment types
+_PT  = {0:"NULL",1:"LOAD",2:"DYNAMIC",3:"INTERP",4:"NOTE",5:"SHLIB",
+        6:"PHDR",7:"TLS",0x6474e550:"GNU_EH_FRAME",0x6474e551:"GNU_STACK",
+        0x6474e552:"GNU_RELRO",0x6474e553:"GNU_PROPERTY"}
+# ELF dynamic-section tag meanings
+_DT_NAMES = {
+    0:"NULL",1:"NEEDED",2:"PLTRELSZ",3:"PLTGOT",4:"HASH",5:"STRTAB",
+    6:"SYMTAB",7:"RELA",8:"RELASZ",9:"RELAENT",10:"STRSZ",11:"SYMENT",
+    12:"INIT",13:"FINI",14:"SONAME",15:"RPATH",16:"SYMBOLIC",17:"REL",
+    18:"RELSZ",19:"RELENT",20:"PLTREL",21:"DEBUG",22:"TEXTREL",23:"JMPREL",
+    24:"BIND_NOW",25:"INIT_ARRAY",26:"FINI_ARRAY",28:"INIT_ARRAYSZ",
+    29:"FINI_ARRAYSZ",30:"RUNPATH",31:"FLAGS",32:"PREINIT_ARRAY",
+    33:"PREINIT_ARRAYSZ",34:"SYMTAB_SHNDX",35:"RELRSZ",36:"RELR",37:"RELRENT",
+    0x6ffffef5:"GNU_HASH",0x6ffffff0:"VERSYM",0x6ffffffe:"VERNEED",
+    0x6fffffff:"VERNEEDNUM",0x6ffffffd:"VERDEF",0x6ffffffc:"VERDEFNUM",
+}
+# Symbol type and binding decoding
+_STT = {0:"NOTYPE",1:"OBJECT",2:"FUNC",3:"SECTION",4:"FILE",5:"COMMON",6:"TLS"}
+_STB = {0:"LOCAL",1:"GLOBAL",2:"WEAK",10:"GNU_UNIQUE"}
+_STV = {0:"DEFAULT",1:"INTERNAL",2:"HIDDEN",3:"PROTECTED"}
+
+
+class DeepElfParser:
+    """
+    Pure-Python ELF binary parser — reads every structure directly from
+    an ``mmap.ACCESS_READ`` mapping using ``struct.unpack``.
+
+    No external tools are called.  The binary is never executed.
+
+    Analogous to the CT scanner itself in the Herculaneum pipeline: it
+    doesn't "interpret" the data yet — it just faithfully records every
+    byte in structured form so the higher layers (ElfUnderstanding,
+    VirtualUnwrapper, AIPatternMatcher) can reason about it.
+
+    Parsed structures
+    ─────────────────
+    • ELF header            (e_ident through e_shstrndx)
+    • Program headers       (PT_LOAD, PT_DYNAMIC, PT_INTERP, …)
+    • Section headers       (name, type, flags, offset, size, …)
+    • Section contents
+        – .dynamic          DT_NEEDED, DT_SONAME, DT_INIT, DT_FINI, …
+        – .dynsym / .symtab  all symbol entries (name, type, bind, addr, size)
+        – .strtab / .dynstr string tables
+        – .rela.plt / .rela.dyn   relocations → (offset, type, sym, addend)
+        – .note.*           build-id, ABI, property
+        – .gnu.hash         GNU hash table (fast symbol lookup)
+    • Derived data
+        – PLT stub addresses
+        – GOT slot map
+        – Imported symbols (undefined, GLOBAL/WEAK)
+        – Exported symbols (defined, GLOBAL, non-LOCAL)
+        – Shared library dependencies (DT_NEEDED)
+    """
+
+    # Struct format strings
+    _ELF64_HDR  = "<4sBBBBBxxxxxxx HHIQQQIHHHHHH"  # 64-byte header after ident
+    _ELF64_SHDR = "<IIQQQQIIQQ"   # 64-byte section header
+    _ELF64_PHDR = "<IIQQQQQQ"     # 56-byte program header
+    _ELF64_SYM  = "<IBBHQQ"       # 24-byte symbol
+    _ELF64_DYN  = "<qQ"           # 16-byte dynamic entry
+    _ELF64_RELA = "<QIiQ"         # Wait: Elf64_Rela = off(8) info(8) addend(8) - but struct fields differ
+    # Elf64_Rela: r_offset(u64) r_info(u64) r_addend(i64)
+    _ELF64_RELA_REAL = "<QQq"     # 24 bytes
+    _ELF32_HDR  = "<4sBBBBBxxxxxxx HHIIIIIHHHHHH"
+    _ELF32_SHDR = "<IIIIIIIIII"   # 40-byte section header
+    _ELF32_PHDR = "<IIIIIIII"     # 32-byte program header
+    _ELF32_SYM  = "<IIIBBH"       # 16-byte symbol
+    _ELF32_DYN  = "<iI"           # 8-byte dynamic entry
+    _ELF32_RELA_REAL = "<IIi"     # 12 bytes
+
+    def __init__(self, elf_path: str):
+        self.path = Path(elf_path).resolve()
+        if not self.path.exists():
+            raise FileNotFoundError(f"Not found: {self.path}")
+
+    # ------------------------------------------------------------------
+    # Public API
+    # ------------------------------------------------------------------
+
+    def parse(self) -> Dict[str, Any]:
+        """
+        Parse the full ELF structure and return a comprehensive dict.
+
+        The result contains every field extracted directly from the binary
+        format — no readelf, no objdump, no external tools.
+        """
+        import mmap as _mmap
+        with open(self.path, "rb") as fh:
+            mm = _mmap.mmap(fh.fileno(), 0, access=_mmap.ACCESS_READ)
+            try:
+                return self._parse_mmap(mm)
+            finally:
+                mm.close()
+
+    # ------------------------------------------------------------------
+    # Internal parse implementation
+    # ------------------------------------------------------------------
+
+    def _parse_mmap(self, mm: Any) -> Dict[str, Any]:
+        size = len(mm)
+
+        # ── e_ident ────────────────────────────────────────────────────
+        if size < 16 or mm[:4] != ELF_MAGIC:
+            raise ValueError(f"Not a valid ELF: {self.path}")
+
+        ei_class = mm[4]   # 1=32-bit, 2=64-bit
+        ei_data  = mm[5]   # 1=little-endian, 2=big-endian
+        is_64    = (ei_class == 2)
+        is_le    = (ei_data  == 1)
+
+        endian = "<" if is_le else ">"
+
+        # ── ELF header ─────────────────────────────────────────────────
+        hdr = self._parse_header(mm, is_64, endian)
+
+        # ── Section headers + string table ─────────────────────────────
+        sections = self._parse_section_headers(mm, hdr, is_64, endian)
+        shstrtab = self._read_strtab(
+            mm, sections[hdr["e_shstrndx"]] if hdr["e_shstrndx"] < len(sections) else {}
+        )
+        # Resolve section names
+        for sh in sections:
+            sh["name"] = self._strtab_lookup(shstrtab, sh.get("sh_name", 0))
+
+        # ── Program headers ────────────────────────────────────────────
+        phdrs = self._parse_program_headers(mm, hdr, is_64, endian)
+
+        # ── Section contents ───────────────────────────────────────────
+        dynstr  = self._find_strtab(mm, sections, ".dynstr")
+        strtab  = self._find_strtab(mm, sections, ".strtab")
+
+        dynsyms  = self._parse_symtab(mm, sections, ".dynsym",  dynstr,  is_64, endian)
+        symtab   = self._parse_symtab(mm, sections, ".symtab",  strtab,  is_64, endian)
+        dynamic  = self._parse_dynamic(mm, sections, dynstr, endian, is_64)
+        notes    = self._parse_notes(mm, sections, endian)
+        relas    = self._parse_relocations(mm, sections, dynsyms, is_64, endian)
+        gnu_hash = self._parse_gnu_hash(mm, sections, endian, is_64)
+
+        # ── Derived: imports / exports / deps ─────────────────────────
+        imports  = [s for s in dynsyms  if s.get("shndx") == 0   and s["bind"] in ("GLOBAL","WEAK") and s["name"]]
+        exports  = [s for s in dynsyms  if s.get("shndx") != 0   and s["bind"] in ("GLOBAL","WEAK") and s["name"]]
+        dso_deps = [e["val_str"] for e in dynamic if e["tag_name"] == "NEEDED" and e.get("val_str")]
+
+        # ── All symbols merged ─────────────────────────────────────────
+        all_syms = dynsyms + [s for s in symtab
+                               if not any(d["name"] == s["name"] for d in dynsyms)]
+
+        # ── GOT / PLT analysis ─────────────────────────────────────────
+        plt_stubs = self._find_plt_stubs(sections, relas)
+
+        return {
+            "path":       str(self.path),
+            "size_bytes": size,
+            "class":      "64-bit" if is_64 else "32-bit",
+            "endian":     "little" if is_le else "big",
+            "header":     hdr,
+            "sections":   sections,
+            "phdrs":      phdrs,
+            "dynsyms":    dynsyms,
+            "symtab":     symtab,
+            "all_symbols": all_syms,
+            "imports":    imports,
+            "exports":    exports,
+            "dynamic":    dynamic,
+            "dso_deps":   dso_deps,
+            "notes":      notes,
+            "relocations": relas,
+            "plt_stubs":  plt_stubs,
+            "gnu_hash":   gnu_hash,
+            "section_count":  len(sections),
+            "symbol_count":   len(all_syms),
+            "import_count":   len(imports),
+            "export_count":   len(exports),
+        }
+
+    # ------------------------------------------------------------------
+    # ELF header
+    # ------------------------------------------------------------------
+
+    def _parse_header(self, mm: Any, is_64: bool, endian: str) -> Dict[str, Any]:
+        if is_64:
+            # After the 16-byte e_ident
+            fmt = endian + "HHIQQQIHHHHHH"   # 48 bytes
+            needed = 16 + struct.calcsize(fmt)
+            if len(mm) < needed:
+                raise ValueError("ELF file too short to contain full header")
+            (e_type, e_machine, e_version, e_entry, e_phoff, e_shoff,
+             e_flags, e_ehsize, e_phentsize, e_phnum, e_shentsize,
+             e_shnum, e_shstrndx) = struct.unpack_from(fmt, mm, 16)
+        else:
+            fmt = endian + "HHIIIIIHHHHHH"
+            needed = 16 + struct.calcsize(fmt)
+            if len(mm) < needed:
+                raise ValueError("ELF file too short to contain full header")
+            (e_type, e_machine, e_version, e_entry, e_phoff, e_shoff,
+             e_flags, e_ehsize, e_phentsize, e_phnum, e_shentsize,
+             e_shnum, e_shstrndx) = struct.unpack_from(fmt, mm, 16)
+
+        _ETYPES   = {0:"ET_NONE",1:"ET_REL",2:"ET_EXEC",3:"ET_DYN",4:"ET_CORE"}
+        _MACHINES = {0x3E:"x86-64",0x28:"ARM",0xB7:"AArch64",0x08:"MIPS",
+                     0x14:"PowerPC",0x15:"PPC64",0x02:"SPARC",0x3:"x86",
+                     0xF3:"RISC-V"}
+
+        return {
+            "e_type":     _ETYPES.get(e_type,    f"0x{e_type:04x}"),
+            "e_machine":  _MACHINES.get(e_machine, f"0x{e_machine:04x}"),
+            "e_version":  e_version,
+            "e_entry":    f"0x{e_entry:016x}" if is_64 else f"0x{e_entry:08x}",
+            "e_phoff":    e_phoff,
+            "e_shoff":    e_shoff,
+            "e_flags":    f"0x{e_flags:08x}",
+            "e_ehsize":   e_ehsize,
+            "e_phentsize": e_phentsize,
+            "e_phnum":    e_phnum,
+            "e_shentsize": e_shentsize,
+            "e_shnum":    e_shnum,
+            "e_shstrndx": e_shstrndx,
+            "is_64bit":   is_64,
+            "is_pie":     e_type == 3,   # ET_DYN = position-independent executable
+        }
+
+    # ------------------------------------------------------------------
+    # Section headers
+    # ------------------------------------------------------------------
+
+    def _parse_section_headers(
+        self, mm: Any, hdr: Dict, is_64: bool, endian: str
+    ) -> List[Dict[str, Any]]:
+        e_shoff    = hdr["e_shoff"]
+        e_shnum    = hdr["e_shnum"]
+        e_shentsize = hdr["e_shentsize"]
+
+        if e_shoff == 0 or e_shnum == 0:
+            return []
+
+        fmt = endian + ("IIQQQQIIQQ" if is_64 else "IIIIIIIIII")
+        entry_size = struct.calcsize(fmt)
+
+        sections: List[Dict] = []
+        for i in range(e_shnum):
+            off = e_shoff + i * e_shentsize
+            if off + entry_size > len(mm):
+                break
+            fields = struct.unpack_from(fmt, mm, off)
+            if is_64:
+                sh_name, sh_type, sh_flags, sh_addr, sh_offset, sh_size, \
+                    sh_link, sh_info, sh_addralign, sh_entsize = fields
+            else:
+                sh_name, sh_type, sh_flags, sh_addr, sh_offset, sh_size, \
+                    sh_link, sh_info, sh_addralign, sh_entsize = fields
+
+            sections.append({
+                "index":       i,
+                "sh_name":     sh_name,
+                "name":        "",          # filled in later from .shstrtab
+                "type":        _SHT.get(sh_type, f"0x{sh_type:x}"),
+                "sh_type":     sh_type,
+                "flags":       self._decode_flags(sh_flags, _SHF),
+                "sh_flags":    sh_flags,
+                "addr":        f"0x{sh_addr:x}",
+                "sh_addr":     sh_addr,
+                "offset":      sh_offset,
+                "size":        sh_size,
+                "sh_link":     sh_link,
+                "sh_info":     sh_info,
+                "alignment":   sh_addralign,
+                "entry_size":  sh_entsize,
+                "executable":  bool(sh_flags & 4),
+                "writable":    bool(sh_flags & 1),
+                "loadable":    bool(sh_flags & 2),
+            })
+        return sections
+
+    # ------------------------------------------------------------------
+    # Program headers
+    # ------------------------------------------------------------------
+
+    def _parse_program_headers(
+        self, mm: Any, hdr: Dict, is_64: bool, endian: str
+    ) -> List[Dict[str, Any]]:
+        e_phoff    = hdr["e_phoff"]
+        e_phnum    = hdr["e_phnum"]
+        e_phentsize = hdr["e_phentsize"]
+
+        if e_phoff == 0 or e_phnum == 0:
+            return []
+
+        fmt = endian + ("IIQQQQQQ" if is_64 else "IIIIIIII")
+        entry_size = struct.calcsize(fmt)
+
+        phdrs: List[Dict] = []
+        for i in range(e_phnum):
+            off = e_phoff + i * e_phentsize
+            if off + entry_size > len(mm):
+                break
+            fields = struct.unpack_from(fmt, mm, off)
+
+            if is_64:
+                p_type, p_flags, p_offset, p_vaddr, p_paddr, \
+                    p_filesz, p_memsz, p_align = fields
+            else:
+                p_type, p_offset, p_vaddr, p_paddr, \
+                    p_filesz, p_memsz, p_flags, p_align = fields
+
+            perm = ("r" if p_flags & 4 else "-"
+                  + "w" if p_flags & 2 else "-"
+                  + "x" if p_flags & 1 else "-")
+
+            phdrs.append({
+                "index":    i,
+                "type":     _PT.get(p_type, f"PT_0x{p_type:x}"),
+                "p_type":   p_type,
+                "offset":   p_offset,
+                "vaddr":    f"0x{p_vaddr:x}",
+                "filesz":   p_filesz,
+                "memsz":    p_memsz,
+                "flags":    perm,
+                "p_flags":  p_flags,
+                "align":    p_align,
+                "executable": bool(p_flags & 1),
+                "writable":   bool(p_flags & 2),
+                "readable":   bool(p_flags & 4),
+            })
+        return phdrs
+
+    # ------------------------------------------------------------------
+    # Symbol tables
+    # ------------------------------------------------------------------
+
+    def _parse_symtab(
+        self, mm: Any, sections: List[Dict],
+        sec_name: str, strtab: bytes,
+        is_64: bool, endian: str,
+    ) -> List[Dict[str, Any]]:
+        sec = next((s for s in sections if s["name"] == sec_name), None)
+        if sec is None or sec["size"] == 0:
+            return []
+
+        if is_64:
+            fmt = endian + "IBBHQQ"    # st_name(4) st_info(1) st_other(1) st_shndx(2) st_value(8) st_size(8)
+            entry_size = 24
+        else:
+            fmt = endian + "IIIBBH"    # st_name(4) st_value(4) st_size(4) st_info(1) st_other(1) st_shndx(2)
+            entry_size = 16
+
+        syms: List[Dict] = []
+        offset = sec["offset"]
+        count  = sec["size"] // entry_size
+
+        for i in range(count):
+            off = offset + i * entry_size
+            if off + entry_size > len(mm):
+                break
+            fields = struct.unpack_from(fmt, mm, off)
+
+            if is_64:
+                st_name, st_info, st_other, st_shndx, st_value, st_size = fields
+            else:
+                st_name, st_value, st_size, st_info, st_other, st_shndx = fields
+
+            sym_type = _STT.get(st_info & 0xF,  f"0x{st_info & 0xF:x}")
+            sym_bind = _STB.get(st_info >> 4,   f"0x{st_info >> 4:x}")
+            sym_vis  = _STV.get(st_other & 0x3, "DEFAULT")
+            sym_name = self._strtab_lookup(strtab, st_name)
+
+            syms.append({
+                "index":   i,
+                "name":    sym_name,
+                "type":    sym_type,
+                "bind":    sym_bind,
+                "vis":     sym_vis,
+                "shndx":   st_shndx,
+                "value":   f"0x{st_value:x}",
+                "st_value": st_value,
+                "size":    st_size,
+                "is_func":     sym_type == "FUNC",
+                "is_object":   sym_type == "OBJECT",
+                "is_imported": st_shndx == 0 and sym_bind in ("GLOBAL", "WEAK"),
+                "is_exported": st_shndx != 0 and sym_bind in ("GLOBAL", "WEAK"),
+            })
+        return syms
+
+    # ------------------------------------------------------------------
+    # Dynamic section
+    # ------------------------------------------------------------------
+
+    def _parse_dynamic(
+        self, mm: Any, sections: List[Dict],
+        dynstr: bytes, endian: str, is_64: bool,
+    ) -> List[Dict[str, Any]]:
+        sec = next((s for s in sections if s["name"] == ".dynamic"), None)
+        if sec is None:
+            # Try finding it via PT_DYNAMIC program header
+            return []
+
+        fmt        = endian + ("qQ" if is_64 else "iI")
+        entry_size = 16 if is_64 else 8
+        entries: List[Dict] = []
+
+        offset = sec["offset"]
+        count  = sec["size"] // entry_size
+
+        for i in range(count):
+            off = offset + i * entry_size
+            if off + entry_size > len(mm):
+                break
+            d_tag, d_val = struct.unpack_from(fmt, mm, off)
+            tag_name = _DT_NAMES.get(d_tag & 0xFFFFFFFF, f"DT_0x{d_tag:x}")
+
+            # Resolve string values for string-table tags
+            val_str: Optional[str] = None
+            if tag_name in ("NEEDED", "SONAME", "RPATH", "RUNPATH"):
+                val_str = self._strtab_lookup(dynstr, d_val)
+
+            entries.append({
+                "tag":      d_tag,
+                "tag_name": tag_name,
+                "val":      d_val,
+                "val_str":  val_str,
+            })
+
+            if d_tag == 0:   # DT_NULL = end of .dynamic
+                break
+
+        return entries
+
+    # ------------------------------------------------------------------
+    # Relocations
+    # ------------------------------------------------------------------
+
+    def _parse_relocations(
+        self, mm: Any, sections: List[Dict],
+        dynsyms: List[Dict], is_64: bool, endian: str,
+    ) -> List[Dict[str, Any]]:
+        relas: List[Dict] = []
+
+        for sec in sections:
+            if sec["type"] not in ("RELA", "REL"):
+                continue
+            if is_64:
+                fmt        = endian + "QQq" if sec["type"] == "RELA" else endian + "QQ"
+                entry_size = 24 if sec["type"] == "RELA" else 16
+            else:
+                fmt        = endian + "IIi" if sec["type"] == "RELA" else endian + "II"
+                entry_size = 12 if sec["type"] == "RELA" else 8
+
+            offset = sec["offset"]
+            count  = sec["size"] // entry_size
+
+            for i in range(count):
+                off = offset + i * entry_size
+                if off + entry_size > len(mm):
+                    break
+                fields = struct.unpack_from(fmt, mm, off)
+
+                if is_64:
+                    r_offset = fields[0]
+                    r_info   = fields[1]
+                    r_addend = fields[2] if sec["type"] == "RELA" else 0
+                    sym_idx  = r_info >> 32
+                    r_type   = r_info & 0xFFFFFFFF
+                else:
+                    r_offset = fields[0]
+                    r_info   = fields[1]
+                    r_addend = fields[2] if sec["type"] == "RELA" else 0
+                    sym_idx  = r_info >> 8
+                    r_type   = r_info & 0xFF
+
+                sym_name = ""
+                if 0 < sym_idx < len(dynsyms):
+                    sym_name = dynsyms[sym_idx]["name"]
+
+                relas.append({
+                    "section":  sec["name"],
+                    "offset":   f"0x{r_offset:x}",
+                    "type":     r_type,
+                    "sym_idx":  sym_idx,
+                    "sym_name": sym_name,
+                    "addend":   r_addend,
+                })
+
+        return relas
+
+    # ------------------------------------------------------------------
+    # NOTE sections
+    # ------------------------------------------------------------------
+
+    def _parse_notes(
+        self, mm: Any, sections: List[Dict], endian: str
+    ) -> List[Dict[str, Any]]:
+        notes: List[Dict] = []
+        for sec in sections:
+            if sec["type"] != "NOTE":
+                continue
+            offset = sec["offset"]
+            end    = offset + sec["size"]
+            pos    = offset
+            while pos + 12 <= end:
+                namesz, descsz, n_type = struct.unpack_from(
+                    endian + "III", mm, pos
+                )
+                pos += 12
+                name = b""
+                if namesz > 0 and pos + namesz <= end:
+                    name = bytes(mm[pos: pos + namesz]).rstrip(b"\x00")
+                    pos += (namesz + 3) & ~3   # align to 4 bytes
+                desc = b""
+                if descsz > 0 and pos + descsz <= end:
+                    desc = bytes(mm[pos: pos + descsz])
+                    pos += (descsz + 3) & ~3
+
+                note: Dict[str, Any] = {
+                    "section":  sec["name"],
+                    "name":     name.decode("ascii", errors="replace"),
+                    "type":     n_type,
+                    "desc_len": descsz,
+                }
+                # Build-ID note
+                if name == b"GNU" and n_type == 3:
+                    note["build_id"] = desc.hex()
+                # ABI version note
+                if name == b"GNU" and n_type == 1 and len(desc) >= 16:
+                    abi = struct.unpack_from("<IIII", desc)
+                    os_map = {0: "Linux", 1: "Hurd", 2: "Solaris", 3: "FreeBSD"}
+                    note["abi_os"]      = os_map.get(abi[0], str(abi[0]))
+                    note["abi_version"] = f"{abi[1]}.{abi[2]}.{abi[3]}"
+                notes.append(note)
+        return notes
+
+    # ------------------------------------------------------------------
+    # GNU hash table
+    # ------------------------------------------------------------------
+
+    def _parse_gnu_hash(
+        self, mm: Any, sections: List[Dict], endian: str, is_64: bool
+    ) -> Dict[str, Any]:
+        sec = next((s for s in sections if s["name"] == ".gnu.hash"), None)
+        if sec is None or sec["size"] < 16:
+            return {"present": False}
+
+        offset = sec["offset"]
+        nbuckets, symoffset, bloom_size, bloom_shift = struct.unpack_from(
+            endian + "IIII", mm, offset
+        )
+        return {
+            "present":     True,
+            "nbuckets":    nbuckets,
+            "symoffset":   symoffset,
+            "bloom_size":  bloom_size,
+            "bloom_shift": bloom_shift,
+        }
+
+    # ------------------------------------------------------------------
+    # PLT stub detection
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def _find_plt_stubs(
+        sections: List[Dict], relas: List[Dict]
+    ) -> List[Dict[str, Any]]:
+        """
+        Map PLT stub addresses to the imported symbol names they call.
+        Each .rela.plt entry gives (GOT slot address, symbol index).
+        The PLT stub at base + i * 16 calls GOT[sym].
+        """
+        plt = next((s for s in sections if s["name"] == ".plt"), None)
+        if plt is None:
+            return []
+
+        plt_relas = [r for r in relas if r["section"] == ".rela.plt"]
+        stubs: List[Dict] = []
+        plt_base = plt["sh_addr"]
+
+        for i, rela in enumerate(plt_relas):
+            stub_addr = plt_base + (i + 1) * 16    # first stub is PLT[0] (resolver)
+            stubs.append({
+                "index":     i,
+                "addr":      f"0x{stub_addr:x}",
+                "sym_name":  rela["sym_name"],
+                "got_slot":  rela["offset"],
+            })
+        return stubs
+
+    # ------------------------------------------------------------------
+    # String table helpers
+    # ------------------------------------------------------------------
+
+    def _find_strtab(
+        self, mm: Any, sections: List[Dict], name: str
+    ) -> bytes:
+        sec = next((s for s in sections if s["name"] == name), None)
+        if sec is None:
+            return b""
+        return self._read_strtab(mm, sec)
+
+    @staticmethod
+    def _read_strtab(mm: Any, sec: Dict) -> bytes:
+        if not sec:
+            return b""
+        offset = sec.get("offset", 0)
+        size   = sec.get("size", 0)
+        if offset == 0 or size == 0 or offset + size > len(mm):
+            return b""
+        return bytes(mm[offset: offset + size])
+
+    @staticmethod
+    def _strtab_lookup(strtab: bytes, index: int) -> str:
+        if not strtab or index >= len(strtab):
+            return ""
+        end = strtab.find(b"\x00", index)
+        if end == -1:
+            end = len(strtab)
+        return strtab[index:end].decode("utf-8", errors="replace")
+
+    @staticmethod
+    def _decode_flags(flags: int, flag_map: Dict[int, str]) -> List[str]:
+        return [name for bit, name in flag_map.items()
+                if isinstance(bit, int) and flags & bit]
+
+
+# ===========================================================================
+# ElfUnderstanding  — semantic layer on top of DeepElfParser
+# ===========================================================================
+
+class ElfUnderstanding:
+    """
+    Takes the raw structural data from DeepElfParser and builds
+    **semantic understanding** — like the "ink detection" pass in the
+    Herculaneum pipeline that goes from "here are the CT voxels" to
+    "here is what the ink says".
+
+    Answers questions like:
+    • What does this binary *do*?  (purpose from strings + imports)
+    • Which external functions does it call and from which libraries?
+    • What is its initialization sequence?
+    • What configuration / environment variables does it read?
+    • What algorithms are likely embedded?  (crypto, compression, regex, …)
+    • How is it structured?  (single binary vs. plugin host, daemon vs. CLI, …)
+    """
+
+    # Known algorithm fingerprints: (import_or_string_patterns, label)
+    _ALGORITHM_FINGERPRINTS: List[Tuple[List[str], str]] = [
+        (["pcre2_match", "pcre2_compile"],      "PCRE2 regex engine"),
+        (["regexec", "regcomp"],                "POSIX regex"),
+        (["SSL_connect", "SSL_read"],           "OpenSSL TLS"),
+        (["mbedtls_", "mbedtls_pk_"],           "mbedTLS"),
+        (["pthread_create", "pthread_join"],    "POSIX threads"),
+        (["tokio", "async_runtime"],            "Tokio async runtime (Rust)"),
+        (["rayon::", "ThreadPool"],             "Rayon parallel iterators (Rust)"),
+        (["zstd_decompress", "ZSTD_compress"],  "Zstandard compression"),
+        (["lz4_compress", "LZ4_decompress"],    "LZ4 compression"),
+        (["inflate", "deflate", "zlib"],        "zlib/gzip compression"),
+        (["brotli_compress", "BrotliDecompress"],"Brotli compression"),
+        (["blake3_", "BLAKE3"],                 "BLAKE3 hashing"),
+        (["SHA256_Init", "SHA256_Update"],      "SHA-256 hashing"),
+        (["md5_init", "MD5Final"],              "MD5 hashing"),
+        (["sqlite3_open", "sqlite3_exec"],      "SQLite database"),
+        (["jemalloc", "je_malloc"],             "jemalloc allocator"),
+        (["mimalloc", "mi_malloc"],             "mimalloc allocator"),
+        (["mmap", "munmap"],                    "Memory-mapped I/O"),
+        (["fork", "execve"],                    "Process spawning"),
+        (["inotify_init", "inotify_add_watch"], "Linux inotify file watching"),
+    ]
+
+    def __init__(self, parse_result: Dict[str, Any]):
+        self._p = parse_result
+
+    # ------------------------------------------------------------------
+    # Public API
+    # ------------------------------------------------------------------
+
+    def understand(self) -> Dict[str, Any]:
+        """
+        Run all semantic analyses and return a structured understanding dict.
+        """
+        imports_set = {s["name"] for s in self._p.get("imports", [])}
+        exports_set = {s["name"] for s in self._p.get("exports", [])}
+        all_names   = {s["name"] for s in self._p.get("all_symbols", [])}
+        dso_deps    = self._p.get("dso_deps", [])
+
+        purpose       = self._infer_purpose(imports_set, dso_deps)
+        binary_type   = self._classify_binary_type()
+        algorithms    = self._detect_algorithms(imports_set | all_names)
+        init_sequence = self._trace_init_sequence()
+        env_vars      = self._find_env_vars_and_config(imports_set)
+        security      = self._security_analysis(imports_set)
+        lib_usage     = self._library_usage_map(dso_deps, imports_set)
+        exec_flow     = self._execution_flow_summary()
+
+        return {
+            "purpose":        purpose,
+            "binary_type":    binary_type,
+            "algorithms":     algorithms,
+            "init_sequence":  init_sequence,
+            "env_config":     env_vars,
+            "security":       security,
+            "library_usage":  lib_usage,
+            "execution_flow": exec_flow,
+            "import_count":   self._p.get("import_count", 0),
+            "export_count":   self._p.get("export_count", 0),
+            "dso_deps":       dso_deps,
+        }
+
+    # ------------------------------------------------------------------
+    # Purpose inference
+    # ------------------------------------------------------------------
+
+    def _infer_purpose(
+        self, imports: set, deps: List[str]
+    ) -> str:
+        dep_str = " ".join(deps).lower()
+        imp_str = " ".join(imports).lower()
+
+        hints: List[str] = []
+        if "pcre2" in dep_str or "pcre2_match" in imp_str:
+            hints.append("regex/pattern search")
+        if any(x in dep_str for x in ("gtk", "qt", "xcb", "wayland", "webkit")):
+            hints.append("GUI application")
+        if any(x in dep_str for x in ("openssl", "gnutls", "mbedtls", "nss")):
+            hints.append("TLS/SSL network communication")
+        if any(x in imp_str for x in ("sqlite3", "leveldb", "rocksdb")):
+            hints.append("database")
+        if any(x in imp_str for x in ("pthread_create", "fork", "clone")):
+            hints.append("multi-process/threaded")
+        if any(x in imp_str for x in ("mmap", "munmap", "mremap")):
+            hints.append("memory-mapped I/O")
+        if any(x in imp_str for x in ("inotify", "epoll", "kqueue", "select")):
+            hints.append("event-driven I/O")
+        if "libz" in dep_str or "zstd" in dep_str:
+            hints.append("compressed data processing")
+        if not hints:
+            hints.append("general purpose utility")
+        return "; ".join(hints)
+
+    # ------------------------------------------------------------------
+    # Binary type
+    # ------------------------------------------------------------------
+
+    def _classify_binary_type(self) -> Dict[str, Any]:
+        hdr     = self._p.get("header", {})
+        phdrs   = self._p.get("phdrs", [])
+        dynamic = self._p.get("dynamic", [])
+        exports = self._p.get("exports", [])
+
+        e_type  = hdr.get("e_type", "")
+        is_pie  = hdr.get("is_pie", False)
+        is_dyn  = any(p["type"] == "DYNAMIC" for p in phdrs)
+        is_interp = any(p["type"] == "INTERP" for p in phdrs)
+
+        has_main   = any(s["name"] == "main" for s in exports)
+        has_init   = any(p["tag_name"] in ("INIT","INIT_ARRAY") for p in dynamic)
+        has_soname = any(p["tag_name"] == "SONAME" for p in dynamic)
+
+        kind = "unknown"
+        if e_type == "ET_DYN":
+            if has_soname:
+                kind = "shared library (.so)"
+            elif is_pie:
+                kind = "PIE executable (position-independent)"
+            else:
+                kind = "shared object"
+        elif e_type == "ET_EXEC":
+            kind = "static executable"
+        elif e_type == "ET_REL":
+            kind = "relocatable object (.o)"
+        elif e_type == "ET_CORE":
+            kind = "core dump"
+
+        return {
+            "kind":       kind,
+            "is_pie":     is_pie,
+            "is_dynamic": is_dyn,
+            "needs_interp": is_interp,
+            "has_main":   has_main,
+            "has_soname": has_soname,
+            "has_init":   has_init,
+        }
+
+    # ------------------------------------------------------------------
+    # Algorithm detection
+    # ------------------------------------------------------------------
+
+    def _detect_algorithms(self, symbol_set: set) -> List[str]:
+        found: List[str] = []
+        sym_str = " ".join(symbol_set).lower()
+        for patterns, label in self._ALGORITHM_FINGERPRINTS:
+            if any(p.lower() in sym_str for p in patterns):
+                found.append(label)
+        return found
+
+    # ------------------------------------------------------------------
+    # Initialization sequence
+    # ------------------------------------------------------------------
+
+    def _trace_init_sequence(self) -> Dict[str, Any]:
+        dynamic = self._p.get("dynamic", [])
+        phdrs   = self._p.get("phdrs",   [])
+        secs    = self._p.get("sections", [])
+
+        steps: List[str] = []
+
+        interp = next((p for p in phdrs if p["type"] == "INTERP"), None)
+        if interp:
+            steps.append("1. Dynamic linker loads the binary")
+
+        gnu_relro = next((p for p in phdrs if p["type"] == "GNU_RELRO"), None)
+        if gnu_relro:
+            steps.append("2. GNU_RELRO: read-only after relocation (security hardening)")
+
+        for entry in dynamic:
+            tn = entry["tag_name"]
+            if tn == "INIT":
+                steps.append(f"3. DT_INIT: call constructor at {entry['val']:#x}")
+            if tn == "INIT_ARRAY":
+                steps.append(f"4. DT_INIT_ARRAY: call {entry.get('val',0)} constructors")
+            if tn == "FINI":
+                steps.append(f"5. DT_FINI: call destructor at {entry['val']:#x}")
+
+        # .ctors section (older style)
+        if any(s["name"] in (".ctors", ".init") for s in secs):
+            steps.append("6. .ctors / .init section present (legacy constructor chain)")
+
+        gnu_stack = next((p for p in phdrs if p["type"] == "GNU_STACK"), None)
+        if gnu_stack:
+            nx = not gnu_stack.get("executable", False)
+            steps.append(
+                f"7. GNU_STACK: {'non-executable' if nx else 'EXECUTABLE (NX disabled!)'} stack"
+            )
+
+        return {"steps": steps, "interp": interp}
+
+    # ------------------------------------------------------------------
+    # Environment / config reading
+    # ------------------------------------------------------------------
+
+    def _find_env_vars_and_config(
+        self, imports: set
+    ) -> Dict[str, Any]:
+        reads_env  = "getenv" in imports
+        reads_conf = any(x in imports for x in ("fopen", "open", "stat", "access"))
+        reads_proc = any(x in imports for x in ("readdir", "opendir"))
+
+        return {
+            "reads_environment_variables": reads_env,
+            "reads_config_files":          reads_conf,
+            "reads_proc_or_sys":           reads_proc,
+        }
+
+    # ------------------------------------------------------------------
+    # Security analysis
+    # ------------------------------------------------------------------
+
+    def _security_analysis(self, imports: set) -> Dict[str, Any]:
+        # Stack canary: __stack_chk_fail imported → compiled with -fstack-protector
+        stack_prot = "__stack_chk_fail" in imports
+
+        # FORTIFY_SOURCE: presence of __*_chk variants
+        fortify = any("_chk" in s for s in imports)
+
+        # Dangerous functions
+        dangerous = [s for s in imports if s in (
+            "gets", "strcpy", "strcat", "sprintf", "vsprintf",
+            "scanf", "sscanf", "fscanf", "strtok",
+        )]
+
+        # PIE
+        is_pie = self._p.get("header", {}).get("is_pie", False)
+
+        # RELRO
+        phdrs = self._p.get("phdrs", [])
+        relro = any(p["type"] == "GNU_RELRO" for p in phdrs)
+
+        # NX stack
+        gnu_stack = next((p for p in phdrs if p["type"] == "GNU_STACK"), None)
+        nx_stack  = gnu_stack is not None and not gnu_stack.get("executable", False)
+
+        score = sum([stack_prot, fortify, is_pie, relro, nx_stack])
+        grade = ["F","D","C","B","A","A+"][min(score, 5)]
+
+        return {
+            "stack_canary":    stack_prot,
+            "fortify_source":  fortify,
+            "pie":             is_pie,
+            "relro":           relro,
+            "nx_stack":        nx_stack,
+            "dangerous_funcs": dangerous,
+            "hardening_score": score,
+            "hardening_grade": grade,
+        }
+
+    # ------------------------------------------------------------------
+    # Library usage map
+    # ------------------------------------------------------------------
+
+    @staticmethod
+    def _library_usage_map(
+        deps: List[str], imports: set
+    ) -> Dict[str, List[str]]:
+        """Map each library to the symbols imported from it."""
+        lib_map: Dict[str, List[str]] = {}
+        # Use heuristic: libc symbols start with predictable prefixes
+        _lib_prefixes: List[Tuple[str, str]] = [
+            ("libc.so",   ["malloc","free","printf","open","read","write",
+                           "close","mmap","fork","execve","getenv","fopen"]),
+            ("libpthread",["pthread_create","pthread_join","pthread_mutex",
+                           "pthread_cond","pthread_rwlock","sem_"]),
+            ("libdl",     ["dlopen","dlsym","dlclose","dlerror"]),
+            ("libm",      ["sin","cos","sqrt","pow","log","exp","floor","ceil"]),
+        ]
+        for lib in deps:
+            matched: List[str] = []
+            for prefix, syms in _lib_prefixes:
+                if prefix in lib:
+                    matched = [s for s in imports if any(s.startswith(p) for p in syms)]
+            lib_map[lib] = matched
+        return lib_map
+
+    # ------------------------------------------------------------------
+    # Execution flow summary
+    # ------------------------------------------------------------------
+
+    def _execution_flow_summary(self) -> Dict[str, Any]:
+        """High-level execution flow based on binary structure."""
+        phdrs   = self._p.get("phdrs",   [])
+        dynamic = self._p.get("dynamic", [])
+        imports = {s["name"] for s in self._p.get("imports", [])}
+
+        load_segments = [p for p in phdrs if p["type"] == "LOAD"]
+        exec_segs     = [p for p in load_segments if p.get("executable")]
+        data_segs     = [p for p in load_segments if p.get("writable")]
+
+        return {
+            "load_segment_count":  len(load_segments),
+            "exec_segment_count":  len(exec_segs),
+            "data_segment_count":  len(data_segs),
+            "has_thread_local":    any(p["type"] == "TLS"  for p in phdrs),
+            "has_eh_frame":        any(p["type"] == "GNU_EH_FRAME" for p in phdrs),
+            "uses_dlopen":         "dlopen" in imports,
+            "uses_fork_exec":      "fork" in imports and "execve" in imports,
+            "uses_mmap":           "mmap" in imports,
+        }
+
+
+# ===========================================================================
+# ProgressiveScan  — CT-scanner style multi-depth scan with progress
+# ===========================================================================
+
+class ProgressiveScan:
+    """
+    Multi-depth progressive scanner — like adjusting the CT scanner settings
+    from a quick scout image to a full high-resolution scan.
+
+    Six depth levels:
+
+    Depth 1 — Header only     (< 0.01 s)  Identity check: magic, arch, type, PIE
+    Depth 2 — Skeleton        (< 0.1 s)   Section/segment layout
+    Depth 3 — Symbols         (< 0.5 s)   Full symbol table + language detection
+    Depth 4 — Deep structure  (< 2 s)     Dynamic section, relocations, GOT/PLT,
+                                          imports/exports, notes (build-id, ABI)
+    Depth 5 — Understanding   (< 5 s)     Semantic analysis: purpose, algorithms,
+                                          security hardening, init sequence,
+                                          config/env reading patterns
+    Depth 6 — Reconstruction  (open)      Full BinaryXRay + VirtualUnwrapper +
+                                          AIPatternMatcher + ScrollAssembler
+
+    Usage::
+
+        # Print a progress report at each depth
+        for update in ProgressiveScan(elf_path).scan(max_depth=5):
+            print(f"[{update['depth']}/5] {update['label']}: "
+                  f"{update['summary']}")
+
+        # Run to a specific depth and get the full result
+        result = ProgressiveScan(elf_path).run(depth=4)
+    """
+
+    _DEPTH_LABELS = {
+        1: "Header identity",
+        2: "Section/segment skeleton",
+        3: "Symbol table + language",
+        4: "Deep structure (dynamic, relos, PLT)",
+        5: "Semantic understanding",
+        6: "Full AI reconstruction",
+    }
+
+    def __init__(self, elf_path: str):
+        self.elf_path = Path(elf_path).resolve()
+        if not self.elf_path.exists():
+            raise FileNotFoundError(f"Not found: {self.elf_path}")
+        with open(self.elf_path, "rb") as fh:
+            if fh.read(4) != ELF_MAGIC:
+                raise ValueError(f"Not a valid ELF: {self.elf_path}")
+
+    # ------------------------------------------------------------------
+    # Public API
+    # ------------------------------------------------------------------
+
+    def run(self, depth: int = 4) -> Dict[str, Any]:
+        """
+        Run all scan passes up to *depth* and return the combined result.
+
+        Unlike ``scan()`` (a generator), this blocks until *depth* is reached
+        and returns the aggregated result dict.
+        """
+        result: Dict[str, Any] = {"binary": str(self.elf_path), "depth": depth}
+        for update in self.scan(max_depth=depth):
+            result.update(update.get("data", {}))
+        return result
+
+    def scan(
+        self, max_depth: int = 6
+    ):   # → Iterator[Dict[str, Any]]
+        """
+        Generator: yields one progress-update dict per depth level.
+
+        Each dict has::
+
+            {
+                "depth":    int,          # 1–6
+                "label":    str,          # human-readable label
+                "progress": float,        # 0.0–1.0
+                "summary":  str,          # one-line summary
+                "data":     Dict,         # depth-specific result data
+            }
+        """
+        max_depth = max(1, min(6, max_depth))
+
+        # ── Depth 1: Header identity ───────────────────────────────────
+        if max_depth >= 1:
+            data = self._depth1_header()
+            yield {
+                "depth":    1,
+                "label":    self._DEPTH_LABELS[1],
+                "progress": 1 / max_depth,
+                "summary":  (
+                    f"{data['class']} {data['machine']} {data['type']}"
+                    + (" [PIE]" if data.get("is_pie") else "")
+                    + f" — {data['size_bytes']:,} bytes"
+                ),
+                "data": data,
+            }
+            if max_depth == 1:
+                return
+
+        # ── Depth 2: Skeleton ──────────────────────────────────────────
+        if max_depth >= 2:
+            data = self._depth2_skeleton()
+            yield {
+                "depth":    2,
+                "label":    self._DEPTH_LABELS[2],
+                "progress": 2 / max_depth,
+                "summary":  (
+                    f"{data['section_count']} sections, "
+                    f"{data['phdr_count']} segments"
+                    + (" [HAS_DWARF]" if data.get("has_debug") else "")
+                    + (" [STRIPPED]" if not data.get("has_symtab") else "")
+                ),
+                "data": data,
+            }
+            if max_depth == 2:
+                return
+
+        # ── Depth 3: Symbols + language ───────────────────────────────
+        if max_depth >= 3:
+            data = self._depth3_symbols()
+            yield {
+                "depth":    3,
+                "label":    self._DEPTH_LABELS[3],
+                "progress": 3 / max_depth,
+                "summary":  (
+                    f"language={data['language']}, "
+                    f"{data['dynsym_count']} dynsyms, "
+                    f"{data['source_file_count']} src paths"
+                ),
+                "data": data,
+            }
+            if max_depth == 3:
+                return
+
+        # ── Depth 4: Deep structure ────────────────────────────────────
+        if max_depth >= 4:
+            data = self._depth4_deep()
+            sec  = data.get("security", {})
+            yield {
+                "depth":    4,
+                "label":    self._DEPTH_LABELS[4],
+                "progress": 4 / max_depth,
+                "summary":  (
+                    f"{data['import_count']} imports, "
+                    f"{data['export_count']} exports, "
+                    f"{len(data.get('dso_deps', []))} libs, "
+                    f"hardening={sec.get('hardening_grade','?')}"
+                ),
+                "data": data,
+            }
+            if max_depth == 4:
+                return
+
+        # ── Depth 5: Semantic understanding ───────────────────────────
+        if max_depth >= 5:
+            data = self._depth5_understanding()
+            algs = data.get("algorithms", [])
+            yield {
+                "depth":    5,
+                "label":    self._DEPTH_LABELS[5],
+                "progress": 5 / max_depth,
+                "summary":  (
+                    f"purpose={data.get('purpose','?')!r:.60}, "
+                    f"algorithms=[{', '.join(algs[:3])}]"
+                ),
+                "data": data,
+            }
+            if max_depth == 5:
+                return
+
+        # ── Depth 6: Full AI reconstruction ───────────────────────────
+        if max_depth >= 6:
+            data = self._depth6_reconstruct()
+            yield {
+                "depth":    6,
+                "label":    self._DEPTH_LABELS[6],
+                "progress": 1.0,
+                "summary":  (
+                    f"{data.get('module_count', 0)} modules, "
+                    f"{data.get('fragment_count', 0)} fragments"
+                ),
+                "data": data,
+            }
+
+    # ------------------------------------------------------------------
+    # Depth implementations
+    # ------------------------------------------------------------------
+
+    def _depth1_header(self) -> Dict[str, Any]:
+        """Read only the 64-byte ELF header."""
+        parser = DeepElfParser(str(self.elf_path))
+        import mmap as _mmap
+        with open(self.elf_path, "rb") as fh:
+            mm = _mmap.mmap(fh.fileno(), 0, access=_mmap.ACCESS_READ)
+            try:
+                ei_class = mm[4]
+                ei_data  = mm[5]
+                is_64    = (ei_class == 2)
+                endian   = "<" if ei_data == 1 else ">"
+                hdr = parser._parse_header(mm, is_64, endian)
+            finally:
+                mm.close()
+
+        return {
+            "class":      hdr["class"] if False else ("64-bit" if is_64 else "32-bit"),
+            "machine":    hdr["e_machine"],
+            "type":       hdr["e_type"],
+            "entry":      hdr["e_entry"],
+            "is_pie":     hdr["is_pie"],
+            "is_64bit":   is_64,
+            "size_bytes": self.elf_path.stat().st_size,
+            "sha256":     self._sha256_fast(),
+        }
+
+    def _depth2_skeleton(self) -> Dict[str, Any]:
+        """Parse section and program headers only."""
+        import mmap as _mmap
+        parser = DeepElfParser(str(self.elf_path))
+        with open(self.elf_path, "rb") as fh:
+            mm = _mmap.mmap(fh.fileno(), 0, access=_mmap.ACCESS_READ)
+            try:
+                is_64   = mm[4] == 2
+                endian  = "<" if mm[5] == 1 else ">"
+                hdr     = parser._parse_header(mm, is_64, endian)
+                secs    = parser._parse_section_headers(mm, hdr, is_64, endian)
+                phdrs   = parser._parse_program_headers(mm, hdr, is_64, endian)
+                shstr   = parser._read_strtab(
+                    mm,
+                    secs[hdr["e_shstrndx"]] if hdr["e_shstrndx"] < len(secs) else {}
+                )
+                for s in secs:
+                    s["name"] = parser._strtab_lookup(shstr, s["sh_name"])
+            finally:
+                mm.close()
+
+        has_debug = any(s["name"] in (".debug_info", ".debug_abbrev",
+                                       ".debug_line") for s in secs)
+        has_sym   = any(s["name"] == ".symtab" for s in secs)
+        exec_secs = [s["name"] for s in secs if s.get("executable") and s["name"]]
+
+        return {
+            "section_count": len(secs),
+            "phdr_count":    len(phdrs),
+            "sections":      [s["name"] for s in secs if s["name"]],
+            "exec_sections": exec_secs,
+            "has_debug":     has_debug,
+            "has_symtab":    has_sym,
+            "segment_types": [p["type"] for p in phdrs],
+        }
+
+    def _depth3_symbols(self) -> Dict[str, Any]:
+        """Parse symbol tables + detect language."""
+        import mmap as _mmap
+        parser = DeepElfParser(str(self.elf_path))
+        with open(self.elf_path, "rb") as fh:
+            mm = _mmap.mmap(fh.fileno(), 0, access=_mmap.ACCESS_READ)
+            try:
+                is_64   = mm[4] == 2
+                endian  = "<" if mm[5] == 1 else ">"
+                hdr     = parser._parse_header(mm, is_64, endian)
+                secs    = parser._parse_section_headers(mm, hdr, is_64, endian)
+                shstr   = parser._read_strtab(
+                    mm,
+                    secs[hdr["e_shstrndx"]] if hdr["e_shstrndx"] < len(secs) else {}
+                )
+                for s in secs:
+                    s["name"] = parser._strtab_lookup(shstr, s["sh_name"])
+                dynstr  = parser._find_strtab(mm, secs, ".dynstr")
+                strtab  = parser._find_strtab(mm, secs, ".strtab")
+                dynsyms = parser._parse_symtab(mm, secs, ".dynsym", dynstr, is_64, endian)
+                symtab  = parser._parse_symtab(mm, secs, ".symtab", strtab, is_64, endian)
+            finally:
+                mm.close()
+
+        # Language inference via BinaryXRay helper
+        xray = BinaryXRay.__new__(BinaryXRay)
+        xray.elf_path = self.elf_path
+        string_files = xray._extract_source_paths_from_strings()
+        sym_names    = [s["name"] for s in dynsyms + symtab if s["name"]]
+        language     = xray._infer_language(sym_names, string_files)
+
+        return {
+            "dynsym_count":    len(dynsyms),
+            "symtab_count":    len(symtab),
+            "dynsyms":         [s["name"] for s in dynsyms if s["name"]][:100],
+            "language":        language,
+            "source_files":    string_files,
+            "source_file_count": len(string_files),
+        }
+
+    def _depth4_deep(self) -> Dict[str, Any]:
+        """Full DeepElfParser parse."""
+        parse = DeepElfParser(str(self.elf_path)).parse()
+        security = ElfUnderstanding(parse)._security_analysis(
+            {s["name"] for s in parse.get("imports", [])}
+        )
+        return {
+            "import_count":  parse["import_count"],
+            "export_count":  parse["export_count"],
+            "dso_deps":      parse["dso_deps"],
+            "imports":       [s["name"] for s in parse["imports"] if s["name"]][:100],
+            "exports":       [s["name"] for s in parse["exports"] if s["name"]][:50],
+            "notes":         parse["notes"],
+            "plt_stubs":     parse["plt_stubs"][:50],
+            "reloc_count":   len(parse["relocations"]),
+            "section_count": parse["section_count"],
+            "symbol_count":  parse["symbol_count"],
+            "gnu_hash":      parse["gnu_hash"],
+            "security":      security,
+            "dynamic_tags":  [e["tag_name"] for e in parse["dynamic"] if e["tag_name"] != "NULL"],
+        }
+
+    def _depth5_understanding(self) -> Dict[str, Any]:
+        """Semantic understanding layer."""
+        parse       = DeepElfParser(str(self.elf_path)).parse()
+        understands = ElfUnderstanding(parse).understand()
+        return understands
+
+    def _depth6_reconstruct(self) -> Dict[str, Any]:
+        """Full reconstruction pipeline."""
+        return ScrollAssembler(
+            elf_path=str(self.elf_path)
+        ).reconstruct(
+            output_dir=str(Path(str(self.elf_path) + "_reconstructed"))
+        )
+
+    def _sha256_fast(self) -> str:
+        h = hashlib.sha256()
+        with open(self.elf_path, "rb") as fh:
+            for chunk in iter(lambda: fh.read(65536), b""):
+                h.update(chunk)
+        return h.hexdigest()
+
+
+# ===========================================================================
 # VirtualUnwrapper  — reassemble layers into modules
 # ===========================================================================
 
