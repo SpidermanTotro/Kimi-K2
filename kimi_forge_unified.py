@@ -172,6 +172,39 @@ class ForgeToolRegistry:
                 ],
                 "implementation": "binary_tools.py",
             },
+            "ai_reconstructor": {
+                "description": (
+                    "AI-powered binary reconstructor — like the Herculaneum scroll "
+                    "technique applied to ELF binaries. Six-layer CT-style scan "
+                    "(BinaryXRay), virtual unwrapping (VirtualUnwrapper), pattern "
+                    "matching (AIPatternMatcher), and confidence-annotated source "
+                    "output (ScrollAssembler). Also includes DeepElfParser (pure-Python "
+                    "struct-level ELF parser, no external tools) and ElfUnderstanding "
+                    "(purpose, algorithms, security hardening grade)."
+                ),
+                "capabilities": [
+                    "elf_xray", "virtual_unwrap", "ai_pattern_match",
+                    "source_reconstruction", "deep_elf_parse", "elf_understanding",
+                    "progressive_scan", "security_analysis", "algorithm_detection",
+                    "scroll_assembler",
+                ],
+                "implementation": "ai_reconstructor.py",
+            },
+            "gemini_program_fixer": {
+                "description": (
+                    "Fix broken programs using the FREE Gemini 1.5 Flash API — "
+                    "no paid subscription. Replaces GitHub Copilot / ChatGPT for "
+                    "day-to-day code repair. Falls back to built-in pattern fixes "
+                    "for 20+ common errors when offline. Also explains and reviews "
+                    "source files. Free API key: https://aistudio.google.com/apikey"
+                ),
+                "capabilities": [
+                    "code_fix", "code_explain", "code_review",
+                    "gemini_auth_check", "pattern_fix", "diff_output",
+                    "multi_language",  # python, js, ts, rust, go, c, cpp, java, shell
+                ],
+                "implementation": "gemini_code_fixer.py",
+            },
         }
     
     def get_tool(self, tool_name: str) -> Optional[Dict]:
@@ -275,7 +308,21 @@ class KimiK2Model:
                ["gemini", "gemini auth", "gemini sign", "gemini login",
                 "gemini cli", "fix gemini", "gemini not", "gemini fail"]):
             tool_calls.append(ForgeToolCall("gemini_auth_fixer", {"task": prompt}))
-        
+
+        if any(word in prompt.lower() for word in
+               ["xray", "x-ray", "scan elf", "deep scan", "reconstruct binary",
+                "scroll", "herculaneum", "unwrap", "understand elf",
+                "progressive scan", "ct scan", "binary reconstruction",
+                "deep elf", "elf understanding", "security grade"]):
+            tool_calls.append(ForgeToolCall("ai_reconstructor", {"task": prompt}))
+
+        if any(word in prompt.lower() for word in
+               ["fix my", "fix program", "broken", "fix code", "fix script",
+                "error in", "bug in", "repair", "debug", "not working",
+                "free gemini", "gemini fix", "replace copilot", "free ai",
+                "explain code", "explain file", "review code", "check code"]):
+            tool_calls.append(ForgeToolCall("gemini_program_fixer", {"task": prompt}))
+
         return tool_calls
 
 

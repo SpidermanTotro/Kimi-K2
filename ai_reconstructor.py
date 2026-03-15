@@ -94,11 +94,12 @@ import hashlib
 import json
 import os
 import re
+import struct
 import subprocess
 import sys
 import textwrap
 from pathlib import Path
-from typing import Any, Dict, List, Optional, Tuple
+from typing import Any, Dict, Iterator, List, Optional, Tuple
 
 # ---------------------------------------------------------------------------
 # Import THE FORGE tools we build on
@@ -1354,6 +1355,7 @@ class ElfUnderstanding:
             "execution_flow": exec_flow,
             "import_count":   self._p.get("import_count", 0),
             "export_count":   self._p.get("export_count", 0),
+            "imports":        sorted(imports_set),
             "dso_deps":       dso_deps,
         }
 
@@ -1453,34 +1455,66 @@ class ElfUnderstanding:
         phdrs   = self._p.get("phdrs",   [])
         secs    = self._p.get("sections", [])
 
+        # Build a fast lookup so we can cross-reference INIT_ARRAY / INIT_ARRAYSZ
+        dyn_val = {e["tag_name"]: e["val"] for e in dynamic}
+
         steps: List[str] = []
+        step = 1
 
         interp = next((p for p in phdrs if p["type"] == "INTERP"), None)
         if interp:
-            steps.append("1. Dynamic linker loads the binary")
+            steps.append(f"{step}. Dynamic linker (ld-linux) loads and relocates the binary")
+            step += 1
 
         gnu_relro = next((p for p in phdrs if p["type"] == "GNU_RELRO"), None)
         if gnu_relro:
-            steps.append("2. GNU_RELRO: read-only after relocation (security hardening)")
+            steps.append(f"{step}. GNU_RELRO: relocations committed, GOT made read-only (security)")
+            step += 1
 
-        for entry in dynamic:
-            tn = entry["tag_name"]
-            if tn == "INIT":
-                steps.append(f"3. DT_INIT: call constructor at {entry['val']:#x}")
-            if tn == "INIT_ARRAY":
-                steps.append(f"4. DT_INIT_ARRAY: call {entry.get('val',0)} constructors")
-            if tn == "FINI":
-                steps.append(f"5. DT_FINI: call destructor at {entry['val']:#x}")
+        if "INIT" in dyn_val:
+            steps.append(
+                f"{step}. DT_INIT: call single constructor at {dyn_val['INIT']:#x}"
+            )
+            step += 1
 
-        # .ctors section (older style)
+        if "INIT_ARRAY" in dyn_val:
+            # INIT_ARRAYSZ is byte-size; divide by pointer width (8 for 64-bit, 4 for 32-bit)
+            ptr_sz   = 8 if self._p.get("class") == "64-bit" else 4
+            arraysz  = dyn_val.get("INIT_ARRAYSZ", 0)
+            count    = arraysz // ptr_sz if ptr_sz else 0
+            steps.append(
+                f"{step}. DT_INIT_ARRAY: call {count} constructor(s) "
+                f"at {dyn_val['INIT_ARRAY']:#x} ({arraysz} bytes)"
+            )
+            step += 1
+
+        if "FINI_ARRAY" in dyn_val:
+            ptr_sz   = 8 if self._p.get("class") == "64-bit" else 4
+            arraysz  = dyn_val.get("FINI_ARRAYSZ", 0)
+            count    = arraysz // ptr_sz if ptr_sz else 0
+            steps.append(
+                f"{step}. DT_FINI_ARRAY: {count} destructor(s) at {dyn_val['FINI_ARRAY']:#x}"
+            )
+            step += 1
+
+        if "FINI" in dyn_val:
+            steps.append(
+                f"{step}. DT_FINI: call single destructor at {dyn_val['FINI']:#x}"
+            )
+            step += 1
+
+        # .ctors section (older GCC style)
         if any(s["name"] in (".ctors", ".init") for s in secs):
-            steps.append("6. .ctors / .init section present (legacy constructor chain)")
+            steps.append(f"{step}. .ctors / .init section present (legacy constructor chain)")
+            step += 1
 
         gnu_stack = next((p for p in phdrs if p["type"] == "GNU_STACK"), None)
         if gnu_stack:
             nx = not gnu_stack.get("executable", False)
             steps.append(
-                f"7. GNU_STACK: {'non-executable' if nx else 'EXECUTABLE (NX disabled!)'} stack"
+                f"{step}. GNU_STACK: "
+                + ("non-executable stack (NX enabled ✅)" if nx
+                   else "EXECUTABLE stack — NX disabled ⚠️")
             )
 
         return {"steps": steps, "interp": interp}
@@ -1507,8 +1541,19 @@ class ElfUnderstanding:
     # ------------------------------------------------------------------
 
     def _security_analysis(self, imports: set) -> Dict[str, Any]:
+        # ── Detect language so we can apply language-specific rules ───
+        all_syms = {s["name"] for s in self._p.get("all_symbols", [])}
+        all_names = imports | all_syms
+        is_rust = any(n in all_names for n in (
+            "_Unwind_Resume", "_Unwind_Backtrace", "__rust_alloc",
+            "rust_begin_unwind", "__rg_", "__rust_",
+        ))
+        is_go = any(n.startswith("runtime.") for n in all_names)
+
         # Stack canary: __stack_chk_fail imported → compiled with -fstack-protector
+        # Rust/Go don't use this (they have language-level memory safety instead)
         stack_prot = "__stack_chk_fail" in imports
+        lang_safe  = is_rust or is_go   # memory-safe language — canary not needed
 
         # FORTIFY_SOURCE: presence of __*_chk variants
         fortify = any("_chk" in s for s in imports)
@@ -1530,18 +1575,26 @@ class ElfUnderstanding:
         gnu_stack = next((p for p in phdrs if p["type"] == "GNU_STACK"), None)
         nx_stack  = gnu_stack is not None and not gnu_stack.get("executable", False)
 
-        score = sum([stack_prot, fortify, is_pie, relro, nx_stack])
-        grade = ["F","D","C","B","A","A+"][min(score, 5)]
+        # For memory-safe languages, award full credit for canary + fortify
+        # because the language itself provides equivalent (or stronger) guarantees.
+        effective_canary  = stack_prot or lang_safe
+        effective_fortify = fortify    or lang_safe
+
+        score = sum([effective_canary, effective_fortify, is_pie, relro, nx_stack])
+        grade = ["F", "D", "C", "B", "A", "A+"][min(score, 5)]
 
         return {
-            "stack_canary":    stack_prot,
-            "fortify_source":  fortify,
-            "pie":             is_pie,
-            "relro":           relro,
-            "nx_stack":        nx_stack,
-            "dangerous_funcs": dangerous,
-            "hardening_score": score,
-            "hardening_grade": grade,
+            "stack_canary":        stack_prot,
+            "fortify_source":      fortify,
+            "language_memory_safe": lang_safe,
+            "pie":                 is_pie,
+            "relro":               relro,
+            "nx_stack":            nx_stack,
+            "dangerous_funcs":     dangerous,
+            "hardening_score":     score,
+            "hardening_grade":     grade,
+            "is_rust":             is_rust,
+            "is_go":               is_go,
         }
 
     # ------------------------------------------------------------------
@@ -2888,7 +2941,27 @@ class AIReconstructorCLI:
                 "directory (processes every ELF in the report)"
             ),
         )
+        action.add_argument(
+            "--deep", metavar="ELF",
+            help=(
+                "Progressive deep scan: runs all 6 CT-scanner depth levels "
+                "with live progress (like adjusting the scroll scanner settings)"
+            ),
+        )
+        action.add_argument(
+            "--understand", metavar="ELF",
+            help="Run DeepElfParser + ElfUnderstanding: purpose, algorithms, security",
+        )
 
+        parser.add_argument(
+            "--scan-depth", metavar="N", type=int, default=5,
+            choices=range(1, 7),
+            help=(
+                "Depth for --deep scan (1–6, default 5). "
+                "1=header, 2=skeleton, 3=symbols, 4=deep-structure, "
+                "5=understanding, 6=full-reconstruction"
+            ),
+        )
         parser.add_argument(
             "-o", "--output-dir", default="ai_reconstructor_out",
             help="Output directory (default: ai_reconstructor_out/)",
@@ -2909,6 +2982,10 @@ class AIReconstructorCLI:
                                           args.output_dir, args.json)
         if args.full:
             return self._run_full(args.full, args.output_dir, args.json)
+        if args.deep:
+            return self._run_deep(args.deep, args.scan_depth, args.json)
+        if args.understand:
+            return self._run_understand(args.understand, args.json)
 
         parser.print_help()
         return 1
@@ -2964,6 +3041,57 @@ class AIReconstructorCLI:
             print(json.dumps(result, indent=2))
         else:
             self._print_reconstruction(result)
+        return 0
+
+    def _run_deep(
+        self, elf_path: str, depth: int, as_json: bool
+    ) -> int:
+        """Progressive CT-scanner style deep scan."""
+        if not as_json:
+            print("=" * 64)
+            print(f"🔥 THE FORGE — Progressive Deep Scan (depth {depth}/6)")
+            print("=" * 64)
+        try:
+            scanner = ProgressiveScan(elf_path)
+        except (FileNotFoundError, ValueError) as exc:
+            print(f"❌ {exc}", file=sys.stderr)
+            return 1
+
+        combined: Dict[str, Any] = {"binary": elf_path}
+        for update in scanner.scan(max_depth=depth):
+            if as_json:
+                combined.update(update.get("data", {}))
+            else:
+                d = update["depth"]
+                label = update["label"]
+                prog  = update["progress"]
+                summ  = update["summary"]
+                bar   = "█" * int(prog * 20) + "░" * (20 - int(prog * 20))
+                print(f"\n  [{bar}] Depth {d}/6 — {label}")
+                print(f"  └─ {summ}")
+
+        if as_json:
+            print(json.dumps(combined, indent=2, default=str))
+        else:
+            print(f"\n  ✅ Deep scan complete (depth {depth}/6)")
+        return 0
+
+    def _run_understand(self, elf_path: str, as_json: bool) -> int:
+        """Semantic understanding layer."""
+        if not as_json:
+            print("=" * 64)
+            print("🔥 THE FORGE — ELF Understanding")
+            print("=" * 64)
+        try:
+            parse = DeepElfParser(elf_path).parse()
+            understanding = ElfUnderstanding(parse).understand()
+        except (FileNotFoundError, ValueError) as exc:
+            print(f"❌ {exc}", file=sys.stderr)
+            return 1
+        if as_json:
+            print(json.dumps(understanding, indent=2, default=str))
+        else:
+            self._print_understanding(understanding)
         return 0
 
     def _run_full(
@@ -3049,6 +3177,88 @@ class AIReconstructorCLI:
                   f"conf={conf:.0%}  syms={syms}  strs={strs}")
             if src:
                 print(f"        source: {src}")
+
+    @staticmethod
+    def _print_understanding(u: Dict) -> None:
+        sec = u.get("security", {})
+        bt  = u.get("binary_type", {})
+        ef  = u.get("execution_flow", {})
+        print(f"\n  🧠 ELF Understanding:")
+        print(f"\n  ── Purpose")
+        print(f"     {u.get('purpose','?')}")
+        print(f"\n  ── Binary type")
+        print(f"     {bt.get('kind','?')}"
+              + (" [PIE]"    if bt.get("is_pie")      else "")
+              + (" [dynamic]" if bt.get("is_dynamic") else "")
+              + (" [has main]" if bt.get("has_main")  else ""))
+        print(f"\n  ── Algorithms detected")
+        for a in u.get("algorithms", []) or ["(none detected)"]:
+            print(f"     • {a}")
+        print(f"\n  ── Libraries ({len(u.get('dso_deps', []))})")
+        for d in u.get("dso_deps", []):
+            print(f"     {d}")
+
+        # Imported symbols — the most useful thing for understanding behaviour
+        imports = u.get("imports", [])
+        if imports:
+            print(f"\n  ── Imported symbols ({u.get('import_count', len(imports))} total)")
+            # Group by category for readability
+            categories = {
+                "🔒 crypto/auth":   [s for s in imports if any(x in s.lower() for x in
+                    ("ssl", "tls", "crypto", "sha", "md5", "aes", "rsa", "hmac", "getrandom"))],
+                "🔤 regex":        [s for s in imports if "pcre" in s.lower() or "regex" in s.lower()],
+                "🧵 threads":      [s for s in imports if "pthread" in s.lower() or "thread" in s.lower()],
+                "📁 file/IO":      [s for s in imports if any(x in s.lower() for x in
+                    ("open", "read", "write", "fstat", "mmap", "getcwd", "realpath"))],
+                "🌐 network":      [s for s in imports if any(x in s.lower() for x in
+                    ("recv", "send", "socket", "connect", "bind", "accept"))],
+                "⚙️  process":     [s for s in imports if any(x in s.lower() for x in
+                    ("fork", "exec", "spawn", "wait", "kill", "signal"))],
+                "🧠 memory":       [s for s in imports if any(x in s.lower() for x in
+                    ("malloc", "free", "realloc", "alloc", "mmap", "mremap", "brk"))],
+                "🛠 unwind/debug": [s for s in imports if "_Unwind_" in s or "backtrace" in s.lower()],
+            }
+            shown = set()
+            for label, syms in categories.items():
+                if syms:
+                    unique = [s for s in syms if s not in shown][:6]
+                    if unique:
+                        print(f"     {label:<20} {', '.join(unique)}")
+                        shown.update(unique)
+            # Remaining uncategorised
+            rest = [s for s in imports[:60] if s not in shown]
+            if rest:
+                print(f"     📦 other           "
+                      + ", ".join(rest[:8])
+                      + (f" … (+{len(rest)-8})" if len(rest) > 8 else ""))
+
+        print(f"\n  ── Security hardening  grade={sec.get('hardening_grade','?')}")
+        if sec.get("language_memory_safe"):
+            lang = "Rust" if sec.get("is_rust") else "Go" if sec.get("is_go") else "safe language"
+            print(f"     ℹ️  {lang} binary — memory safety guaranteed by the language")
+        print(f"     Stack canary : "
+              + ("✅" if sec.get("stack_canary")
+                 else ("✅ (via language)" if sec.get("language_memory_safe") else "❌")))
+        print(f"     FORTIFY_SRC  : "
+              + ("✅" if sec.get("fortify_source")
+                 else ("✅ (via language)" if sec.get("language_memory_safe") else "❌")))
+        print(f"     PIE          : {'✅' if sec.get('pie')      else '❌'}")
+        print(f"     RELRO        : {'✅' if sec.get('relro')    else '❌'}")
+        print(f"     NX stack     : {'✅' if sec.get('nx_stack') else '❌'}")
+        if sec.get("dangerous_funcs"):
+            print(f"     ⚠️  Dangerous : {', '.join(sec['dangerous_funcs'])}")
+        print(f"\n  ── Execution flow")
+        print(f"     Load segments  : {ef.get('load_segment_count', 0)}")
+        print(f"     Exec segments  : {ef.get('exec_segment_count', 0)}")
+        print(f"     Thread-local   : {ef.get('has_thread_local', False)}")
+        print(f"     Exception frs  : {ef.get('has_eh_frame', False)}")
+        print(f"     dlopen         : {ef.get('uses_dlopen', False)}")
+        print(f"     fork+exec      : {ef.get('uses_fork_exec', False)}")
+        init = u.get("init_sequence", {})
+        if init.get("steps"):
+            print(f"\n  ── Init sequence")
+            for step in init["steps"]:
+                print(f"     {step}")
 
     @staticmethod
     def _print_reconstruction(result: Dict) -> None:
