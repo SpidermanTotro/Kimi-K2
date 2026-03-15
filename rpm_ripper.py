@@ -412,7 +412,7 @@ class RpmRipper:
 
     def rip(self) -> Dict[str, Any]:
         """
-        Full pipeline: extract → collect ELFs → analyze → return report.
+        Full pipeline: extract → collect ELFs → collect sources → analyze → report.
 
         Returns
         -------
@@ -422,6 +422,7 @@ class RpmRipper:
             output_dir      Output directory path.
             extracted_files Total number of extracted files.
             elf_files       List of per-ELF analysis dicts.
+            source_files    Dict mapping category → list of preserved paths.
             summary         High-level summary dict.
         """
         if not self.rpm_path.exists():
@@ -430,8 +431,10 @@ class RpmRipper:
         self.output_dir.mkdir(parents=True, exist_ok=True)
         extract_dir = self.output_dir / "extracted"
         elf_dir = self.output_dir / "elfs"
+        sources_dir = self.output_dir / "sources"
         extract_dir.mkdir(exist_ok=True)
         elf_dir.mkdir(exist_ok=True)
+        sources_dir.mkdir(exist_ok=True)
 
         print(f"📦 Ripping: {self.rpm_path.name}")
         print(f"📁 Output:  {self.output_dir}")
@@ -448,6 +451,12 @@ class RpmRipper:
         elf_paths = self._collect_elfs(extracted, elf_dir)
         print(f"   Found {len(elf_paths)} ELF binaries")
 
+        print("📂 Collecting source artefacts …")
+        source_files = self._collect_sources(extracted, sources_dir)
+        total_sources = sum(len(v) for v in source_files.values())
+        print(f"   Found {total_sources} source/config/script files across "
+              f"{len(source_files)} categories")
+
         print("🧬 Analyzing ELF files …")
         elf_analyses: List[Dict[str, Any]] = []
         for ep in elf_paths:
@@ -460,7 +469,7 @@ class RpmRipper:
                 print(f"   ⚠️  {Path(ep).name}: {exc}")
                 elf_analyses.append({"path": ep, "error": str(exc)})
 
-        summary = self._build_summary(rpm_info, elf_analyses)
+        summary = self._build_summary(rpm_info, elf_analyses, source_files)
 
         report: Dict[str, Any] = {
             "rpm_path": str(self.rpm_path),
@@ -468,6 +477,7 @@ class RpmRipper:
             "output_dir": str(self.output_dir),
             "extracted_files": len(extracted),
             "elf_files": elf_analyses,
+            "source_files": source_files,
             "summary": summary,
         }
 
@@ -588,8 +598,107 @@ class RpmRipper:
 
         return preserved
 
+    # File extensions → source category (mirrors dmg_ripper for consistency)
+    _SOURCE_CATEGORIES: Dict[str, str] = {
+        ".c":    "c_source",
+        ".cpp":  "cpp_source",
+        ".cc":   "cpp_source",
+        ".h":    "headers",
+        ".hpp":  "headers",
+        ".rs":   "rust_source",
+        ".go":   "go_source",
+        ".py":   "python_scripts",
+        ".rb":   "ruby_scripts",
+        ".sh":   "shell_scripts",
+        ".bash": "shell_scripts",
+        ".zsh":  "shell_scripts",
+        ".js":   "javascript",
+        ".ts":   "typescript",
+        ".lua":  "lua_scripts",
+        ".pl":   "perl_scripts",
+        # Config / data
+        ".json": "json_configs",
+        ".toml": "toml_configs",
+        ".yaml": "yaml_configs",
+        ".yml":  "yaml_configs",
+        ".conf": "config_files",
+        ".ini":  "config_files",
+        ".cfg":  "config_files",
+        ".env":  "env_files",
+        ".spec": "rpm_spec",
+        # Build
+        ".cmake":   "cmake_files",
+        ".mk":      "makefiles",
+        "makefile": "makefiles",
+        "cmake":    "cmake_files",
+        # Docs
+        ".md":  "documentation",
+        ".txt": "documentation",
+        ".rst": "documentation",
+        ".man": "man_pages",
+        # Desktop / systemd integration
+        ".desktop": "desktop_files",
+        ".service": "systemd_units",
+        ".socket":  "systemd_units",
+        ".timer":   "systemd_units",
+        # Shared data
+        ".xml":  "xml_data",
+        ".sql":  "sql_scripts",
+        ".csv":  "data_files",
+        ".po":   "localization",
+        ".pot":  "localization",
+    }
+
+    def _collect_sources(
+        self, all_files: List[str], sources_dir: Path
+    ) -> Dict[str, List[str]]:
+        """
+        Categorise and copy every non-ELF file from the extracted payload.
+
+        Returns a dict mapping category name → list of preserved destination
+        paths.  This is the "real source code" layer — any scripts, headers,
+        config files, spec files, or documentation shipped inside the RPM.
+        """
+        categorised: Dict[str, List[str]] = {}
+        seen: Dict[str, int] = {}
+
+        for src in all_files:
+            if self._is_elf(src):
+                continue  # ELFs are handled separately
+
+            path = Path(src)
+            suffix = path.suffix.lower()
+            fname_lower = path.name.lower()
+
+            category = (
+                self._SOURCE_CATEGORIES.get(suffix)
+                or self._SOURCE_CATEGORIES.get(fname_lower)
+                or "other_files"
+            )
+
+            cat_dir = sources_dir / category
+            cat_dir.mkdir(parents=True, exist_ok=True)
+
+            base = path.name
+            count = seen.get(base, 0)
+            seen[base] = count + 1
+            dest_name = base if count == 0 else f"{base}.{count}"
+            dest = cat_dir / dest_name
+
+            try:
+                shutil.copy2(src, dest)
+                categorised.setdefault(category, []).append(str(dest))
+            except (OSError, PermissionError):
+                pass
+
+        return categorised
+
     @staticmethod
-    def _build_summary(rpm_info: Dict[str, str], elf_analyses: List[Dict]) -> Dict[str, Any]:
+    def _build_summary(
+        rpm_info: Dict[str, str],
+        elf_analyses: List[Dict],
+        source_files: Optional[Dict[str, List[str]]] = None,
+    ) -> Dict[str, Any]:
         """Build a human-readable high-level summary."""
         languages: Dict[str, int] = {}
         frameworks: Dict[str, int] = {}
@@ -628,6 +737,12 @@ class RpmRipper:
             "framework_breakdown": frameworks,
             "machine_breakdown": machines,
             "stripped_binaries": stripped_count,
+            "source_file_categories": {
+                k: len(v) for k, v in (source_files or {}).items()
+            },
+            "total_source_artefacts": sum(
+                len(v) for v in (source_files or {}).values()
+            ),
         }
 
 
@@ -1237,16 +1352,20 @@ class RpmRipperCLI:
         parser = argparse.ArgumentParser(
             prog="rpm_ripper",
             description=(
-                "🔧 THE FORGE — RPM Ripper, ELF Analyzer & Decompiler.\n\n"
-                "Extracts RPM packages, preserves ELF binaries, and recovers\n"
-                "as much human-readable source information as possible through\n"
-                "DWARF extraction, symbol demangling, and disassembly."
+                "🔧 THE FORGE — RPM Ripper, ELF Analyzer, Decompiler & Project Reconstructor.\n\n"
+                "Extracts RPM packages, preserves ELF binaries, collects all source\n"
+                "artefacts, and can reconstruct a complete buildable open-source project\n"
+                "from the combined analysis."
             ),
             formatter_class=argparse.RawDescriptionHelpFormatter,
             epilog=(
                 "examples:\n"
-                "  # Rip an RPM and analyse all ELF binaries inside it\n"
+                "  # Rip an RPM, analyse all ELF binaries, collect all sources\n"
                 "  %(prog)s warp-terminal-0.1.rpm -o out/\n\n"
+                "  # Full pipeline: rip + decompile + reconstruct open-source project\n"
+                "  %(prog)s warp-terminal-0.1.rpm -o out/ --reconstruct recon/\n\n"
+                "  # Reconstruct from an existing rip report (skip re-ripping)\n"
+                "  %(prog)s --reconstruct-from out/analysis_report.json recon/\n\n"
                 "  # Analyse a single ELF file you already have\n"
                 "  %(prog)s --analyze-only /usr/bin/warp-terminal\n\n"
                 "  # Full decompilation pipeline on a single ELF\n"
@@ -1282,6 +1401,14 @@ class RpmRipperCLI:
                 "(which contains the real source code) for a given binary RPM"
             ),
         )
+        action.add_argument(
+            "--reconstruct-from",
+            metavar="REPORT_JSON",
+            help=(
+                "Load an existing analysis_report.json and reconstruct the "
+                "open-source project from it (skips re-ripping)"
+            ),
+        )
 
         parser.add_argument(
             "rpm",
@@ -1297,6 +1424,16 @@ class RpmRipperCLI:
             "-r", "--report",
             default=None,
             help="Additional path to save the JSON analysis report",
+        )
+        parser.add_argument(
+            "--reconstruct",
+            metavar="RECON_DIR",
+            default=None,
+            help=(
+                "After ripping, run the full ProjectReconstructor pipeline: "
+                "decompile every binary, layout all sources, generate build "
+                "scaffold, and write README + notes into RECON_DIR"
+            ),
         )
         parser.add_argument(
             "--ghidra",
@@ -1319,15 +1456,22 @@ class RpmRipperCLI:
         if args.find_source:
             return self._run_find_source(args.find_source)
 
+        if args.reconstruct_from:
+            return self._run_reconstruct_from(args.reconstruct_from,
+                                               args.output_dir)
+
         if not args.rpm:
             parser.print_help()
             return 1
 
-        return self._run_rip(args.rpm, args.output_dir, args.report)
+        return self._run_rip(args.rpm, args.output_dir, args.report,
+                              args.reconstruct)
 
     # ------------------------------------------------------------------
 
-    def _run_rip(self, rpm_path: str, output_dir: str, extra_report: Optional[str]) -> int:
+    def _run_rip(self, rpm_path: str, output_dir: str,
+                 extra_report: Optional[str],
+                 recon_dir: Optional[str] = None) -> int:
         print("=" * 60)
         print("🔥 THE FORGE — RPM Ripper & ELF Analyzer")
         print("=" * 60)
@@ -1346,7 +1490,39 @@ class RpmRipperCLI:
             print(f"📄 Report also saved → {extra_path}")
 
         self._print_summary(report["summary"])
+
+        if recon_dir:
+            print(f"\n🔨 Reconstructing open-source project → {recon_dir}")
+            self._do_reconstruct(report, recon_dir)
+
         return 0
+
+    def _run_reconstruct_from(self, report_path: str, recon_dir: str) -> int:
+        print("=" * 60)
+        print("🔥 THE FORGE — Project Reconstructor")
+        print("=" * 60)
+        try:
+            with open(report_path, encoding="utf-8") as fh:
+                report = json.load(fh)
+        except (OSError, json.JSONDecodeError) as exc:
+            print(f"\n❌ Cannot load report: {exc}", file=sys.stderr)
+            return 1
+        self._do_reconstruct(report, recon_dir)
+        return 0
+
+    @staticmethod
+    def _do_reconstruct(report: Dict[str, Any], recon_dir: str) -> None:
+        """Import and run ProjectReconstructor from dmg_ripper."""
+        try:
+            from dmg_ripper import ProjectReconstructor
+            manifest = ProjectReconstructor(report).reconstruct(output_dir=recon_dir)
+            print(f"\n✅ Project ready in: {manifest['output_dir']}")
+            print(f"   {len(manifest['files_created'])} files written")
+        except ImportError:
+            print("   ⚠️  dmg_ripper.py not found — cannot run ProjectReconstructor.",
+                  file=sys.stderr)
+        except Exception as exc:
+            print(f"   ⚠️  Reconstruction error: {exc}", file=sys.stderr)
 
     def _run_elf_only(self, elf_path: str) -> int:
         print("=" * 60)
@@ -1450,21 +1626,34 @@ class RpmRipperCLI:
         print(f"  Stripped         : {summary['stripped_binaries']}")
         print(f"  Dominant language: {summary['dominant_language']}")
 
-        if summary["language_breakdown"]:
+        if summary.get("language_breakdown"):
             print("  Language breakdown:")
             for lang, count in sorted(summary["language_breakdown"].items()):
                 print(f"    {lang}: {count}")
 
-        if summary["framework_breakdown"]:
+        if summary.get("framework_breakdown"):
             print("  Frameworks detected:")
             for fw, count in sorted(summary["framework_breakdown"].items()):
                 print(f"    {fw}: {count} binaries")
 
-        if summary["machine_breakdown"]:
+        if summary.get("machine_breakdown"):
             print("  Machine types:")
             for mach, count in sorted(summary["machine_breakdown"].items()):
                 print(f"    {mach}: {count}")
 
+        total_src = summary.get("total_source_artefacts", 0)
+        if total_src:
+            print(f"  Source artefacts : {total_src} files")
+            for cat, count in sorted(
+                summary.get("source_file_categories", {}).items()
+            ):
+                print(f"    {cat}: {count}")
+
+        print("=" * 60)
+        if summary.get("total_source_artefacts", 0) or summary.get("elf_count", 0):
+            print("\n💡 Next step: add --reconstruct <dir> to rebuild as an")
+            print("   open-source project with build files, source layout,")
+            print("   and decompiled function skeletons.")
         print("=" * 60)
 
 
