@@ -4,28 +4,43 @@ This directory contains the complete implementation of THE FORGE AI system.
 
 ## Files
 
-### Documentation (15 MD files, 416KB total)
-- **ALL_SKILLS.md** (47KB) - Complete skills catalog (865+ skills)
-- **INTELLIGENT_SYSTEMS.md** (22KB) - Intelligent monitoring & user care
-- **BOOK_WRITING_MASTERY.md** (21KB) - Professional authoring platform
-- **MULTIMEDIA_CAPABILITIES.md** (24KB) - Video/photo/audio/word processing
-- **ULTIMATE_GUIDE.md** (58KB) - Everything in one page
-- **THE_FORGE_EXPLAINED.md** (39KB) - Ecosystem architecture
-- **SKILLS_MATRIX.md** (26KB) - Feature comparisons
-- **examples_guide.md** (29KB) - Code examples
-- **gaming_enhancement_guide.md** (21KB) - Pokemon/WoW enhancement
-- **vision_and_roadmap.md** (28KB) - Future vision
-- **COMPLETE_GUIDE.md** (44KB) - Merged reference
-- **quick_start_examples.md** (14KB) - Quick start
-- **tool_call_guidance.md** (11KB) - Tool calling
-- **deploy_guidance.md** (9KB) - Deployment
-- **docs/README.md** (9KB) - Navigation
+### Documentation (15 MD files)
+- **ALL_SKILLS.md** — Complete skills catalog (865+ skills)
+- **INTELLIGENT_SYSTEMS.md** — Intelligent monitoring & user care
+- **BOOK_WRITING_MASTERY.md** — Professional authoring platform
+- **MULTIMEDIA_CAPABILITIES.md** — Video/photo/audio/word processing
+- **ULTIMATE_GUIDE.md** — Everything in one page
+- **THE_FORGE_EXPLAINED.md** — Ecosystem architecture
+- **SKILLS_MATRIX.md** — Feature comparisons
+- **examples_guide.md** — Code examples
+- **gaming_enhancement_guide.md** — Pokemon/WoW enhancement
+- **vision_and_roadmap.md** — Future vision
+- **COMPLETE_GUIDE.md** — Merged reference
+- **quick_start_examples.md** — Quick start
+- **tool_call_guidance.md** — Tool calling
+- **deploy_guidance.md** — Deployment
+- **docs/README.md** — Navigation
 
-### Implementation Files
-- **forge_implementation.py** (12KB) - Main implementation script
-- **forge_knowledge_base.json** (883KB) - Complete knowledge base export
-- **forge_vllm_config.json** (6KB) - vLLM deployment configuration
-- **requirements.txt** - Python dependencies (minimal!)
+### Core Implementation
+- **forge_implementation.py** — Main ForgeAI class; loads docs, builds system prompt
+- **forge_server.py** — Flask REST API server (all tools wired up)
+- **forge_cli.py** — Interactive CLI
+- **forge_gui.py** — Web GUI (Flask + templates/)
+- **kimi_forge_unified.py** — KimiForgeUnified dispatcher + tool registry
+- **requirements.txt** — Python dependencies
+
+### New Local AI Tools (v1.1)
+- **nullclaw/** — Local AI programming agent (Ollama, 12 modules, 2,276 lines)
+- **nullclaw.py** — NullClaw CLI entry point
+- **gemini_code_fixer.py** — Free Gemini 1.5 Flash code repair (770 lines)
+- **ai_reconstructor.py** — ELF X-Ray / scroll-technique binary analysis (3,289 lines)
+- **binary_tools.py** — ELF/Mach-O/RPM/DMG binary inspection tools
+- **rpm_ripper.py** — RPM package ripper
+- **dmg_ripper.py** — macOS DMG ripper / Linux port helper
+
+> **Note:** `forge_knowledge_base.json` and `forge_vllm_config.json` are
+> **generated artifacts** (not tracked in git). Run `python3 forge_implementation.py`
+> to regenerate them locally.
 
 ## Quick Start
 
@@ -36,11 +51,33 @@ python3 forge_implementation.py
 ```
 
 This will:
-- Load all 15 MD files (416,729 characters)
-- Extract 1,345+ capabilities
+- Load all 15 MD files
+- Extract 1,453+ capabilities
 - Generate complete system prompt
-- Export knowledge base (forge_knowledge_base.json)
-- Export vLLM config (forge_vllm_config.json)
+- Export knowledge base (`forge_knowledge_base.json` — generated locally)
+- Export vLLM config (`forge_vllm_config.json` — generated locally)
+
+### 2. Use in Your Code
+
+```python
+from forge_implementation import ForgeAI
+
+# Initialize THE FORGE
+
+## Quick Start
+
+### 1. Load ALL Documentation
+
+```bash
+python3 forge_implementation.py
+```
+
+This will:
+- Load all 15 MD files
+- Extract 1,453+ capabilities
+- Generate complete system prompt
+- Export knowledge base (`forge_knowledge_base.json` — generated locally, not in git)
+- Export vLLM config (`forge_vllm_config.json` — generated locally, not in git)
 
 ### 2. Use in Your Code
 
@@ -65,6 +102,9 @@ print(f"Total words: {stats['total_words']:,}")
 ### 3. Deploy with vLLM
 
 ```bash
+# First generate the config
+python3 forge_implementation.py        # creates forge_vllm_config.json locally
+
 # Install vLLM
 pip install vllm
 
@@ -76,41 +116,46 @@ vllm serve moonshot-ai/Kimi-K2-71B-Instruct \
 
 ### 4. Fine-Tune the Model
 
-Use `forge_knowledge_base.json` which contains:
-- All 15 documentation files
-- 416,729 characters of knowledge
-- 51,507 words
-- 14,650 lines
-- Structured for model training
+```bash
+# First generate the knowledge base
+python3 forge_implementation.py        # creates forge_knowledge_base.json locally
+```
+
+`forge_knowledge_base.json` (generated) contains all documentation files
+structured for model fine-tuning. It is **not tracked in git** — generate it
+locally with the command above.
 
 ## What Makes This Complete
 
-✅ **ALL MD files imported** - Not missing a single one  
-✅ **Working Python code** - Actually loads and processes everything  
-✅ **Verified execution** - Proven to work (see output above)  
-✅ **Export functionality** - Knowledge base + vLLM config  
-✅ **No external dependencies** - Uses Python standard library  
-✅ **Statistics & validation** - Shows what's loaded  
-✅ **Ready for deployment** - vLLM config included  
-✅ **Ready for fine-tuning** - Knowledge base JSON included  
+✅ **ALL MD files imported** — Not missing a single one
+✅ **Working Python code** — Actually loads and processes everything
+✅ **NullClaw** — Local AI repair agent (GPU / Ollama, free)
+✅ **GeminiProgramFixer** — Free Gemini 1.5 Flash code repair
+✅ **AI Reconstructor** — ELF X-Ray / scroll-technique binary analysis
+✅ **Export functionality** — Knowledge base + vLLM config (generated on demand)
+✅ **No mandatory external deps** — Core uses Python standard library
+✅ **Statistics & validation** — Shows what's loaded
+✅ **Ready for deployment** — vLLM config generation included
+✅ **Ready for fine-tuning** — Knowledge base generation included
 
 ## Capabilities Summary
-
-Based on ALL loaded documentation:
 
 | Category | Capabilities |
 |----------|-------------|
 | Programming & Code | 60+ |
+| **NullClaw (local AI repair)** | 18 |
+| **GeminiProgramFixer (free cloud)** | 8 |
+| **AI Reconstructor / ELF X-Ray** | 10 |
 | Book Writing | 80+ |
 | Gaming Enhancement | 40+ |
 | Video & Image Processing | 35+ |
-| **Video Editing** | 50+ |
-| **Word Processing** | 45+ |
-| **Photo Editing** | 55+ |
-| **YouTube Analysis** | 30+ |
-| **Audio Recording** | 40+ |
-| **TV Recording** | 40+ |
-| **Intelligent Systems** | 290+ |
+| Video Editing | 50+ |
+| Word Processing | 45+ |
+| Photo Editing | 55+ |
+| YouTube Analysis | 30+ |
+| Audio Recording | 40+ |
+| TV Recording | 40+ |
+| Intelligent Systems | 290+ |
 | GitHub & Version Control | 25+ |
 | File Handling | 20+ |
 | AI/ML & Advanced Tech | 15+ |
@@ -119,15 +164,16 @@ Based on ALL loaded documentation:
 | Ecosystem & Characters | 30+ |
 | Unique Forge Features | 25+ |
 
-**TOTAL: 865+ skills across all categories**
+**TOTAL: 1,453+ skills across all categories**
 
 ## Next Steps
 
-1. **Review the documentation** - See docs/ULTIMATE_GUIDE.md for everything
-2. **Run the implementation** - `python3 forge_implementation.py`
-3. **Deploy with vLLM** - Use forge_vllm_config.json
-4. **Fine-tune if desired** - Use forge_knowledge_base.json
-5. **Build your application** - Import ForgeAI class
+1. **Review the documentation** — See `docs/ULTIMATE_GUIDE.md` for everything
+2. **Run the implementation** — `python3 forge_implementation.py`
+3. **Try NullClaw** — `python3 nullclaw.py repair <your-project>`
+4. **Try GeminiProgramFixer** — `python3 gemini_code_fixer.py yourfile.py`
+5. **Deploy with vLLM** — Generate `forge_vllm_config.json`, then use it
+6. **Fine-tune if desired** — Generate `forge_knowledge_base.json`, then train
 
 ## Philosophy
 

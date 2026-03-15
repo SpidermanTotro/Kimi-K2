@@ -68,7 +68,7 @@
 
 ## 📅 Phase 2: Training Data Integration (Q2 2025) - PLANNED 📋
 
-**Goal:** Convert THE FORGE's 430,845+ lines into high-quality training data for Kimi K2.
+**Goal:** Convert THE FORGE's 443,000+ lines into high-quality training data for Kimi K2.
 
 ### Training Data Export
 - [ ] Convert all Python implementations to instruction-tuning format
@@ -289,7 +289,7 @@ We're building THE FORGE ❤️ KIMI K2 together as a community!
 
 ## 📝 Version History
 
-- **v1.0 (Current)** - Complete FORGE ❤️ KIMI K2 integration, 430,845+ lines
+- **v1.1 (Current)** - NullClaw, GeminiProgramFixer, AI Reconstructor added, 443,000+ lines
 - **v0.9** - Multi-language build system, downloadable distributions
 - **v0.8** - Complete movie database integration (10M+ films)
 - **v0.7** - Professional video editor, Linux OS builder

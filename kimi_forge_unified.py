@@ -263,25 +263,62 @@ class KimiK2Model:
         logger.info(f"✅ FORGE integration enabled with {len(self.forge_tools.tools)} tools")
     
     def generate(self, prompt: str, enable_tools: bool = True) -> KimiResponse:
-        """Generate response from Kimi K2, optionally using FORGE tools"""
-        
-        # In production, this would call actual Kimi K2 model
-        # For now, we simulate intelligent tool selection
-        
-        tool_calls = []
+        """
+        Route prompt through FORGE tool selection.
+
+        When a local Kimi K2 model endpoint is available (KIMI_API_URL env var),
+        it is called first; otherwise the response is assembled from the tool
+        results themselves, which is already useful for agentic tasks.
+        """
+        tool_calls: List[ForgeToolCall] = []
         if enable_tools:
             tool_calls = self._select_tools(prompt)
-        
-        # Simulate Kimi K2 response
-        response_text = f"Kimi K2 response for: {prompt}\n"
-        
-        if tool_calls:
-            response_text += f"\nUsing {len(tool_calls)} FORGE tool(s) to enhance response..."
-        
+
+        # ── Optional: call a real Kimi K2 API if configured ─────────────
+        kimi_api_url = os.environ.get("KIMI_API_URL", "").strip()
+        response_text = ""
+        if kimi_api_url:
+            try:
+                import urllib.request
+                payload = json.dumps({
+                    "model": self.model_path,
+                    "messages": [{"role": "user", "content": prompt}],
+                }).encode()
+                req = urllib.request.Request(
+                    f"{kimi_api_url}/v1/chat/completions",
+                    data=payload,
+                    headers={"Content-Type": "application/json"},
+                    method="POST",
+                )
+                with urllib.request.urlopen(req, timeout=30) as resp:
+                    data = json.loads(resp.read())
+                    response_text = (
+                        data.get("choices", [{}])[0]
+                        .get("message", {})
+                        .get("content", "")
+                    )
+            except Exception as exc:
+                logger.warning("Kimi K2 API call failed (%s); using tool results only.", exc)
+
+        # ── If no live model, describe selected tools as the response ────
+        if not response_text:
+            if tool_calls:
+                tool_names = ", ".join(tc.tool_name for tc in tool_calls)
+                response_text = (
+                    f"🔧 Routing to FORGE tool(s): {tool_names}\n"
+                    "Results will appear in the tool output below."
+                )
+            else:
+                response_text = (
+                    "No FORGE tool matched this request. "
+                    "Try asking about: code repair, ELF analysis, binary ripping, "
+                    "book writing, video editing, or gaming."
+                )
+
         return KimiResponse(
             text=response_text,
             tool_calls=tool_calls,
-            confidence=0.95
+            confidence=0.95,
         )
     
     def _select_tools(self, prompt: str) -> List[ForgeToolCall]:
@@ -384,7 +421,7 @@ class KimiForgeUnified:
         logger.info(f"✅ Kimi K2 Model: {self.config['model']}")
         logger.info(f"✅ FORGE Tools: {len(self.forge_tools.tools)}")
         logger.info(f"✅ Knowledge Base: {len(self.knowledge_base)} entries")
-        logger.info(f"✅ Total Capabilities: 1,450+")
+        logger.info(f"✅ Total Capabilities: 1,453+")
         logger.info("=" * 60)
     
     def _default_config(self) -> Dict:
@@ -421,7 +458,7 @@ class KimiForgeUnified:
         # Step 1: Get initial response from Kimi K2
         kimi_response = self.kimi.generate(user_input, enable_tools=use_tools)
         
-        # Step 2: Execute any FORGE tools that were selected
+        # ── Execute any FORGE tools that were selected ───────────────────
         if kimi_response.tool_calls:
             logger.info(f"🔧 Executing {len(kimi_response.tool_calls)} FORGE tool(s)...")
             
@@ -454,7 +491,7 @@ class KimiForgeUnified:
         return {
             "kimi_k2_model": self.config["model"],
             "forge_tools_available": len(self.forge_tools.tools),
-            "total_capabilities": 1450,
+            "total_capabilities": 1453,
             "knowledge_base_entries": len(self.knowledge_base),
             "status": "operational",
             "marriage_status": "complete ❤️"

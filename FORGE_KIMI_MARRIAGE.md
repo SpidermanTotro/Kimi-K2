@@ -2,12 +2,12 @@
 
 ## 🔥 THE FORGE MARRIES KIMI K2 - Building Into One Supreme AI
 
-This document describes how THE FORGE AI integrates into the heart of Kimi K2, creating a unified system that combines Kimi K2's state-of-the-art 1T parameter MoE model with THE FORGE's 1,450+ practical capabilities.
+This document describes how THE FORGE AI integrates into the heart of Kimi K2, creating a unified system that combines Kimi K2's state-of-the-art 1T parameter MoE model with THE FORGE's 1,453+ practical capabilities.
 
 ## 💍 The Marriage: How They Become One
 
 ### Phase 1: THE FORGE as Kimi K2's Tool Arsenal
-**Kimi K2 gains 1,450+ new capabilities:**
+**Kimi K2 gains 1,453+ new capabilities:**
 
 ```python
 # Kimi K2 can now call THE FORGE tools natively
@@ -24,13 +24,13 @@ kimi_k2.call_tool("forge_code_generator", params={...})
 - Media restoration → Kimi K2's image/video understanding
 
 ### Phase 2: THE FORGE as Kimi K2's Training Data
-**408,349+ lines become training examples:**
+**443,000+ lines become training examples:**
 
 ```
 Kimi K2 learns from:
 - 180,000+ lines of Python implementation
 - 60,000+ lines of documentation
-- 1,450+ feature specifications
+- 1,453+ feature specifications
 - All FORGE capabilities as instruction examples
 ```
 
@@ -132,7 +132,7 @@ math_training = extract_forge_learning_system()
 - **MultiPL-E**: +4-8% (FORGE's multi-language support)
 
 ### Tool Use Tasks
-- **Tau2 (all)**: +5-10% (FORGE's 1,450+ tools)
+- **Tau2 (all)**: +5-10% (FORGE's 1,453+ tools)
 - **AceBench**: +3-7% (FORGE's adaptive system)
 
 ### Math & STEM
@@ -171,6 +171,9 @@ python3 kimi_forge_server.py
 
 ### Option 3: vLLM Deployment
 ```bash
+# First generate the vLLM config locally (not stored in git):
+python3 forge_implementation.py     # creates forge_vllm_config.json
+
 # Deploy with vLLM
 vllm serve kimi-k2-instruct \
   --enable-forge-tools \
@@ -194,8 +197,13 @@ forge_integration:
     - code_generation
     - book_writing
     - media_restoration
-    - all_1450_capabilities
+    - nullclaw
+    - gemini_program_fixer
+    - ai_reconstructor
+    - all_1453_capabilities
   
+  # knowledge_base and training_data are generated artifacts —
+  # run `python3 forge_implementation.py` to create them locally.
   knowledge_base: "forge_knowledge_base.json"
   training_data: "forge_training_data.jsonl"
 ```
@@ -262,7 +270,7 @@ print(f"Performance gain: {tool_stats.avg_improvement}")
 ## 🌟 The Marriage Benefits
 
 ### For Kimi K2:
-✅ Gains 1,450+ practical capabilities
+✅ Gains 1,453+ practical capabilities
 ✅ Better benchmark scores across all categories  
 ✅ Expanded training data (408K+ lines)
 ✅ Real-world tool ecosystem
@@ -330,7 +338,7 @@ python3 test_kimi_forge_marriage.py
 # Expected output:
 # ✅ Kimi K2 loaded
 # ✅ FORGE tools integrated
-# ✅ 1,450+ capabilities available
+# ✅ 1,453+ capabilities available
 # ✅ Benchmarks ready for testing
 # ✅ Marriage complete!
 ```

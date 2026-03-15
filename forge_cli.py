@@ -159,15 +159,17 @@ class ForgeCLI:
             return "Mode not recognized. Use /mode to select a valid mode."
             
     def generate_chat_response(self, message: str) -> str:
-        """Generate general chat response"""
-        response = f"Processing: {message}\n\n"
-        response += "This is THE FORGE AI in action. In production, this would:\n"
-        response += "- Use the Kimi K2 model with 1T parameters\n"
-        response += "- Apply the complete system prompt from all 15 documentation files\n"
-        response += "- Utilize 865+ capabilities as needed\n"
-        response += "- Learn from your interaction patterns\n"
-        response += "- Provide context-aware, intelligent responses\n"
-        return response
+        """Generate general chat response via KimiForgeUnified."""
+        try:
+            from kimi_forge_unified import KimiForgeUnified
+            if not hasattr(self, "_unified"):
+                self._unified = KimiForgeUnified()
+            return self._unified.process(message)
+        except Exception as exc:
+            return (
+                f"[ForgeAI] Routing error: {exc}\n\n"
+                "Tip: ensure kimi_forge_unified.py is in the same directory."
+            )
         
     def generate_code_response(self, message: str) -> str:
         """Generate code-focused response"""

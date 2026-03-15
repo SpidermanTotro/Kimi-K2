@@ -1,6 +1,6 @@
 __pycache__/
 
-# NullClaw runtime outputs — never commit these
+# ── NullClaw runtime outputs ────────────────────────────────────────────────
 logs/build_*.log
 reports/
 patches/generated/
@@ -9,3 +9,25 @@ repo.db
 memory.db
 repo.index
 repo_files.pkl
+
+# ── Generated export files (recreate with: python3 forge_implementation.py) ─
+forge_knowledge_base.json
+forge_vllm_config.json
+
+# ── Distribution archives (recreate with: make dist) ────────────────────────
+dist/
+
+# ── Large binary assets (not source code) ───────────────────────────────────
+tech_report.pdf
+*.zip
+*.tar.gz
+
+# ── Python / editor noise ────────────────────────────────────────────────────
+*.pyc
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+dist/
+build/

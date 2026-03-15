@@ -88,14 +88,12 @@ make run-cli
 
 ## Distribution Package
 
-The build creates a ZIP file containing:
-- All Python source code
-- Documentation files
-- Configuration files
-- Installation scripts
-- README and guides
+The build creates a ZIP file containing all source code, docs, and configs.
 
-Download location: `dist/THE_FORGE_v1.0_YYYYMMDD.zip`
+> **Note:** The `dist/` directory is **not tracked in git** (gitignored).
+> Run `make dist` to create it locally.
+
+Download location: `dist/THE_FORGE_vX.X_YYYYMMDD.zip`
 
 ## System Requirements
 

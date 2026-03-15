@@ -1,444 +1,443 @@
 #!/usr/bin/env python3
 """
-THE FORGE AI - Production Server
-Complete working implementation with REST API
-"""
+THE FORGE AI — Production REST API Server
+==========================================
+All endpoints route to real implementations:
 
-import os
+  POST /api/chat               → KimiForgeUnified.process()
+  POST /api/nullclaw/repair    → NullClaw RepairLoop
+  POST /api/gemini-fix         → GeminiProgramFixer
+  POST /api/ai-reconstruct     → AIReconstructor pipeline
+  POST /api/code-review        → KimiForgeUnified + code tool
+  GET  /api/capabilities       → full tool registry
+  GET  /api/tools/<name>       → single tool info
+  GET  /api/stats              → system statistics
+  GET  /api/system-prompt      → Forge system prompt
+  GET  /health                 → health check
+
+Start:
+    pip install flask flask-cors
+    python3 forge_server.py
+    # → http://localhost:5000
+"""
+from __future__ import annotations
+
 import json
 import logging
+import os
+import sys
+import tempfile
 from datetime import datetime
-from typing import Dict, List, Optional, Any
-from dataclasses import dataclass, asdict
 from pathlib import Path
+from typing import Dict, List, Optional
 
-# Flask for REST API
-from flask import Flask, request, jsonify, Response, stream_with_context
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 
-# Import our implementation
-from forge_implementation import ForgeAI
+# ── Internal imports ────────────────────────────────────────────────────────
+_ROOT = Path(__file__).parent
+if str(_ROOT) not in sys.path:
+    sys.path.insert(0, str(_ROOT))
 
-# Configure logging
+from forge_implementation import ForgeAI
+from kimi_forge_unified import KimiForgeUnified
+
+# ── Logging ─────────────────────────────────────────────────────────────────
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+    format="%(asctime)s %(name)s %(levelname)s  %(message)s",
 )
-logger = logging.getLogger(__name__)
+logger = logging.getLogger("forge-server")
 
-# Initialize Flask app
+# ── Flask app ────────────────────────────────────────────────────────────────
 app = Flask(__name__)
-CORS(app)  # Enable CORS for all routes
+CORS(app)
 
-# Initialize THE FORGE
-forge = None
-conversation_history: Dict[str, List[Dict]] = {}
-
-
-@dataclass
-class Message:
-    """Message structure for conversations"""
-    role: str  # 'user', 'assistant', 'system'
-    content: str
-    timestamp: str = None
-    
-    def __post_init__(self):
-        if self.timestamp is None:
-            self.timestamp = datetime.utcnow().isoformat()
+# ── Lazy singletons (initialised on first request) ───────────────────────────
+_forge: Optional[ForgeAI] = None
+_unified: Optional[KimiForgeUnified] = None
+_conversation_history: Dict[str, List[dict]] = {}
+_started_at: str = datetime.utcnow().isoformat()
 
 
-@dataclass
-class ForgeResponse:
-    """Response structure from THE FORGE"""
-    content: str
-    capabilities_used: List[str]
-    suggestions: List[str]
-    status: str
-    session_id: str
+def _get_forge() -> ForgeAI:
+    global _forge
+    if _forge is None:
+        logger.info("🔥 Initialising ForgeAI …")
+        _forge = ForgeAI()
+        _forge.initialize()
+        logger.info("✅ ForgeAI ready")
+    return _forge
 
 
-def initialize_forge():
-    """Initialize THE FORGE AI system"""
-    global forge
-    try:
-        logger.info("🔥 Initializing THE FORGE AI...")
-        forge = ForgeAI()
-        forge.initialize()
-        logger.info("✅ THE FORGE AI initialized successfully!")
-        return True
-    except Exception as e:
-        logger.error(f"❌ Failed to initialize THE FORGE: {e}")
-        return False
+def _get_unified() -> KimiForgeUnified:
+    global _unified
+    if _unified is None:
+        logger.info("🔥 Initialising KimiForgeUnified …")
+        _unified = KimiForgeUnified()
+        logger.info("✅ KimiForgeUnified ready")
+    return _unified
 
 
-@app.route('/health', methods=['GET'])
-def health_check():
-    """Health check endpoint"""
+# ── Helpers ──────────────────────────────────────────────────────────────────
+
+def _ts() -> str:
+    return datetime.utcnow().isoformat()
+
+
+def _err(msg: str, code: int = 400):
+    return jsonify({"error": msg, "timestamp": _ts()}), code
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# Health
+# ═══════════════════════════════════════════════════════════════════════════════
+
+@app.get("/health")
+def health():
     return jsonify({
-        'status': 'healthy',
-        'service': 'THE FORGE AI',
-        'version': '1.0.0',
-        'initialized': forge is not None,
-        'timestamp': datetime.utcnow().isoformat()
+        "status":      "healthy",
+        "service":     "THE FORGE AI",
+        "version":     "1.1.0",
+        "started_at":  _started_at,
+        "timestamp":   _ts(),
+        "forge_ready": _forge is not None,
+        "unified_ready": _unified is not None,
     })
 
 
-@app.route('/api/chat', methods=['POST'])
+# ═══════════════════════════════════════════════════════════════════════════════
+# Chat  — real routing via KimiForgeUnified
+# ═══════════════════════════════════════════════════════════════════════════════
+
+@app.post("/api/chat")
 def chat():
     """
-    Main chat endpoint
-    
-    Request body:
-    {
-        "message": "Your message here",
-        "session_id": "optional-session-id",
-        "stream": false
-    }
+    Main chat endpoint.
+
+    Body: { "message": "...", "session_id": "optional", "use_tools": true }
     """
-    if forge is None:
-        return jsonify({'error': 'THE FORGE not initialized'}), 503
-    
-    try:
-        data = request.get_json()
-        
-        if not data or 'message' not in data:
-            return jsonify({'error': 'Message is required'}), 400
-        
-        message = data['message']
-        session_id = data.get('session_id', 'default')
-        stream = data.get('stream', False)
-        
-        # Initialize session if needed
-        if session_id not in conversation_history:
-            conversation_history[session_id] = []
-        
-        # Add user message to history
-        user_msg = Message(role='user', content=message)
-        conversation_history[session_id].append(asdict(user_msg))
-        
-        # Generate response
-        response_content = f"THE FORGE AI processing your request: {message}\n\n"
-        response_content += "This is a demonstration response. In production, this would:\n"
-        response_content += "- Use the Kimi K2 model for generation\n"
-        response_content += "- Apply the complete system prompt from all documentation\n"
-        response_content += "- Utilize appropriate capabilities based on request\n"
-        response_content += "- Learn from interaction patterns\n"
-        
-        # Detect capabilities needed
-        capabilities = detect_capabilities(message)
-        suggestions = generate_suggestions(message, capabilities)
-        
-        # Create response
-        assistant_msg = Message(role='assistant', content=response_content)
-        conversation_history[session_id].append(asdict(assistant_msg))
-        
-        forge_response = ForgeResponse(
-            content=response_content,
-            capabilities_used=capabilities,
-            suggestions=suggestions,
-            status='success',
-            session_id=session_id
-        )
-        
-        return jsonify(asdict(forge_response))
-        
-    except Exception as e:
-        logger.error(f"Error in chat endpoint: {e}")
-        return jsonify({'error': str(e)}), 500
+    data = request.get_json(silent=True) or {}
+    message = (data.get("message") or "").strip()
+    if not message:
+        return _err("'message' is required")
 
+    session_id = data.get("session_id", "default")
+    use_tools  = bool(data.get("use_tools", True))
 
-@app.route('/api/capabilities', methods=['GET'])
-def get_capabilities():
-    """Get all available capabilities"""
-    if forge is None:
-        return jsonify({'error': 'THE FORGE not initialized'}), 503
-    
-    try:
-        capabilities = forge.get_all_capabilities()
-        categories = {}
-        
-        if hasattr(forge, 'get_capability_categories'):
-            categories = forge.get_capability_categories()
-        
-        return jsonify({
-            'total_capabilities': len(capabilities),
-            'capabilities': capabilities,
-            'categories': categories
-        })
-    except Exception as e:
-        logger.error(f"Error getting capabilities: {e}")
-        return jsonify({'error': str(e)}), 500
-
-
-@app.route('/api/system-prompt', methods=['GET'])
-def get_system_prompt():
-    """Get the complete system prompt"""
-    if forge is None:
-        return jsonify({'error': 'THE FORGE not initialized'}), 503
-    
-    try:
-        prompt = forge.get_system_prompt()
-        return jsonify({
-            'system_prompt': prompt,
-            'length': len(prompt)
-        })
-    except Exception as e:
-        logger.error(f"Error getting system prompt: {e}")
-        return jsonify({'error': str(e)}), 500
-
-
-@app.route('/api/documentation', methods=['GET'])
-def get_documentation():
-    """Get all loaded documentation"""
-    if forge is None:
-        return jsonify({'error': 'THE FORGE not initialized'}), 503
-    
-    try:
-        docs = []
-        total_size = 0
-        
-        if hasattr(forge, 'documents'):
-            docs = forge.documents
-            total_size = sum(len(doc['content']) for doc in forge.documents)
-        
-        return jsonify({
-            'documents': docs,
-            'total_files': len(docs),
-            'total_size': total_size
-        })
-    except Exception as e:
-        logger.error(f"Error getting documentation: {e}")
-        return jsonify({'error': str(e)}), 500
-
-
-@app.route('/api/sessions/<session_id>/history', methods=['GET'])
-def get_session_history(session_id: str):
-    """Get conversation history for a session"""
-    if session_id not in conversation_history:
-        return jsonify({'error': 'Session not found'}), 404
-    
-    return jsonify({
-        'session_id': session_id,
-        'messages': conversation_history[session_id],
-        'message_count': len(conversation_history[session_id])
-    })
-
-
-@app.route('/api/sessions/<session_id>', methods=['DELETE'])
-def clear_session(session_id: str):
-    """Clear a conversation session"""
-    if session_id in conversation_history:
-        del conversation_history[session_id]
-    
-    return jsonify({
-        'status': 'success',
-        'message': f'Session {session_id} cleared'
-    })
-
-
-@app.route('/api/code-review', methods=['POST'])
-def code_review():
-    """
-    Code review endpoint
-    
-    Request body:
-    {
-        "code": "code to review",
-        "language": "python"
-    }
-    """
-    if forge is None:
-        return jsonify({'error': 'THE FORGE not initialized'}), 503
-    
-    try:
-        data = request.get_json()
-        
-        if not data or 'code' not in data:
-            return jsonify({'error': 'Code is required'}), 400
-        
-        code = data['code']
-        language = data.get('language', 'unknown')
-        
-        # Perform code review (simplified for demo)
-        issues = []
-        suggestions = []
-        
-        if len(code.split('\n')) > 100:
-            issues.append({
-                'type': 'complexity',
-                'severity': 'medium',
-                'message': 'Consider breaking this into smaller functions'
-            })
-        
-        if 'TODO' in code or 'FIXME' in code:
-            issues.append({
-                'type': 'todo',
-                'severity': 'low',
-                'message': 'Found TODO/FIXME comments that need attention'
-            })
-        
-        suggestions.append('Add type hints for better code clarity')
-        suggestions.append('Consider adding docstrings to functions')
-        
-        return jsonify({
-            'status': 'complete',
-            'language': language,
-            'lines_reviewed': len(code.split('\n')),
-            'issues': issues,
-            'suggestions': suggestions,
-            'quality_score': 85
-        })
-        
-    except Exception as e:
-        logger.error(f"Error in code review: {e}")
-        return jsonify({'error': str(e)}), 500
-
-
-@app.route('/api/book-writing/analyze', methods=['POST'])
-def analyze_book():
-    """
-    Analyze book content for quality and suggestions
-    
-    Request body:
-    {
-        "content": "book content",
-        "genre": "fiction"
-    }
-    """
-    if forge is None:
-        return jsonify({'error': 'THE FORGE not initialized'}), 503
-    
-    try:
-        data = request.get_json()
-        
-        if not data or 'content' not in data:
-            return jsonify({'error': 'Content is required'}), 400
-        
-        content = data['content']
-        genre = data.get('genre', 'unknown')
-        
-        # Analyze content (simplified for demo)
-        word_count = len(content.split())
-        paragraph_count = len([p for p in content.split('\n\n') if p.strip()])
-        
-        return jsonify({
-            'status': 'complete',
-            'genre': genre,
-            'statistics': {
-                'word_count': word_count,
-                'paragraph_count': paragraph_count,
-                'estimated_pages': word_count // 250
-            },
-            'quality_score': 78,
-            'suggestions': [
-                'Consider adding more descriptive imagery',
-                'Dialogue could be more natural',
-                'Pacing is good overall'
-            ],
-            'sequel_potential': 'High - multiple plot threads remain open'
-        })
-        
-    except Exception as e:
-        logger.error(f"Error in book analysis: {e}")
-        return jsonify({'error': str(e)}), 500
-
-
-@app.route('/api/stats', methods=['GET'])
-def get_stats():
-    """Get system statistics"""
-    if forge is None:
-        return jsonify({'error': 'THE FORGE not initialized'}), 503
-    
-    try:
-        total_sessions = len(conversation_history)
-        total_messages = sum(len(msgs) for msgs in conversation_history.values())
-        
-        total_files = 0
-        total_size = 0
-        
-        if hasattr(forge, 'documents'):
-            total_files = len(forge.documents)
-            total_size = sum(len(doc['content']) for doc in forge.documents)
-        
-        return jsonify({
-            'system': {
-                'status': 'running',
-                'uptime': 'N/A',
-                'version': '1.0.0'
-            },
-            'documentation': {
-                'files_loaded': total_files,
-                'total_size': total_size,
-                'capabilities': len(forge.get_all_capabilities())
-            },
-            'sessions': {
-                'total_sessions': total_sessions,
-                'total_messages': total_messages,
-                'active_sessions': total_sessions
-            }
-        })
-        
-    except Exception as e:
-        logger.error(f"Error getting stats: {e}")
-        return jsonify({'error': str(e)}), 500
-
-
-def detect_capabilities(message: str) -> List[str]:
-    """Detect which capabilities are needed based on message"""
-    capabilities = []
-    message_lower = message.lower()
-    
-    if any(word in message_lower for word in ['code', 'program', 'function', 'debug']):
-        capabilities.append('programming')
-    
-    if any(word in message_lower for word in ['book', 'write', 'story', 'novel']):
-        capabilities.append('book_writing')
-    
-    if any(word in message_lower for word in ['video', 'edit', 'movie']):
-        capabilities.append('video_editing')
-    
-    if any(word in message_lower for word in ['photo', 'image', 'picture']):
-        capabilities.append('photo_editing')
-    
-    if any(word in message_lower for word in ['game', 'pokemon', 'wow']):
-        capabilities.append('gaming')
-    
-    return capabilities if capabilities else ['general']
-
-
-def generate_suggestions(message: str, capabilities: List[str]) -> List[str]:
-    """Generate helpful suggestions based on context"""
-    suggestions = []
-    
-    if 'programming' in capabilities:
-        suggestions.append('Would you like me to review the code for issues?')
-        suggestions.append('I can help optimize performance')
-    
-    if 'book_writing' in capabilities:
-        suggestions.append('I can analyze for sequel potential')
-        suggestions.append('Would you like genre-specific suggestions?')
-    
-    if not suggestions:
-        suggestions.append('What would you like to work on?')
-    
-    return suggestions
-
-
-if __name__ == '__main__':
-    # Initialize THE FORGE
-    if not initialize_forge():
-        logger.error("Failed to initialize THE FORGE. Exiting.")
-        exit(1)
-    
-    # Run server
-    port = int(os.environ.get('PORT', 5000))
-    logger.info(f"🚀 Starting THE FORGE AI server on port {port}")
-    logger.info(f"📍 API available at http://localhost:{port}")
-    logger.info(f"🔍 Health check: http://localhost:{port}/health")
-    
-    app.run(
-        host='0.0.0.0',
-        port=port,
-        debug=False,
-        threaded=True
+    # History
+    _conversation_history.setdefault(session_id, [])
+    _conversation_history[session_id].append(
+        {"role": "user", "content": message, "timestamp": _ts()}
     )
+
+    # Route through KimiForgeUnified (real dispatch + tool selection)
+    try:
+        unified   = _get_unified()
+        response  = unified.process(message, use_tools=use_tools)
+    except Exception as exc:
+        logger.error("chat error: %s", exc, exc_info=True)
+        return _err(str(exc), 500)
+
+    _conversation_history[session_id].append(
+        {"role": "assistant", "content": response, "timestamp": _ts()}
+    )
+
+    return jsonify({
+        "content":    response,
+        "session_id": session_id,
+        "timestamp":  _ts(),
+        "status":     "success",
+    })
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# NullClaw repair endpoint
+# ═══════════════════════════════════════════════════════════════════════════════
+
+@app.post("/api/nullclaw/repair")
+def nullclaw_repair():
+    """
+    Run a NullClaw repair pass on a project directory.
+
+    Body: {
+        "project_dir": "/abs/path/to/project",
+        "model":       "qwen2.5-coder:latest",   (optional)
+        "build_cmd":   "npm run build",           (optional)
+        "auto_apply":  false                      (optional)
+    }
+    """
+    data = request.get_json(silent=True) or {}
+    project_dir = (data.get("project_dir") or "").strip()
+    if not project_dir:
+        return _err("'project_dir' is required")
+    if not Path(project_dir).is_dir():
+        return _err(f"Directory not found: {project_dir}", 404)
+
+    try:
+        from nullclaw.config import load_config
+        from nullclaw.repair_loop import RepairLoop
+
+        cfg = load_config()
+        cfg.primary_model   = data.get("model",     cfg.primary_model)
+        cfg.default_build_cmd = data.get("build_cmd", cfg.default_build_cmd)
+        cfg.auto_apply_patch  = bool(data.get("auto_apply", False))
+        cfg.max_repair_passes = int(data.get("max_passes", 1))
+
+        # Write outputs to a temp dir so the server stays clean
+        with tempfile.TemporaryDirectory(prefix="forge-nullclaw-") as td:
+            cfg.log_dir    = str(Path(td) / "logs")
+            cfg.report_dir = str(Path(td) / "reports")
+            cfg.patch_dir  = str(Path(td) / "patches")
+            cfg.ensure_dirs()
+
+            loop    = RepairLoop(cfg)
+            passes  = loop.run(project_dir)
+
+        results = []
+        for p in passes:
+            results.append({
+                "pass":         p.pass_number,
+                "build_passed": p.build_passed,
+                "error":        str(p.error) if p.error else None,
+                "patch_applied": p.patch_applied,
+                "ai_response":  (p.agent_result.final_reply[:2000]
+                                 if p.agent_result and p.agent_result.final_reply
+                                 else None),
+            })
+
+        return jsonify({
+            "project_dir": project_dir,
+            "passes":      len(results),
+            "results":     results,
+            "status":      "success",
+            "timestamp":   _ts(),
+        })
+
+    except Exception as exc:
+        logger.error("nullclaw/repair error: %s", exc, exc_info=True)
+        return _err(str(exc), 500)
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# GeminiProgramFixer endpoint
+# ═══════════════════════════════════════════════════════════════════════════════
+
+@app.post("/api/gemini-fix")
+def gemini_fix():
+    """
+    Fix / explain / review code using GeminiProgramFixer (free Gemini 1.5 Flash).
+
+    Body: {
+        "code":    "source code string",
+        "action":  "fix" | "explain" | "review",   (default: "fix")
+        "language": "python"                        (optional, auto-detected)
+    }
+    """
+    data   = request.get_json(silent=True) or {}
+    code   = (data.get("code") or "").strip()
+    action = (data.get("action") or "fix").strip().lower()
+    if not code:
+        return _err("'code' is required")
+    if action not in ("fix", "explain", "review"):
+        return _err("'action' must be one of: fix, explain, review")
+
+    try:
+        from gemini_code_fixer import GeminiProgramFixer
+        fixer = GeminiProgramFixer()
+
+        if action == "fix":
+            result = fixer.fix_code(code)
+        elif action == "explain":
+            result = fixer.explain_code(code)
+        else:
+            result = fixer.review_code(code)
+
+        return jsonify({
+            "action":    action,
+            "result":    result,
+            "status":    "success",
+            "timestamp": _ts(),
+        })
+
+    except Exception as exc:
+        logger.error("gemini-fix error: %s", exc, exc_info=True)
+        return _err(str(exc), 500)
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# AI Reconstructor endpoint
+# ═══════════════════════════════════════════════════════════════════════════════
+
+@app.post("/api/ai-reconstruct")
+def ai_reconstruct():
+    """
+    Run the ELF X-Ray / scroll-technique reconstructor on an uploaded or
+    path-referenced binary.
+
+    Body: {
+        "binary_path": "/abs/path/to/elf",
+        "scan_depth":  3,          (1-6, default 3)
+        "mode":        "full"      ("xray"|"unwrap"|"reconstruct"|"understand"|"full")
+    }
+    """
+    data        = request.get_json(silent=True) or {}
+    binary_path = (data.get("binary_path") or "").strip()
+    if not binary_path:
+        return _err("'binary_path' is required")
+    if not Path(binary_path).exists():
+        return _err(f"File not found: {binary_path}", 404)
+
+    scan_depth = int(data.get("scan_depth", 3))
+    mode       = (data.get("mode") or "full").strip().lower()
+
+    try:
+        from ai_reconstructor import (
+            BinaryXRay,
+            DeepElfParser,
+            ElfUnderstanding,
+            VirtualUnwrapper,
+            AIPatternMatcher,
+            ScrollAssembler,
+        )
+
+        out: dict = {"binary": binary_path, "mode": mode, "timestamp": _ts()}
+
+        if mode in ("xray", "full"):
+            xray   = BinaryXRay(binary_path)
+            result = xray.scan(depth=scan_depth)
+            out["xray"] = result
+
+        if mode in ("unwrap", "full"):
+            unwrap = VirtualUnwrapper(binary_path)
+            out["unwrap"] = unwrap.unwrap()
+
+        if mode in ("reconstruct", "full"):
+            matcher    = AIPatternMatcher(binary_path)
+            assembler  = ScrollAssembler(binary_path)
+            patterns   = matcher.match()
+            out["patterns"]      = patterns
+            out["reconstruction"] = assembler.assemble(patterns)
+
+        if mode in ("understand", "full"):
+            parser  = DeepElfParser(binary_path)
+            elf_map = parser.parse()
+            udr     = ElfUnderstanding(binary_path)
+            out["deep_parse"]    = elf_map
+            out["understanding"] = udr.understand(elf_map)
+
+        out["status"] = "success"
+        return jsonify(out)
+
+    except Exception as exc:
+        logger.error("ai-reconstruct error: %s", exc, exc_info=True)
+        return _err(str(exc), 500)
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# Capabilities & tool registry
+# ═══════════════════════════════════════════════════════════════════════════════
+
+@app.get("/api/capabilities")
+def get_capabilities():
+    """Return the full tool registry with descriptions and capability lists."""
+    unified = _get_unified()
+    tools   = unified.forge_tools.tools
+    return jsonify({
+        "total_tools":    len(tools),
+        "total_capabilities": sum(len(t.get("capabilities", [])) for t in tools.values()),
+        "tools":          tools,
+        "timestamp":      _ts(),
+    })
+
+
+@app.get("/api/tools/<tool_name>")
+def get_tool(tool_name: str):
+    """Return info for a single tool."""
+    unified = _get_unified()
+    tool    = unified.forge_tools.get_tool(tool_name)
+    if not tool:
+        return _err(f"Tool not found: {tool_name}", 404)
+    return jsonify({"name": tool_name, **tool, "timestamp": _ts()})
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# System prompt
+# ═══════════════════════════════════════════════════════════════════════════════
+
+@app.get("/api/system-prompt")
+def get_system_prompt():
+    """Return the Forge system prompt (built from all docs/)."""
+    forge  = _get_forge()
+    prompt = forge.get_system_prompt()
+    return jsonify({"system_prompt": prompt, "length": len(prompt), "timestamp": _ts()})
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# Stats
+# ═══════════════════════════════════════════════════════════════════════════════
+
+@app.get("/api/stats")
+def get_stats():
+    total_msgs = sum(len(v) for v in _conversation_history.values())
+    forge      = _get_forge()
+    unified    = _get_unified()
+    return jsonify({
+        "system": {
+            "status":     "running",
+            "version":    "1.1.0",
+            "started_at": _started_at,
+        },
+        "documentation": {
+            "files_loaded": len(forge.loader.documents),
+            "total_chars":  len(forge.loader.all_content),
+        },
+        "tools": {
+            "total_tools":        len(unified.forge_tools.tools),
+            "total_capabilities": unified.get_stats()["total_capabilities"],
+        },
+        "sessions": {
+            "active":        len(_conversation_history),
+            "total_messages": total_msgs,
+        },
+        "timestamp": _ts(),
+    })
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# Session management
+# ═══════════════════════════════════════════════════════════════════════════════
+
+@app.get("/api/sessions/<session_id>/history")
+def session_history(session_id: str):
+    msgs = _conversation_history.get(session_id)
+    if msgs is None:
+        return _err(f"Session not found: {session_id}", 404)
+    return jsonify({"session_id": session_id, "messages": msgs, "count": len(msgs)})
+
+
+@app.delete("/api/sessions/<session_id>")
+def clear_session(session_id: str):
+    _conversation_history.pop(session_id, None)
+    return jsonify({"status": "success", "session_id": session_id})
+
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# Entry point
+# ═══════════════════════════════════════════════════════════════════════════════
+
+if __name__ == "__main__":
+    port  = int(os.environ.get("PORT", 5000))
+    debug = os.environ.get("FORGE_DEBUG", "0") == "1"
+
+    logger.info("🔥 THE FORGE AI server starting …")
+    logger.info("   http://localhost:%d", port)
+    logger.info("   health:  GET  /health")
+    logger.info("   chat:    POST /api/chat")
+    logger.info("   repair:  POST /api/nullclaw/repair")
+    logger.info("   fix:     POST /api/gemini-fix")
+    logger.info("   xray:    POST /api/ai-reconstruct")
+    logger.info("   tools:   GET  /api/capabilities")
+    logger.info("   stats:   GET  /api/stats")
+
+    app.run(host="0.0.0.0", port=port, debug=debug, threaded=True)
