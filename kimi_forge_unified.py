@@ -106,7 +106,72 @@ class ForgeToolRegistry:
                     "library_upgrading", "format_conversion", "gaming",
                     "imaging", "audio_processing", "ai_learning"
                 ]
-            }
+            },
+            # Binary analysis / reverse engineering tools
+            "elf_analyzer": {
+                "description": (
+                    "Safely analyze ELF Linux binaries using read-only mmap — "
+                    "the binary is NEVER executed. Detects language, shared libs, "
+                    "symbols, strings, and build metadata."
+                ),
+                "capabilities": [
+                    "elf_header_parsing", "symbol_demangling", "string_extraction",
+                    "dwarf_debug_info", "language_detection", "framework_detection",
+                ],
+                "implementation": "binary_tools.py",
+            },
+            "rpm_ripper": {
+                "description": (
+                    "Rip RPM and DEB packages: extract every ELF binary and "
+                    "source artefact, decompile binaries layer-by-layer "
+                    "(DWARF → symbols → strings → disassembly → Ghidra), "
+                    "and reconstruct a buildable open-source project scaffold."
+                ),
+                "capabilities": [
+                    "rpm_extraction", "deb_extraction", "elf_preservation",
+                    "source_collection", "decompilation", "project_reconstruction",
+                    "src_rpm_finder",
+                ],
+                "implementation": "rpm_ripper.py",
+            },
+            "dmg_ripper": {
+                "description": (
+                    "Rip macOS DMG disk images on Linux: extract Mach-O binaries, "
+                    "map every macOS framework to its Linux equivalent crate "
+                    "(Metal→wgpu, AppKit→winit, WebKit→webkit2gtk …), and generate "
+                    "a complete Linux porting scaffold with Cargo.toml and stubs."
+                ),
+                "capabilities": [
+                    "dmg_extraction", "macho_analysis", "framework_mapping",
+                    "linux_port_scaffold", "project_reconstruction",
+                ],
+                "implementation": "dmg_ripper.py",
+            },
+            "warp_ripper": {
+                "description": (
+                    "Rip the Warp terminal package (.deb/.rpm) with Warp-specific "
+                    "fingerprinting: finds the Rust ELF, extracts auth/config paths "
+                    "from binary strings, and identifies Warp's webkit2gtk/wayland libs."
+                ),
+                "capabilities": [
+                    "deb_extraction", "warp_fingerprinting", "auth_path_extraction",
+                    "config_path_extraction", "rust_detection",
+                ],
+                "implementation": "binary_tools.py",
+            },
+            "gemini_auth_fixer": {
+                "description": (
+                    "Diagnose and fix Google Gemini CLI authentication failures on "
+                    "headless Linux (no browser, no GNOME Keyring, CI/SSH). "
+                    "Analyses the CLI binary safely, finds token file paths, and "
+                    "writes credentials.json + a wrapper script using API key auth."
+                ),
+                "capabilities": [
+                    "gemini_cli_location", "binary_analysis", "auth_diagnosis",
+                    "credentials_writer", "shell_wrapper", "ci_env_config",
+                ],
+                "implementation": "binary_tools.py",
+            },
         }
     
     def get_tool(self, tool_name: str) -> Optional[Dict]:
@@ -186,6 +251,30 @@ class KimiK2Model:
         
         if any(word in prompt.lower() for word in ["restore", "vhs", "old", "vintage"]):
             tool_calls.append(ForgeToolCall("media_restorer", {"source": "vintage", "target": "4k"}))
+
+        if any(word in prompt.lower() for word in
+               ["elf", "binary", "binary analysis", "inspect binary", "open elf",
+                "safe elf", "mmap", "symbol", "decompile binary"]):
+            tool_calls.append(ForgeToolCall("elf_analyzer", {"task": prompt}))
+
+        if any(word in prompt.lower() for word in
+               ["rpm", "rip rpm", "rip package", "deb", "rip deb",
+                "extract package", "package ripper", "reconstruct"]):
+            tool_calls.append(ForgeToolCall("rpm_ripper", {"task": prompt}))
+
+        if any(word in prompt.lower() for word in
+               ["dmg", "rip dmg", "macho", "mach-o", "port to linux",
+                "linux port", "port mac"]):
+            tool_calls.append(ForgeToolCall("dmg_ripper", {"task": prompt}))
+
+        if any(word in prompt.lower() for word in
+               ["warp", "warp terminal", "rip warp", "warp rip"]):
+            tool_calls.append(ForgeToolCall("warp_ripper", {"task": prompt}))
+
+        if any(word in prompt.lower() for word in
+               ["gemini", "gemini auth", "gemini sign", "gemini login",
+                "gemini cli", "fix gemini", "gemini not", "gemini fail"]):
+            tool_calls.append(ForgeToolCall("gemini_auth_fixer", {"task": prompt}))
         
         return tool_calls
 
