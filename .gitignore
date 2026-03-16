@@ -1,1 +1,4 @@
 .kimi_skill_cache/
+__pycache__/
+*.pyc
+*.pyo
