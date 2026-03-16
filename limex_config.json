@@ -1,0 +1,152 @@
+{
+  "limex_version": "1.0.0",
+  "framework": "Lightweight Integrated Model EXchange (limex)",
+  "purpose": "Merge Kimi coding models into a unified Ollama LLM",
+  "merged_model": {
+    "display_name": "KimiCoder (limex unified)",
+    "source_models": [
+      "Kimi (v1)",
+      "Kimi 2",
+      "Kimi 2.5"
+    ],
+    "coding_strengths": [
+      "Python scripting and automation",
+      "REST API design",
+      "Data-structure algorithms",
+      "Basic web development (HTML/CSS/JS)",
+      "SQL and relational-database queries",
+      "Full-stack web development (React, Node.js, FastAPI)",
+      "Systems programming in C, C++, Rust",
+      "Multi-file refactoring and code review",
+      "CI/CD pipeline configuration (GitHub Actions, Docker)",
+      "Mathematical algorithm implementation",
+      "Security-hardened code generation",
+      "Agentic software engineering (SWE-bench level)",
+      "Long-context repository understanding (>100 K tokens)",
+      "Advanced debugging and root-cause analysis",
+      "Test-driven development with full coverage",
+      "Performance optimisation and profiling",
+      "Multi-language polyglot projects",
+      "Infrastructure-as-code (Terraform, Pulumi, Kubernetes)"
+    ],
+    "supported_languages": [
+      "bash",
+      "c",
+      "cpp",
+      "css",
+      "dockerfile",
+      "go",
+      "graphql",
+      "hcl",
+      "html",
+      "java",
+      "javascript",
+      "kotlin",
+      "python",
+      "rust",
+      "sql",
+      "swift",
+      "terraform",
+      "typescript",
+      "yaml"
+    ],
+    "context_window": 131072
+  },
+  "variants": {
+    "kimi-coding-32b": {
+      "ollama_base": "qwen2.5-coder:32b-instruct-q4_K_M",
+      "modelfile": "Modelfile.kimi-coding-32b",
+      "ram_target_gb": 32,
+      "quantization": "Q4_K_M",
+      "num_ctx": 32768,
+      "ollama_model_name": "kimi-coding-32b",
+      "description": "Full-power variant \u2014 requires 32 GB RAM / VRAM"
+    },
+    "kimi-coding-16b": {
+      "ollama_base": "qwen2.5-coder:14b-instruct-q4_K_M",
+      "modelfile": "Modelfile.kimi-coding-16b",
+      "ram_target_gb": 16,
+      "quantization": "Q4_K_M",
+      "num_ctx": 16384,
+      "ollama_model_name": "kimi-coding-16b",
+      "description": "Efficient variant \u2014 runs in 16 GB RAM / VRAM"
+    }
+  },
+  "source_profiles": {
+    "kimi-v1": {
+      "display_name": "Kimi (v1)",
+      "coding_strengths": [
+        "Python scripting and automation",
+        "REST API design",
+        "Data-structure algorithms",
+        "Basic web development (HTML/CSS/JS)",
+        "SQL and relational-database queries"
+      ],
+      "supported_languages": [
+        "python",
+        "javascript",
+        "html",
+        "css",
+        "sql"
+      ],
+      "context_window": 8192
+    },
+    "kimi-v2": {
+      "display_name": "Kimi 2",
+      "coding_strengths": [
+        "Full-stack web development (React, Node.js, FastAPI)",
+        "Systems programming in C, C++, Rust",
+        "Multi-file refactoring and code review",
+        "CI/CD pipeline configuration (GitHub Actions, Docker)",
+        "Mathematical algorithm implementation",
+        "Security-hardened code generation"
+      ],
+      "supported_languages": [
+        "python",
+        "javascript",
+        "typescript",
+        "rust",
+        "c",
+        "cpp",
+        "go",
+        "java",
+        "bash",
+        "yaml",
+        "dockerfile"
+      ],
+      "context_window": 32768
+    },
+    "kimi-v2.5": {
+      "display_name": "Kimi 2.5",
+      "coding_strengths": [
+        "Agentic software engineering (SWE-bench level)",
+        "Long-context repository understanding (>100 K tokens)",
+        "Advanced debugging and root-cause analysis",
+        "Test-driven development with full coverage",
+        "Performance optimisation and profiling",
+        "Multi-language polyglot projects",
+        "Infrastructure-as-code (Terraform, Pulumi, Kubernetes)"
+      ],
+      "supported_languages": [
+        "python",
+        "javascript",
+        "typescript",
+        "rust",
+        "c",
+        "cpp",
+        "go",
+        "java",
+        "kotlin",
+        "swift",
+        "bash",
+        "yaml",
+        "dockerfile",
+        "terraform",
+        "hcl",
+        "sql",
+        "graphql"
+      ],
+      "context_window": 131072
+    }
+  }
+}

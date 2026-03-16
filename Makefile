@@ -62,16 +62,51 @@ run-cli:
 	@echo "💻 Starting THE FORGE CLI..."
 	@python3 forge_cli.py
 
+## ── Kimi Ollama Merger (limex) ─────────────────────────────────────────
+
+merge-kimi:
+	@echo "🔀 Merging Kimi coding models (limex framework)..."
+	@python3 kimi_ollama_merger.py
+	@echo "✅ Merge complete"
+
+merge-kimi-32b:
+	@echo "🔀 Generating 32 GB variant..."
+	@python3 kimi_ollama_merger.py --variant 32b
+
+merge-kimi-16b:
+	@echo "🔀 Generating 16 GB variant..."
+	@python3 kimi_ollama_merger.py --variant 16b
+
+install-kimi-ollama: merge-kimi
+	@echo "📦 Installing merged models into Ollama..."
+	@python3 kimi_ollama_merger.py --install
+
+run-kimi-32b:
+	@echo "🚀 Running KimiCoder 32B..."
+	@ollama run kimi-coding-32b
+
+run-kimi-16b:
+	@echo "🚀 Running KimiCoder 16B..."
+	@ollama run kimi-coding-16b
+
 help:
 	@echo "THE FORGE - Build System"
 	@echo ""
 	@echo "Available targets:"
-	@echo "  make all       - Build everything"
-	@echo "  make build     - Build THE FORGE"
-	@echo "  make test      - Run tests"
-	@echo "  make clean     - Clean build artifacts"
-	@echo "  make install   - Install THE FORGE"
-	@echo "  make dist      - Create distribution"
-	@echo "  make run-gui   - Start GUI"
-	@echo "  make run-server - Start server"
-	@echo "  make run-cli   - Start CLI"
+	@echo "  make all              - Build everything"
+	@echo "  make build            - Build THE FORGE"
+	@echo "  make test             - Run tests"
+	@echo "  make clean            - Clean build artifacts"
+	@echo "  make install          - Install THE FORGE"
+	@echo "  make dist             - Create distribution"
+	@echo "  make run-gui          - Start GUI"
+	@echo "  make run-server       - Start server"
+	@echo "  make run-cli          - Start CLI"
+	@echo ""
+	@echo "Kimi Ollama Merger (limex):"
+	@echo "  make merge-kimi       - Generate all Ollama artefacts"
+	@echo "  make merge-kimi-32b   - Generate 32 GB Modelfile only"
+	@echo "  make merge-kimi-16b   - Generate 16 GB Modelfile only"
+	@echo "  make install-kimi-ollama - Install models into Ollama"
+	@echo "  make run-kimi-32b     - Run KimiCoder 32B interactively"
+	@echo "  make run-kimi-16b     - Run KimiCoder 16B interactively"
