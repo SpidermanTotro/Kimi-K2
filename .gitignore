@@ -1,0 +1,42 @@
+# Build artifacts
+build/
+*.pyc
+__pycache__/
+
+# Distribution packages
+dist/*.zip
+
+# Keep checksums
+!dist/checksums.json
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Python
+*.egg-info/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Node
+node_modules/
+package-lock.json
+
+# Rust
+target/
+Cargo.lock
+
+# C++
+*.o
+*.so
+*.a
+*.exe
+cmake-build-*/

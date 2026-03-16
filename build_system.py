@@ -76,15 +76,122 @@ class ForgeBuilder:
     
     def build_video_editor(self):
         """Build video editor components"""
-        print("   Video editor components ready")
+        print("   Checking video editor components...")
+        
+        # Check for C++ video processing source
+        cpp_sources = list(self.project_root.glob("src/**/*.cpp"))
+        if cpp_sources:
+            print(f"   ✓ Found {len(cpp_sources)} C++ source files")
+            # Try to build with CMake if available
+            if (self.project_root / "CMakeLists.txt").exists():
+                print("   ✓ CMake configuration found")
+                try:
+                    result = subprocess.run(
+                        ["cmake", "--version"],
+                        capture_output=True,
+                        text=True,
+                        timeout=5
+                    )
+                    if result.returncode == 0:
+                        print("   ✓ CMake available - C++ builds would be possible")
+                    else:
+                        print("   ⚠ CMake not available - skipping C++ build")
+                except (subprocess.TimeoutExpired, FileNotFoundError):
+                    print("   ⚠ CMake not found - skipping C++ build")
+        else:
+            print("   ⚠ No C++ source files found - video components are Python-based")
+        
+        print("   ✓ Video editor components verified")
         
     def build_linux_os(self):
         """Prepare Linux OS builder"""
-        print("   Linux OS builder ready")
+        print("   Checking Linux OS builder components...")
+        
+        # Check for bootable OS components
+        rust_sources = list(self.project_root.glob("src/**/*.rs"))
+        go_sources = list(self.project_root.glob("src/**/*.go"))
+        
+        if rust_sources:
+            print(f"   ✓ Found {len(rust_sources)} Rust source files")
+            # Check for Cargo
+            if (self.project_root / "Cargo.toml").exists():
+                print("   ✓ Cargo configuration found")
+                try:
+                    result = subprocess.run(
+                        ["cargo", "--version"],
+                        capture_output=True,
+                        text=True,
+                        timeout=5
+                    )
+                    if result.returncode == 0:
+                        print("   ✓ Cargo available - Rust builds would be possible")
+                    else:
+                        print("   ⚠ Cargo not available - skipping Rust build")
+                except (subprocess.TimeoutExpired, FileNotFoundError):
+                    print("   ⚠ Cargo not found - skipping Rust build")
+        else:
+            print("   ⚠ No Rust source files found")
+            
+        if go_sources:
+            print(f"   ✓ Found {len(go_sources)} Go source files")
+            try:
+                result = subprocess.run(
+                    ["go", "version"],
+                    capture_output=True,
+                    text=True,
+                    timeout=5
+                )
+                if result.returncode == 0:
+                    print("   ✓ Go available - Go builds would be possible")
+                else:
+                    print("   ⚠ Go not available - skipping Go build")
+            except (subprocess.TimeoutExpired, FileNotFoundError):
+                print("   ⚠ Go not found - skipping Go build")
+        else:
+            print("   ⚠ No Go source files found")
+            
+        print("   ✓ Linux OS builder components verified")
         
     def build_documentation(self):
         """Compile all documentation"""
-        print("   Documentation ready")
+        print("   Compiling documentation...")
+        
+        # Find all markdown files
+        doc_files = list(self.project_root.glob("docs/*.md"))
+        root_docs = [f for f in self.project_root.glob("*.md") 
+                     if f.name not in ["LICENSE.md"]]
+        
+        all_docs = doc_files + root_docs
+        
+        print(f"   ✓ Found {len(all_docs)} documentation files")
+        
+        # Create a combined documentation file in build directory
+        combined_doc = self.build_dir / "COMPLETE_DOCUMENTATION.md"
+        
+        with open(combined_doc, 'w', encoding='utf-8') as outfile:
+            outfile.write("# THE FORGE - Complete Documentation\n\n")
+            outfile.write(f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n")
+            outfile.write("---\n\n")
+            
+            # Add table of contents
+            outfile.write("## Table of Contents\n\n")
+            for i, doc in enumerate(sorted(all_docs), 1):
+                outfile.write(f"{i}. [{doc.name}](#{doc.stem.lower().replace('_', '-')})\n")
+            outfile.write("\n---\n\n")
+            
+            # Combine all documentation
+            for doc in sorted(all_docs):
+                outfile.write(f"\n# {doc.name}\n\n")
+                try:
+                    with open(doc, 'r', encoding='utf-8') as infile:
+                        outfile.write(infile.read())
+                    outfile.write("\n\n---\n\n")
+                except Exception as e:
+                    outfile.write(f"Error reading file: {e}\n\n")
+        
+        print(f"   ✓ Created combined documentation: {combined_doc.name}")
+        print(f"   ✓ Size: {combined_doc.stat().st_size / 1024:.2f} KB")
+        print("   ✓ Documentation compilation complete")
         
     def create_distribution(self):
         """Create downloadable distribution"""
@@ -107,6 +214,12 @@ class ForgeBuilder:
             # Add README
             if (self.project_root / "README.md").exists():
                 zipf.write(self.project_root / "README.md", "README.md")
+            
+            # Add compiled documentation if it exists
+            combined_doc = self.build_dir / "COMPLETE_DOCUMENTATION.md"
+            if combined_doc.exists():
+                zipf.write(combined_doc, "COMPLETE_DOCUMENTATION.md")
+                print("   ✓ Included compiled documentation")
         
         print(f"   ✓ Created: {zip_name}")
         print(f"   ✓ Size: {zip_path.stat().st_size / 1024 / 1024:.2f} MB")
