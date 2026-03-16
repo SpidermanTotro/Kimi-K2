@@ -168,6 +168,21 @@ class ForgeBuilder:
         # Create a combined documentation file in build directory
         combined_doc = self.build_dir / "COMPLETE_DOCUMENTATION.md"
         
+        def make_anchor(text):
+            """Create a markdown anchor from text"""
+            # Convert to lowercase, replace spaces and underscores with hyphens
+            anchor = text.lower()
+            anchor = anchor.replace(' ', '-').replace('_', '-')
+            # Remove file extension
+            if anchor.endswith('.md'):
+                anchor = anchor[:-3]
+            # Remove special characters except hyphens
+            anchor = ''.join(c for c in anchor if c.isalnum() or c == '-')
+            # Remove multiple consecutive hyphens
+            while '--' in anchor:
+                anchor = anchor.replace('--', '-')
+            return anchor.strip('-')
+        
         with open(combined_doc, 'w', encoding='utf-8') as outfile:
             outfile.write("# THE FORGE - Complete Documentation\n\n")
             outfile.write(f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n")
@@ -176,12 +191,15 @@ class ForgeBuilder:
             # Add table of contents
             outfile.write("## Table of Contents\n\n")
             for i, doc in enumerate(sorted(all_docs), 1):
-                outfile.write(f"{i}. [{doc.name}](#{doc.stem.lower().replace('_', '-')})\n")
+                anchor = make_anchor(doc.name)
+                outfile.write(f"{i}. [{doc.name}](#{anchor})\n")
             outfile.write("\n---\n\n")
             
             # Combine all documentation
             for doc in sorted(all_docs):
-                outfile.write(f"\n# {doc.name}\n\n")
+                anchor = make_anchor(doc.name)
+                outfile.write(f'\n<a id="{anchor}"></a>\n\n')
+                outfile.write(f"# {doc.name}\n\n")
                 try:
                     with open(doc, 'r', encoding='utf-8') as infile:
                         outfile.write(infile.read())
