@@ -1,0 +1,52 @@
+{
+  "model": "Kimi-K2-Base",
+  "training_data": "kimi_k2_training_data.json",
+  "objective": "Improve benchmark performance across all categories",
+  "enhancements": {
+    "coding": {
+      "source": "THE FORGE 180K+ Python lines",
+      "target_benchmarks": [
+        "LiveCodeBench",
+        "OJBench",
+        "SWE-bench"
+      ]
+    },
+    "tool_use": {
+      "source": "THE FORGE 1,450+ capabilities",
+      "target_benchmarks": [
+        "Tau2",
+        "AceBench",
+        "TerminalBench"
+      ]
+    },
+    "math_reasoning": {
+      "source": "THE FORGE optimization algorithms",
+      "target_benchmarks": [
+        "AIME",
+        "MATH",
+        "PolyMath"
+      ]
+    },
+    "agentic": {
+      "source": "THE FORGE complete systems (Linux, GUI, Database)",
+      "target_benchmarks": [
+        "SWE-bench",
+        "Aider-Polyglot"
+      ]
+    },
+    "general": {
+      "source": "THE FORGE 60K+ documentation lines",
+      "target_benchmarks": [
+        "MMLU",
+        "GPQA",
+        "SimpleQA"
+      ]
+    }
+  },
+  "training_strategy": {
+    "phase_1": "Instruction tuning on FORGE examples",
+    "phase_2": "Tool integration and function calling",
+    "phase_3": "Agentic capability enhancement",
+    "phase_4": "Benchmark-specific optimization"
+  }
+}
