@@ -17,20 +17,30 @@ Convert FORGE knowledge into instruction-tuning format:
 - Coding examples → LiveCodeBench, SWE-bench improvement
 - Tool examples → Tau2, AceBench improvement
 - Math examples → AIME, MATH improvement
-- Agentic examples → SWE-bench Multilingual improvement
+- Agentic examples → SWE-bench, Aider-Polyglot improvement
 
 ## Step 3: Fine-Tune Kimi K2
 ```bash
-# Using vLLM
-python -m vllm.entrypoints.openai.api_server \
-    --model Kimi-K2-Base \
-    --training-data kimi_k2_training_data.json \
-    --output-dir Kimi-K2-FORGE
+# Note: Fine-tuning requires a training framework. The commands below are examples.
+# Adjust based on your training setup (e.g., DeepSpeed, Megatron-LM, or custom scripts)
 
-# Using SGLang
+# Example with Hugging Face Transformers
+python fine_tune.py \
+    --model Kimi-K2-Base \
+    --train-file kimi_k2_training_data.json \
+    --output-dir Kimi-K2-FORGE \
+    --learning-rate 2e-5 \
+    --num-epochs 3
+
+# After fine-tuning, deploy with vLLM for inference
+python -m vllm.entrypoints.openai.api_server \
+    --model Kimi-K2-FORGE \
+    --port 8000
+
+# Or deploy with SGLang for inference
 python -m sglang.launch_server \
-    --model-path Kimi-K2-Base \
-    --training-data kimi_k2_training_data.json
+    --model-path Kimi-K2-FORGE \
+    --port 8000
 ```
 
 ## Step 4: Integrate FORGE Tools
