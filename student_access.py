@@ -31,9 +31,14 @@ FREE_RESOURCES: List[Dict[str, str]] = [
         "notes": "Run the full 1-trillion-parameter model locally — no API key needed.",
     },
     {
+        "name": "Kimi K2.5 (official — multimodal, 256K context)",
+        "url": "https://github.com/MoonshotAI/Kimi-K2.5",
+        "notes": "Vision-to-code, thinking mode, 256K context. Free & open-source.",
+    },
+    {
         "name": "Hugging Face (free model hub)",
         "url": "https://huggingface.co/moonshotai",
-        "notes": "Download Kimi K2 weights for free and run offline via transformers/vLLM.",
+        "notes": "Download Kimi K2 / K2.5 weights for free and run offline via transformers/vLLM.",
     },
     {
         "name": "Ollama (one-command local LLM runner)",
@@ -118,17 +123,21 @@ class StudentAccess:
         return "\n".join(lines)
 
     def get_local_setup_guide(self) -> str:
-        """Return a step-by-step guide to running Kimi K2 locally for free."""
+        """Return a step-by-step guide to running Kimi K2 / K2.5 locally for free."""
         guide = textwrap.dedent("""\
-            🚀 RUN KIMI K2 LOCALLY — ZERO COST SETUP
-            ==========================================
+            🚀 RUN KIMI K2 / K2.5 LOCALLY — ZERO COST SETUP
+            =================================================
+
+            ── KIMI K2 (official: github.com/MoonshotAI/Kimi-K2) ──────────
 
             Option A: vLLM (fastest, needs a GPU)
             ----------------------------------------
             pip install vllm
             vllm serve moonshotai/Kimi-K2-Instruct \\
                 --tensor-parallel-size 4 \\
-                --max-model-len 32768
+                --max-model-len 32768 \\
+                --enable-auto-tool-choice \\
+                --tool-call-parser kimi_k2
 
             Option B: Hugging Face Transformers (CPU/GPU)
             -----------------------------------------------
@@ -143,20 +152,50 @@ class StudentAccess:
             print(tok.decode(out[0], skip_special_tokens=True))
             EOF
 
-            Option C: Ollama (easiest, any machine)
-            ----------------------------------------
-            # Install Ollama from https://ollama.com, then:
-            ollama run kimi-k2   # downloads & runs in one command
+            Option C: Ollama with FORGE Modelfile (easiest)
+            -------------------------------------------------
+            # 1. Download quantised GGUF from HuggingFace:
+            #    https://huggingface.co/moonshotai/Kimi-K2-Instruct
+            # 2. Edit ollama/Modelfile.kimi-k2 → set FROM to your GGUF path
+            # 3. Create and run:
+            ollama create kimi-k2-forge -f ollama/Modelfile.kimi-k2
+            ollama run kimi-k2-forge
 
             Option D: Google Colab (no local GPU needed)
             ---------------------------------------------
             1. Open https://colab.research.google.com
             2. Set Runtime → GPU → T4 (free tier)
-            3. Run:
-               !pip install vllm
-               # Then use Option A commands above
+            3. !pip install vllm  then run Option A
 
-            💡 TIP: All four options are completely free for students.
+            ── KIMI K2.5 (official: github.com/MoonshotAI/Kimi-K2.5) ──────
+
+            K2.5 adds: multimodal (vision-to-code), 256K context,
+            thinking mode, and higher SWE-bench scores (76.8 %).
+
+            Option A: Ollama with FORGE Modelfile
+            ----------------------------------------
+            # 1. Download GGUF from https://huggingface.co/moonshotai/Kimi-K2.5
+            # 2. Edit ollama/Modelfile.kimi-k2.5 → set FROM to your GGUF path
+            ollama create kimi-k2.5-forge -f ollama/Modelfile.kimi-k2.5
+            ollama run kimi-k2.5-forge
+
+            Thinking mode (for hard problems):
+            ollama run kimi-k2.5-forge --parameter temperature 1.0
+
+            Option B: vLLM with thinking mode
+            ----------------------------------
+            vllm serve moonshotai/Kimi-K2.5 \\
+                --tensor-parallel-size 16 \\
+                --max-model-len 65536
+
+            ── ABSORB SKILLS FROM BOTH OFFICIAL REPOS ───────────────────
+
+            python3 kimi_skill_absorber.py --generate
+
+            This reads both official MoonshotAI repos, extracts all
+            programming skills, and regenerates ollama/Modelfile.combined.
+
+            💡 TIP: All options are completely free for students.
         """)
         return guide
 
