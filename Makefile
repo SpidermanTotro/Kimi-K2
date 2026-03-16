@@ -75,6 +75,14 @@ test-ripper:
 	@echo "🧪 Testing AI Ripper..."
 	@python3 test_ai_ripper.py
 
+test-benchmarks:
+	@echo "🧪 Testing Benchmark Framework..."
+	@python3 test_benchmark_framework.py
+
+run-benchmarks:
+	@echo "📊 Running Benchmark Framework..."
+	@python3 benchmark_framework.py
+
 help:
 	@echo "THE FORGE - Build System"
 	@echo ""
@@ -93,3 +101,7 @@ help:
 	@echo "  make run-ripper-gui - Start AI Ripper GUI"
 	@echo "  make run-ripper-cli - Show AI Ripper CLI help"
 	@echo "  make test-ripper    - Run AI Ripper tests"
+	@echo ""
+	@echo "Benchmark targets:"
+	@echo "  make test-benchmarks - Run benchmark framework tests"
+	@echo "  make run-benchmarks  - Run benchmark framework"
