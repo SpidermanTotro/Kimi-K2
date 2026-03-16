@@ -9,6 +9,9 @@ dist/*.zip
 # Keep checksums
 !dist/checksums.json
 
+# Generated reports
+benchmark_report.md
+
 # IDE
 .vscode/
 .idea/

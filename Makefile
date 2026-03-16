@@ -35,6 +35,21 @@ test:
 	@python3 -m py_compile *.py 2>/dev/null || true
 	@echo "✅ Tests passed"
 
+run-benchmarks:
+	@echo "🎯 Running benchmark tests..."
+	@python3 test_executor.py --all --report
+	@echo "✅ Benchmarks complete - see benchmark_report.md"
+
+run-benchmarks-coding:
+	@echo "🎯 Running coding benchmarks..."
+	@python3 test_executor.py --all --category coding
+	@echo "✅ Coding benchmarks complete"
+
+run-benchmarks-math:
+	@echo "🎯 Running math benchmarks..."
+	@python3 test_executor.py --all --category math
+	@echo "✅ Math benchmarks complete"
+
 clean:
 	@echo "🧹 Cleaning build artifacts..."
 	@rm -rf $(BUILD_DIR) $(DIST_DIR)
@@ -75,3 +90,6 @@ help:
 	@echo "  make run-gui   - Start GUI"
 	@echo "  make run-server - Start server"
 	@echo "  make run-cli   - Start CLI"
+	@echo "  make run-benchmarks - Run all benchmark tests"
+	@echo "  make run-benchmarks-coding - Run coding benchmarks only"
+	@echo "  make run-benchmarks-math - Run math benchmarks only"
