@@ -47,3 +47,6 @@ htmlcov/
 # Temporary files
 /tmp/
 *.tmp
+
+# Benchmark results (runtime artifacts)
+benchmark_results/

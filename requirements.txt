@@ -4,6 +4,10 @@
 Flask>=2.3.0
 Flask-CORS>=4.0.0
 
+# Benchmark system dependencies
+matplotlib>=3.7.0
+numpy>=1.24.0
+
 # Core implementation (no external dependencies required!)
 
 # Optional: For vLLM model deployment
