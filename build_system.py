@@ -183,6 +183,21 @@ class ForgeBuilder:
         # Create a combined documentation file in build directory
         combined_doc = self.build_dir / "COMPLETE_DOCUMENTATION.md"
         
+        # Track used anchors to ensure uniqueness
+        used_anchors = set()
+        doc_anchors = {}
+        
+        for doc in sorted(all_docs):
+            anchor = make_anchor(doc.name)
+            # Ensure uniqueness by appending numbers if needed
+            original_anchor = anchor
+            counter = 1
+            while anchor in used_anchors:
+                anchor = f"{original_anchor}-{counter}"
+                counter += 1
+            used_anchors.add(anchor)
+            doc_anchors[doc] = anchor
+        
         with open(combined_doc, 'w', encoding='utf-8') as outfile:
             outfile.write("# THE FORGE - Complete Documentation\n\n")
             outfile.write(f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n")
@@ -191,13 +206,13 @@ class ForgeBuilder:
             # Add table of contents
             outfile.write("## Table of Contents\n\n")
             for i, doc in enumerate(sorted(all_docs), 1):
-                anchor = make_anchor(doc.name)
+                anchor = doc_anchors[doc]
                 outfile.write(f"{i}. [{doc.name}](#{anchor})\n")
             outfile.write("\n---\n\n")
             
             # Combine all documentation
             for doc in sorted(all_docs):
-                anchor = make_anchor(doc.name)
+                anchor = doc_anchors[doc]
                 outfile.write(f'\n<a id="{anchor}"></a>\n\n')
                 outfile.write(f"# {doc.name}\n\n")
                 try:
@@ -205,7 +220,7 @@ class ForgeBuilder:
                         outfile.write(infile.read())
                     outfile.write("\n\n---\n\n")
                 except Exception as e:
-                    outfile.write(f"Error reading {doc.name}: {e}\n\n")
+                    outfile.write(f"Error reading {doc}: {e}\n\n")
         
         print(f"   ✓ Created combined documentation: {combined_doc.name}")
         print(f"   ✓ Size: {combined_doc.stat().st_size / 1024:.2f} KB")
