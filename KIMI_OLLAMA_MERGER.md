@@ -31,20 +31,20 @@ All 12 categories from every Kimi generation are included:
 
 | # | Category | Skills merged |
 |---|----------|--------------|
-| 1 | Programming & Code | 27 (Python, Rust, Go, agentic SWE, TDD, …) |
-| 2 | Content & Writing | 13 (book writing, academic papers, SEO, …) |
-| 3 | Gaming Enhancement | 9 (50+ Pokémon, WoW servers, ROM upscaling, …) |
-| 4 | Video & Image Processing | 9 (VHS→8K restoration, colourisation, …) |
-| 5 | Multimedia & Productivity | 14 (NLE video editing, audio restoration, …) |
-| 6 | GitHub & Version Control | 16 (full lifecycle, monorepo, security advisories) |
-| 7 | File Handling & Processing | 9 (30+ types, binary diff, archives) |
-| 8 | AI / ML & Advanced Tech | 9 (RAG, fine-tuning, quantisation, …) |
-| 9 | DevOps & Deployment | 14 (GitOps, service mesh, chaos engineering, …) |
-| 10 | Security & Compliance | 13 (OWASP, pentest, SOC2/HIPAA mapping, …) |
-| 11 | Ecosystem & Character | 7 (narrative systems, emotional climate, …) |
-| 12 | Unique Forge Features | 6 (131K context, self-hosted, zero-cost) |
+| 1 | Programming & Code | 83 (Python, Rust, Go, agentic SWE, TDD, …) |
+| 2 | Content & Writing | 60 (book writing, academic papers, SEO, …) |
+| 3 | Gaming Enhancement | 28 (50+ Pokémon, WoW servers, ROM upscaling, …) |
+| 4 | Video & Image Processing | 31 (VHS→8K restoration, colourisation, …) |
+| 5 | Multimedia & Productivity | 62 (NLE video editing, audio restoration, …) |
+| 6 | GitHub & Version Control | 33 (full lifecycle, monorepo, security advisories) |
+| 7 | File Handling & Processing | 16 (30+ types, binary diff, archives) |
+| 8 | AI / ML & Advanced Tech | 15 (RAG, fine-tuning, quantisation, …) |
+| 9 | DevOps & Deployment | 21 (GitOps, service mesh, chaos engineering, …) |
+| 10 | Security & Compliance | 19 (OWASP, pentest, SOC2/HIPAA mapping, …) |
+| 11 | Ecosystem & Character | 16 (narrative systems, emotional climate, …) |
+| 12 | Unique Forge Features | 22 (131K context, self-hosted, zero-cost) |
 
-**Total: 141 skills, 29 programming languages.**
+**Total: 406 skills, 30 programming languages.**
 
 ---
 
@@ -88,7 +88,7 @@ Output:
 
 ```
 limex_config.json           ← provenance record
-kimi_training_data.jsonl    ← 182-example Alpaca JSONL training set
+kimi_training_data.jsonl    ← 464-example Alpaca JSONL training set
 Modelfile.kimi-free-32b     ← Ollama Modelfile, 32 GB variant
 Modelfile.kimi-free-16b     ← Ollama Modelfile, 16 GB variant
 ```
@@ -203,7 +203,7 @@ make run-kimi-16b          # ollama run kimi-free-16b
 | File | Description |
 |------|-------------|
 | `limex_config.json` | Full provenance: merged profile, variant configs, source profiles |
-| `kimi_training_data.jsonl` | 182 Alpaca examples — skills, hello-worlds (29 langs), payment-refusal patterns, workflows |
+| `kimi_training_data.jsonl` | 464 Alpaca examples — skills, hello-worlds (30 langs), payment-refusal patterns, rich coding/writing/DevOps/workflow examples |
 | `Modelfile.kimi-free-32b` | Ollama Modelfile, 32 GB |
 | `Modelfile.kimi-free-16b` | Ollama Modelfile, 16 GB |
 
@@ -231,3 +231,13 @@ response = system.process("Restore this VHS video to 4K quality")
 | Out-of-memory during create | Use the 16 GB variant or reduce `num_ctx` |
 | Slow first response | Ollama loads weights on first call; subsequent calls are faster |
 | Model refuses payment requests | Expected — those skills were intentionally removed |
+
+---
+
+## Further reading
+
+| Document | What it covers |
+|---|---|
+| [COMPARISON.md](COMPARISON.md) | Honest feature comparison vs GPT-4o, Claude 3.5, Gemini 1.5 Pro |
+| [REALITY_CHECK.md](REALITY_CHECK.md) | What's real, what's aspirational — plain English |
+| [unsloth_train.py](unsloth_train.py) | Fine-tuning the model on your own data |
