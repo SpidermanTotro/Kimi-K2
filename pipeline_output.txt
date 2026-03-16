@@ -1,0 +1,6 @@
+Traceback (most recent call last):
+  File "/home/runner/work/Kimi-K2/Kimi-K2/ai_analysis_pipeline.py", line 15, in <module>
+    from ai_modular_splitter import LLMModularSplitter
+  File "/home/runner/work/Kimi-K2/Kimi-K2/ai_modular_splitter.py", line 11, in <module>
+    import numpy as np
+ModuleNotFoundError: No module named 'numpy'
