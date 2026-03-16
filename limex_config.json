@@ -1,106 +1,259 @@
 {
-  "limex_version": "1.0.0",
+  "limex_version": "2.0.0",
   "framework": "Lightweight Integrated Model EXchange (limex)",
-  "purpose": "Merge Kimi coding models into a unified Ollama LLM",
+  "purpose": "Merge ALL Kimi skills into a unified Ollama LLM, with payment/monetisation capabilities removed",
   "merged_model": {
-    "display_name": "KimiCoder (limex unified)",
+    "display_name": "KimiFree (limex \u2014 all skills, no payment)",
     "source_models": [
       "Kimi (v1)",
       "Kimi 2",
       "Kimi 2.5"
     ],
-    "coding_strengths": [
-      "Python scripting and automation",
-      "REST API design",
-      "Data-structure algorithms",
-      "Basic web development (HTML/CSS/JS)",
-      "SQL and relational-database queries",
-      "Full-stack web development (React, Node.js, FastAPI)",
-      "Systems programming in C, C++, Rust",
-      "Multi-file refactoring and code review",
-      "CI/CD pipeline configuration (GitHub Actions, Docker)",
-      "Mathematical algorithm implementation",
-      "Security-hardened code generation",
-      "Agentic software engineering (SWE-bench level)",
-      "Long-context repository understanding (>100 K tokens)",
-      "Advanced debugging and root-cause analysis",
-      "Test-driven development with full coverage",
-      "Performance optimisation and profiling",
-      "Multi-language polyglot projects",
-      "Infrastructure-as-code (Terraform, Pulumi, Kubernetes)"
-    ],
+    "skills_by_category": {
+      "programming": [
+        "Python scripting and automation",
+        "REST API design",
+        "Data-structure algorithms",
+        "Basic web development (HTML/CSS/JS)",
+        "SQL and relational-database queries",
+        "Shell scripting (bash)",
+        "Unit-test generation",
+        "Code documentation (docstrings, comments)",
+        "Full-stack web development (React, Node.js, FastAPI)",
+        "Systems programming in C, C++, Rust",
+        "Multi-file refactoring and code review",
+        "CI/CD pipeline configuration (GitHub Actions, Docker)",
+        "Mathematical algorithm implementation",
+        "Security-hardened code generation",
+        "Type-safe TypeScript applications",
+        "Go microservices",
+        "Java enterprise patterns",
+        "Performance optimisation and profiling",
+        "Agentic software engineering (SWE-bench level)",
+        "Long-context repository understanding (>100 K tokens)",
+        "Advanced debugging and root-cause analysis",
+        "Test-driven development with full coverage",
+        "Multi-language polyglot projects",
+        "Formal verification patterns",
+        "Compiler and interpreter implementation",
+        "Embedded and real-time systems programming",
+        "Concurrent and parallel programming (async, threads, actors)"
+      ],
+      "writing": [
+        "Technical documentation",
+        "README generation",
+        "Basic report writing",
+        "Long-form content creation",
+        "Book chapter drafting",
+        "SEO-optimised article writing",
+        "API reference documentation",
+        "User-guide authoring",
+        "Award-winning book writing with series planning",
+        "Screenplay and dialogue writing",
+        "Academic paper drafting",
+        "Technical white-paper authoring",
+        "Sequel and continuity detection"
+      ],
+      "gaming": [
+        "Game logic implementation",
+        "Save-state management",
+        "ROM metadata enrichment",
+        "50+ Pok\u00e9mon game enhancement",
+        "WoW private-server creation (12 expansions)",
+        "ROM upscaling (SD \u2192 8K)",
+        "Game-save editor tooling",
+        "Emulator configuration automation",
+        "Speedrun route analysis"
+      ],
+      "video_image": [
+        "Video upscaling pipeline (SD \u2192 4K)",
+        "Image upscaling and enhancement",
+        "Colour correction scripts",
+        "Thumbnail generation",
+        "Historical restoration (VHS \u2192 8K, 1956-era films)",
+        "AI-driven colourisation of B&W footage",
+        "Frame interpolation (24fps \u2192 60fps)",
+        "Artefact removal and noise reduction",
+        "Universal format conversion (any \u2192 any)",
+        "Batch library upgrade (DVD \u2192 4K)"
+      ],
+      "multimedia": [
+        "Professional video editing workflow",
+        "Audio recording and processing",
+        "Podcast production pipeline",
+        "Full non-linear video editing suite (unlimited tracks)",
+        "Advanced word processing (styles, TOC, cross-references)",
+        "Professional photo editing (layers, masks, healing)",
+        "TV show recording and cataloguing (personal use only)",
+        "FM radio recording (personal use only)",
+        "Audio restoration (vinyl \u2192 digital)",
+        "Screencast and tutorial production",
+        "YouTube channel analytics (views, CTR, audience retention)",
+        "YouTube content strategy and topic research"
+      ],
+      "github": [
+        "Git operations (commit, branch, merge)",
+        "Pull request descriptions",
+        "Repository management (create, fork, clone)",
+        "Git operations (rebase, cherry-pick, bisect)",
+        "Pull request review and merge",
+        "Issue triage and labelling",
+        "GitHub Actions workflow authoring",
+        "Branch protection rules",
+        "Full repository lifecycle management",
+        "Automated code review bots",
+        "Dependency graph analysis",
+        "Security advisory integration",
+        "Multi-repo monorepo orchestration"
+      ],
+      "files": [
+        "File upload and analysis",
+        "Text/CSV/JSON parsing",
+        "30+ file-type analysis (PDF, DOCX, XLSX, images)",
+        "Batch file transformation",
+        "Binary file inspection",
+        "Universal file-type detection and parsing",
+        "Archive creation and extraction (zip, tar, 7z)",
+        "Binary diff and patch generation"
+      ],
+      "ai_ml": [
+        "Machine learning model explanation",
+        "Machine learning pipeline design",
+        "Neural network architecture explanation",
+        "Hyperparameter tuning guidance",
+        "Model evaluation metrics",
+        "LLM fine-tuning workflow design",
+        "RAG (retrieval-augmented generation) pipelines",
+        "Vector database integration",
+        "Model quantisation guidance",
+        "On-device inference optimisation"
+      ],
+      "devops": [
+        "Basic Dockerfile authoring",
+        "Environment variable management",
+        "Docker Compose multi-service stacks",
+        "Kubernetes manifest generation",
+        "Terraform infrastructure-as-code",
+        "CI/CD pipeline design",
+        "Cloud deployment (AWS, GCP, Azure patterns)",
+        "GitOps workflow design",
+        "Service mesh configuration (Istio, Linkerd)",
+        "Observability stack (Prometheus, Grafana, Loki)",
+        "Chaos engineering experiments",
+        "Zero-downtime deployment strategies"
+      ],
+      "security": [
+        "Syntax-level bug detection",
+        "Basic input validation",
+        "OWASP Top-10 vulnerability detection",
+        "Secrets scanning",
+        "Dependency CVE analysis",
+        "Authentication flow review",
+        "SQL injection prevention",
+        "Penetration test scripting",
+        "Threat-model documentation",
+        "Zero-trust architecture design",
+        "Cryptography implementation review",
+        "Compliance mapping (SOC2, ISO 27001, HIPAA)"
+      ],
+      "ecosystem": [
+        "FORGE tool integration",
+        "Plugin architecture design",
+        "Character world and narrative system design",
+        "Emotional-climate tracking system",
+        "Continuous-learning loop integration",
+        "Community-driven open-source contribution workflows"
+      ],
+      "unique_features": [
+        "Instruction-following with context window 8K",
+        "32K context window for large codebases",
+        "Never-reset memory patterns",
+        "131K context window for full repository ingestion",
+        "Cosmic / spiritual reasoning layer",
+        "Self-hosted, zero-cost deployment on local hardware"
+      ]
+    },
     "supported_languages": [
       "bash",
       "c",
       "cpp",
       "css",
+      "dart",
       "dockerfile",
+      "elixir",
       "go",
       "graphql",
+      "haskell",
       "hcl",
       "html",
       "java",
       "javascript",
       "kotlin",
+      "lua",
+      "perl",
+      "php",
+      "powershell",
       "python",
+      "r",
+      "ruby",
       "rust",
+      "scala",
       "sql",
       "swift",
       "terraform",
       "typescript",
       "yaml"
     ],
-    "context_window": 131072
+    "context_window": 131072,
+    "payment_skills_removed": [
+      "YouTube monetization insights: Ad type performance",
+      "YouTube monetization insights: CPM analysis",
+      "YouTube monetization insights: CPM analysis (cost per 1000 views)",
+      "YouTube monetization insights: Membership insights",
+      "YouTube monetization insights: Merchandise click tracking",
+      "YouTube monetization insights: RPM tracking",
+      "YouTube monetization insights: Revenue estimates",
+      "YouTube monetization insights: Sponsorship value calculation",
+      "YouTube monetization insights: Super Chat tracking"
+    ]
   },
   "variants": {
-    "kimi-coding-32b": {
+    "kimi-free-32b": {
       "ollama_base": "qwen2.5-coder:32b-instruct-q4_K_M",
-      "modelfile": "Modelfile.kimi-coding-32b",
+      "modelfile": "Modelfile.kimi-free-32b",
       "ram_target_gb": 32,
       "quantization": "Q4_K_M",
       "num_ctx": 32768,
-      "ollama_model_name": "kimi-coding-32b",
-      "description": "Full-power variant \u2014 requires 32 GB RAM / VRAM"
+      "ollama_model_name": "kimi-free-32b",
+      "description": "Full-power free variant \u2014 32 GB RAM / VRAM"
     },
-    "kimi-coding-16b": {
+    "kimi-free-16b": {
       "ollama_base": "qwen2.5-coder:14b-instruct-q4_K_M",
-      "modelfile": "Modelfile.kimi-coding-16b",
+      "modelfile": "Modelfile.kimi-free-16b",
       "ram_target_gb": 16,
       "quantization": "Q4_K_M",
       "num_ctx": 16384,
-      "ollama_model_name": "kimi-coding-16b",
-      "description": "Efficient variant \u2014 runs in 16 GB RAM / VRAM"
+      "ollama_model_name": "kimi-free-16b",
+      "description": "Efficient free variant \u2014 16 GB RAM / VRAM"
     }
   },
   "source_profiles": {
     "kimi-v1": {
       "display_name": "Kimi (v1)",
-      "coding_strengths": [
-        "Python scripting and automation",
-        "REST API design",
-        "Data-structure algorithms",
-        "Basic web development (HTML/CSS/JS)",
-        "SQL and relational-database queries"
-      ],
+      "strip_payment": false,
       "supported_languages": [
         "python",
         "javascript",
         "html",
         "css",
-        "sql"
+        "sql",
+        "bash"
       ],
       "context_window": 8192
     },
     "kimi-v2": {
       "display_name": "Kimi 2",
-      "coding_strengths": [
-        "Full-stack web development (React, Node.js, FastAPI)",
-        "Systems programming in C, C++, Rust",
-        "Multi-file refactoring and code review",
-        "CI/CD pipeline configuration (GitHub Actions, Docker)",
-        "Mathematical algorithm implementation",
-        "Security-hardened code generation"
-      ],
+      "strip_payment": true,
       "supported_languages": [
         "python",
         "javascript",
@@ -118,15 +271,7 @@
     },
     "kimi-v2.5": {
       "display_name": "Kimi 2.5",
-      "coding_strengths": [
-        "Agentic software engineering (SWE-bench level)",
-        "Long-context repository understanding (>100 K tokens)",
-        "Advanced debugging and root-cause analysis",
-        "Test-driven development with full coverage",
-        "Performance optimisation and profiling",
-        "Multi-language polyglot projects",
-        "Infrastructure-as-code (Terraform, Pulumi, Kubernetes)"
-      ],
+      "strip_payment": true,
       "supported_languages": [
         "python",
         "javascript",
@@ -144,7 +289,17 @@
         "terraform",
         "hcl",
         "sql",
-        "graphql"
+        "graphql",
+        "lua",
+        "ruby",
+        "php",
+        "r",
+        "scala",
+        "elixir",
+        "haskell",
+        "dart",
+        "perl",
+        "powershell"
       ],
       "context_window": 131072
     }

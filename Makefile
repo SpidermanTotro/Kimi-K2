@@ -1,7 +1,9 @@
 # THE FORGE - Master Makefile
 # Builds entire project across all languages
 
-.PHONY: all build test clean install dist
+.PHONY: all build test clean install dist \
+        merge-kimi merge-kimi-32b merge-kimi-16b \
+        install-kimi-ollama run-kimi-32b run-kimi-16b
 
 # Detect OS
 UNAME_S := $(shell uname -s)
@@ -62,10 +64,12 @@ run-cli:
 	@echo "💻 Starting THE FORGE CLI..."
 	@python3 forge_cli.py
 
-## ── Kimi Ollama Merger (limex) ─────────────────────────────────────────
+## ── Kimi All-Skills Merger (limex) ────────────────────────────────────
+## Merges ALL Kimi skills, strips payment features, generates Ollama
+## Modelfiles and an Alpaca-format JSONL fine-tuning dataset.
 
 merge-kimi:
-	@echo "🔀 Merging Kimi coding models (limex framework)..."
+	@echo "🔀 Merging all Kimi skills (limex framework)..."
 	@python3 kimi_ollama_merger.py
 	@echo "✅ Merge complete"
 
@@ -77,17 +81,17 @@ merge-kimi-16b:
 	@echo "🔀 Generating 16 GB variant..."
 	@python3 kimi_ollama_merger.py --variant 16b
 
-install-kimi-ollama: merge-kimi
-	@echo "📦 Installing merged models into Ollama..."
+install-kimi-ollama:
+	@echo "📦 Generating artefacts and installing into Ollama..."
 	@python3 kimi_ollama_merger.py --install
 
 run-kimi-32b:
-	@echo "🚀 Running KimiCoder 32B..."
-	@ollama run kimi-coding-32b
+	@echo "🚀 Running KimiFree 32B..."
+	@ollama run kimi-free-32b
 
 run-kimi-16b:
-	@echo "🚀 Running KimiCoder 16B..."
-	@ollama run kimi-coding-16b
+	@echo "🚀 Running KimiFree 16B..."
+	@ollama run kimi-free-16b
 
 help:
 	@echo "THE FORGE - Build System"
@@ -103,10 +107,10 @@ help:
 	@echo "  make run-server       - Start server"
 	@echo "  make run-cli          - Start CLI"
 	@echo ""
-	@echo "Kimi Ollama Merger (limex):"
-	@echo "  make merge-kimi       - Generate all Ollama artefacts"
-	@echo "  make merge-kimi-32b   - Generate 32 GB Modelfile only"
-	@echo "  make merge-kimi-16b   - Generate 16 GB Modelfile only"
-	@echo "  make install-kimi-ollama - Install models into Ollama"
-	@echo "  make run-kimi-32b     - Run KimiCoder 32B interactively"
-	@echo "  make run-kimi-16b     - Run KimiCoder 16B interactively"
+	@echo "Kimi All-Skills Merger (limex):"
+	@echo "  make merge-kimi           - Merge all skills, strip payment, generate artefacts"
+	@echo "  make merge-kimi-32b       - 32 GB Modelfile + training data only"
+	@echo "  make merge-kimi-16b       - 16 GB Modelfile + training data only"
+	@echo "  make install-kimi-ollama  - Generate artefacts + ollama create both variants"
+	@echo "  make run-kimi-32b         - ollama run kimi-free-32b"
+	@echo "  make run-kimi-16b         - ollama run kimi-free-16b"

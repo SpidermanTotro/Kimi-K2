@@ -1,14 +1,14 @@
-# Kimi Coding Model Merger — Ollama / limex Guide
+# Kimi All-Skills Model Merger — Ollama / limex Guide
 
-> **TL;DR** — This tool strips the coding capabilities from **Kimi**,
-> **Kimi 2**, and **Kimi 2.5**, merges them into a single unified system
-> prompt, and generates two ready-to-use [Ollama](https://ollama.com)
-> model configurations:
+> **TL;DR** — Strips and merges **all** skills from Kimi, Kimi 2, and
+> Kimi 2.5 into two ready-to-use [Ollama](https://ollama.com) models,
+> with every payment / monetisation capability removed so it costs
+> nothing to run forever.
 >
-> | Variant | RAM target | Ollama model name |
-> |---------|-----------|-------------------|
-> | 32 GB   | 32 GB     | `kimi-coding-32b` |
-> | 16 GB   | 16 GB     | `kimi-coding-16b` |
+> | Model | RAM | Ollama name |
+> |-------|-----|-------------|
+> | KimiFree 32B | 32 GB | `kimi-free-32b` |
+> | KimiFree 16B | 16 GB | `kimi-free-16b` |
 
 ---
 
@@ -17,11 +17,53 @@
 **limex** (**L**ightweight **I**ntegrated **M**odel **EX**change) is the
 small framework used here to:
 
-1. Define per-generation coding-skill profiles (strengths, languages,
-   context window).
-2. Deduplicate and union those profiles into one merged configuration.
-3. Emit Ollama `Modelfile`s and a `limex_config.json` provenance record
-   from that merged configuration.
+1. Define per-generation skill profiles across all 12 categories.
+2. Strip payment / monetisation skills before merging.
+3. Union profiles into one merged configuration.
+4. Emit Ollama `Modelfile`s, a `limex_config.json` provenance record,
+   and a `kimi_training_data.jsonl` fine-tuning dataset.
+
+---
+
+## Skill categories merged
+
+All 12 categories from every Kimi generation are included:
+
+| # | Category | Skills merged |
+|---|----------|--------------|
+| 1 | Programming & Code | 27 (Python, Rust, Go, agentic SWE, TDD, …) |
+| 2 | Content & Writing | 13 (book writing, academic papers, SEO, …) |
+| 3 | Gaming Enhancement | 9 (50+ Pokémon, WoW servers, ROM upscaling, …) |
+| 4 | Video & Image Processing | 9 (VHS→8K restoration, colourisation, …) |
+| 5 | Multimedia & Productivity | 14 (NLE video editing, audio restoration, …) |
+| 6 | GitHub & Version Control | 16 (full lifecycle, monorepo, security advisories) |
+| 7 | File Handling & Processing | 9 (30+ types, binary diff, archives) |
+| 8 | AI / ML & Advanced Tech | 9 (RAG, fine-tuning, quantisation, …) |
+| 9 | DevOps & Deployment | 14 (GitOps, service mesh, chaos engineering, …) |
+| 10 | Security & Compliance | 13 (OWASP, pentest, SOC2/HIPAA mapping, …) |
+| 11 | Ecosystem & Character | 7 (narrative systems, emotional climate, …) |
+| 12 | Unique Forge Features | 6 (131K context, self-hosted, zero-cost) |
+
+**Total: 141 skills, 29 programming languages.**
+
+---
+
+## Payment skills removed
+
+The following capabilities are stripped from **Kimi 2** and **Kimi 2.5**
+before the merge so the model has zero monetisation features:
+
+- YouTube monetization insights: Revenue estimates
+- YouTube monetization insights: CPM analysis (cost per 1000 views)
+- YouTube monetization insights: RPM tracking
+- YouTube monetization insights: Ad type performance
+- YouTube monetization insights: Sponsorship value calculation
+- YouTube monetization insights: Super Chat tracking
+- YouTube monetization insights: Membership insights
+- YouTube monetization insights: Merchandise click tracking
+
+The model will politely decline any request related to these topics and
+explain that they have been intentionally removed.
 
 ---
 
@@ -32,35 +74,33 @@ small framework used here to:
 | Tool | Purpose |
 |------|---------|
 | Python 3.8+ | Run the merger script |
-| [Ollama](https://ollama.com/download) | Build and run the model locally |
+| [Ollama](https://ollama.com/download) | Build and run models locally |
 
-### 1 — Generate Ollama artefacts
+### 1 — Generate all artefacts
 
 ```bash
 python3 kimi_ollama_merger.py
-# or via Make:
+# or:
 make merge-kimi
 ```
 
-This produces three files:
+Output:
 
 ```
-limex_config.json          ← full provenance record
-Modelfile.kimi-coding-32b  ← Ollama Modelfile, 32 GB variant
-Modelfile.kimi-coding-16b  ← Ollama Modelfile, 16 GB variant
+limex_config.json           ← provenance record
+kimi_training_data.jsonl    ← 182-example Alpaca JSONL training set
+Modelfile.kimi-free-32b     ← Ollama Modelfile, 32 GB variant
+Modelfile.kimi-free-16b     ← Ollama Modelfile, 16 GB variant
 ```
 
-### 2 — Install one or both models into Ollama
+### 2 — Install in Ollama
 
 ```bash
-# 32 GB variant (requires ~20 GB disk + 32 GB RAM/VRAM)
-ollama create kimi-coding-32b -f Modelfile.kimi-coding-32b
-
-# 16 GB variant (requires ~10 GB disk + 16 GB RAM/VRAM)
-ollama create kimi-coding-16b -f Modelfile.kimi-coding-16b
+ollama create kimi-free-32b -f Modelfile.kimi-free-32b
+ollama create kimi-free-16b -f Modelfile.kimi-free-16b
 ```
 
-Or let the script do it for you:
+Or let the script handle both steps:
 
 ```bash
 python3 kimi_ollama_merger.py --install
@@ -68,42 +108,70 @@ python3 kimi_ollama_merger.py --install
 make install-kimi-ollama
 ```
 
-### 3 — Run the model
+### 3 — Run
 
 ```bash
-ollama run kimi-coding-32b
+ollama run kimi-free-32b
 # or:
-ollama run kimi-coding-16b
+make run-kimi-32b
 ```
 
 ---
 
-## Choosing a variant
+## Fine-tuning with the generated training data
 
-| | `kimi-coding-32b` | `kimi-coding-16b` |
+`kimi_training_data.jsonl` is standard Alpaca format and works with any
+major fine-tuning framework:
+
+```jsonl
+{"instruction": "...", "input": "", "output": "..."}
+```
+
+### unsloth (recommended for single-GPU)
+
+```python
+from unsloth import FastLanguageModel
+from datasets import load_dataset
+from trl import SFTTrainer
+
+model, tokenizer = FastLanguageModel.from_pretrained("kimi-free-16b")
+dataset = load_dataset("json", data_files="kimi_training_data.jsonl")
+trainer = SFTTrainer(model=model, train_dataset=dataset["train"], ...)
+trainer.train()
+```
+
+### mlx-lm (Apple Silicon)
+
+```bash
+mlx_lm.lora \
+  --model kimi-free-16b \
+  --data kimi_training_data.jsonl \
+  --iters 1000
+```
+
+### axolotl
+
+```yaml
+# axolotl config snippet
+base_model: kimi-free-16b
+datasets:
+  - path: kimi_training_data.jsonl
+    type: alpaca
+```
+
+---
+
+## Variant comparison
+
+| | `kimi-free-32b` | `kimi-free-16b` |
 |---|---|---|
 | **Ollama base** | `qwen2.5-coder:32b-instruct-q4_K_M` | `qwen2.5-coder:14b-instruct-q4_K_M` |
 | **RAM / VRAM** | ~32 GB | ~16 GB |
 | **Context window** | 32 768 tokens | 16 384 tokens |
 | **GPU layers** | 50 | 35 |
-| **Best for** | Complex, multi-file tasks | Fast iteration on smaller tasks |
-
----
-
-## Merged coding strengths
-
-The merged model inherits **all** strengths from every Kimi generation:
-
-| Source | Highlights |
-|--------|-----------|
-| **Kimi v1** | Python scripting, REST API design, SQL, basic web |
-| **Kimi 2** | Full-stack (React/FastAPI), C/C++/Rust, security, CI/CD |
-| **Kimi 2.5** | Agentic SWE, long-context (>100 K tokens), TDD, IaC |
-
-**Supported languages** (19 total):
-`bash` · `c` · `cpp` · `css` · `dockerfile` · `go` · `graphql` · `hcl` ·
-`html` · `java` · `javascript` · `kotlin` · `python` · `rust` · `sql` ·
-`swift` · `terraform` · `typescript` · `yaml`
+| **Best for** | Complex multi-file tasks | Fast iteration |
+| **Payment features** | ❌ None | ❌ None |
+| **Cost to run** | Free | Free |
 
 ---
 
@@ -113,55 +181,44 @@ The merged model inherits **all** strengths from every Kimi generation:
 python3 kimi_ollama_merger.py [options]
 
 Options:
-  --variant {32b,16b,all}   Which size variant to generate (default: all)
-  --install                 After generating, run `ollama create` locally
+  --variant {32b,16b,all}   Size variant to generate (default: all)
+  --install                 Also run `ollama create` after generating
 ```
 
 ### Make targets
 
 ```
-make merge-kimi            # Generate all artefacts
-make merge-kimi-32b        # 32 GB Modelfile only
-make merge-kimi-16b        # 16 GB Modelfile only
+make merge-kimi            # All artefacts (Modelfiles + training data)
+make merge-kimi-32b        # 32 GB variant only
+make merge-kimi-16b        # 16 GB variant only
 make install-kimi-ollama   # Generate + ollama create both variants
-make run-kimi-32b          # ollama run kimi-coding-32b
-make run-kimi-16b          # ollama run kimi-coding-16b
+make run-kimi-32b          # ollama run kimi-free-32b
+make run-kimi-16b          # ollama run kimi-free-16b
 ```
 
 ---
 
 ## Generated files
 
-### `limex_config.json`
-
-Machine-readable provenance record.  Contains the full merged profile, per-
-generation source profiles, and variant deployment parameters.  Use this in
-CI to verify that the Modelfiles were generated from the expected sources.
-
-### `Modelfile.kimi-coding-32b` / `Modelfile.kimi-coding-16b`
-
-Standard Ollama `Modelfile`s.  You can edit them directly to:
-
-- Swap the `FROM` base (e.g. to a locally downloaded GGUF file).
-- Adjust `PARAMETER num_ctx` for your available memory.
-- Add `PARAMETER num_gpu 0` to force CPU-only inference.
+| File | Description |
+|------|-------------|
+| `limex_config.json` | Full provenance: merged profile, variant configs, source profiles |
+| `kimi_training_data.jsonl` | 182 Alpaca examples — skills, hello-worlds (29 langs), payment-refusal patterns, workflows |
+| `Modelfile.kimi-free-32b` | Ollama Modelfile, 32 GB |
+| `Modelfile.kimi-free-16b` | Ollama Modelfile, 16 GB |
 
 ---
 
 ## Integration with THE FORGE
 
-The merged KimiCoder model is designed to complement the existing
-**THE FORGE ❤️ KIMI K2** integration:
-
 ```python
 from kimi_forge_unified import KimiForgeUnified
 
-# Point the unified system at the local Ollama endpoint
 system = KimiForgeUnified(config={
-    "model": "kimi-coding-32b",   # or kimi-coding-16b
+    "model": "kimi-free-32b",          # or kimi-free-16b
     "api_base": "http://localhost:11434/v1",
 })
-response = system.process("Refactor this Python module for async I/O")
+response = system.process("Restore this VHS video to 4K quality")
 ```
 
 ---
@@ -170,7 +227,7 @@ response = system.process("Refactor this Python module for async I/O")
 
 | Symptom | Fix |
 |---------|-----|
-| `ollama: command not found` | Install Ollama from <https://ollama.com/download> |
-| Out-of-memory during `ollama create` | Use the 16 GB variant or reduce `num_ctx` |
-| Slow first response | Ollama is loading model weights; subsequent calls are faster |
-| Wrong chat format | Edit `TEMPLATE` in the Modelfile to match your base model |
+| `ollama: command not found` | Install from <https://ollama.com/download> |
+| Out-of-memory during create | Use the 16 GB variant or reduce `num_ctx` |
+| Slow first response | Ollama loads weights on first call; subsequent calls are faster |
+| Model refuses payment requests | Expected — those skills were intentionally removed |
