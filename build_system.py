@@ -6,11 +6,26 @@ Builds entire project with all components
 
 import os
 import sys
+import re
 import subprocess
 import zipfile
 import json
 from pathlib import Path
 from datetime import datetime
+
+def make_anchor(text):
+    """Create a markdown anchor from text"""
+    # Convert to lowercase, replace spaces and underscores with hyphens
+    anchor = text.lower()
+    anchor = anchor.replace(' ', '-').replace('_', '-')
+    # Remove file extension
+    if anchor.endswith('.md'):
+        anchor = anchor[:-3]
+    # Remove special characters except hyphens
+    anchor = ''.join(c for c in anchor if c.isalnum() or c == '-')
+    # Remove multiple consecutive hyphens
+    anchor = re.sub(r'-+', '-', anchor)
+    return anchor.strip('-')
 
 class ForgeBuilder:
     """Complete build system for THE FORGE"""
@@ -168,21 +183,6 @@ class ForgeBuilder:
         # Create a combined documentation file in build directory
         combined_doc = self.build_dir / "COMPLETE_DOCUMENTATION.md"
         
-        def make_anchor(text):
-            """Create a markdown anchor from text"""
-            # Convert to lowercase, replace spaces and underscores with hyphens
-            anchor = text.lower()
-            anchor = anchor.replace(' ', '-').replace('_', '-')
-            # Remove file extension
-            if anchor.endswith('.md'):
-                anchor = anchor[:-3]
-            # Remove special characters except hyphens
-            anchor = ''.join(c for c in anchor if c.isalnum() or c == '-')
-            # Remove multiple consecutive hyphens
-            while '--' in anchor:
-                anchor = anchor.replace('--', '-')
-            return anchor.strip('-')
-        
         with open(combined_doc, 'w', encoding='utf-8') as outfile:
             outfile.write("# THE FORGE - Complete Documentation\n\n")
             outfile.write(f"Generated: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}\n\n")
@@ -205,7 +205,7 @@ class ForgeBuilder:
                         outfile.write(infile.read())
                     outfile.write("\n\n---\n\n")
                 except Exception as e:
-                    outfile.write(f"Error reading file: {e}\n\n")
+                    outfile.write(f"Error reading {doc.name}: {e}\n\n")
         
         print(f"   ✓ Created combined documentation: {combined_doc.name}")
         print(f"   ✓ Size: {combined_doc.stat().st_size / 1024:.2f} KB")
