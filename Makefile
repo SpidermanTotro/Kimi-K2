@@ -1,5 +1,6 @@
 # THE FORGE - Master Makefile
 # Builds entire project across all languages
+# Last Updated: March 16, 2026
 
 .PHONY: all build test clean install dist
 
@@ -15,7 +16,7 @@ endif
 # Build configuration
 BUILD_DIR = build
 DIST_DIR = dist
-VERSION = 1.0.0
+VERSION = 1.2.0
 
 all: build
 

@@ -2,6 +2,7 @@
 """
 THE FORGE ❤️ KIMI K2: Unified System
 =====================================
+Version: 1.2.0 - March 2026
 
 This module implements the marriage between THE FORGE and Kimi K2,
 creating a unified AI system that combines:

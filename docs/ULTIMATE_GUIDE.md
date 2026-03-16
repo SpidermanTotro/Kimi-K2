@@ -2121,7 +2121,7 @@ python -m vllm.entrypoints.openai.api_server --model ./model
 
 ---
 
-*Last Updated: 2025-11-11*  
+*Last Updated: 2026-03-16*  
 *Version: 1.0*  
 *Total Documentation: 6,900+ lines across 13 files*  
 *This document: 2,500+ lines - EVERYTHING IN ONE PLACE!*

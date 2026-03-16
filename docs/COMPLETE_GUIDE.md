@@ -1642,7 +1642,7 @@ Kimi K2 is released under the **Modified MIT License**. Free to use, modify, and
 
 ---
 
-*Last Updated: November 2025*
+*Last Updated: March 2026*
 *This is a living document - it grows as Kimi K2 grows*
 
 **THANK YOU FOR BEING PART OF THE KIMI K2 REVOLUTION! 🎉**

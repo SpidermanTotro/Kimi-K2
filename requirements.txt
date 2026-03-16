@@ -1,17 +1,24 @@
 # THE FORGE Implementation Requirements
+# Last Updated: March 16, 2026
 
 # Core dependencies for REST API server
-Flask>=2.3.0
+Flask>=3.0.0
 Flask-CORS>=4.0.0
 
-# Core implementation (no external dependencies required!)
+# Core analysis and visualization tools
+requests>=2.31.0
+matplotlib>=3.8.0
+numpy>=1.26.0
+Pillow>=10.0.0
+
+# Core implementation (Python standard library - no external dependencies required!)
 
 # Optional: For vLLM model deployment
-# vllm>=0.2.0  # For model deployment
-# sglang>=0.1.0  # Alternative deployment option
+# vllm>=0.5.0  # For model deployment
+# sglang>=0.2.0  # Alternative deployment option
 
 # Optional: For enhanced features
 # openai>=1.0.0  # For API compatibility
-# fastapi>=0.100.0  # Alternative to Flask
-# uvicorn>=0.20.0  # For running FastAPI
-# pydantic>=2.0.0  # For data validation
+# fastapi>=0.110.0  # Alternative to Flask
+# uvicorn>=0.28.0  # For running FastAPI
+# pydantic>=2.6.0  # For data validation

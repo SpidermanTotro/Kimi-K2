@@ -3,6 +3,7 @@
 THE FORGE AI - Complete Web-based GUI
 =====================================
 Professional interface with toolbars, icons, and all 865+ capabilities integrated.
+Version: 1.2.0 - March 2026
 """
 
 from flask import Flask, render_template, request, jsonify, send_from_directory
@@ -38,7 +39,8 @@ def api_init():
         'total_characters': sum(len(doc['content']) for doc in forge.documents.values()),
         'categories': list(set(cap['category'] for cap in forge.capabilities)),
         'status': 'ready',
-        'version': '1.0.0',
+        'version': '1.2.0',
+        'updated': 'March 2026',
         'name': 'THE FORGE AI'
     }
     
