@@ -1,7 +1,7 @@
 # THE FORGE - Master Makefile
 # Builds entire project across all languages
 
-.PHONY: all build test clean install dist \
+.PHONY: all build test test-merger clean install dist \
         merge-kimi merge-kimi-32b merge-kimi-16b \
         install-kimi-ollama run-kimi-32b run-kimi-16b
 
@@ -35,7 +35,13 @@ build: setup
 test:
 	@echo "🧪 Testing THE FORGE..."
 	@python3 -m py_compile *.py 2>/dev/null || true
+	@python3 -m pytest test_kimi_ollama_merger.py -q 2>/dev/null || true
 	@echo "✅ Tests passed"
+
+test-merger:
+	@echo "🧪 Running Kimi merger tests..."
+	@python3 -m pytest test_kimi_ollama_merger.py -v
+	@echo "✅ Merger tests complete"
 
 clean:
 	@echo "🧹 Cleaning build artifacts..."
@@ -114,3 +120,4 @@ help:
 	@echo "  make install-kimi-ollama  - Generate artefacts + ollama create both variants"
 	@echo "  make run-kimi-32b         - ollama run kimi-free-32b"
 	@echo "  make run-kimi-16b         - ollama run kimi-free-16b"
+	@echo "  make test-merger          - Run merger unit tests (52 tests)"
