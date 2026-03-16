@@ -83,7 +83,7 @@ Kimi K2 enhanced with THE FORGE becomes more capable across:
 - ✅ Coding (LiveCodeBench, SWE-bench)
 - ✅ Tool use (Tau2, AceBench)
 - ✅ Math/STEM (AIME, MATH)
-- ✅ Agentic tasks (SWE-bench Multilingual)
+- ✅ Agentic tasks (SWE-bench, Aider-Polyglot)
 - ✅ General knowledge (MMLU, GPQA)
 
 Both projects benefit: THE FORGE provides practical tools, Kimi K2 gains benchmark performance.
