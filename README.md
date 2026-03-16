@@ -128,7 +128,62 @@
 
 **See full roadmap:** [FORGE_KIMI_MARRIAGE.md](FORGE_KIMI_MARRIAGE.md)
 
-### 🚀 Quick Start - Run THE FORGE ❤️ KIMI K2
+---
+
+## 🎓 Free for University Students — No Subscription Needed
+
+> **Frustrated by expensive coding tools and LLM APIs? You shouldn't have to pay to learn.**
+> This project is 100% open-source. Run the full Kimi K2 model on your own machine, completely free.
+
+### ⚡ Zero-Cost Quick Start (students)
+
+```bash
+# 1. Clone this repo
+git clone https://github.com/moonshotai/Kimi-K2.git && cd Kimi-K2
+
+# 2. Install deps
+pip install -r requirements.txt
+
+# 3. Launch the student-focused CLI
+python3 forge_cli.py
+# Then type:  /mode student
+# Or:         /student resources   ← free tool list
+#             /student setup       ← run Kimi K2 locally for free
+#             /student absorb "data structures"
+#             /student exercise "binary trees"
+```
+
+### 🆓 Free Tools for Students
+
+| Tool | What it gives you | Cost |
+|------|------------------|------|
+| **Kimi K2 (this repo)** | Full 1T-param coding AI, local | **Free** |
+| **GitHub Student Pack** | Copilot, Azure, 100+ tools | **Free** (edu email) |
+| **Google Colab** | Free T4/A100 GPU to run models | **Free** |
+| **Ollama** | One-command local LLM runner | **Free** |
+| **Hugging Face** | Download model weights | **Free** |
+| **Kaggle Notebooks** | 30 h/week free GPU | **Free** |
+| **LM Studio** | Desktop GUI for local LLMs | **Free** |
+
+### 🧠 Skill Absorption System
+
+The student module lets you build a **personal learning queue** of skills you want the LLM to teach you:
+
+```python
+from student_access import StudentAccess
+
+sa = StudentAccess()
+sa.absorb_skill("machine learning")
+sa.absorb_skill("system design")
+print(sa.show_skill_queue())
+print(sa.generate_coding_exercise("binary search trees", "intermediate"))
+```
+
+> Run `python3 student_access.py` to see a full demo.
+
+---
+
+
 
 **Option 1: Run Unified System (Recommended)**
 ```bash

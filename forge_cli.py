@@ -13,6 +13,7 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 
 from forge_implementation import ForgeAI
+from student_access import StudentAccess
 
 
 class ForgeCLI:
@@ -22,6 +23,7 @@ class ForgeCLI:
         self.forge = None
         self.session_history: List[Dict] = []
         self.current_mode = 'chat'
+        self.student = StudentAccess()
         
     def initialize(self):
         """Initialize THE FORGE"""
@@ -45,7 +47,8 @@ class ForgeCLI:
         print("  /help      - Show this help message")
         print("  /stats     - Show system statistics")
         print("  /caps      - List all capabilities")
-        print("  /mode      - Change mode (chat, code, book, video)")
+        print("  /mode      - Change mode (chat, code, book, video, student)")
+        print("  /student   - Student free-access tools (resources, setup, skills)")
         print("  /history   - Show conversation history")
         print("  /clear     - Clear conversation history")
         print("  /exit      - Exit THE FORGE")
@@ -115,7 +118,10 @@ class ForgeCLI:
             self.session_history.clear()
             print("✅ Conversation history cleared")
             print()
-            
+
+        elif cmd == '/student':
+            self.handle_student_command(command)
+
         else:
             print(f"❌ Unknown command: {cmd}")
             print("Type /help for available commands")
@@ -155,6 +161,8 @@ class ForgeCLI:
             return self.generate_book_response(message)
         elif self.current_mode == 'video':
             return self.generate_video_response(message)
+        elif self.current_mode == 'student':
+            return self.generate_student_response(message)
         else:
             return "Mode not recognized. Use /mode to select a valid mode."
             
@@ -201,6 +209,55 @@ class ForgeCLI:
                 "- YouTube optimization\n"
                 "- Thumbnail and metadata suggestions\n\n"
                 f"Your request: {message}")
+
+    def generate_student_response(self, message: str) -> str:
+        """Generate a free student-oriented response"""
+        return self.student.get_coding_help(message)
+
+    def handle_student_command(self, command: str):
+        """Handle /student sub-commands for free student access"""
+        parts = command.split(maxsplit=1)
+        sub = parts[1].lower() if len(parts) > 1 else "help"
+
+        if sub == "resources" or sub == "free":
+            print()
+            print(self.student.list_free_resources())
+            print()
+        elif sub == "setup":
+            print()
+            print(self.student.get_local_setup_guide())
+            print()
+        elif sub == "skills":
+            print()
+            print(self.student.show_skill_queue())
+            print()
+        elif sub.startswith("absorb "):
+            skill = sub[len("absorb "):]
+            print()
+            print(self.student.absorb_skill(skill))
+            print()
+        elif sub.startswith("exercise "):
+            topic = sub[len("exercise "):]
+            print()
+            print(self.student.generate_coding_exercise(topic))
+            print()
+        elif sub == "export":
+            print()
+            print(self.student.export_session())
+            print()
+        else:
+            print()
+            print(self.student.welcome())
+            print("🎓 Student sub-commands:")
+            print("  /student resources  — list free coding tools")
+            print("  /student setup      — zero-cost local LLM setup guide")
+            print("  /student skills     — view your skill learning queue")
+            print("  /student absorb <topic>   — add a skill to learn")
+            print("  /student exercise <topic> — get a free coding exercise")
+            print("  /student export     — save session to JSON")
+            print()
+            print("💡 You can also switch to student mode: /mode student")
+            print()
         
     def show_stats(self):
         """Show system statistics"""
@@ -252,10 +309,11 @@ class ForgeCLI:
         if len(parts) < 2:
             print()
             print("Available modes:")
-            print("  chat   - General conversation")
-            print("  code   - Code generation and review")
-            print("  book   - Book writing and publishing")
-            print("  video  - Video editing guidance")
+            print("  chat     - General conversation")
+            print("  code     - Code generation and review")
+            print("  book     - Book writing and publishing")
+            print("  video    - Video editing guidance")
+            print("  student  - Free student/university coding tools (no subscription needed)")
             print()
             print(f"Current mode: {self.current_mode}")
             print()
@@ -265,7 +323,7 @@ class ForgeCLI:
             
         new_mode = parts[1].lower()
         
-        if new_mode in ['chat', 'code', 'book', 'video']:
+        if new_mode in ['chat', 'code', 'book', 'video', 'student']:
             self.current_mode = new_mode
             print(f"✅ Mode changed to: {new_mode}")
             print()
