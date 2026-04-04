@@ -18,7 +18,7 @@
 </div>
 
 <div align="center" style="line-height: 1;">
-  <a href="https://github.com/moonshotai/Kimi-K2/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/badge/License-Modified_MIT-f5de53?&color=f5de53"/></a>
+  <a href="https://github.com/SpidermanTotro/Kimi-K2/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/badge/License-Modified_MIT-f5de53?&color=f5de53"/></a>
 </div>
 
 <p align="center">
